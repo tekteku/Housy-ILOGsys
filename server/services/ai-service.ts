@@ -58,6 +58,8 @@ class AiService {
   // For chatbot functionality
   async processChatMessage(sessionId: string, userId: number | null, content: string, preferredModel: string = "openai"): Promise<string> {
     try {
+      console.log(`Processing chat with preferred model: ${preferredModel}`);
+      
       // Save user message
       const userMessage: InsertChatMessage = {
         userId: userId || null,
@@ -70,6 +72,7 @@ class AiService {
       
       // Get conversation history for context
       const chatHistory = await storage.getChatMessages(sessionId);
+      console.log(`Retrieved ${chatHistory.length} messages from chat history`);
       
       // Prepare system message for construction domain expertise
       const systemMessage = `Tu es un assistant spécialisé pour Housy, une plateforme de gestion immobilière et de construction en Tunisie. 
@@ -89,80 +92,104 @@ Pour les emplacements, concentre-toi sur les villes tunisiennes, notamment Tunis
 
 Sois professionnel mais amical dans tes réponses et formate les informations clairement avec une mise en forme appropriée.`;
       
-      // Try to use the preferred model first, with fallbacks
+      // The order of models to try, based on user preference
+      const modelsToTry = [];
+      
+      // Add the preferred model first
+      modelsToTry.push(preferredModel);
+      
+      // Then add the fallbacks in order of reliability
+      if (preferredModel !== "claude" && preferredModel !== "anthropic") {
+        modelsToTry.push("claude");
+      }
+      if (preferredModel !== "openai" && preferredModel !== "gpt") {
+        modelsToTry.push("openai");
+      }
+      if (preferredModel !== "ollama") {
+        modelsToTry.push("ollama");
+      }
+      
+      console.log("Models to try in order:", modelsToTry);
+      
+      // Try each model in sequence until one works
       let assistantResponse = "";
       let usedProvider = "";
+      let errors = [];
       
-      try {
-        // First attempt with preferred provider
-        if (preferredModel === "openai" || preferredModel === "gpt") {
-          // Prepare messages for OpenAI
-          const messages = chatHistory.map(msg => ({
-            role: msg.role as any,
-            content: msg.content
-          }));
-          
-          messages.unshift({
-            role: "system",
-            content: systemMessage
-          });
-          
-          // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-          const response = await openai.chat.completions.create({
-            model: "gpt-4o",
-            messages: messages,
-            temperature: 0.7,
-            max_tokens: 1000
-          });
-          
-          assistantResponse = response.choices[0].message.content || "";
-          usedProvider = "openai";
-        } 
-        else if (preferredModel === "claude" || preferredModel === "anthropic") {
-          // Use Claude API
-          assistantResponse = await this.processChatWithClaude(chatHistory, systemMessage);
-          usedProvider = "anthropic";
-        }
-        else if (preferredModel === "ollama") {
-          // Use Ollama API for local processing
-          assistantResponse = await this.processChatWithOllama(chatHistory, systemMessage);
-          usedProvider = "ollama";
-        } 
-        else {
-          // Default to OpenAI if model not specified
-          throw new Error("Model not specified, try fallback");
-        }
-      } catch (error) {
-        console.log("Primary model failed, trying fallback...", error);
-        
-        // Try Anthropic as the first fallback
+      for (const model of modelsToTry) {
         try {
-          assistantResponse = await this.processChatWithClaude(chatHistory, systemMessage);
-          usedProvider = "anthropic (fallback)";
-        } catch (claudeError) {
-          console.log("Claude fallback failed, trying Ollama...", claudeError);
+          console.log(`Attempting to use model: ${model}`);
           
-          // Try Ollama as the second fallback
-          try {
-            assistantResponse = await this.processChatWithOllama(chatHistory, systemMessage);
-            usedProvider = "ollama (fallback)";
-          } catch (ollamaError) {
-            console.error("All providers failed:", ollamaError);
-            assistantResponse = "Désolé, je rencontre actuellement des difficultés techniques. Tous nos modèles d'IA sont momentanément indisponibles. Veuillez réessayer plus tard.";
-            usedProvider = "none (all failed)";
+          if (model === "openai" || model === "gpt") {
+            // Check if we have an API key before attempting
+            if (!process.env.OPENAI_API_KEY || process.env.OPENAI_API_KEY === "sk-") {
+              console.log("OpenAI API key not available, skipping");
+              errors.push("OpenAI API key missing");
+              continue;
+            }
+            
+            // Prepare messages for OpenAI
+            const messages = chatHistory.map(msg => ({
+              role: msg.role as any,
+              content: msg.content
+            }));
+            
+            messages.unshift({
+              role: "system",
+              content: systemMessage
+            });
+            
+            // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+            const response = await openai.chat.completions.create({
+              model: "gpt-4o",
+              messages: messages,
+              temperature: 0.7,
+              max_tokens: 1000
+            });
+            
+            assistantResponse = response.choices[0].message.content || "";
+            usedProvider = "openai";
+            break; // Exit loop on success
+          } 
+          else if (model === "claude" || model === "anthropic") {
+            // Check if we have an API key before attempting
+            if (!process.env.ANTHROPIC_API_KEY || process.env.ANTHROPIC_API_KEY === "") {
+              console.log("Anthropic API key not available, skipping");
+              errors.push("Anthropic API key missing");
+              continue;
+            }
+            
+            // Use Claude API
+            assistantResponse = await this.processChatWithClaude(chatHistory, systemMessage);
+            usedProvider = "anthropic";
+            break; // Exit loop on success
           }
+          else if (model === "ollama") {
+            // Use Ollama API for local processing
+            assistantResponse = await this.processChatWithOllama(chatHistory, systemMessage);
+            usedProvider = "ollama";
+            break; // Exit loop on success
+          }
+        } catch (error) {
+          // Log the error and continue to the next model
+          console.log(`Error with ${model}:`, error);
+          errors.push(`${model}: ${error.message || 'Unknown error'}`);
         }
       }
       
-      // If we still don't have a response, provide a default
+      // If we've tried all models and none worked
       if (!assistantResponse) {
-        assistantResponse = "Je suis désolé, je n'ai pas pu traiter votre demande en utilisant le modèle demandé. Veuillez réessayer plus tard ou essayer un autre modèle.";
+        console.error("All AI models failed:", errors);
+        assistantResponse = "Désolé, je rencontre actuellement des difficultés techniques. Tous nos modèles d'IA sont momentanément indisponibles. Veuillez réessayer plus tard.\n\nDétails techniques: " + errors.join("; ");
+        usedProvider = "none (all failed)";
       }
       
-      // Add a note about which provider was used if it was a fallback
-      if (usedProvider.includes("fallback")) {
-        assistantResponse = `[Utilisation du modèle de secours: ${usedProvider}]\n\n` + assistantResponse;
+      // Add a note about which provider was used if different from preferred
+      if (usedProvider && preferredModel !== usedProvider.split(" ")[0]) {
+        assistantResponse = `[Utilisation du modèle ${usedProvider} au lieu de ${preferredModel}]\n\n` + assistantResponse;
       }
+      
+      console.log(`Successfully generated response using: ${usedProvider}`);
       
       // Save assistant response
       const assistantMessage: InsertChatMessage = {
@@ -183,30 +210,61 @@ Sois professionnel mais amical dans tes réponses et formate les informations cl
   
   // Process chat with Claude (Anthropic)
   private async processChatWithClaude(chatHistory: any[], systemMessage: string): Promise<string> {
-    // Convert chat history to Anthropic format
-    const messages = chatHistory.map(msg => ({
-      role: msg.role,
-      content: msg.content
-    }));
-    
-    // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
-    const response = await anthropic.messages.create({
-      model: "claude-3-7-sonnet-20250219",
-      system: systemMessage,
-      max_tokens: 1000,
-      messages
-    });
-    
-    // Extract text from response
-    let responseText = "";
-    if (response.content && response.content.length > 0) {
-      const firstContent = response.content[0];
-      if (typeof firstContent === 'object' && 'text' in firstContent) {
-        responseText = firstContent.text;
+    try {
+      console.log("Using Anthropic Claude API...");
+      
+      // Filter and prepare valid messages - only include messages with valid roles
+      const validMessages = [];
+      
+      for (const msg of chatHistory) {
+        // Anthropic only accepts 'user' or 'assistant' roles
+        if (msg.role === 'user') {
+          validMessages.push({
+            role: 'user' as const,
+            content: msg.content
+          });
+        } else if (msg.role === 'assistant') {
+          validMessages.push({
+            role: 'assistant' as const,
+            content: msg.content
+          });
+        }
       }
+      
+      console.log(`Prepared ${validMessages.length} valid messages for Claude`);
+      
+      if (validMessages.length === 0) {
+        // Add a default user message if the history is empty
+        validMessages.push({
+          role: 'user' as const,
+          content: "Bonjour, pouvez-vous me donner des informations sur la construction en Tunisie?"
+        });
+      }
+      
+      // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
+      const response = await anthropic.messages.create({
+        model: "claude-3-sonnet-20240229", // Using a model that exists in current Anthropic API
+        system: systemMessage,
+        max_tokens: 1000,
+        messages: validMessages
+      });
+      
+      console.log("Claude API response received");
+      
+      // Extract text from response
+      let responseText = "";
+      if (response.content && response.content.length > 0) {
+        const firstContent = response.content[0];
+        if (typeof firstContent === 'object' && 'text' in firstContent) {
+          responseText = firstContent.text;
+        }
+      }
+      
+      return responseText || "Je suis désolé, je n'ai pas pu générer une réponse.";
+    } catch (error) {
+      console.error("Error with Claude API:", error);
+      throw error;
     }
-    
-    return responseText || "Je suis désolé, je n'ai pas pu générer une réponse.";
   }
   
   // Process chat with Ollama (local model)

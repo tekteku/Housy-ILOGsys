@@ -10,7 +10,7 @@ const Chatbot = () => {
     return savedSessionId || `session_${Date.now()}`;
   });
   
-  const [selectedModel, setSelectedModel] = useState("openai");
+  const [selectedModel, setSelectedModel] = useState("claude");
 
   // Set document title
   useEffect(() => {
@@ -139,7 +139,7 @@ const Chatbot = () => {
         <div className="lg:col-span-9">
           <ChatInterface 
             sessionId={sessionId}
-            initialMessages={chatHistory || []}
+            initialMessages={Array.isArray(chatHistory) ? chatHistory : []}
             isLoading={isLoading}
             aiModel={selectedModel}
             onNewChat={startNewChat}
