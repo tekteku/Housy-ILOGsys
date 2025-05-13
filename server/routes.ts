@@ -16,6 +16,7 @@ import path from "path";
 import fs from "fs";
 import { ZodError } from "zod";
 import { nanoid } from "nanoid";
+import { parse } from 'csv-parse/sync';
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Handle Zod validation errors
@@ -240,12 +241,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   app.get("/api/materials/trends", async (req, res) => {
     try {
+      // Handle case when ids parameter is missing
+      if (!req.query.ids) {
+        return res.json([]);
+      }
+      
       const materialIds = (req.query.ids as string).split(',').map(id => parseInt(id));
       const months = req.query.months ? parseInt(req.query.months as string) : 6;
       
-      const trends = await materialService.getMaterialPriceTrends(materialIds, months);
+      // Check for invalid IDs and remove them
+      const validMaterialIds = materialIds.filter(id => !isNaN(id));
+      
+      // If no valid IDs, return empty array
+      if (validMaterialIds.length === 0) {
+        return res.json([]);
+      }
+      
+      const trends = await materialService.getMaterialPriceTrends(validMaterialIds, months);
       res.json(trends);
     } catch (error) {
+      console.error('Error in /api/materials/trends:', error);
       res.status(500).json({ 
         message: "Error fetching material price trends", 
         error: (error as Error).message 
