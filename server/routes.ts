@@ -452,21 +452,86 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   app.post("/api/real-estate/import", async (req, res) => {
     try {
-      // In a real app, would handle file upload
-      // Here we'll use the provided CSV file directly
+      // Use the provided CSV file directly
       const csvPath = path.resolve(import.meta.dirname, "..", "attached_assets", "tunisia_geo_enhanced_20250427_2133101.csv");
       
       if (!fs.existsSync(csvPath)) {
         return res.status(404).json({ message: "CSV file not found" });
       }
       
-      // For this implementation, we'll just return success without actually importing
-      // In a real app, this would parse and import the data
+      // Read and parse the CSV file
+      const csvContent = fs.readFileSync(csvPath, 'utf8');
+      const records = parse(csvContent, {
+        columns: true,
+        skip_empty_lines: true,
+        delimiter: ',',
+        relaxColumnCount: true, // Allow varying column counts
+        trim: true, // Trim whitespace from values
+      });
+      
+      // Process and import the records (in batches to avoid overloading memory)
+      const batchSize = 100;
+      let imported = 0;
+      let batches = 0;
+      
+      // Start an async process to handle the import
+      // This allows the response to return quickly while processing continues
+      (async () => {
+        console.log(`Starting import of ${records.length} real estate listings`);
+        
+        for (let i = 0; i < records.length; i += batchSize) {
+          const batch = records.slice(i, i + batchSize);
+          batches++;
+          
+          // Process the batch
+          for (const record of batch) {
+            if (!record.id || !record.title || !record.price || !record.price_currency || 
+                !record.property_type || !record.city || !record.governorate) {
+              continue; // Skip incomplete records
+            }
+            
+            // Format the data for storage
+            const listingData = {
+              propertyId: record.id.trim(),
+              title: record.title.trim(),
+              description: record.description || null,
+              price: parseFloat(record.price),
+              priceCurrency: record.price_currency.trim(),
+              area: record.area ? parseFloat(record.area) : null,
+              rooms: record.rooms || null,
+              propertyType: record.property_type.trim(),
+              city: record.city.trim(),
+              governorate: record.governorate.trim(),
+              address: record.address || null,
+              latitude: record.latitude ? parseFloat(record.latitude) : null,
+              longitude: record.longitude ? parseFloat(record.longitude) : null,
+              source: record.source_website || null,
+              url: record.url || null,
+              scrapedAt: new Date(record.scraped_at || Date.now())
+            };
+            
+            try {
+              // Check if record exists and update or create
+              await storage.addRealEstateListing(listingData);
+              imported++;
+            } catch (err) {
+              console.error(`Error importing listing ${record.id}:`, err);
+            }
+          }
+          
+          console.log(`Imported batch ${batches} (${imported} properties so far)`);
+        }
+        
+        console.log(`Completed import of ${imported} real estate listings`);
+      })();
+      
+      // Return immediately without waiting for all records to process
       res.json({ 
-        message: "Real estate data import initiated", 
+        message: `Real estate data import started. Processing ${records.length} listings in background.`, 
         status: "processing" 
       });
     } catch (error) {
+      console.error('Error importing real estate data:', error);
       res.status(500).json({ 
         message: "Error importing real estate data", 
         error: (error as Error).message 
