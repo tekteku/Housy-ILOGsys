@@ -35,7 +35,7 @@ interface MaterialEstimation {
     unit: string;
     unitPrice: number;
     totalPrice: number;
-    supplier?: string;
+    supplier?: string | null;
   }>;
 }
 

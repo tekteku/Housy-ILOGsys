@@ -70,9 +70,9 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
               return (
                 <li key={item.path}>
                   <Link href={item.path}>
-                    <a
+                    <div
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2 font-medium rounded-lg",
+                        "flex items-center gap-3 px-3 py-2 font-medium rounded-lg cursor-pointer",
                         isActive
                           ? "text-neutral-900 bg-neutral-100"
                           : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
@@ -85,7 +85,7 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
                         )}
                       ></i>
                       <span>{item.label}</span>
-                    </a>
+                    </div>
                   </Link>
                 </li>
               );
