@@ -21,15 +21,15 @@ const MobileNav = () => {
           
           return (
             <Link key={item.path} href={item.path}>
-              <a
+              <div
                 className={cn(
-                  "flex flex-col items-center",
+                  "flex flex-col items-center cursor-pointer",
                   isActive ? "text-primary-600" : "text-neutral-500"
                 )}
               >
                 <i className={`fas fa-${item.icon} text-lg`}></i>
                 <span className="text-xs mt-1">{item.label}</span>
-              </a>
+              </div>
             </Link>
           );
         })}

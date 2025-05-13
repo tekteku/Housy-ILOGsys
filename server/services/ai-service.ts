@@ -218,39 +218,100 @@ class AiService {
   // For market trend analysis with Claude
   async analyzeMarketTrends(data: any[]): Promise<any> {
     try {
-      // Prepare data - limit to avoid token limits
-      const limitedData = data.slice(0, 100);
-      const dataString = JSON.stringify(limitedData, null, 2);
+      // Prepare data - limit to avoid token limits but ensure geographic diversity
+      // Group by governorate first to ensure we have samples from different regions
+      const governorateGroups: Record<string, any[]> = {};
+      
+      // Group listings by governorate
+      data.forEach(listing => {
+        if (!listing.governorate) return;
+        
+        if (!governorateGroups[listing.governorate]) {
+          governorateGroups[listing.governorate] = [];
+        }
+        governorateGroups[listing.governorate].push(listing);
+      });
+      
+      // Take samples from each governorate to ensure geographic representation
+      let sampledData: any[] = [];
+      Object.keys(governorateGroups).forEach(governorate => {
+        // Take up to 10 samples from each governorate
+        const governorateSample = governorateGroups[governorate].slice(0, 10);
+        sampledData = sampledData.concat(governorateSample);
+      });
+      
+      // If we still need more data, add random samples up to 150 total
+      if (sampledData.length < 150) {
+        const randomSamples = data
+          .filter(item => !sampledData.includes(item))
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 150 - sampledData.length);
+        
+        sampledData = sampledData.concat(randomSamples);
+      }
+      
+      // Generate statistics to include with the data
+      const priceStats = this.calculatePriceStatistics(data);
+      const propertyTypeDistribution = this.calculatePropertyTypeDistribution(data);
+      const cityDistribution = this.calculateCityDistribution(data);
+      
+      // Create a summary of the data for the AI
+      const dataSummary = {
+        sampleData: sampledData.slice(0, 100), // Send 100 sample listings
+        statistics: {
+          totalListings: data.length,
+          priceStats,
+          propertyTypeDistribution,
+          cityDistribution,
+          topCities: Object.entries(cityDistribution)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([city, count]) => ({ city, count }))
+        }
+      };
+      
+      const dataString = JSON.stringify(dataSummary, null, 2);
       
       // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
       const response = await anthropic.messages.create({
         model: "claude-3-7-sonnet-20250219",
-        max_tokens: 2000,
-        system: `You're a real estate market analyst in Tunisia. Analyze the provided data and output your findings in JSON format with the following keys:
-          - "marketTrends": Array of key market trends
-          - "priceAnalysis": Breakdown of price ranges and trends
-          - "locationInsights": Insights on best performing locations
-          - "investmentRecommendations": List of recommendations for investors
-          - "constructionOpportunities": Opportunities for new construction projects`,
+        max_tokens: 3000,
+        system: `You're a real estate market analyst in Tunisia with expertise in construction and development. 
+        Analyze the provided Tunisian real estate data (which includes both sample listings and statistical summaries) 
+        and output comprehensive, data-driven findings in JSON format with the following keys:
+          - "marketTrends": Array of specific market trends with supporting data points
+          - "priceAnalysis": Detailed breakdown of price ranges and trends by property type and location
+          - "locationInsights": Specific insights on best performing locations with price/m² calculations
+          - "constructionOpportunities": Specific opportunities for builders based on supply/demand gaps
+          - "materialRecommendations": Recommendations for construction materials likely to be in demand based on trending property types
+          - "investmentStrategyByRegion": Region-specific investment strategies with expected ROI estimates`,
         messages: [
-          { role: 'user', content: `Analyze these Tunisian real estate listings and provide comprehensive market insights:\n\n${dataString}` }
+          { role: 'user', content: `Analyze this Tunisian real estate data and provide comprehensive market insights that would be valuable for construction companies, developers, and investors:\n\n${dataString}` }
         ],
       });
       
       let result: any;
       try {
-        result = JSON.parse(response.content[0].text);
+        if (response.content[0].type === 'text') {
+          result = JSON.parse(response.content[0].text);
+        } else {
+          throw new Error("Unexpected response format");
+        }
       } catch (parseError) {
         console.error("Error parsing Claude response as JSON:", parseError);
-        result = { text: response.content[0].text };
+        result = { error: "Failed to parse response", message: parseError.message };
       }
       
       // Save analysis to database
       const analysisData: InsertAiAnalysis = {
         analysisType: "market_trends",
-        inputData: limitedData,
+        inputData: { 
+          sampleSize: sampledData.length,
+          governorates: Object.keys(governorateGroups),
+          totalListings: data.length
+        },
         result,
-        provider: "claude"
+        provider: "anthropic"
       };
       
       await storage.saveAiAnalysis(analysisData);
@@ -260,6 +321,58 @@ class AiService {
       console.error("Error analyzing market trends with Claude:", error);
       throw error;
     }
+  }
+  
+  // Helper methods for data analysis
+  private calculatePriceStatistics(data: any[]): any {
+    const prices = data
+      .filter(item => item.price && !isNaN(parseFloat(item.price)))
+      .map(item => parseFloat(item.price));
+      
+    if (prices.length === 0) return { min: 0, max: 0, avg: 0, median: 0 };
+    
+    prices.sort((a, b) => a - b);
+    
+    const min = prices[0];
+    const max = prices[prices.length - 1];
+    const avg = prices.reduce((sum, price) => sum + price, 0) / prices.length;
+    const median = prices.length % 2 === 0 
+      ? (prices[prices.length / 2 - 1] + prices[prices.length / 2]) / 2
+      : prices[Math.floor(prices.length / 2)];
+      
+    return { min, max, avg, median };
+  }
+  
+  private calculatePropertyTypeDistribution(data: any[]): Record<string, number> {
+    const distribution: Record<string, number> = {};
+    
+    data.forEach(item => {
+      if (!item.propertyType) return;
+      
+      if (!distribution[item.propertyType]) {
+        distribution[item.propertyType] = 0;
+      }
+      
+      distribution[item.propertyType]++;
+    });
+    
+    return distribution;
+  }
+  
+  private calculateCityDistribution(data: any[]): Record<string, number> {
+    const distribution: Record<string, number> = {};
+    
+    data.forEach(item => {
+      if (!item.city) return;
+      
+      if (!distribution[item.city]) {
+        distribution[item.city] = 0;
+      }
+      
+      distribution[item.city]++;
+    });
+    
+    return distribution;
   }
   
   // For DeepSeek API integration (price prediction)
