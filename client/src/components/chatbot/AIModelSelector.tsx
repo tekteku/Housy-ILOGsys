@@ -17,22 +17,22 @@ const AIModelSelector = ({ selectedModel, onModelChange }: AIModelSelectorProps)
     {
       id: "openai",
       name: "GPT-4o (OpenAI)",
-      description: "Modèle le plus avancé capable de répondre à presque n'importe quelle question sur la construction et l'immobilier."
+      description: "Exploite les données réelles du marché immobilier tunisien (109,336 listings) et des prix actuels des matériaux."
     },
     {
       id: "claude",
       name: "Claude 3 (Anthropic)",
-      description: "Excellent pour l'analyse détaillée du marché immobilier et des tendances économiques."
+      description: "Analystes des données immobilières par région en Tunisie avec vision détaillée des tendances du marché."
     },
     {
       id: "ollama",
-      name: "Llama 2 (Ollama)",
-      description: "Traitement local des données pour une meilleure confidentialité et des estimations rapides."
+      name: "Llama 2 (Local)",
+      description: "Traitement local des données avec focus sur les prix des matériaux de construction tunisiens de 46 fournisseurs."
     },
     {
       id: "deepseek",
       name: "DeepSeek",
-      description: "Spécialisé dans les prédictions de prix immobiliers et l'analyse avancée des tendances."
+      description: "Modèle prédictif spécialisé dans l'anticipation des tendances du marché immobilier tunisien par région."
     }
   ];
 

@@ -137,9 +137,41 @@ const ChatInterface = ({
   // Display empty state if no messages
   const isEmpty = messages.length === 0 && !isLoading;
 
+  const getAiModelName = () => {
+    switch (aiModel) {
+      case "openai": return "GPT-4o (OpenAI)";
+      case "claude": return "Claude 3 (Anthropic)";
+      case "ollama": return "Llama 2 (Ollama)";
+      case "deepseek": return "DeepSeek";
+      default: return "GPT-4o (OpenAI)";
+    }
+  };
+
   return (
-    <Card className="shadow-sm border border-neutral-200 h-[calc(100vh-16rem)]">
+    <Card className="shadow-sm border border-neutral-200 h-[calc(100vh-16rem)] bg-neutral-50">
       <CardContent className="p-0 h-full flex flex-col">
+        {/* Chat header with model info */}
+        <div className="p-3 border-b border-neutral-200 bg-white flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary-100 flex items-center justify-center text-primary-600">
+              <i className={`fas ${aiModel === "claude" ? "fa-comment-dots" : "fa-robot"} text-sm`}></i>
+            </div>
+            <div>
+              <div className="font-medium text-sm">Assistant Construction & Immobilier</div>
+              <div className="text-xs text-neutral-500">
+                Utilise {getAiModelName()} avec les données immobilières tunisiennes
+              </div>
+            </div>
+          </div>
+          <button 
+            onClick={onNewChat} 
+            className="text-xs bg-primary-50 text-primary-600 hover:bg-primary-100 py-1 px-2 rounded flex items-center gap-1"
+          >
+            <i className="fas fa-plus text-xs"></i>
+            <span className="hidden md:inline">Nouvelle conversation</span>
+          </button>
+        </div>
+        
         {/* Chat Messages */}
         <div className="flex-1 overflow-y-auto p-4">
           {isLoading ? (
@@ -152,21 +184,56 @@ const ChatInterface = ({
             </div>
           ) : isEmpty ? (
             <div className="h-full flex flex-col items-center justify-center text-center px-4">
-              <div className="mb-4 w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center">
-                <i className="fas fa-robot text-primary-600 text-2xl"></i>
+              <div className="mb-6 w-20 h-20 rounded-full bg-primary-100 flex items-center justify-center">
+                <i className="fas fa-robot text-primary-600 text-3xl"></i>
               </div>
-              <h2 className="text-xl font-semibold mb-2">
-                Assistant IA Housy
+              <h2 className="text-2xl font-semibold mb-3 text-neutral-800">
+                Assistant Construction & Immobilier
               </h2>
-              <p className="text-neutral-500 mb-6 max-w-md">
-                Je peux vous aider avec l'estimation des coûts, les matériaux de construction, les tendances du marché immobilier, et bien plus encore.
+              <p className="text-neutral-600 mb-8 max-w-md leading-relaxed">
+                Je suis spécialisé dans le secteur immobilier et de la construction en Tunisie avec accès aux données réelles du marché.
               </p>
-              <p className="text-neutral-500">
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg w-full mb-8">
+                <div className="bg-white p-3 rounded-lg border border-neutral-200 shadow-sm text-left flex items-start gap-2">
+                  <div className="text-emerald-500 mt-0.5"><i className="fas fa-chart-line"></i></div>
+                  <div>
+                    <h3 className="font-medium text-sm">Tendances du marché</h3>
+                    <p className="text-xs text-neutral-500">Analyses des prix par région et type de bien</p>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-3 rounded-lg border border-neutral-200 shadow-sm text-left flex items-start gap-2">
+                  <div className="text-amber-500 mt-0.5"><i className="fas fa-hammer"></i></div>
+                  <div>
+                    <h3 className="font-medium text-sm">Matériaux de construction</h3>
+                    <p className="text-xs text-neutral-500">Prix et disponibilité en Tunisie</p>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-3 rounded-lg border border-neutral-200 shadow-sm text-left flex items-start gap-2">
+                  <div className="text-blue-500 mt-0.5"><i className="fas fa-calculator"></i></div>
+                  <div>
+                    <h3 className="font-medium text-sm">Estimation de projets</h3>
+                    <p className="text-xs text-neutral-500">Calcul détaillé des coûts</p>
+                  </div>
+                </div>
+                
+                <div className="bg-white p-3 rounded-lg border border-neutral-200 shadow-sm text-left flex items-start gap-2">
+                  <div className="text-violet-500 mt-0.5"><i className="fas fa-university"></i></div>
+                  <div>
+                    <h3 className="font-medium text-sm">Réglementations</h3>
+                    <p className="text-xs text-neutral-500">Permis et normes de construction</p>
+                  </div>
+                </div>
+              </div>
+              
+              <p className="text-neutral-600 font-medium">
                 {getGreetingMessage()}
               </p>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-1 pb-2">
               {messages.map((msg, index) => (
                 <ChatMessage
                   key={msg.id || index}
@@ -175,12 +242,15 @@ const ChatInterface = ({
                 />
               ))}
               {isTyping && (
-                <div className="flex">
-                  <div className="rounded-lg bg-neutral-100 p-3 text-neutral-800 max-w-md">
+                <div className="flex mb-4">
+                  <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center mr-2 mt-1 flex-shrink-0">
+                    <i className="fas fa-robot text-primary-600 text-sm"></i>
+                  </div>
+                  <div className="rounded-lg bg-white p-4 text-neutral-800 border border-neutral-200 shadow-sm">
                     <div className="flex space-x-2">
-                      <div className="w-2 h-2 rounded-full bg-neutral-500 animate-bounce" style={{ animationDelay: "0ms" }}></div>
-                      <div className="w-2 h-2 rounded-full bg-neutral-500 animate-bounce" style={{ animationDelay: "300ms" }}></div>
-                      <div className="w-2 h-2 rounded-full bg-neutral-500 animate-bounce" style={{ animationDelay: "600ms" }}></div>
+                      <div className="w-2 h-2 rounded-full bg-primary-300 animate-bounce" style={{ animationDelay: "0ms" }}></div>
+                      <div className="w-2 h-2 rounded-full bg-primary-500 animate-bounce" style={{ animationDelay: "300ms" }}></div>
+                      <div className="w-2 h-2 rounded-full bg-primary-700 animate-bounce" style={{ animationDelay: "600ms" }}></div>
                     </div>
                   </div>
                 </div>
@@ -191,15 +261,15 @@ const ChatInterface = ({
         </div>
 
         {/* Input Form */}
-        <div className="border-t border-neutral-200 p-4 bg-white">
+        <div className="border-t border-neutral-200 p-4 bg-white rounded-b-lg">
           <form onSubmit={handleSubmit} className="flex space-x-2">
             <div className="relative flex-1">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Posez votre question..."
+                placeholder="Posez votre question sur la construction ou l'immobilier en Tunisie..."
                 disabled={isLoading || isTyping}
-                className="pr-10"
+                className="pr-10 bg-white border-neutral-300 focus:border-primary-500 pl-4 py-6 shadow-sm"
                 ref={inputRef}
               />
               {input && (
@@ -215,40 +285,25 @@ const ChatInterface = ({
             <Button
               type="submit"
               disabled={!input.trim() || isLoading || isTyping}
+              className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-6"
             >
               <i className="fas fa-paper-plane"></i>
             </Button>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={onNewChat}
-              title="Nouvelle conversation"
-              className="md:hidden"
-            >
-              <i className="fas fa-plus"></i>
-            </Button>
           </form>
-          <div className="flex justify-between mt-2 text-xs text-neutral-500">
-            <div>
-              <span>Utilisation du modèle: </span>
-              <span className="font-medium">
-                {aiModel === "openai" 
-                  ? "GPT-4o (OpenAI)" 
-                  : aiModel === "claude" 
-                    ? "Claude 3 (Anthropic)" 
-                    : aiModel === "ollama" 
-                      ? "Llama 2 (Ollama)" 
-                      : "DeepSeek"}
-              </span>
+          <div className="flex justify-between mt-3 text-xs text-neutral-500">
+            <div className="flex items-center gap-1">
+              <div className={`w-2 h-2 rounded-full ${isTyping ? "bg-green-500" : "bg-neutral-300"}`}></div>
+              <span>{isTyping ? "En train de répondre..." : "Prêt à répondre"}</span>
             </div>
             <button 
-              className="text-primary-600 hover:text-primary-700"
+              className="text-neutral-500 hover:text-neutral-700 flex items-center gap-1"
               onClick={() => {
                 setMessages([]);
                 onNewChat();
               }}
             >
-              Effacer la conversation
+              <i className="fas fa-trash-alt text-xs"></i>
+              <span>Effacer la conversation</span>
             </button>
           </div>
         </div>

@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface ChatMessageProps {
   message: {
@@ -13,6 +15,15 @@ interface ChatMessageProps {
 
 const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
   const isUser = message.role === "user";
+  const [isExpanded, setIsExpanded] = useState(true);
+  const [isCopied, setIsCopied] = useState(false);
+  
+  // Copy message to clipboard
+  const copyMessage = () => {
+    navigator.clipboard.writeText(message.content);
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 2000);
+  };
 
   // Format code blocks in the message
   const formatContent = (content: string) => {
@@ -116,37 +127,84 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
   };
 
   return (
-    <div className={cn("flex", isUser ? "justify-end" : "justify-start")}>
+    <div className={cn("flex mb-4 group", isUser ? "justify-end" : "justify-start")}>
+      {!isUser && (
+        <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center mr-2 mt-1 flex-shrink-0 border border-primary-200">
+          {getAIModelIcon()}
+        </div>
+      )}
+      
       <div
         className={cn(
-          "max-w-3xl rounded-lg p-3",
+          "max-w-3xl rounded-lg p-4 shadow-sm transition-all",
+          isExpanded ? "w-full" : "w-64 cursor-pointer",
           isUser
-            ? "bg-primary-600 text-white"
-            : "bg-neutral-100 text-neutral-800"
+            ? "bg-primary-600 text-white border border-primary-700"
+            : "bg-white text-neutral-800 border border-neutral-200"
         )}
+        onClick={() => !isExpanded && setIsExpanded(true)}
       >
-        <div className="flex items-center gap-2 mb-1">
-          {isUser ? (
-            <>
-              <span className="font-medium text-sm">Vous</span>
-              <span className="text-xs opacity-70">
-                {message.timestamp && formatDate(message.timestamp)}
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="font-medium text-sm flex items-center">
-                {getAIModelIcon()}
-                <span className="ml-1">Assistant Housy</span>
-              </span>
-              <span className="text-xs opacity-70">
-                {message.timestamp && formatDate(message.timestamp)}
-              </span>
-            </>
-          )}
+        <div className="flex items-center justify-between mb-2">
+          <div className="flex items-center gap-2">
+            {isUser ? (
+              <>
+                <span className="font-medium text-sm">Vous</span>
+                <span className="text-xs opacity-70">
+                  {message.timestamp && formatDate(message.timestamp)}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="font-medium text-sm flex items-center">
+                  Assistant Housy
+                </span>
+                <span className="text-xs opacity-70">
+                  {message.timestamp && formatDate(message.timestamp)}
+                </span>
+              </>
+            )}
+          </div>
+          
+          {/* Message actions */}
+          <div className={cn("flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", 
+                           isUser ? "text-white" : "text-neutral-500")}>
+            {!isUser && (
+              <button 
+                className="p-1 rounded hover:bg-neutral-100 text-xs" 
+                onClick={copyMessage}
+                title={isCopied ? "Copié!" : "Copier le message"}
+              >
+                <i className={cn("fas", isCopied ? "fa-check" : "fa-copy")}></i>
+              </button>
+            )}
+            <button 
+              className="p-1 rounded hover:bg-neutral-100 text-xs" 
+              onClick={() => setIsExpanded(!isExpanded)}
+              title={isExpanded ? "Réduire" : "Agrandir"}
+            >
+              <i className={cn("fas", isExpanded ? "fa-chevron-up" : "fa-chevron-down")}></i>
+            </button>
+          </div>
         </div>
-        <div className="space-y-2">{formatContent(message.content)}</div>
+        
+        {isExpanded && (
+          <div className={cn("space-y-2 prose prose-sm", 
+                           isUser ? "prose-invert" : "")}>{formatContent(message.content)}</div>
+        )}
+        
+        {!isExpanded && (
+          <div className="text-sm opacity-75 truncate">
+            {message.content.substring(0, 100)}
+            {message.content.length > 100 && "..."}
+          </div>
+        )}
       </div>
+      
+      {isUser && (
+        <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white ml-2 mt-1 flex-shrink-0">
+          <i className="fas fa-user text-sm"></i>
+        </div>
+      )}
     </div>
   );
 };
