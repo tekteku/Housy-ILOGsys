@@ -1,0 +1,114 @@
+# Demande de modification pour le projet ILOGsys - Application Housy
+
+## Contexte
+L'application Housy est une plateforme web intelligente dédiée au secteur de la construction et de l'immobilier en Tunisie. Elle est conçue pour résoudre des problématiques comme l'instabilité des prix des matériaux, le manque de transparence dans l'estimation des coûts, et l'absence d'outils centralisés pour la gestion des projets. L'objectif de ces modifications est d'enrichir les fonctionnalités existantes, améliorer l'interface utilisateur, intégrer des API avancées et garantir l'utilisation de données réelles.
+
+---
+
+## Architecture de l'application
+- Répertoire racine : `C:/Users/TaherCh/Desktop/Nouveau dossier (2)/Modification/ILOGsysDashboard`
+- Structure des dossiers principaux :
+  - `client` : Frontend
+  - `server` : Backend
+  - `db` : Gestion de la base de données
+  - `shared` : Composants partagés entre le frontend et le backend
+- Technologies utilisées :
+  - **Frontend** : React/TypeScript avec TailwindCSS
+  - **Backend** : Node.js avec Express.js
+  - **Base de données** : PostgreSQL avec Prisma ORM
+  - **Outils de Build** : Vite.js, PostCSS
+  - **Fichiers de configuration** : `vite.config.ts`, `tailwind.config.ts`, `tsconfig.json`
+
+---
+
+## Fonctionnalités existantes
+1. **Estimation intelligente des coûts**
+2. **Analyse des tendances du marché**
+3. **Gestion de projets de construction**
+4. **Chatbot intelligent**
+5. **Administration de la plateforme**
+
+---
+
+## Modifications demandées
+
+### 1. **Suivi de projet de construction**
+- **Tableau de bord en temps réel** :
+  - Intégrez un diagramme de Gantt pour visualiser l'avancement des tâches.
+  - Ajoutez des indicateurs clés comme le pourcentage d'avancement, les dépassements de budget, et les échéances.
+- **Gestion des ressources** :
+  - Permettez l'attribution des ressources humaines et matérielles par tâche.
+  - Développez un système d'alerte en cas de surcharge ou de disponibilité limitée.
+- **Reporting automatisé** :
+  - Implémentez une génération automatique de rapports (PDF, Excel) avec l'état d'avancement du projet.
+- **Notifications intelligentes** :
+  - Configurez des rappels automatiques pour les échéances ou tâches importantes.
+
+### 2. **Estimation des matériaux**
+- **Calculateur dynamique** :
+  - Proposez une estimation des quantités nécessaires en fonction des dimensions fournies par l'utilisateur.
+  - Prenez en compte les pertes (wastage) dans les calculs.
+- **Base de données des prix des matériaux** :
+  - Mettez à jour automatiquement les coûts via des connexions API ou des fichiers CSV.
+  - Ajoutez une fonctionnalité de comparaison des prix entre différents fournisseurs.
+- **Simulation de scénarios** :
+  - Permettez aux utilisateurs d'analyser les coûts en fonction de différents choix de matériaux ou de localisation.
+- **Historique des projets et des matériaux** :
+  - Ajoutez une fonctionnalité pour stocker et réutiliser les données des projets et matériaux précédents.
+
+### 3. **Amélioration du Frontend**
+- **Interface utilisateur améliorée** :
+  - Modernisez l'interface utilisateur pour qu'elle soit plus attrayante et intuitive.
+  - Ajoutez des arrière-plans avec des images pertinentes (par exemple, des photos de bâtiments, plans de construction ou matériaux).
+  - Assurez-vous que l'interface est responsive et fonctionne bien sur tous les appareils.
+- **Nouvelles visualisations** :
+  - Intégrez des graphiques interactifs pour les indicateurs clés de performance (KPI).
+  - Utilisez des bibliothèques comme `Recharts` ou `D3.js`.
+
+### 4. **Utilisation de vraies données dans les fichiers CSV**
+- Identifiez les fichiers CSV contenant des données simulées (mocked data).
+- Remplacez ces données par des données réelles :
+  - Configurez un scraper pour collecter des données à partir de sources fiables (par exemple, API publiques ou sites web autorisés).
+  - Intégrez ces données dans la base de données PostgreSQL.
+  - Assurez une mise à jour régulière des données pour qu'elles restent pertinentes.
+
+### 5. **Intégration d'API avancées**
+- **Ollama (local)** :
+  - Exploitez Ollama installé localement pour effectuer des tâches d'analyse et d'extraction de données des fichiers CSV.
+  - Configurez Ollama pour traiter les données des prix immobiliers et fournir des insights pertinents.
+- **OpenAI et Claude** :
+  - Intégrez OpenAI et Claude pour améliorer les capacités du chatbot intelligent (ex : répondre à des questions complexes sur les projets ou les tendances du marché).
+  - Utilisez-les pour générer des résumés automatiques ou des recommandations basées sur les données des utilisateurs.
+- **DeepSeek** :
+  - Intégrez DeepSeek pour des analyses avancées des tendances du marché immobilier et des prédictions basées sur des données historiques.
+
+---
+
+## Points techniques
+### Frontend
+- Intégrez les visualisations dans le tableau de bord avec des librairies comme **Recharts** ou **D3.js**.
+- Ajoutez des composants réutilisables pour les graphiques, formulaires de calcul, et notifications.
+
+### Backend
+- Créez de nouveaux endpoints dans l'API pour :
+  - Gérer les tâches du projet et leurs statuts.
+  - Alimenter la base de données des prix des matériaux.
+  - Générer les rapports automatisés.
+  - Intégrer Ollama pour le traitement local des données CSV.
+  - Connecter OpenAI, Claude, et DeepSeek via leurs API respectives.
+
+### Base de données
+- Ajoutez des tables pour :
+  - Les tâches de projet (id, nom, statut, échéance, ressources allouées).
+  - Les matériaux (id, nom, catégorie, prix, fournisseur, date de mise à jour).
+- Mettez à jour le schéma Prisma ORM en conséquence.
+
+### Tests
+- Créez des tests unitaires pour valider les calculs d'estimation des matériaux.
+- Implémentez des tests d'intégration pour vérifier les nouveaux endpoints API.
+- Testez la qualité des données collectées et leur intégration dans le système.
+
+---
+
+## Objectif final
+Ces modifications doivent permettre à l'application Housy de devenir un outil complet, avec une interface utilisateur moderne, des données fiables, des API avancées et des fonctionnalités enrichies pour le suivi des projets et l'estimation des matériaux. Merci de m'indiquer si vous avez besoin d'informations supplémentaires ou d'un exemple de code pour démarrer les modifications.
