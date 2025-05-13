@@ -56,7 +56,7 @@ async function callOllamaApi(
 
 class AiService {
   // For chatbot functionality
-  async processChatMessage(sessionId: string, userId: number | null, content: string): Promise<string> {
+  async processChatMessage(sessionId: string, userId: number | null, content: string, preferredModel: string = "openai"): Promise<string> {
     try {
       // Save user message
       const userMessage: InsertChatMessage = {
@@ -71,43 +71,98 @@ class AiService {
       // Get conversation history for context
       const chatHistory = await storage.getChatMessages(sessionId);
       
-      // Prepare messages for OpenAI
-      const messages = chatHistory.map(msg => ({
-        role: msg.role as any,
-        content: msg.content
-      }));
-      
-      // Add system message for construction domain expertise
-      messages.unshift({
-        role: "system",
-        content: `You are an AI assistant for Housy, a construction and real estate management platform in Tunisia. 
+      // Prepare system message for construction domain expertise
+      const systemMessage = `Tu es un assistant spécialisé pour Housy, une plateforme de gestion immobilière et de construction en Tunisie. 
         
-You have access to real data from the Tunisian real estate market with 109,336 property listings and construction materials database with 46 items including prices in Tunisian Dinar (TND).
+Tu as accès aux données réelles du marché immobilier tunisien avec 109 336 annonces immobilières et une base de données de matériaux de construction avec 46 articles incluant les prix en Dinar Tunisien (TND).
 
-Your expertise includes:
-1. Construction material costs and estimation in Tunisia
-2. Real estate market trends across different Tunisian regions
-3. Construction techniques and best practices for the Tunisian climate and regulations
-4. Project management for construction projects in Tunisia
-5. Investment analysis for Tunisian real estate
+Ton expertise inclut:
+1. Les coûts des matériaux de construction et l'estimation en Tunisie
+2. Les tendances du marché immobilier dans différentes régions tunisiennes
+3. Les techniques de construction et les meilleures pratiques pour le climat et les réglementations tunisiennes
+4. La gestion de projets de construction en Tunisie
+5. L'analyse d'investissement immobilier tunisien
 
-Use concrete examples and specific data whenever possible. All prices should be in TND (Tunisian Dinar).
-When discussing construction materials, reference actual suppliers like Sotumetal, Ciments d'Enfidha, Ciments de Bizerte, etc.
-For locations, focus on Tunisian cities including Tunis, Sousse, Sfax, and others from our data.
+Utilise des exemples concrets et des données spécifiques chaque fois que possible. Tous les prix doivent être en TND (Dinar Tunisien).
+Lorsque tu parles de matériaux de construction, fais référence aux fournisseurs réels comme Sotumetal, Ciments d'Enfidha, Ciments de Bizerte, etc.
+Pour les emplacements, concentre-toi sur les villes tunisiennes, notamment Tunis, Sousse, Sfax et d'autres villes de nos données.
 
-Be professional but friendly in your responses and format information clearly with appropriate formatting.`
-      });
+Sois professionnel mais amical dans tes réponses et formate les informations clairement avec une mise en forme appropriée.`;
       
-      // Call OpenAI API
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: messages,
-        temperature: 0.7,
-        max_tokens: 1000
-      });
+      // Try to use the preferred model first, with fallbacks
+      let assistantResponse = "";
+      let usedProvider = "";
       
-      const assistantResponse = response.choices[0].message.content || "Je suis désolé, je n'ai pas pu traiter votre demande.";
+      try {
+        // First attempt with preferred provider
+        if (preferredModel === "openai" || preferredModel === "gpt") {
+          // Prepare messages for OpenAI
+          const messages = chatHistory.map(msg => ({
+            role: msg.role as any,
+            content: msg.content
+          }));
+          
+          messages.unshift({
+            role: "system",
+            content: systemMessage
+          });
+          
+          // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+          const response = await openai.chat.completions.create({
+            model: "gpt-4o",
+            messages: messages,
+            temperature: 0.7,
+            max_tokens: 1000
+          });
+          
+          assistantResponse = response.choices[0].message.content || "";
+          usedProvider = "openai";
+        } 
+        else if (preferredModel === "claude" || preferredModel === "anthropic") {
+          // Use Claude API
+          assistantResponse = await this.processChatWithClaude(chatHistory, systemMessage);
+          usedProvider = "anthropic";
+        }
+        else if (preferredModel === "ollama") {
+          // Use Ollama API for local processing
+          assistantResponse = await this.processChatWithOllama(chatHistory, systemMessage);
+          usedProvider = "ollama";
+        } 
+        else {
+          // Default to OpenAI if model not specified
+          throw new Error("Model not specified, try fallback");
+        }
+      } catch (error) {
+        console.log("Primary model failed, trying fallback...", error);
+        
+        // Try Anthropic as the first fallback
+        try {
+          assistantResponse = await this.processChatWithClaude(chatHistory, systemMessage);
+          usedProvider = "anthropic (fallback)";
+        } catch (claudeError) {
+          console.log("Claude fallback failed, trying Ollama...", claudeError);
+          
+          // Try Ollama as the second fallback
+          try {
+            assistantResponse = await this.processChatWithOllama(chatHistory, systemMessage);
+            usedProvider = "ollama (fallback)";
+          } catch (ollamaError) {
+            console.error("All providers failed:", ollamaError);
+            assistantResponse = "Désolé, je rencontre actuellement des difficultés techniques. Tous nos modèles d'IA sont momentanément indisponibles. Veuillez réessayer plus tard.";
+            usedProvider = "none (all failed)";
+          }
+        }
+      }
+      
+      // If we still don't have a response, provide a default
+      if (!assistantResponse) {
+        assistantResponse = "Je suis désolé, je n'ai pas pu traiter votre demande en utilisant le modèle demandé. Veuillez réessayer plus tard ou essayer un autre modèle.";
+      }
+      
+      // Add a note about which provider was used if it was a fallback
+      if (usedProvider.includes("fallback")) {
+        assistantResponse = `[Utilisation du modèle de secours: ${usedProvider}]\n\n` + assistantResponse;
+      }
       
       // Save assistant response
       const assistantMessage: InsertChatMessage = {
@@ -122,6 +177,61 @@ Be professional but friendly in your responses and format information clearly wi
       return assistantResponse;
     } catch (error) {
       console.error("Error processing chat message:", error);
+      throw error;
+    }
+  }
+  
+  // Process chat with Claude (Anthropic)
+  private async processChatWithClaude(chatHistory: any[], systemMessage: string): Promise<string> {
+    // Convert chat history to Anthropic format
+    const messages = chatHistory.map(msg => ({
+      role: msg.role,
+      content: msg.content
+    }));
+    
+    // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
+    const response = await anthropic.messages.create({
+      model: "claude-3-7-sonnet-20250219",
+      system: systemMessage,
+      max_tokens: 1000,
+      messages
+    });
+    
+    // Extract text from response
+    let responseText = "";
+    if (response.content && response.content.length > 0) {
+      const firstContent = response.content[0];
+      if (typeof firstContent === 'object' && 'text' in firstContent) {
+        responseText = firstContent.text;
+      }
+    }
+    
+    return responseText || "Je suis désolé, je n'ai pas pu générer une réponse.";
+  }
+  
+  // Process chat with Ollama (local model)
+  private async processChatWithOllama(chatHistory: any[], systemMessage: string): Promise<string> {
+    try {
+      // Convert chat history to a formatted prompt for Ollama
+      let prompt = "Contexte du système:\n" + systemMessage + "\n\nHistorique de conversation:\n";
+      
+      chatHistory.forEach(msg => {
+        const role = msg.role === "user" ? "Utilisateur" : "Assistant";
+        prompt += `${role}: ${msg.content}\n\n`;
+      });
+      
+      // Add the final prompt
+      prompt += "Assistant: ";
+      
+      // Call Ollama API
+      const response = await callOllamaApi(prompt, "llama2", {
+        system: "Tu es un assistant spécialisé dans l'immobilier et la construction en Tunisie.",
+        temperature: 0.7
+      });
+      
+      return response || "Je suis désolé, je n'ai pas pu générer une réponse.";
+    } catch (error) {
+      console.error("Error with Ollama:", error);
       throw error;
     }
   }

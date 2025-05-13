@@ -28,13 +28,15 @@ export interface AIAnalysisResponse {
 export async function sendChatMessage(
   message: string,
   sessionId: string,
+  model: string = 'openai',
   userId?: number
 ): Promise<{response: string; sessionId: string}> {
   try {
     const response = await apiRequest('POST', '/api/ai/chat', {
       message,
       sessionId,
-      userId
+      userId,
+      model
     });
     
     return await response.json();

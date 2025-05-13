@@ -1,0 +1,28 @@
+[vite] connecting...
+[vite] connected.
+[vite] hot updated: /src/components/chatbot/ChatMessage.tsx
+[vite] hot updated: /src/index.css?v=FAqTQxl0-Hf_oy_8DrJ5x
+[vite] hot updated: /src/components/chatbot/ChatMessage.tsx
+[vite] hot updated: /src/index.css?v=FAqTQxl0-Hf_oy_8DrJ5x
+[vite] hot updated: /src/components/chatbot/ChatInterface.tsx
+[vite] hot updated: /src/index.css?v=FAqTQxl0-Hf_oy_8DrJ5x
+[vite] hot updated: /src/components/chatbot/AIModelSelector.tsx
+[vite] hot updated: /src/index.css?v=FAqTQxl0-Hf_oy_8DrJ5x
+Error sending chat message: 
+Error {}
+message: "500: {"message":"Error processing chat message","error":"429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."}"
+stack: "Error: 500: {"message":"Error processing chat message","error":"429 You exceeded your current quota, please check your plan and billing details. For more information on this error, read the docs: https://platform.openai.com/docs/guides/error-codes/api-errors."}↵ at throwIfResNotOk (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/src/lib/queryClient.ts:5:11)↵ at async apiRequest (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/src/lib/queryClient.ts:15:3)↵ at async sendChatMessage (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/src/lib/ai-service.ts:4:22)"
+get stack: ƒ ()
+set stack: ƒ ()
+length: 1
+name: ""
+[[Prototype]]: ƒ ()
+[[Prototype]]: Object
+
+at t.value (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at new t (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
+at t.value (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
+at https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400
+Error sending message: 
+Error {}
+

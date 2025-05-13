@@ -72,7 +72,8 @@ const ChatInterface = ({
   // Chat message mutation
   const sendMessage = useMutation({
     mutationFn: async (content: string) => {
-      return sendChatMessage(content, sessionId);
+      // Pass the selected AI model to the API
+      return sendChatMessage(content, sessionId, aiModel);
     },
     onSuccess: (data) => {
       // Message was sent and response received

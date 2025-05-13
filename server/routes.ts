@@ -557,7 +557,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ==== AI Integration Routes ====
   app.post("/api/ai/chat", async (req, res) => {
     try {
-      const { message, userId } = req.body;
+      const { message, userId, model } = req.body;
       
       if (!message) {
         return res.status(400).json({ message: "Message content is required" });
@@ -569,7 +569,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const response = await aiService.processChatMessage(
         sessionId,
         userId || null,
-        message
+        message,
+        model || "openai" // Default to OpenAI if no model specified
       );
       
       res.json({
