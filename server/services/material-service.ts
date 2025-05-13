@@ -57,20 +57,39 @@ export class MaterialService {
           continue; // Skip incomplete records
         }
         
+        // Extract material ID and ensure it's a valid number
+        let materialId;
+        try {
+          materialId = parseInt(record.id.replace(/mat_/gi, ''), 16);
+          if (isNaN(materialId)) {
+            console.warn(`Skipping record with invalid ID: ${record.id}`);
+            continue;
+          }
+        } catch (err) {
+          console.warn(`Error parsing material ID: ${record.id}`, err);
+          continue;
+        }
+        
         // Check if material already exists
-        const materialId = parseInt(record.id.replace('mat_', ''), 10);
         const existingMaterial = await storage.getMaterial(materialId);
         
+        // Validate numeric values
+        const price = parseFloat(record.price);
+        if (isNaN(price)) {
+          console.warn(`Skipping record with invalid price: ${record.id}`);
+          continue;
+        }
+        
+        // Prepare material data
         const materialData: InsertMaterial = {
           name: record.name.trim(),
           category: record.category.trim(),
           unit: record.unit.trim(),
-          price: parseFloat(record.price),
+          price: price,
           priceCurrency: record.price_currency?.trim() || 'TND',
-          supplier: record.supplier || null,
-          brand: record.brand || null,
-          description: record.description || null,
-          lastUpdated: new Date()
+          supplier: record.supplier || undefined,
+          brand: record.brand || undefined,
+          description: record.description || undefined
         };
         
         let material: Material;
