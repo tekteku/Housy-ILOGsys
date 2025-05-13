@@ -292,14 +292,20 @@ class AiService {
       
       let result: any;
       try {
-        if (response.content[0].type === 'text') {
-          result = JSON.parse(response.content[0].text);
-        } else {
-          throw new Error("Unexpected response format");
-        }
-      } catch (parseError) {
-        console.error("Error parsing Claude response as JSON:", parseError);
-        result = { error: "Failed to parse response", message: parseError.message };
+        // Safely extract the text content from the response
+        const responseText = typeof response.content[0] === 'object' && 
+                            'text' in response.content[0] ? 
+                            response.content[0].text : 
+                            JSON.stringify(response.content);
+                            
+        result = JSON.parse(responseText);
+      } catch (error: any) {
+        console.error("Error parsing Claude response as JSON:", error);
+        result = { 
+          error: "Failed to parse response",
+          message: error.message || "Unknown parsing error",
+          rawContent: JSON.stringify(response.content) 
+        };
       }
       
       // Save analysis to database
