@@ -1,0 +1,2 @@
+This is a placeholder for an image file. 
+In a real application, you would place actual image files (.jpg, .png, etc.) in this directory.

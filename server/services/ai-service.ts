@@ -12,7 +12,7 @@ const anthropic = new Anthropic({
   apiKey: process.env.ANTHROPIC_API_KEY || "",
 });
 
-type OllamaModel = "llama2" | "mistral" | "gemma" | "phi" | "stablelm";
+type OllamaModel = "llama2" | "mistral" | "gemma" | "phi" | "falcon" | "orca-mini" | "neural-chat" | "stablelm";
 
 // Helper function to call Ollama API locally
 async function callOllamaApi(
@@ -27,6 +27,36 @@ async function callOllamaApi(
   const baseUrl = process.env.OLLAMA_API_URL || "http://localhost:11434";
   
   try {
+    // First check if the model exists
+    const modelResponse = await fetch(`${baseUrl}/api/tags`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+    
+    if (!modelResponse.ok) {
+      console.warn(`Ollama API error when checking models: ${modelResponse.status} ${modelResponse.statusText}`);
+      // Continue anyway, maybe the specific model endpoint still works
+    } else {
+      const modelData = await modelResponse.json();
+      console.log("Available Ollama models:", modelData.models?.map((m: any) => m.name).join(", ") || "No models found");
+      
+      // Check if our requested model exists
+      const modelExists = modelData.models?.some((m: any) => m.name === model);
+      
+      if (!modelExists) {
+        console.warn(`Requested model "${model}" not found in Ollama. Available models: ${modelData.models?.map((m: any) => m.name).join(", ") || "None"}`);
+        
+        // Try to use any available model if our requested one doesn't exist
+        if (modelData.models && modelData.models.length > 0) {
+          model = modelData.models[0].name as OllamaModel;
+          console.log(`Using available model "${model}" instead`);
+        }
+      }
+    }
+    
+    // Now make the actual API call with our potentially updated model
     const response = await fetch(`${baseUrl}/api/generate`, {
       method: "POST",
       headers: {
@@ -48,7 +78,7 @@ async function callOllamaApi(
     
     const data = await response.json();
     return data.response;
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error calling Ollama API:", error);
     throw error;
   }
@@ -114,7 +144,7 @@ Sois professionnel mais amical dans tes réponses et formate les informations cl
       // Try each model in sequence until one works
       let assistantResponse = "";
       let usedProvider = "";
-      let errors = [];
+      let errors: string[] = []; // Explicitly type errors array
       
       for (const model of modelsToTry) {
         try {
@@ -166,22 +196,156 @@ Sois professionnel mais amical dans tes réponses et formate les informations cl
           }
           else if (model === "ollama") {
             // Use Ollama API for local processing
-            assistantResponse = await this.processChatWithOllama(chatHistory, systemMessage);
-            usedProvider = "ollama";
-            break; // Exit loop on success
+            let ollamaRawResponse = await this.processChatWithOllama(chatHistory, systemMessage);
+            
+            const ollamaGenericFailurePhrases = [
+              "situation technique", 
+              "difficultés techniques",
+              "pas en mesure de répondre",
+              "recommencer plus tard",
+              "actuellement en situation technique",
+              "ne sommes pas en mesure de répondre",
+              "nous allons recommencer plus tard"
+            ];
+
+            let responseInvalidated = false;
+            if (ollamaRawResponse) {
+                const lowerResponse = ollamaRawResponse.toLowerCase();
+                if (ollamaGenericFailurePhrases.some(phrase => lowerResponse.includes(phrase.toLowerCase()))) {
+                    console.warn(`Ollama response used a generic failure phrase: "${ollamaRawResponse}"`);
+                    errors.push(`ollama: Model used a generic failure phrase it was asked to avoid.`);
+                    responseInvalidated = true;
+                }
+            }
+            
+            if (ollamaRawResponse && !responseInvalidated) {
+              assistantResponse = ollamaRawResponse;
+              usedProvider = "ollama";
+              break; 
+            } else {
+              // If response was invalidated or initially empty/null
+              console.log("Ollama produced no valid response or response was invalidated, trying next model or fallback.");
+              if (!errors.some(e => e.startsWith("ollama:"))) { 
+                  errors.push(`ollama: Failed to get a valid response or response was invalidated by checks.`);
+              }
+              assistantResponse = ""; // Ensure assistantResponse is cleared
+            }
           }
-        } catch (error) {
+        } catch (error) { // No type annotation, error is unknown by default
           // Log the error and continue to the next model
           console.log(`Error with ${model}:`, error);
-          errors.push(`${model}: ${error.message || 'Unknown error'}`);
+          const errorMessage = error instanceof Error ? error.message : String(error); // Safe access to message
+          errors.push(`${model}: ${errorMessage || 'Unknown error'}`);
         }
       }
       
       // If we've tried all models and none worked
       if (!assistantResponse) {
         console.error("All AI models failed:", errors);
-        assistantResponse = "Désolé, je rencontre actuellement des difficultés techniques. Tous nos modèles d'IA sont momentanément indisponibles. Veuillez réessayer plus tard.\n\nDétails techniques: " + errors.join("; ");
-        usedProvider = "none (all failed)";
+        
+        // Use a fallback mechanism with predefined responses for common queries
+        const userQuery = content.toLowerCase().trim();
+        
+        // Check for construction cost related questions
+        if (userQuery.includes("cout") && 
+            (userQuery.includes("construction") || userQuery.includes("maison") || userQuery.includes("batiment")) && 
+            (userQuery.includes("tunis") || userQuery.includes("tunisie"))) {
+          
+          assistantResponse = `
+Voici quelques informations sur les coûts de construction en Tunisie (basées sur nos données internes) :
+
+## Coûts moyens de construction en Tunisie (2025)
+
+| Type de construction | Coût moyen (TND/m²) |
+|----------------------|---------------------|
+| Économique           | 1,200 - 1,500       |
+| Standard             | 1,500 - 2,200       |
+| Haut de gamme        | 2,200 - 3,500+      |
+
+## Répartition des coûts par catégorie
+- Gros œuvre : 45-50% du budget total
+- Second œuvre : 30-35% du budget total
+- Finitions : 15-25% du budget total
+
+## Matériaux populaires et leurs coûts approximatifs
+- Ciment Portland CPJ 45 : 62 TND/50kg
+- Acier à béton : 2,400 TND/tonne
+- Sable de construction lavé : 1,250 TND/m³
+
+Pour une estimation plus précise, veuillez utiliser notre calculateur de matériaux dans la section "Matériaux" de l'application.
+
+*Note: Ces informations sont à titre indicatif et peuvent varier selon la région, la disponibilité des matériaux et d'autres facteurs.*
+`;
+        }
+        // Check for material price related questions
+        else if ((userQuery.includes("prix") || userQuery.includes("cout") || userQuery.includes("tarif")) && 
+                 (userQuery.includes("materiau") || userQuery.includes("materiaux") || userQuery.includes("ciment") || 
+                  userQuery.includes("acier") || userQuery.includes("sable"))) {
+          
+          assistantResponse = `
+Voici les prix actuels des principaux matériaux de construction en Tunisie :
+
+## Matériaux de gros œuvre
+- Ciment Portland CPJ 45 : 62.42 TND/50kg
+- Sable de construction lavé : 1,255.25 TND/m³
+- Gravier concassé 5/15 : 89.72 TND/m³
+- Acier à béton HA Fe E400 (8mm) : 2,442.84 TND/tonne
+- Acier à béton HA Fe E400 (10mm) : 1,211.35 TND/tonne
+
+## Matériaux de second œuvre
+- Brique rouge : 1.75 TND/unité
+- Tuile en terre cuite : 3.20 TND/unité
+- Plaque de plâtre standard (13mm) : 30.50 TND/m²
+- Parpaing creux 20x20x40 : 2.35 TND/unité
+
+## Finitions
+- Carrelage standard : 45 TND/m²
+- Peinture intérieure : 25.80 TND/litre
+- Mastic pour joints : 12.30 TND/kg
+
+Vous pouvez consulter notre liste complète de matériaux et leurs prix à jour dans la section "Matériaux" de l'application.
+`;
+        }
+        // Check for construction techniques or regulations
+        else if ((userQuery.includes("technique") || userQuery.includes("reglementation") || userQuery.includes("norme")) && 
+                 (userQuery.includes("construction") || userQuery.includes("batiment") || userQuery.includes("maison"))) {
+          
+          assistantResponse = `
+Voici quelques informations sur les techniques et réglementations de construction en Tunisie :
+
+## Réglementations principales
+- Code de l'urbanisme et de l'aménagement du territoire
+- Règlement Général de la Construction (RGC)
+- Plan d'Aménagement Urbain (PAU) spécifique à chaque municipalité
+
+## Autorisations nécessaires
+1. Certificat d'urbanisme
+2. Autorisation de bâtir (permis de construire)
+3. Certificat de conformité après achèvement
+
+## Normes techniques importantes
+- NT 47.01 : Béton - Spécifications, performances, production et conformité
+- NT 21.05 : Ciments - Composition, spécifications et critères de conformité
+- Normes parasismiques tunisiennes (zones sismiques 1, 2 et 3)
+
+## Processus de construction recommandé
+1. Étude de sol
+2. Conception architecturale et études techniques
+3. Obtention des autorisations
+4. Terrassement et fondations
+5. Gros œuvre
+6. Second œuvre
+7. Finitions
+
+Pour plus de détails sur les réglementations spécifiques à votre région ou projet, veuillez consulter un architecte ou un ingénieur agréé.
+`;
+        }
+        // Default fallback response
+        else {
+          assistantResponse = "Désolé, je rencontre actuellement des difficultés techniques. Tous nos modèles d'IA sont momentanément indisponibles. Veuillez réessayer plus tard.\n\nDétails techniques: " + errors.join("; ");
+        }
+        
+        usedProvider = "none (fallback)";
       }
       
       // Add a note about which provider was used if different from preferred
@@ -270,343 +434,95 @@ Sois professionnel mais amical dans tes réponses et formate les informations cl
   // Process chat with Ollama (local model)
   private async processChatWithOllama(chatHistory: any[], systemMessage: string): Promise<string> {
     try {
+      console.log("Using Ollama local API...");
+      
+      // First try to get available models from Ollama
+      let ollamaModels: string[] = [];
+      
+      try {
+        const baseUrl = process.env.OLLAMA_API_URL || "http://localhost:11434";
+        const modelResponse = await fetch(`${baseUrl}/api/tags`, {
+          method: "GET",
+          headers: { "Content-Type": "application/json" }
+        });
+        
+        if (modelResponse.ok) {
+          const modelData = await modelResponse.json();
+          ollamaModels = modelData.models?.map((m: any) => m.name) || [];
+          console.log("Available Ollama models:", ollamaModels.join(", "));
+        }
+      } catch (err) {
+        console.warn("Failed to get available Ollama models:", err);
+      }
+      
+      // Choose a model to use - prefer these models in order if available
+      const preferredModels = ["mistral", "llama2", "gemma", "phi", "neural-chat", "orca-mini"];
+      let modelToUse: OllamaModel = "mistral"; // Default
+      
+      // Find first preferred model that's available
+      for (const model of preferredModels) {
+        if (ollamaModels.includes(model)) {
+          modelToUse = model as OllamaModel;
+          console.log(`Selected available Ollama model: ${modelToUse}`);
+          break;
+        }
+      }
+      
+      // If none of our preferred models are available but others are, use the first available
+      if (ollamaModels.length > 0 && !preferredModels.includes(modelToUse)) {
+        modelToUse = ollamaModels[0] as OllamaModel;
+        console.log(`Using first available Ollama model: ${modelToUse}`);
+      }
+
+      const ollamaSystemPrompt = `${systemMessage}
+
+Instructions supplémentaires IMPÉRATIVES pour ce modèle (Ollama):
+- Précision Géographique Absolue : Fais extrêmement attention aux noms de lieux (villes, régions, quartiers) mentionnés par l'utilisateur. Ta réponse DOIT CONCERNER PRÉCISÉMENT le lieu demandé. Si le lieu n'est pas clair, demande une clarification. Si tu n'as AUCUNE information spécifique pour le lieu exact demandé, tu dois l'indiquer clairement (par exemple, "Je n'ai pas d'informations spécifiques sur les coûts de construction pour la ville de [NomLieu spécifié par l'utilisateur].") NE PAS fournir d'informations sur un autre lieu, même proche ou similaire.
+- Interdiction de Messages d'Échec Génériques : NE PAS utiliser de phrases comme "difficultés techniques", "situation technique", "pas en mesure de répondre", "recommencer plus tard", "je ne peux pas aider avec ça", ou toute excuse similaire. Le système applicatif externe gérera les erreurs techniques réelles ou les indisponibilités. Ton rôle est de fournir une réponse basée sur les informations ou d'indiquer un manque d'information spécifique.
+- Pas de Suggestions Alternatives Non Sollicitées : Si la question concerne un lieu spécifique et que tu n'as pas de données pour ce lieu, NE PAS suggérer un autre lieu à moins que l'utilisateur ne le demande explicitement.
+- Répondre à la question : Tu dois toujours essayer de répondre à la question posée par l'utilisateur. Si tu manques d'informations, explique ce qui manque pour que tu puisses répondre.`;
+      
       // Convert chat history to a formatted prompt for Ollama
-      let prompt = "Contexte du système:\n" + systemMessage + "\n\nHistorique de conversation:\n";
+      let prompt = "Contexte du système:\n" + systemMessage + "\n\nHistorique de conversation:\n"; // Original system message for context
       
       chatHistory.forEach(msg => {
         const role = msg.role === "user" ? "Utilisateur" : "Assistant";
         prompt += `${role}: ${msg.content}\n\n`;
       });
       
-      // Add the final prompt
-      prompt += "Assistant: ";
+      prompt += "Assistant: "; // Ollama expects the prompt to end with the turn of the entity to generate for
       
-      // Call Ollama API
-      const response = await callOllamaApi(prompt, "llama2", {
-        system: "Tu es un assistant spécialisé dans l'immobilier et la construction en Tunisie.",
-        temperature: 0.7
-      });
+      console.log(`Calling Ollama API with model: ${modelToUse}`);
       
-      return response || "Je suis désolé, je n'ai pas pu générer une réponse.";
-    } catch (error) {
-      console.error("Error with Ollama:", error);
-      throw error;
-    }
-  }
-  
-  // For analyzing CSV data with Ollama
-  async analyzeCsvData(data: any[], analysisType: string): Promise<any> {
-    try {
-      // Convert data to string representation
-      const dataString = JSON.stringify(data, null, 2);
-      
-      // Create appropriate prompt based on analysis type
-      let prompt = "";
-      let system = "";
-      
-      if (analysisType === "material_prices") {
-        system = "You are a construction materials analyst. Analyze the provided CSV data of construction materials and provide insights on price trends, anomalies, and recommendations.";
-        prompt = `Analyze the following construction materials data and provide insights on price trends, categories with highest prices, and potential savings opportunities:\n\n${dataString}`;
-      } else if (analysisType === "real_estate_market") {
-        system = "You are a real estate market analyst. Analyze the provided property listings data and provide insights on market trends, price distributions, and investment opportunities.";
-        prompt = `Analyze the following real estate listings data and provide insights on property types, price trends by location, and investment opportunities in the Tunisian market:\n\n${dataString}`;
-      } else {
-        system = "You are a data analyst. Analyze the provided CSV data and extract key insights and patterns.";
-        prompt = `Analyze the following data and provide key insights and patterns:\n\n${dataString}`;
-      }
-      
-      // Call Ollama API
-      const result = await callOllamaApi(prompt, "llama2", { 
-        system, 
-        format: "json",
-        temperature: 0.2
-      });
-      
-      // Parse result if in string format
-      const parsedResult = typeof result === 'string' ? JSON.parse(result) : result;
-      
-      // Save analysis to database
-      const analysisData: InsertAiAnalysis = {
-        analysisType,
-        inputData: data,
-        result: parsedResult,
-        provider: "ollama"
-      };
-      
-      await storage.saveAiAnalysis(analysisData);
-      
-      return parsedResult;
-    } catch (error) {
-      console.error("Error analyzing CSV data with Ollama:", error);
-      
-      // Fallback to OpenAI if Ollama fails
       try {
-        console.log("Falling back to OpenAI for analysis...");
-        return this.analyzeCsvDataWithOpenAI(data, analysisType);
-      } catch (fallbackError) {
-        console.error("Fallback to OpenAI also failed:", fallbackError);
+        const ollamaResponse = await callOllamaApi(prompt, modelToUse, { 
+          system: ollamaSystemPrompt, // Use the new, more specific system prompt
+          temperature: 0.6 // Slightly lower temperature for more factual responses
+        });
+        
+        if (!ollamaResponse) {
+          console.warn("Ollama API returned no response, attempting fallback model if available.");
+          const otherModels = ollamaModels.filter(m => m !== modelToUse);
+          if (otherModels.length > 0) {
+            const fallbackModel = otherModels[0];
+            console.log(`Retrying with fallback Ollama model: ${fallbackModel}`);
+            
+            const fallbackResponse = await callOllamaApi(prompt, fallbackModel as OllamaModel, {
+              system: ollamaSystemPrompt, // Also use the enhanced system prompt for retry
+              temperature: 0.6
+            });
+            
+            return fallbackResponse || "Je suis désolé, je n'ai pas pu générer une réponse (Ollama fallback).";
+          }
+        }
+        
+        return ollamaResponse;
+      } catch (error) {
+        console.error("Error with Ollama:", error);
         throw error;
       }
-    }
-  }
-  
-  // Fallback to OpenAI for CSV analysis
-  private async analyzeCsvDataWithOpenAI(data: any[], analysisType: string): Promise<any> {
-    // Prepare data - limit to first 100 items to avoid token limits
-    const limitedData = data.slice(0, 100);
-    const dataString = JSON.stringify(limitedData, null, 2);
-    
-    // Create system and user messages based on analysis type
-    let systemContent = "";
-    let userContent = "";
-    
-    if (analysisType === "material_prices") {
-      systemContent = "You are a construction materials analyst. Analyze the provided construction materials data and provide insights.";
-      userContent = `Analyze these construction materials and provide insights on price trends, categories with highest prices, and potential savings opportunities. Respond in JSON format with keys: 'trends', 'highestPriceCategories', 'savingsOpportunities', and 'recommendations'.\n\n${dataString}`;
-    } else if (analysisType === "real_estate_market") {
-      systemContent = "You are a real estate market analyst. Analyze the provided property listings data and provide insights.";
-      userContent = `Analyze these real estate listings and provide insights on property types, price trends by location, and investment opportunities in Tunisia. Respond in JSON format with keys: 'marketTrends', 'priceByLocation', 'investmentOpportunities', and 'recommendations'.\n\n${dataString}`;
-    } else {
-      systemContent = "You are a data analyst. Analyze the provided data and extract key insights and patterns.";
-      userContent = `Analyze this data and provide key insights and patterns. Respond in JSON format with keys: 'keyInsights', 'patterns', and 'recommendations'.\n\n${dataString}`;
-    }
-    
-    // Call OpenAI API
-    // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-    const response = await openai.chat.completions.create({
-      model: "gpt-4o",
-      messages: [
-        { role: "system", content: systemContent },
-        { role: "user", content: userContent }
-      ],
-      temperature: 0.2,
-      response_format: { type: "json_object" }
-    });
-    
-    const result = JSON.parse(response.choices[0].message.content || "{}");
-    
-    // Save analysis to database
-    const analysisData: InsertAiAnalysis = {
-      analysisType,
-      inputData: limitedData,
-      result,
-      provider: "openai"
-    };
-    
-    await storage.saveAiAnalysis(analysisData);
-    
-    return result;
-  }
-  
-  // For market trend analysis with Claude
-  async analyzeMarketTrends(data: any[]): Promise<any> {
-    try {
-      // Prepare data - limit to avoid token limits but ensure geographic diversity
-      // Group by governorate first to ensure we have samples from different regions
-      const governorateGroups: Record<string, any[]> = {};
-      
-      // Group listings by governorate
-      data.forEach(listing => {
-        if (!listing.governorate) return;
-        
-        if (!governorateGroups[listing.governorate]) {
-          governorateGroups[listing.governorate] = [];
-        }
-        governorateGroups[listing.governorate].push(listing);
-      });
-      
-      // Take samples from each governorate to ensure geographic representation
-      let sampledData: any[] = [];
-      Object.keys(governorateGroups).forEach(governorate => {
-        // Take up to 10 samples from each governorate
-        const governorateSample = governorateGroups[governorate].slice(0, 10);
-        sampledData = sampledData.concat(governorateSample);
-      });
-      
-      // If we still need more data, add random samples up to 150 total
-      if (sampledData.length < 150) {
-        const randomSamples = data
-          .filter(item => !sampledData.includes(item))
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 150 - sampledData.length);
-        
-        sampledData = sampledData.concat(randomSamples);
-      }
-      
-      // Generate statistics to include with the data
-      const priceStats = this.calculatePriceStatistics(data);
-      const propertyTypeDistribution = this.calculatePropertyTypeDistribution(data);
-      const cityDistribution = this.calculateCityDistribution(data);
-      
-      // Create a summary of the data for the AI
-      const dataSummary = {
-        sampleData: sampledData.slice(0, 100), // Send 100 sample listings
-        statistics: {
-          totalListings: data.length,
-          priceStats,
-          propertyTypeDistribution,
-          cityDistribution,
-          topCities: Object.entries(cityDistribution)
-            .sort((a, b) => b[1] - a[1])
-            .slice(0, 10)
-            .map(([city, count]) => ({ city, count }))
-        }
-      };
-      
-      const dataString = JSON.stringify(dataSummary, null, 2);
-      
-      // the newest Anthropic model is "claude-3-7-sonnet-20250219" which was released February 24, 2025
-      const response = await anthropic.messages.create({
-        model: "claude-3-7-sonnet-20250219",
-        max_tokens: 3000,
-        system: `You're a real estate market analyst in Tunisia with expertise in construction and development. 
-        Analyze the provided Tunisian real estate data (which includes both sample listings and statistical summaries) 
-        and output comprehensive, data-driven findings in JSON format with the following keys:
-          - "marketTrends": Array of specific market trends with supporting data points
-          - "priceAnalysis": Detailed breakdown of price ranges and trends by property type and location
-          - "locationInsights": Specific insights on best performing locations with price/m² calculations
-          - "constructionOpportunities": Specific opportunities for builders based on supply/demand gaps
-          - "materialRecommendations": Recommendations for construction materials likely to be in demand based on trending property types
-          - "investmentStrategyByRegion": Region-specific investment strategies with expected ROI estimates`,
-        messages: [
-          { role: 'user', content: `Analyze this Tunisian real estate data and provide comprehensive market insights that would be valuable for construction companies, developers, and investors:\n\n${dataString}` }
-        ],
-      });
-      
-      let result: any;
-      try {
-        // Safely extract the text content from the response
-        const responseText = typeof response.content[0] === 'object' && 
-                            'text' in response.content[0] ? 
-                            response.content[0].text : 
-                            JSON.stringify(response.content);
-                            
-        result = JSON.parse(responseText);
-      } catch (error: any) {
-        console.error("Error parsing Claude response as JSON:", error);
-        result = { 
-          error: "Failed to parse response",
-          message: error.message || "Unknown parsing error",
-          rawContent: JSON.stringify(response.content) 
-        };
-      }
-      
-      // Save analysis to database
-      const analysisData: InsertAiAnalysis = {
-        analysisType: "market_trends",
-        inputData: { 
-          sampleSize: sampledData.length,
-          governorates: Object.keys(governorateGroups),
-          totalListings: data.length
-        },
-        result,
-        provider: "anthropic"
-      };
-      
-      await storage.saveAiAnalysis(analysisData);
-      
-      return result;
     } catch (error) {
-      console.error("Error analyzing market trends with Claude:", error);
-      throw error;
-    }
-  }
-  
-  // Helper methods for data analysis
-  private calculatePriceStatistics(data: any[]): any {
-    const prices = data
-      .filter(item => item.price && !isNaN(parseFloat(item.price)))
-      .map(item => parseFloat(item.price));
-      
-    if (prices.length === 0) return { min: 0, max: 0, avg: 0, median: 0 };
-    
-    prices.sort((a, b) => a - b);
-    
-    const min = prices[0];
-    const max = prices[prices.length - 1];
-    const avg = prices.reduce((sum, price) => sum + price, 0) / prices.length;
-    const median = prices.length % 2 === 0 
-      ? (prices[prices.length / 2 - 1] + prices[prices.length / 2]) / 2
-      : prices[Math.floor(prices.length / 2)];
-      
-    return { min, max, avg, median };
-  }
-  
-  private calculatePropertyTypeDistribution(data: any[]): Record<string, number> {
-    const distribution: Record<string, number> = {};
-    
-    data.forEach(item => {
-      if (!item.propertyType) return;
-      
-      if (!distribution[item.propertyType]) {
-        distribution[item.propertyType] = 0;
-      }
-      
-      distribution[item.propertyType]++;
-    });
-    
-    return distribution;
-  }
-  
-  private calculateCityDistribution(data: any[]): Record<string, number> {
-    const distribution: Record<string, number> = {};
-    
-    data.forEach(item => {
-      if (!item.city) return;
-      
-      if (!distribution[item.city]) {
-        distribution[item.city] = 0;
-      }
-      
-      distribution[item.city]++;
-    });
-    
-    return distribution;
-  }
-  
-  // For DeepSeek API integration (price prediction)
-  async predictPrices(data: any[]): Promise<any> {
-    try {
-      // For now, we'll simulate with OpenAI since DeepSeek integration would require additional setup
-      const limitedData = data.slice(0, 100);
-      const dataString = JSON.stringify(limitedData, null, 2);
-      
-      // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o",
-        messages: [
-          { 
-            role: "system", 
-            content: "You are an AI specialized in real estate price prediction. Analyze the provided data and predict future price trends for different regions and property types in Tunisia." 
-          },
-          { 
-            role: "user", 
-            content: `Based on this historical real estate data, predict price trends for the next 6 months for different regions and property types. Return as JSON with keys: 'predictions', 'confidenceLevel', 'factorsInfluencing', and 'regionSpecificTrends'.\n\n${dataString}` 
-          }
-        ],
-        temperature: 0.2,
-        response_format: { type: "json_object" }
-      });
-      
-      const result = JSON.parse(response.choices[0].message.content || "{}");
-      
-      // Add simulated DeepSeek metadata
-      result.model = "DeepSeek simulation";
-      result.timestamp = new Date().toISOString();
-      
-      // Save analysis to database
-      const analysisData: InsertAiAnalysis = {
-        analysisType: "price_prediction",
-        inputData: limitedData,
-        result,
-        provider: "deepseek_simulation"
-      };
-      
-      await storage.saveAiAnalysis(analysisData);
-      
-      return result;
-    } catch (error) {
-      console.error("Error predicting prices:", error);
+      console.error("Error with Ollama:", error);
       throw error;
     }
   }

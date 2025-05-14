@@ -60,7 +60,13 @@ export class MaterialService {
         // Extract material ID and ensure it's a valid number
         let materialId;
         try {
-          materialId = parseInt(record.id.replace(/mat_/gi, ''), 16);
+          // Generate a smaller integer hash from the ID string
+          const idString = record.id.replace(/mat_/gi, '');
+          // Use only the first 8 characters if it's longer
+          const normalizedId = idString.substring(0, 8);
+          // Convert the first 8 hex characters to decimal (smaller number)
+          materialId = parseInt(normalizedId, 16) % 1000000; // Ensure it's within safe range
+          
           if (isNaN(materialId)) {
             console.warn(`Skipping record with invalid ID: ${record.id}`);
             continue;

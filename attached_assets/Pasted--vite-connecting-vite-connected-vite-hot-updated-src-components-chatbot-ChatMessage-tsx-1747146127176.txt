@@ -19,7 +19,7 @@ name: ""
 [[Prototype]]: ƒ ()
 [[Prototype]]: Object
 
-at t.value (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
+at t.value (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard..dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:17465)
 at new t (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:12630)
 at t.value (https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:32766)
 at https://9c3b3275-87fd-448d-8974-2b05094d309e-00-26ekh3tr0vzz9.picard.replit.dev/__replco/static/devtools/eruda/3.2.3/eruda.js:2:34400

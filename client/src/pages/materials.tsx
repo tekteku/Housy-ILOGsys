@@ -10,9 +10,9 @@ import { Button } from "@/components/ui/button";
 const Materials = () => {
   const [activeTab, setActiveTab] = useState("list");
   const [filters, setFilters] = useState({
-    category: "",
+    category: "all",
     search: "",
-    supplier: "",
+    supplier: "all",
     sortBy: "name",
   });
 

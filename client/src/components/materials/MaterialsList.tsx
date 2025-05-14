@@ -32,7 +32,7 @@ const MaterialsList = ({ filters }: MaterialsListProps) => {
   const { data: materials, isLoading, error } = useQuery({
     queryKey: ['/api/materials', filters.category],
     queryFn: () => {
-      const url = filters.category 
+      const url = filters.category && filters.category !== 'all' 
         ? `/api/materials?category=${filters.category}` 
         : '/api/materials';
       return fetch(url).then(res => res.json());
@@ -67,7 +67,7 @@ const MaterialsList = ({ filters }: MaterialsListProps) => {
       material.name.toLowerCase().includes(filters.search.toLowerCase()) ||
       (material.description && material.description.toLowerCase().includes(filters.search.toLowerCase()));
     
-    const matchesSupplier = !filters.supplier || 
+    const matchesSupplier = filters.supplier === 'all' || 
       material.supplier === filters.supplier;
     
     return matchesSearch && matchesSupplier;

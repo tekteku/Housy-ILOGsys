@@ -43,7 +43,7 @@ const MaterialFilters = ({ filters, onFilterChange }: MaterialFiltersProps) => {
           <SelectValue placeholder="Toutes catégories" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Toutes catégories</SelectItem>
+          <SelectItem value="all">Toutes catégories</SelectItem>
           <SelectItem value="gros_oeuvre">Gros œuvre</SelectItem>
           <SelectItem value="second_oeuvre">Second œuvre</SelectItem>
           <SelectItem value="finition">Finitions</SelectItem>
@@ -58,7 +58,7 @@ const MaterialFilters = ({ filters, onFilterChange }: MaterialFiltersProps) => {
           <SelectValue placeholder="Tous fournisseurs" />
         </SelectTrigger>
         <SelectContent>
-          <SelectItem value="">Tous fournisseurs</SelectItem>
+          <SelectItem value="all">Tous fournisseurs</SelectItem>
           {suppliers.map((supplier: string) => (
             <SelectItem key={supplier} value={supplier}>
               {supplier}

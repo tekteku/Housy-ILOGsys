@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
+import UserAvatar from "@/components/ui/user-avatar";
 
 interface Resource {
   id: number;
@@ -50,16 +51,12 @@ const ResourceItem = ({ resource }: { resource: Resource }) => {
   const getResourceIcon = () => {
     if (resource.type === "human") {
       return (
-        <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 overflow-hidden">
-          {resource.details?.avatar ? (
-            <img
-              src={resource.details.avatar}
-              alt={resource.name}
-              className="h-full w-full object-cover"
-            />
-          ) : (
-            <i className="fas fa-user"></i>
-          )}
+        <div className="overflow-hidden">
+          <UserAvatar 
+            src={resource.details?.avatar || undefined}
+            alt={resource.name}
+            size="sm"
+          />
         </div>
       );
     } else if (resource.type === "equipment") {

@@ -12,6 +12,7 @@ import { projectService } from "./services/project-service";
 import { materialService } from "./services/material-service";
 import { reportService } from "./services/report-service";
 import { aiService } from "./services/ai-service";
+import imageRoutes from "./services/image-service";
 import path from "path";
 import fs from "fs";
 import { ZodError } from "zod";
@@ -35,6 +36,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
     }
   };
+  
+  // Register image routes
+  app.use("/api/images", imageRoutes);
   
   // ==== User Routes ====
   app.get("/api/users/:id", async (req, res) => {
