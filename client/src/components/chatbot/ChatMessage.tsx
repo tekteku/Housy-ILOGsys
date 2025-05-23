@@ -61,7 +61,17 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
     const result: ParsedContent[] = [];
     
     try {
-      // Check if the content is JSON and contains chart data
+      // Check for specific JSON format starting with chartType:bar
+      if (content.startsWith('{"chartType":"bar"')) {
+        const chartData = JSON.parse(content);
+        return [{ 
+          type: 'chart', 
+          content: chartData.data || [],
+          chartType: 'bar'
+        }];
+      }
+      
+      // Check if the content is JSON and contains chart data (legacy format)
       if (content.includes('"chartData"') || content.includes('"type":"chart"')) {
         const parsedJson = JSON.parse(content);
         
@@ -191,22 +201,33 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
         <ResponsiveContainer width="100%" height="90%">
           <BarChart
             data={chartData}
-            margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+            margin={{ top: 5, right: 20, left: -20, bottom: 5 }}
           >
-            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-            <XAxis dataKey="name" tick={{fontSize: 12}} />
-            <YAxis tick={{fontSize: 12}} />
+            <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" />
+            <XAxis 
+              dataKey="name" 
+              fontSize={10} 
+              tickLine={false} 
+              axisLine={false} 
+            />
+            <YAxis 
+              fontSize={10} 
+              tickLine={false} 
+              axisLine={false} 
+            />
             <Tooltip 
-              contentStyle={{
+              contentStyle={{ 
+                fontSize: '10px', 
+                padding: '2px 8px',
+                backgroundColor: "white",
                 borderRadius: "8px",
                 border: "none",
-                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
-                padding: "8px 12px",
-                fontSize: "12px"
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)"
               }}
+              cursor={{fill: 'rgba(59, 130, 246, 0.05)'}}
             />
-            <Legend wrapperStyle={{fontSize: "12px", paddingTop: "8px"}} />
-            <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />
+            <Legend wrapperStyle={{fontSize: "10px", paddingTop: "8px"}} />
+            <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
