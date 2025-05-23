@@ -1,4 +1,3 @@
-// filepath: c:\\Users\\TaherCh\\Desktop\\Essay\\HousyTunisia\\HousyTunisia\\client\\src\\pages\\projects.tsx
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
@@ -51,39 +50,34 @@ const Projects = () => {
   }, []);
 
   // Fetch projects data
-  const { data: projects = [], isLoading, error } = useQuery<Project[]>({
+  const { data: projects, isLoading, error } = useQuery({
     queryKey: ['/api/projects'],
   });
 
   // Filter projects based on search term and status filter
   const filteredProjects = projects
-    .filter((project: Project) =>
-      project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (project.clientName && project.clientName.toLowerCase().includes(searchTerm.toLowerCase())) ||
-      (project.location && project.location.toLowerCase().includes(searchTerm.toLowerCase()))
-    )
-    .filter((project: Project) => {
-      if (filter === "all") return true;
-      return project.status === filter;
-    });
+    ? projects
+        .filter((project: Project) =>
+          project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (project.clientName && project.clientName.toLowerCase().includes(searchTerm.toLowerCase())) ||
+          (project.location && project.location.toLowerCase().includes(searchTerm.toLowerCase()))
+        )
+        .filter((project: Project) => {
+          if (filter === "all") return true;
+          return project.status === filter;
+        })
+    : [];
+
   // Sort projects
-  const sortedProjects = [...filteredProjects].sort((a, b) => {
-    const aValue = a[sortConfig.key];
-    const bValue = b[sortConfig.key];
-    
-    // Handle undefined values
-    if (aValue === undefined && bValue === undefined) return 0;
-    if (aValue === undefined) return sortConfig.direction === 'asc' ? 1 : -1;
-    if (bValue === undefined) return sortConfig.direction === 'asc' ? -1 : 1;
-    
-    if (aValue < bValue) {
+  const sortedProjects = filteredProjects ? [...filteredProjects].sort((a, b) => {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
       return sortConfig.direction === 'asc' ? -1 : 1;
     }
-    if (aValue > bValue) {
+    if (a[sortConfig.key] > b[sortConfig.key]) {
       return sortConfig.direction === 'asc' ? 1 : -1;
     }
     return 0;
-  });
+  }) : [];
     
   // Handle sort
   const handleSort = (key: keyof Project, direction: 'asc' | 'desc') => {
@@ -234,9 +228,9 @@ const Projects = () => {
           <SearchInput
             placeholder="Rechercher un projet..."
             value={searchTerm}
-            onChange={(value: string) => setSearchTerm(value)}
+            onChange={(value) => setSearchTerm(value)}
             suggestions={["Projets résidentiels", "Projets commerciaux", "Projets en retard"]}
-            onSuggestionClick={(suggestion: string) => setSearchTerm(suggestion)}
+            onSuggestionClick={(suggestion) => setSearchTerm(suggestion)}
           />
         </div>
         <div className="flex flex-wrap gap-2">

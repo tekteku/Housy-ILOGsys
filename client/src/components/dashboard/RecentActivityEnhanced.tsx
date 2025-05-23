@@ -1,17 +1,7 @@
-import { useQuery } from "@tanstconst RecentActivity = () => {
-  const { data: activities, isLoading, error, isError } = useQuery({
-    queryKey: ['/api/activities'],
-  });
-  
-  const { showNotification } = useNotification();react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
-import { ErrorAlert } from "@/components/ui/error-alert";
-import { EmptyState } from "@/components/ui/empty-state";
-import { LoadingIndicator } from "@/components/ui/loading-indicator";
-import { useNotification } from "@/hooks/use-notification";
 import { ErrorAlert } from "@/components/ui/error-alert";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
@@ -35,12 +25,12 @@ interface Activity {
   };
 }
 
-const RecentActivity = () => {
+const RecentActivityEnhanced = () => {
   const { data: activities, isLoading, isError } = useQuery({
     queryKey: ['/api/activities'],
   });
 
-  const { addNotification } = useNotification();
+  const { showNotification } = useNotification();
 
   // Helper function to get icon based on activity type
   const getActivityIcon = (activity: Activity) => {
@@ -201,54 +191,74 @@ const RecentActivity = () => {
       <div className="p-5 border-b border-neutral-200 flex justify-between items-center">
         <h2 className="text-lg font-medium text-neutral-900">Activités récentes</h2>
         <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-          {isLoading ? "..." : activities?.length || sampleActivities.length} activité(s)
+          {isLoading ? "..." : (Array.isArray(activities) ? activities.length : sampleActivities.length)} activité(s)
         </span>
       </div>
       
       <div className="p-3">
-        {isError ? (
-          <ErrorAlert className="mb-4">
-            Une erreur s'est produite lors du chargement des activités. Veuillez réessayer plus tard.
-          </ErrorAlert>
-        ) : (
-          <div className="space-y-1">
-            {isLoading ? (
-              [...Array(5)].map((_, index) => (
-                <div key={index} className="p-2 rounded-lg flex items-start space-x-3">
-                  <Skeleton className="w-7 h-7 rounded-full flex-shrink-0" />
-                  <div className="w-full">
-                    <Skeleton className="h-4 w-full mb-1" />
-                    <Skeleton className="h-3 w-2/3" />
+        {isError && (
+          <ErrorAlert
+            title="Erreur de chargement"
+            description="Impossible de charger les activités récentes. Veuillez réessayer plus tard."
+            severity="error"
+            action={{ 
+              label: "Réessayer",
+              onClick: () => window.location.reload()
+            }}
+          />
+        )}
+        
+        <div className="space-y-1">
+          {isLoading ? (
+            <LoadingIndicator type="skeleton" count={5} height="h-12" />
+          ) : Array.isArray(activities) && activities.length > 0 ? (
+            activities.map((activity: Activity) => {
+              const { bg, icon } = getActivityIcon(activity);
+              
+              return (
+                <div key={activity.id} className="p-2 hover:bg-neutral-50 rounded-lg flex items-start space-x-3">
+                  <div className={`w-7 h-7 rounded-full ${bg} flex items-center justify-center flex-shrink-0`}>
+                    <i className={`${icon} text-xs`}></i>
+                  </div>
+                  <div>
+                    <p className="text-sm text-neutral-800">
+                      {getActivityMessage(activity)}
+                    </p>
+                    <p className="text-xs text-neutral-500">
+                      {getTimeString(activity.timestamp)} par {getUserName(activity)}
+                    </p>
                   </div>
                 </div>
-              ))
-            ) : activities?.length > 0 ? (
-              activities.map((activity: Activity) => {
-                const { bg, icon } = getActivityIcon(activity);
-                
-                return (
-                  <div key={activity.id} className="p-2 hover:bg-neutral-50 rounded-lg flex items-start space-x-3">
-                    <div className={`w-7 h-7 rounded-full ${bg} flex items-center justify-center flex-shrink-0`}>
-                      <i className={`${icon} text-xs`}></i>
-                    </div>
-                    <div>
-                      <p className="text-sm text-neutral-800">
-                        {getActivityMessage(activity)}
-                      </p>
-                      <p className="text-xs text-neutral-500">
-                        {getTimeString(activity.timestamp)} par {getUserName(activity)}
-                      </p>
-                    </div>
+              );
+            })
+          ) : Array.isArray(activities) && activities.length === 0 ? (
+            <EmptyState
+              title="Aucune activité"
+              description="Il n'y a pas d'activités récentes à afficher pour le moment."
+              icon="fa-history"
+            />
+          ) : (
+            sampleActivities.map((activity) => {
+              const { bg, icon } = getActivityIcon(activity);
+              
+              return (
+                <div key={activity.id} className="p-2 hover:bg-neutral-50 rounded-lg flex items-start space-x-3">
+                  <div className={`w-7 h-7 rounded-full ${bg} flex items-center justify-center flex-shrink-0`}>
+                    <i className={`${icon} text-xs`}></i>
                   </div>
-                );
-              })
-            ) : (
-              <EmptyState>
-                Aucune activité récente à afficher.
-              </EmptyState>
-            )}
-          </div>
-        )}
+                  <div>
+                    <p className="text-sm text-neutral-800">
+                      {getActivityMessage(activity)}
+                    </p>
+                    <p className="text-xs text-neutral-500">
+                      {getTimeString(activity.timestamp)} par {getUserName(activity)}
+                    </p>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
         
         {/* View All Button */}
         <div className="mt-3 pt-3 border-t border-neutral-200 flex justify-center">
@@ -261,4 +271,4 @@ const RecentActivity = () => {
   );
 };
 
-export default RecentActivity;
+export default RecentActivityEnhanced;

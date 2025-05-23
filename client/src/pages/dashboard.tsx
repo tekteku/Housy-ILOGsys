@@ -4,7 +4,7 @@ import GanttChart from "@/components/dashboard/GanttChart";
 import MaterialCalculator from "@/components/dashboard/MaterialCalculator";
 import MarketTrends from "@/components/dashboard/MarketTrends";
 import ProjectResources from "@/components/dashboard/ProjectResources";
-import RecentActivity from "@/components/dashboard/RecentActivity";
+import RecentActivityEnhanced from "@/components/dashboard/RecentActivityEnhanced";
 import RealEstateAnalysis from "@/components/dashboard/RealEstateAnalysis";
 import StatCardsSection from "@/components/dashboard/StatCardsSection";
 import ChartCardsSection from "@/components/dashboard/ChartCardsSection";
@@ -68,7 +68,7 @@ const Dashboard = () => {
 
       {/* Project Resources & Real Estate Analysis Section */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <RecentActivity />
+        <RecentActivityEnhanced />
         <ProjectResources />
         <RealEstateAnalysis />
       </div>

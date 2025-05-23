@@ -66,20 +66,13 @@ const Projects = () => {
       if (filter === "all") return true;
       return project.status === filter;
     });
+
   // Sort projects
   const sortedProjects = [...filteredProjects].sort((a, b) => {
-    const aValue = a[sortConfig.key];
-    const bValue = b[sortConfig.key];
-    
-    // Handle undefined values
-    if (aValue === undefined && bValue === undefined) return 0;
-    if (aValue === undefined) return sortConfig.direction === 'asc' ? 1 : -1;
-    if (bValue === undefined) return sortConfig.direction === 'asc' ? -1 : 1;
-    
-    if (aValue < bValue) {
+    if (a[sortConfig.key] < b[sortConfig.key]) {
       return sortConfig.direction === 'asc' ? -1 : 1;
     }
-    if (aValue > bValue) {
+    if (a[sortConfig.key] > b[sortConfig.key]) {
       return sortConfig.direction === 'asc' ? 1 : -1;
     }
     return 0;

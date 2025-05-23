@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn, formatDate, getDateDiff, isOverdue } from "@/lib/utils";
+import { LoadingIndicator } from "@/components/ui/loading-indicator"; 
+import { EmptyState } from "@/components/ui/empty-state"; 
 
 type TimeScale = "day" | "week" | "month";
 
@@ -155,12 +157,14 @@ const GanttChart = () => {
       <Card className="shadow-sm border border-neutral-200">
         <CardContent className="p-5">
           <div className="flex items-center justify-between mb-6">
-            <Skeleton className="h-6 w-40" />
-            <Skeleton className="h-8 w-60" />
+            <h2 className="text-lg font-medium text-neutral-900">Chronologie des projets</h2>
           </div>
-          <div className="space-y-4">
-            <Skeleton className="h-64 w-full" />
-          </div>
+          <LoadingIndicator 
+            type="skeleton" 
+            text="Chargement des données des projets..." 
+            count={5} 
+            height="h-12" 
+          />
         </CardContent>
       </Card>
     );
@@ -252,11 +256,15 @@ const GanttChart = () => {
                 );
               })
             ) : (
-              <div className="flex items-center justify-center py-8">
-                <p className="text-neutral-500 text-sm">
-                  Aucune tâche à afficher. Créez des tâches pour vos projets pour les voir ici.
-                </p>
-              </div>
+              <EmptyState 
+                title="Aucune tâche à afficher"
+                description="Créez des tâches pour vos projets pour les voir dans le diagramme de Gantt"
+                icon="fa-tasks"
+                action={{
+                  label: "Créer une tâche",
+                  onClick: () => window.location.href = '/projects'
+                }}
+              />
             )}
           </div>
         </div>
