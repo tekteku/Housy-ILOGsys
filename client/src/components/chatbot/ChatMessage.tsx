@@ -2,6 +2,16 @@ import { useState } from "react";
 import { formatDate } from "@/lib/utils";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
+import { 
+  BarChart, 
+  Bar, 
+  XAxis, 
+  YAxis, 
+  CartesianGrid, 
+  Tooltip, 
+  Legend, 
+  ResponsiveContainer 
+} from 'recharts';
 
 interface ChatMessageProps {
   message: {
@@ -9,8 +19,22 @@ interface ChatMessageProps {
     role: "user" | "assistant";
     content: string;
     timestamp?: string;
+    suggestions?: string[]; // Ajouter les suggestions optionnelles
   };
   aiModel: string;
+}
+
+// Define types for chart data
+interface ChartData {
+  name: string;
+  value: number;
+  fill?: string;
+}
+
+interface ParsedContent {
+  type: 'text' | 'chart';
+  content: string | ChartData[];
+  chartType?: 'bar' | 'line' | 'pie';
 }
 
 const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
@@ -23,6 +47,52 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
     navigator.clipboard.writeText(message.content);
     setIsCopied(true);
     setTimeout(() => setIsCopied(false), 2000);
+  };
+  
+  // Handle suggestion click
+  const handleSuggestionClick = (suggestion: string) => {
+    // Envoyer un événement pour remplir l'input ou envoyer directement
+    const event = new CustomEvent('suggest-question', { detail: suggestion });
+    document.dispatchEvent(event);
+  };
+  
+  // Parse content to detect charts and other rich content
+  const parseContent = (content: string): ParsedContent[] => {
+    const result: ParsedContent[] = [];
+    
+    try {
+      // Check if the content is JSON and contains chart data
+      if (content.includes('"chartData"') || content.includes('"type":"chart"')) {
+        const parsedJson = JSON.parse(content);
+        
+        if (parsedJson.type === 'chart' && Array.isArray(parsedJson.chartData)) {
+          return [{ 
+            type: 'chart', 
+            content: parsedJson.chartData,
+            chartType: parsedJson.chartType || 'bar'
+          }];
+        }
+        
+        // Check if it's mixed content with both text and charts
+        if (Array.isArray(parsedJson)) {
+          return parsedJson.map((item: any) => {
+            if (item.type === 'chart' && Array.isArray(item.chartData)) {
+              return {
+                type: 'chart',
+                content: item.chartData,
+                chartType: item.chartType || 'bar'
+              };
+            }
+            return { type: 'text', content: item.content || '' };
+          });
+        }
+      }
+    } catch (error) {
+      // If parsing fails, it's plain text - no need to log error
+    }
+    
+    // Default case: treat as regular text
+    return [{ type: 'text', content }];
   };
 
   // Format code blocks in the message
@@ -110,6 +180,39 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
     });
   };
 
+  // Render chart component
+  const renderChart = (chartData: ChartData[], chartType: string = 'bar') => {
+    if (!chartData || chartData.length === 0) return null;
+    
+    // Currently only supporting bar charts
+    return (
+      <div className="w-full h-72 my-5 bg-white rounded-xl p-5 shadow-sm border border-neutral-100">
+        <h4 className="text-sm font-semibold text-neutral-800 mb-3">Comparaison des données</h4>
+        <ResponsiveContainer width="100%" height="90%">
+          <BarChart
+            data={chartData}
+            margin={{ top: 5, right: 20, left: 0, bottom: 5 }}
+          >
+            <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+            <XAxis dataKey="name" tick={{fontSize: 12}} />
+            <YAxis tick={{fontSize: 12}} />
+            <Tooltip 
+              contentStyle={{
+                borderRadius: "8px",
+                border: "none",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+                padding: "8px 12px",
+                fontSize: "12px"
+              }}
+            />
+            <Legend wrapperStyle={{fontSize: "12px", paddingTop: "8px"}} />
+            <Bar dataKey="value" fill="#6366f1" radius={[4, 4, 0, 0]} />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+    );
+  };
+
   // Get appropriate AI model icon
   const getAIModelIcon = () => {
     switch (aiModel) {
@@ -127,20 +230,20 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
   };
 
   return (
-    <div className={cn("flex mb-4 group", isUser ? "justify-end" : "justify-start")}>
+    <div className={cn("flex mb-6 group", isUser ? "justify-end" : "justify-start")}>
       {!isUser && (
-        <div className="w-8 h-8 rounded-full bg-primary-100 flex items-center justify-center mr-2 mt-1 flex-shrink-0 border border-primary-200">
+        <div className="w-9 h-9 rounded-full bg-primary-50 flex items-center justify-center mr-3 mt-1 flex-shrink-0 border border-primary-100 shadow-sm">
           {getAIModelIcon()}
         </div>
       )}
       
       <div
         className={cn(
-          "max-w-3xl rounded-lg p-4 shadow-sm transition-all",
+          "max-w-3xl rounded-2xl shadow-sm transition-all",
           isExpanded ? "w-full" : "w-64 cursor-pointer",
           isUser
-            ? "bg-primary-600 text-white border border-primary-700"
-            : "bg-white text-neutral-800 border border-neutral-200"
+            ? "bg-primary-600 text-white border border-primary-700 p-4"
+            : "bg-white text-neutral-800 border border-neutral-100 p-5"
         )}
         onClick={() => !isExpanded && setIsExpanded(true)}
       >
@@ -148,17 +251,17 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
           <div className="flex items-center gap-2">
             {isUser ? (
               <>
-                <span className="font-medium text-sm">Vous</span>
-                <span className="text-xs opacity-70">
+                <span className="font-semibold text-sm">Vous</span>
+                <span className="text-xs opacity-80">
                   {message.timestamp && formatDate(message.timestamp)}
                 </span>
               </>
             ) : (
               <>
-                <span className="font-medium text-sm flex items-center">
+                <span className="font-semibold text-sm flex items-center">
                   Assistant Housy
                 </span>
-                <span className="text-xs opacity-70">
+                <span className="text-xs opacity-80">
                   {message.timestamp && formatDate(message.timestamp)}
                 </span>
               </>
@@ -166,11 +269,11 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
           </div>
           
           {/* Message actions */}
-          <div className={cn("flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity", 
-                           isUser ? "text-white" : "text-neutral-500")}>
+          <div className={cn("flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity", 
+                           isUser ? "text-white/80 hover:text-white" : "text-neutral-400 hover:text-neutral-700")}>
             {!isUser && (
               <button 
-                className="p-1 rounded hover:bg-neutral-100 text-xs" 
+                className="p-1.5 rounded-full hover:bg-neutral-100 text-xs transition-colors" 
                 onClick={copyMessage}
                 title={isCopied ? "Copié!" : "Copier le message"}
               >
@@ -178,7 +281,7 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
               </button>
             )}
             <button 
-              className="p-1 rounded hover:bg-neutral-100 text-xs" 
+              className="p-1.5 rounded-full hover:bg-neutral-100 text-xs transition-colors" 
               onClick={() => setIsExpanded(!isExpanded)}
               title={isExpanded ? "Réduire" : "Agrandir"}
             >
@@ -188,8 +291,35 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
         </div>
         
         {isExpanded && (
-          <div className={cn("space-y-2 prose prose-sm", 
-                           isUser ? "prose-invert" : "")}>{formatContent(message.content)}</div>
+          <div className={cn("space-y-3 prose prose-sm leading-relaxed", 
+                           isUser ? "prose-invert" : "")}>
+            {parseContent(message.content).map((content, idx) => (
+              <div key={idx}>
+                {content.type === 'text' ? (
+                  formatContent(content.content as string)
+                ) : (
+                  renderChart(content.content as ChartData[], content.chartType)
+                )}
+              </div>
+            ))}
+            
+            {/* Affichage des suggestions sous le message de l'assistant */}
+            {!isUser && message.suggestions && message.suggestions.length > 0 && (
+              <div className="mt-4 pt-4 border-t border-neutral-200/60 flex flex-wrap gap-2">
+                {message.suggestions.map((suggestion, index) => (
+                  <Button
+                    key={index}
+                    variant="outline"
+                    size="sm"
+                    className="text-xs h-auto py-1.5 px-3 bg-white hover:bg-primary-50 border-primary-200/70 text-primary-700 rounded-full font-medium shadow-sm transition-colors"
+                    onClick={() => handleSuggestionClick(suggestion)}
+                  >
+                    {suggestion}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
         )}
         
         {!isExpanded && (
@@ -201,7 +331,7 @@ const ChatMessage = ({ message, aiModel }: ChatMessageProps) => {
       </div>
       
       {isUser && (
-        <div className="w-8 h-8 rounded-full bg-primary-600 flex items-center justify-center text-white ml-2 mt-1 flex-shrink-0">
+        <div className="w-9 h-9 rounded-full bg-primary-600 flex items-center justify-center text-white ml-3 mt-1 flex-shrink-0 shadow-sm">
           <i className="fas fa-user text-sm"></i>
         </div>
       )}

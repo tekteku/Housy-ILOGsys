@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import MobileNav from "./MobileNav";
 import { useIsMobile } from "@/hooks/use-mobile";
+import CompanyLogo from "../ui/CompanyLogo";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -27,10 +28,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
       {isMobile && (
         <header className="bg-white shadow-sm py-3 px-4 flex items-center justify-between z-10">
           <div className="flex items-center">
-            <svg className="h-10 w-10 rounded-lg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="40" height="40" rx="8" fill="#3B82F6"/>
-              <path d="M12 20H28M20 12V28" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-            </svg>
+            <CompanyLogo />
             <span className="font-heading font-bold text-lg ml-2 text-neutral-800">Housy</span>
           </div>
           <button

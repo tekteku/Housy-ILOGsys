@@ -76,15 +76,13 @@ const ChatInterface = ({
       return sendChatMessage(content, sessionId, aiModel);
     },
     onSuccess: (data) => {
-      // Message was sent and response received
       setIsTyping(false);
-      
-      // Add the assistant's response to our messages
       setMessages((prev) => [
         ...prev,
         {
           role: "assistant",
-          content: data.response,
+          content: data.response, // Réponse textuelle
+          suggestions: data.suggestions, // Supposons que le backend renvoie un tableau de suggestions
           sessionId,
         },
       ]);
@@ -262,22 +260,22 @@ const ChatInterface = ({
         </div>
 
         {/* Input Form */}
-        <div className="border-t border-neutral-200 p-4 bg-white rounded-b-lg">
-          <form onSubmit={handleSubmit} className="flex space-x-2">
+        <div className="border-t border-neutral-200 p-5 bg-white rounded-b-xl">
+          <form onSubmit={handleSubmit} className="flex space-x-3">
             <div className="relative flex-1">
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Posez votre question sur la construction ou l'immobilier en Tunisie..."
                 disabled={isLoading || isTyping}
-                className="pr-10 bg-white border-neutral-300 focus:border-primary-500 pl-4 py-6 shadow-sm"
+                className="pr-10 bg-white border-neutral-200 focus:border-primary-500 focus:ring focus:ring-primary-100 pl-5 py-6 rounded-xl shadow-sm text-neutral-700"
                 ref={inputRef}
               />
               {input && (
                 <button
                   type="button"
                   onClick={() => setInput("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 transition-colors"
                 >
                   <i className="fas fa-times-circle"></i>
                 </button>
@@ -286,18 +284,18 @@ const ChatInterface = ({
             <Button
               type="submit"
               disabled={!input.trim() || isLoading || isTyping}
-              className="bg-primary-600 hover:bg-primary-700 text-white px-4 py-6"
+              className="bg-primary-600 hover:bg-primary-700 text-white px-5 py-6 rounded-xl shadow-sm transition-colors"
             >
               <i className="fas fa-paper-plane"></i>
             </Button>
           </form>
-          <div className="flex justify-between mt-3 text-xs text-neutral-500">
-            <div className="flex items-center gap-1">
-              <div className={`w-2 h-2 rounded-full ${isTyping ? "bg-green-500" : "bg-neutral-300"}`}></div>
-              <span>{isTyping ? "En train de répondre..." : "Prêt à répondre"}</span>
+          <div className="flex justify-between mt-4 text-xs text-neutral-500">
+            <div className="flex items-center gap-2">
+              <div className={`w-2 h-2 rounded-full ${isTyping ? "bg-green-500 animate-pulse" : "bg-neutral-300"}`}></div>
+              <span className="font-medium">{isTyping ? "En train de répondre..." : "Prêt à répondre"}</span>
             </div>
             <button 
-              className="text-neutral-500 hover:text-neutral-700 flex items-center gap-1"
+              className="text-neutral-500 hover:text-neutral-700 flex items-center gap-1.5 py-1 px-2 rounded-md hover:bg-neutral-100 transition-colors"
               onClick={() => {
                 setMessages([]);
                 onNewChat();

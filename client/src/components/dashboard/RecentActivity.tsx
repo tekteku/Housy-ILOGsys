@@ -98,7 +98,7 @@ const RecentActivity = () => {
       timestamp: new Date().toISOString(),
       user: {
         id: 1,
-        fullName: "Ahmed Chebbi",
+        fullName: "Adnen Ben Zineb",
       },
       entity: {
         id: 101,

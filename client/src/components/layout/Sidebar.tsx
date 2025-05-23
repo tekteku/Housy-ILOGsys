@@ -1,13 +1,14 @@
 import { useLocation, Link } from "wouter";
 import { cn } from "@/lib/utils";
+import CompanyLogo from "../ui/CompanyLogo";
 
-const navItems = [
-  { path: "/dashboard", icon: "tachometer-alt", label: "Tableau de bord" },
-  { path: "/projects", icon: "tasks", label: "Projets" },
-  { path: "/estimation", icon: "calculator", label: "Estimation" },
-  { path: "/materials", icon: "hammer", label: "Matériaux" },
-  { path: "/chatbot", icon: "robot", label: "Chatbot IA" },
-  { path: "/settings", icon: "cog", label: "Paramètres" },
+const navigationItems = [
+  { name: 'Dashboard', href: '/dashboard', icon: 'home', label: "Tableau de bord" },
+  { name: 'Projects', href: '/projects', icon: 'folder-open', label: "Projets" },
+  { name: 'Estimation', href: '/estimation', icon: 'calculator', label: "Estimation" },
+  { name: 'Materials', href: '/materials', icon: 'cubes', label: "Matériaux" },
+  { name: 'Chatbot AI', href: '/chatbot', icon: 'robot', label: "Chatbot IA" },
+  { name: 'Parameters', href: '/settings', icon: 'cog', label: "Paramètres" },
 ];
 
 interface SidebarProps {
@@ -33,66 +34,58 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
         ></div>
       )}
 
-      <nav
+      <div
         className={cn(
-          "bg-white border-r border-neutral-200 h-screen z-30",
+          "h-screen z-30 bg-neutral-800 text-neutral-200 flex flex-col",
           isMobileView
             ? "fixed top-0 left-0 w-64 shadow-lg transition-transform duration-300 ease-in-out"
-            : "flex-col w-64 sticky top-0"
+            : "w-64 sticky top-0"
         )}
       >
-        <div className="flex items-center justify-center p-6 border-b border-neutral-200">
-          <svg className="h-10 w-10 rounded-lg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="40" height="40" rx="8" fill="#3B82F6"/>
-            <path d="M12 20H28M20 12V28" stroke="white" strokeWidth="4" strokeLinecap="round"/>
-          </svg>
-          <span className="font-heading font-bold text-lg ml-2 text-neutral-800">Housy</span>
+        <div className="p-4 flex items-center gap-2 border-b border-neutral-700">
+          <CompanyLogo className="text-white" />
+          <span className="font-semibold text-lg">Housy</span>
         </div>
 
-        <div className="flex-1 overflow-y-auto py-4">
-          <div className="px-4 mb-6">
-            <div className="bg-neutral-100 rounded-lg p-3 flex items-center gap-2">
-              <div className="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-medium">
-                AC
-              </div>
-              <div>
-                <p className="text-sm font-medium text-neutral-800">Ahmed Chebbi</p>
-                <p className="text-xs text-neutral-500">Chef de Projet</p>
-              </div>
+        <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+          {navigationItems.map((item) => {
+            const isActive = location === item.href || 
+              (item.href === "/dashboard" && location === "/");
+            
+            return (
+              <Link 
+                key={item.name} 
+                href={item.href}
+              >
+                <div
+                  className={cn(
+                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary-600 text-white"
+                      : "text-neutral-300 hover:bg-neutral-700 hover:text-white"
+                  )}
+                >
+                  <i className={`fas fa-${item.icon} w-5 text-center`}></i>
+                  <span>{item.label || item.name}</span>
+                </div>
+              </Link>
+            );
+          })}
+        </nav>
+        
+        {/* Section Utilisateur en bas */}
+        <div className="p-4 border-t border-neutral-700">
+          <div className="flex items-center gap-2">
+            <div className="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-medium">
+              AB
+            </div>
+            <div>
+              <p className="text-sm font-medium text-neutral-200">Adnen Ben Zineb</p>
+              <p className="text-xs text-neutral-400">Chef de Projet</p>
             </div>
           </div>
-
-          <ul className="space-y-1 px-2">
-            {navItems.map((item) => {
-              const isActive = location === item.path || 
-                (item.path === "/dashboard" && location === "/");
-              
-              return (
-                <li key={item.path}>
-                  <Link href={item.path}>
-                    <div
-                      className={cn(
-                        "flex items-center gap-3 px-3 py-2 font-medium rounded-lg cursor-pointer",
-                        isActive
-                          ? "text-neutral-900 bg-neutral-100"
-                          : "text-neutral-600 hover:text-neutral-900 hover:bg-neutral-100"
-                      )}
-                    >
-                      <i
-                        className={cn(
-                          `fas fa-${item.icon} w-5 text-center`,
-                          isActive ? "text-primary-600" : "text-neutral-500"
-                        )}
-                      ></i>
-                      <span>{item.label}</span>
-                    </div>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
         </div>
-      </nav>
+      </div>
     </>
   );
 };

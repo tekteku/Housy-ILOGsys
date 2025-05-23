@@ -6,6 +6,10 @@ import MarketTrends from "@/components/dashboard/MarketTrends";
 import ProjectResources from "@/components/dashboard/ProjectResources";
 import RecentActivity from "@/components/dashboard/RecentActivity";
 import RealEstateAnalysis from "@/components/dashboard/RealEstateAnalysis";
+import StatCardsSection from "@/components/dashboard/StatCardsSection";
+import ChartCardsSection from "@/components/dashboard/ChartCardsSection";
+import BudgetComparisonSection from "@/components/dashboard/BudgetComparisonSection";
+import DashboardCardsGrid from "@/components/dashboard/DashboardCardsGrid";
 import { Button } from "@/components/ui/button";
 
 const Dashboard = () => {
@@ -39,6 +43,18 @@ const Dashboard = () => {
       </div>
 
       {/* Project Overview Stats */}
+      <StatCardsSection />
+      
+      {/* Dashboard Cards Grid - New mixed layout */}
+      <DashboardCardsGrid />
+      
+      {/* Chart Analysis Section */}
+      <ChartCardsSection />
+      
+      {/* Budget Comparison Section */}
+      <BudgetComparisonSection />
+      
+      {/* Detailed Project Stats */}
       <ProjectStats />
 
       {/* Project Timeline (Gantt Chart) */}
