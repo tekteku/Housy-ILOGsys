@@ -55,15 +55,14 @@ export default function NotFound() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-neutral-50 py-16 px-4 sm:px-6 lg:px-8 items-center justify-center relative overflow-hidden">
+    <div className="min-h-screen flex flex-col bg-[#f4f6fa] py-16 px-4 sm:px-6 lg:px-8 items-center justify-center relative overflow-hidden">
       {/* Fond avec motif de construction */}
       <div className="absolute inset-0 opacity-5 pointer-events-none">
         <div className="absolute inset-0" style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}></div>
       </div>
-      
-      <div className="z-10 max-w-md w-full space-y-8 text-center">
+      <div className="z-10 max-w-md w-full space-y-8 text-center bg-white rounded-2xl shadow-lg p-10">
         {/* Icône d'erreur animée */}
         <div className="flex justify-center">
           <div className="w-24 h-24 rounded-full bg-red-50 flex items-center justify-center text-red-500 animate-pulse-glow">
@@ -72,15 +71,13 @@ export default function NotFound() {
             </svg>
           </div>
         </div>
-        
         <div className="mt-6">
-          <h1 className="text-5xl font-extrabold text-neutral-800">404</h1>
-          <h2 className="mt-2 text-2xl font-bold text-neutral-700">Page introuvable</h2>
-          <p className="mt-4 text-neutral-500">
+          <h1 className="text-5xl font-extrabold text-[#162032]">404</h1>
+          <h2 className="mt-2 text-2xl font-bold text-[#162032]">Page introuvable</h2>
+          <p className="mt-4 text-[#b0b8c1]">
             La page que vous recherchez semble avoir été déplacée, supprimée ou n'a jamais existé.
           </p>
         </div>
-        
         {/* Barre de recherche pour aider l'utilisateur */}
         <div className="mt-8">
           <SearchInput
@@ -89,16 +86,16 @@ export default function NotFound() {
             onChange={setSearchQuery}
             onSearch={handleSearch}
             showSearchButton
+            className="rounded-xl shadow-sm border border-neutral-200 px-4 py-3 bg-white"
           />
         </div>
-        
         {/* Liens suggérés */}
         <div className="mt-8">
           <h3 className="text-sm font-medium text-neutral-600 mb-4">Vous cherchez peut-être :</h3>
           <div className="flex flex-wrap gap-2 justify-center">
             {suggestedLinks.map((link, index) => (
               <Link key={index} to={link.path}>
-                <Button variant="outline" size="sm" className="flex items-center gap-2">
+                <Button variant="outline" size="sm" className="flex items-center gap-2 rounded-xl">
                   {link.path === "/dashboard" && <Home className="h-4 w-4" />}
                   {link.path === "/projects" && <i className="fas fa-folder-open text-sm"></i>}
                   {link.path === "/materials" && <i className="fas fa-boxes text-sm"></i>}
@@ -109,21 +106,20 @@ export default function NotFound() {
             ))}
           </div>
         </div>
-        
         {/* Actions de navigation */}
         <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
           {prevPage ? (
             <Button 
               variant="outline"
               onClick={() => window.history.back()}
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 rounded-xl"
             >
               <ArrowLeft className="h-4 w-4" />
               Retour à la page précédente
             </Button>
           ) : (
             <Link to="/dashboard">
-              <Button variant="default" className="flex items-center gap-2">
+              <Button variant="default" className="flex items-center gap-2 rounded-xl">
                 <Home className="h-4 w-4" />
                 Retour au tableau de bord
               </Button>

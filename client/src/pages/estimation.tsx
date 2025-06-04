@@ -8,7 +8,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
-import { Slider } from "@/components/ui/slider";
 import { apiRequest } from "@/lib/queryClient";
 import { formatCurrency } from "@/lib/utils";
 
@@ -99,10 +98,13 @@ const Estimation = () => {
     includeWastage: true,
   });
   
-  const [estimationResult, setEstimationResult] = useState<EstimationResult | null>(null);
+  const [estimationResult, setEstimationResult] = useState<EstimationResult>({
+    totalCost: 0,
+    categories: [],
+  });
 
   // Fetch saved estimations
-  const { data: savedEstimations, isLoading: isLoadingHistory } = useQuery({
+  const { data: savedEstimations, isLoading: isLoadingHistory } = useQuery<SavedEstimation[]>({
     queryKey: ['/api/estimation/history'],
   });
 
@@ -112,7 +114,7 @@ const Estimation = () => {
       const response = await apiRequest('POST', '/api/estimation/calculate', data);
       return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: (data: EstimationResult) => {
       setEstimationResult(data);
       setActiveTab("results");
     },
@@ -146,7 +148,7 @@ const Estimation = () => {
   };
 
   const handleSaveEstimation = () => {
-    if (!estimationResult) return;
+    if (!estimationResult.categories?.length) return;
 
     const dataToSave = {
       name: formData.name,
@@ -171,22 +173,22 @@ const Estimation = () => {
   };
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
+    <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
       {/* Header */}
       <div>
-        <h1 className="text-2xl md:text-3xl font-heading font-bold text-neutral-900">
+        <h1 className="text-3xl md:text-4xl font-heading font-bold text-[#162032]">
           Estimation de matériaux
         </h1>
-        <p className="text-neutral-500 mt-1">
+        <p className="text-[#b0b8c1] mt-2">
           Calculez les quantités et les coûts des matériaux pour vos projets
         </p>
       </div>
 
       {/* Tabs */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-3 mb-6">
+        <TabsList className="grid grid-cols-3 mb-6 rounded-xl bg-white shadow-sm">
           <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-          <TabsTrigger value="results" disabled={!estimationResult}>
+          <TabsTrigger value="results" disabled={!estimationResult?.categories?.length}>
             Résultats
           </TabsTrigger>
           <TabsTrigger value="history">Historique</TabsTrigger>
@@ -194,9 +196,9 @@ const Estimation = () => {
 
         {/* Calculator Tab */}
         <TabsContent value="calculator">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
             {/* Form */}
-            <Card>
+            <Card className="rounded-2xl shadow-lg">
               <CardHeader>
                 <CardTitle>Paramètres d'estimation</CardTitle>
                 <CardDescription>
@@ -434,24 +436,30 @@ const Estimation = () => {
 
                   <div className="space-y-2">
                     <h3 className="text-sm font-medium">Coûts par catégorie</h3>
-                    {estimationResult.categories.map((category) => (
-                      <div key={category.category} className="flex justify-between text-sm">
-                        <span className="text-neutral-600 flex items-center">
-                          <MaterialIcon category={category.category} />
-                          <span className="ml-2">{getCategoryLabel(category.category)}</span>
-                        </span>
-                        <span className="font-medium">
-                          {formatCurrency(category.totalCost)}
-                        </span>
+                    {estimationResult?.categories && estimationResult.categories.length > 0 ? (
+                      estimationResult.categories.map((category) => (
+                        <div key={category.category} className="flex justify-between text-sm">
+                          <span className="text-neutral-600 flex items-center">
+                            <MaterialIcon category={category.category} />
+                            <span className="ml-2">{getCategoryLabel(category.category)}</span>
+                          </span>
+                          <span className="font-medium">
+                            {formatCurrency(category.totalCost)}
+                          </span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="text-sm text-neutral-500">
+                        Aucune catégorie disponible
                       </div>
-                    ))}
+                    )}
                   </div>
 
                   <div className="bg-primary-50 p-3 rounded-lg border border-primary-200">
                     <div className="flex justify-between">
                       <span className="font-medium text-primary-800">Total estimé</span>
                       <span className="font-bold text-primary-900 text-lg">
-                        {formatCurrency(estimationResult.totalCost)}
+                        {formatCurrency(Number.isFinite(estimationResult.totalCost) ? estimationResult.totalCost : 0)}
                       </span>
                     </div>
                   </div>
@@ -479,8 +487,8 @@ const Estimation = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  {estimationResult.categories.map((category) => (
-                    <div key={category.category} className="space-y-2">
+                  {estimationResult?.categories?.map((category) => (
+                    <div key={category.category}>
                       <h3 className="text-sm font-medium flex items-center">
                         <MaterialIcon category={category.category} />
                         <span className="ml-2">{getCategoryLabel(category.category)}</span>
@@ -565,7 +573,7 @@ const Estimation = () => {
                     </div>
                   ))}
                 </div>
-              ) : savedEstimations?.length > 0 ? (
+              ) : savedEstimations && savedEstimations.length > 0 ? (
                 <div className="space-y-4">
                   {savedEstimations.map((estimation: SavedEstimation) => (
                     <div

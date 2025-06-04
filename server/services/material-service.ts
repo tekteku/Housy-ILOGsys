@@ -1,5 +1,5 @@
 import { storage } from "../storage";
-import { Material, InsertMaterial, MaterialPriceHistory, InsertMaterialPriceHistory } from "@shared/schema";
+import { Material, InsertMaterial, MaterialPriceHistory, InsertMaterialPriceHistory } from "../../shared/schema.js";
 import * as fs from 'fs';
 import * as path from 'path';
 import { parse } from 'csv-parse/sync';

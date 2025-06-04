@@ -1,5 +1,6 @@
 import { useToast } from "@/hooks/use-toast"
 import { useCallback } from "react"
+import { ToastAction } from "@/components/ui/toast"
 
 interface NotificationOptions {
   title?: string
@@ -31,20 +32,18 @@ export function useNotification() {
       toast({
         title,
         description,
-        variant: variant === "default" || variant === "destructive" ? variant : "default",
-        className: variant !== "default" && variant !== "destructive" 
-          ? variantStyles[variant] 
-          : "",
+        variant: (variant === "default" || variant === "destructive") ? variant : "default",
+        className: variantStyles[variant],
         duration,
-        action: action ? {
-          label: action.label,
-          onClick: action.onClick,
-        } : undefined,
+        action: action ? (
+          <ToastAction altText={action.label} onClick={action.onClick}>
+            {action.label}
+          </ToastAction>
+        ) : undefined,
       })
     },
     [toast]
   )
-
   // Fonctions d'aide pour les cas d'utilisation courants
   const success = useCallback(
     (title: string, description?: string, duration?: number) => {

@@ -1,5 +1,5 @@
 import { storage } from "../storage";
-import { Project, Task, Material, ProjectEstimation } from "@shared/schema";
+import { Project, Task, Material, ProjectEstimation } from "../../shared/schema.js";
 import * as fs from 'fs/promises';
 import * as path from 'path';
 import { promisify } from 'util';

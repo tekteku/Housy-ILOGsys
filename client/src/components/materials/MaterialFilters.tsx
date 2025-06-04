@@ -12,28 +12,40 @@ interface MaterialFiltersProps {
   onFilterChange: (name: string, value: string) => void;
 }
 
+interface Material {
+  id: number;
+  name: string;
+  supplier?: string;
+}
+
 const MaterialFilters = ({ filters, onFilterChange }: MaterialFiltersProps) => {
   // Query to get unique suppliers from materials
-  const { data: materials } = useQuery({
+  const { data: materials, isLoading, error } = useQuery<Material[]>({
     queryKey: ['/api/materials'],
-    queryFn: () => fetch('/api/materials').then(res => res.json()),
+    queryFn: () => fetch('/api/materials').then(res => res.json()).then(data => data.data), // Extract data array
     staleTime: 300000, // 5 minutes
   });
 
   // Extract unique suppliers
-  const suppliers = materials
-    ? Array.from(new Set(materials.map((m: any) => m.supplier).filter(Boolean)))
+  const suppliers: string[] = materials && Array.isArray(materials)
+    ? Array.from(new Set(materials.map((m: Material) => m.supplier).filter(Boolean))) as string[]
     : [];
+
+  // Handle loading and error states
+  if (isLoading) return <p>Loading filters...</p>;
+  if (error) return <p>Error loading filters: {error.message}</p>;
 
   return (
     <div className="flex flex-col sm:flex-row gap-3">
-      <Input
-        placeholder="Rechercher un matériau..."
-        value={filters.search}
-        onChange={(e) => onFilterChange("search", e.target.value)}
-        className="w-full sm:w-56 pl-10"
-        icon={<i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>}
-      />
+      <div className="relative w-full sm:w-56">
+        <i className="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-neutral-400"></i>
+        <Input
+          placeholder="Rechercher un matériau..."
+          value={filters.search}
+          onChange={(e) => onFilterChange("search", e.target.value)}
+          className="pl-10"
+        />
+      </div>
 
       <Select
         value={filters.category}

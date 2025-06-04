@@ -1,17 +1,8 @@
-import { useQuery } from "@tanstconst RecentActivity = () => {
-  const { data: activities, isLoading, error, isError } = useQuery({
-    queryKey: ['/api/activities'],
-  });
-  
-  const { showNotification } = useNotification();react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
-import { ErrorAlert } from "@/components/ui/error-alert";
-import { EmptyState } from "@/components/ui/empty-state";
-import { LoadingIndicator } from "@/components/ui/loading-indicator";
-import { useNotification } from "@/hooks/use-notification";
 import { ErrorAlert } from "@/components/ui/error-alert";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
@@ -36,11 +27,11 @@ interface Activity {
 }
 
 const RecentActivity = () => {
-  const { data: activities, isLoading, isError } = useQuery({
+  const { data: activities, isLoading, isError } = useQuery<Activity[]>({
     queryKey: ['/api/activities'],
   });
 
-  const { addNotification } = useNotification();
+  const { showNotification } = useNotification();
 
   // Helper function to get icon based on activity type
   const getActivityIcon = (activity: Activity) => {
@@ -201,15 +192,17 @@ const RecentActivity = () => {
       <div className="p-5 border-b border-neutral-200 flex justify-between items-center">
         <h2 className="text-lg font-medium text-neutral-900">Activités récentes</h2>
         <span className="bg-primary-100 text-primary-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-          {isLoading ? "..." : activities?.length || sampleActivities.length} activité(s)
+          {isLoading ? "..." : (activities?.length ?? sampleActivities.length)} activité(s)
         </span>
       </div>
       
       <div className="p-3">
         {isError ? (
-          <ErrorAlert className="mb-4">
-            Une erreur s'est produite lors du chargement des activités. Veuillez réessayer plus tard.
-          </ErrorAlert>
+          <ErrorAlert 
+            title="Erreur de chargement"
+            description="Une erreur s'est produite lors du chargement des activités. Veuillez réessayer plus tard."
+            className="mb-4"
+          />
         ) : (
           <div className="space-y-1">
             {isLoading ? (
@@ -222,7 +215,7 @@ const RecentActivity = () => {
                   </div>
                 </div>
               ))
-            ) : activities?.length > 0 ? (
+            ) : activities && activities.length > 0 ? (
               activities.map((activity: Activity) => {
                 const { bg, icon } = getActivityIcon(activity);
                 
@@ -243,9 +236,10 @@ const RecentActivity = () => {
                 );
               })
             ) : (
-              <EmptyState>
-                Aucune activité récente à afficher.
-              </EmptyState>
+              <EmptyState
+                title="Aucune activité"
+                description="Aucune activité récente à afficher."
+              />
             )}
           </div>
         )}

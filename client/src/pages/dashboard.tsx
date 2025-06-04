@@ -19,23 +19,23 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
+    <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
       {/* Header with Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-heading font-bold text-neutral-900">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-[#162032]">
             Tableau de bord
           </h1>
-          <p className="text-neutral-500 mt-1">
+          <p className="text-[#b0b8c1] mt-2">
             Vue d'ensemble de vos projets et activités
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" className="flex items-center">
+        <div className="flex gap-4">
+          <Button variant="outline" className="flex items-center rounded-xl px-6 py-3 text-base">
             <i className="fas fa-download mr-2"></i>
             Rapports
           </Button>
-          <Button className="flex items-center">
+          <Button className="flex items-center rounded-xl px-6 py-3 text-base">
             <i className="fas fa-plus mr-2"></i>
             Nouveau projet
           </Button>
@@ -61,13 +61,13 @@ const Dashboard = () => {
       <GanttChart />
 
       {/* Material Estimation & Market Trends Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
         <MaterialCalculator />
         <MarketTrends />
       </div>
 
       {/* Project Resources & Real Estate Analysis Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <RecentActivityEnhanced />
         <ProjectResources />
         <RealEstateAnalysis />

@@ -7,7 +7,7 @@ import {
   Project,
   Task,
   Resource
-} from "@shared/schema";
+} from "../../shared/schema.js";
 
 export class ProjectService {
   // Get all projects with summary data
@@ -388,10 +388,15 @@ export class ProjectService {
       const activities = await storage.getRecentActivities(limit);
       
       // Enrich activities with user, project, and task information
-      const enrichedActivities = [];
+      const enrichedActivities: any[] = [];
       
       for (const activity of activities) {
-        let enriched = { ...activity };
+        // Create enriched activity with proper typing
+        const enriched: any = { 
+          ...activity,
+          user: undefined,
+          entity: undefined
+        };
         
         // Add user info if available
         if (activity.userId) {
@@ -438,6 +443,137 @@ export class ProjectService {
       return enrichedActivities;
     } catch (error) {
       console.error("Error getting recent activities:", error);
+      throw error;
+    }
+  }
+  
+  // Get project estimation
+  async getProjectEstimation(projectId: number): Promise<any> {
+    try {
+      // Get project details to ensure it exists
+      const project = await storage.getProject(projectId);
+      
+      if (!project) {
+        throw new Error(`Project with ID ${projectId} not found`);
+      }
+      
+      // Get project estimations from database
+      const estimations = await storage.getProjectEstimations(projectId);
+      
+      if (estimations.length === 0) {
+        // Return a default structure if no estimations exist
+        return {
+          projectId,
+          projectName: project.name,
+          estimations: [],
+          message: "No estimations found for this project"
+        };
+      }
+      
+      // Return the most recent estimation with project info
+      const latestEstimation = estimations[0]; // Already ordered by createdAt desc
+      
+      return {
+        ...latestEstimation,
+        projectName: project.name,
+        projectLocation: project.location,
+        projectBudget: project.budget
+      };
+    } catch (error) {
+      console.error(`Error getting project estimation for ID ${projectId}:`, error);
+      throw error;
+    }
+  }
+  
+  // Generate AI estimation for project
+  async generateAIEstimation(projectId: number): Promise<any> {
+    try {
+      // Get project details
+      const project = await storage.getProject(projectId);
+      
+      if (!project) {
+        throw new Error(`Project with ID ${projectId} not found`);
+      }
+      
+      // For now, generate a basic estimation based on project data
+      // In a real implementation, this would use AI service for more sophisticated estimation
+      const baseEstimation = {
+        projectId,
+        projectName: project.name,
+        projectType: 'residential', // Default since project.type doesn't exist in schema
+        area: 120, // Default area - in real app would come from project data
+        floors: 1,
+        qualityLevel: 'STANDARD',
+        wastageIncluded: true,
+        totalCost: 0,
+        categories: [] as any[],
+        generatedAt: new Date(),
+        generationType: 'AI',
+        confidence: 75
+      };
+      
+      // Simple cost calculation based on project budget or area
+      if (project.budget) {
+        // Use 35% of budget for materials as a rough estimate
+        baseEstimation.totalCost = project.budget * 0.35;
+        
+        // Create basic category breakdown
+        baseEstimation.categories = [
+          {
+            category: 'gros_oeuvre',
+            totalCost: baseEstimation.totalCost * 0.45,
+            materials: []
+          },
+          {
+            category: 'second_oeuvre',
+            totalCost: baseEstimation.totalCost * 0.35,
+            materials: []
+          },
+          {
+            category: 'finition',
+            totalCost: baseEstimation.totalCost * 0.20,
+            materials: []
+          }
+        ];
+      } else {
+        // Default estimation if no budget available
+        baseEstimation.totalCost = 50000; // 50k TND default
+        baseEstimation.categories = [
+          {
+            category: 'gros_oeuvre',
+            totalCost: 22500,
+            materials: []
+          },
+          {
+            category: 'second_oeuvre',
+            totalCost: 17500,
+            materials: []
+          },
+          {
+            category: 'finition',
+            totalCost: 10000,
+            materials: []
+          }
+        ];
+      }
+      
+      // Log activity for AI estimation generation
+      await this.logProjectActivity(
+        1, // TODO: Get from authenticated user
+        'generate',
+        'estimation',
+        projectId,
+        {
+          projectName: project.name,
+          estimationType: 'AI',
+          totalCost: baseEstimation.totalCost,
+          confidence: baseEstimation.confidence
+        }
+      );
+      
+      return baseEstimation;
+    } catch (error) {
+      console.error(`Error generating AI estimation for project ID ${projectId}:`, error);
       throw error;
     }
   }

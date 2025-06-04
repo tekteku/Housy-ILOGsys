@@ -10,9 +10,15 @@ interface RegionPrice {
   color: string;
 }
 
+interface MarketAnalysis {
+  result?: {
+    marketTrends: string[];
+  };
+}
+
 const RealEstateAnalysis = () => {
   // Query for AI-generated market analysis
-  const { data: marketAnalysis, isLoading } = useQuery({
+  const { data: marketAnalysis, isLoading } = useQuery<MarketAnalysis>({
     queryKey: ['/api/ai/market-trends'],
     enabled: false, // Disabled by default, would be enabled in a real app
   });

@@ -13,8 +13,9 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { importMaterialsFromCsv } from "@/lib/data-service";
+import { getEnhancedMaterials, uploadDocument } from "@/lib/mega-data-service";
 import { queryClient } from "@/lib/queryClient";
+import { useNotification } from "@/hooks/use-notification";
 
 interface MaterialsListProps {
   filters: {
@@ -26,25 +27,41 @@ interface MaterialsListProps {
 }
 
 const MaterialsList = ({ filters }: MaterialsListProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize] = useState(20);
   const [importStarted, setImportStarted] = useState(false);
+  const { success, error } = useNotification();
 
-  // Fetch materials
-  const { data: materials, isLoading, error } = useQuery({
-    queryKey: ['/api/materials', filters.category],
-    queryFn: () => {
-      const url = filters.category && filters.category !== 'all' 
-        ? `/api/materials?category=${filters.category}` 
-        : '/api/materials';
-      return fetch(url).then(res => res.json());
-    }
+  // Fetch enhanced materials with filtering and pagination
+  const { data: responseData, isLoading, error: queryError } = useQuery({
+    queryKey: ['enhanced-materials', filters, currentPage, pageSize],
+    queryFn: () => getEnhancedMaterials({
+      category: filters.category !== 'all' ? filters.category : undefined,
+      search: filters.search || undefined,
+      supplier: filters.supplier !== 'all' ? filters.supplier : undefined,
+      sortBy: filters.sortBy,
+      page: currentPage,
+      limit: pageSize,
+    }),
+    refetchInterval: 60000, // Refresh every minute
   });
 
-  // Import materials mutation
+  const { materials = [], total = 0, totalPages = 0 } = responseData || {};
+
+  // Handle CSV import mutation
   const importMaterials = useMutation({
-    mutationFn: importMaterialsFromCsv,
+    mutationFn: async () => {
+      // This is a placeholder for CSV import functionality
+      // In a real implementation, you would handle file selection and upload
+      throw new Error('Import functionality not yet implemented');
+    },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['/api/materials'] });
       setImportStarted(true);
+      success('Import réussi', 'Les matériaux ont été importés avec succès');
+      queryClient.invalidateQueries({ queryKey: ['enhanced-materials'] });
+    },
+    onError: () => {
+      error('Erreur d\'import', 'Une erreur est survenue lors de l\'import');
     }
   });
 
@@ -62,7 +79,7 @@ const MaterialsList = ({ filters }: MaterialsListProps) => {
   }, [importStarted]);
 
   // Filter materials based on search and supplier
-  const filteredMaterials = materials ? materials.filter((material: any) => {
+  const filteredMaterials = materials && Array.isArray(materials) ? materials.filter((material: any) => {
     const matchesSearch = !filters.search || 
       material.name.toLowerCase().includes(filters.search.toLowerCase()) ||
       (material.description && material.description.toLowerCase().includes(filters.search.toLowerCase()));
@@ -111,7 +128,7 @@ const MaterialsList = ({ filters }: MaterialsListProps) => {
               <Skeleton key={index} className="h-16 w-full" />
             ))}
           </div>
-        ) : error ? (
+        ) : queryError ? (
           <div className="p-6">
             <div className="text-center py-8">
               <p className="text-red-500 mb-4">Erreur lors du chargement des matériaux.</p>

@@ -36,22 +36,21 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
 
       <div
         className={cn(
-          "h-screen z-30 bg-neutral-800 text-neutral-200 flex flex-col",
+          "h-screen z-30 bg-[#162032] text-white flex flex-col rounded-r-3xl shadow-2xl",
           isMobileView
-            ? "fixed top-0 left-0 w-64 shadow-lg transition-transform duration-300 ease-in-out"
+            ? "fixed top-0 left-0 w-64 transition-transform duration-300 ease-in-out"
             : "w-64 sticky top-0"
         )}
       >
-        <div className="p-4 flex items-center gap-2 border-b border-neutral-700">
+        <div className="p-6 flex items-center gap-2 border-b border-[#22304a]">
           <CompanyLogo className="text-white" />
-          <span className="font-semibold text-lg">Housy</span>
+          <span className="font-bold text-2xl ml-2">Housy</span>
         </div>
 
         <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
           {navigationItems.map((item) => {
             const isActive = location === item.href || 
               (item.href === "/dashboard" && location === "/");
-            
             return (
               <Link 
                 key={item.name} 
@@ -59,10 +58,10 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
               >
                 <div
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors",
+                    "flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-colors",
                     isActive
-                      ? "bg-primary-600 text-white"
-                      : "text-neutral-300 hover:bg-neutral-700 hover:text-white"
+                      ? "bg-white text-[#162032] shadow-md"
+                      : "text-white hover:bg-[#22304a] hover:text-white"
                   )}
                 >
                   <i className={`fas fa-${item.icon} w-5 text-center`}></i>
@@ -72,16 +71,15 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
             );
           })}
         </nav>
-        
         {/* Section Utilisateur en bas */}
-        <div className="p-4 border-t border-neutral-700">
+        <div className="p-6 border-t border-[#22304a]">
           <div className="flex items-center gap-2">
-            <div className="h-8 w-8 rounded-full bg-primary-600 flex items-center justify-center text-white font-medium">
+            <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center text-[#162032] font-bold text-lg">
               AB
             </div>
             <div>
-              <p className="text-sm font-medium text-neutral-200">Adnen Ben Zineb</p>
-              <p className="text-xs text-neutral-400">Chef de Projet</p>
+              <p className="text-base font-bold text-white">Adnen Ben Zineb</p>
+              <p className="text-xs text-[#b0b8c1]">Chef de Projet</p>
             </div>
           </div>
         </div>

@@ -105,11 +105,10 @@ export function ImageUploadForm({ userId, currentAvatarUrl, onUploadSuccess }: I
       <CardContent>
         <div className="flex flex-col items-center space-y-4">
           {/* Preview current or new avatar */}
-          <div className="mb-4">
-            <UserAvatar 
+          <div className="mb-4">            <UserAvatar 
               src={previewUrl || currentAvatarUrl} 
               alt="Photo de profil"
-              size="xl"
+              size="lg"
             />
           </div>
           

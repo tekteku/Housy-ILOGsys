@@ -17,17 +17,17 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   };
 
   return (
-    <div className="flex h-screen bg-neutral-100">
+    <div className="flex h-screen bg-[#f4f6fa]">
       {/* Mobile Header when sidebar is hidden */}
       {isMobile && (
-        <header className="fixed top-0 left-0 right-0 bg-white shadow-sm py-3 px-4 flex items-center justify-between z-10">
+        <header className="fixed top-0 left-0 right-0 bg-white shadow-sm py-3 px-4 flex items-center justify-between z-10 rounded-b-3xl">
           <div className="flex items-center">
             <CompanyLogo />
-            <span className="font-heading font-bold text-lg ml-2 text-neutral-800">Housy</span>
+            <span className="font-heading font-bold text-lg ml-2 text-[#162032]">Housy</span>
           </div>
           <button
             onClick={toggleMobileSidebar}
-            className="p-2 text-neutral-500 hover:text-neutral-700 focus:outline-none"
+            className="p-2 text-[#162032] hover:text-[#22304a] focus:outline-none"
           >
             <i className="fas fa-bars"></i>
           </button>
@@ -39,8 +39,10 @@ const MainLayout = ({ children }: MainLayoutProps) => {
         isVisible={!isMobile || showMobileSidebar}
         onClose={() => setShowMobileSidebar(false)}
         isMobileView={isMobile}
-      />      {/* Main Content */}
-      <main className={`flex-1 overflow-y-auto p-6 ${isMobile ? 'pt-16 pb-20' : 'ml-64'}`}>
+      />
+
+      {/* Main Content */}
+      <main className={`flex-1 overflow-y-auto p-10 ${isMobile ? 'pt-16 pb-20' : 'ml-64'}`} style={{background:'#f4f6fa'}}>
         {children}
       </main>
 

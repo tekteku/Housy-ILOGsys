@@ -13,7 +13,7 @@ import {
   Legend
 } from 'recharts';
 
-type ChartType = 'line' | 'area' | 'bar';
+type ChartType = 'line' | 'area' | 'bar' | 'stacked-bar';
 
 interface DataSeries {
   key: string;
@@ -66,6 +66,7 @@ const MultiChartCard = ({
             ))}
           </AreaChart>
         );
+      case 'stacked-bar':
       case 'bar':
         return (
           <BarChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>

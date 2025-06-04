@@ -1,13 +1,13 @@
 import { useEffect } from "react";
-import { useRouter } from "next/router";
+import { useLocation } from "wouter";
 
 const ProjectsRedirect = () => {
-  const router = useRouter();
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
     // Redirect to the enhanced projects page
-    router.replace("/projects-enhanced");
-  }, [router]);
+    setLocation("/projects-enhanced");
+  }, [setLocation]);
 
   return null;
 };

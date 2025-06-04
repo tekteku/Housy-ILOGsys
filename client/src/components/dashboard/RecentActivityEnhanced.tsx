@@ -6,6 +6,7 @@ import { ErrorAlert } from "@/components/ui/error-alert";
 import { EmptyState } from "@/components/ui/empty-state";
 import { LoadingIndicator } from "@/components/ui/loading-indicator";
 import { useNotification } from "@/hooks/use-notification";
+import { getDashboardAnalytics } from "@/lib/mega-data-service";
 
 interface Activity {
   id: number;
@@ -14,7 +15,8 @@ interface Activity {
   timestamp: string;
   user?: {
     id: number;
-    fullName: string;
+    username: string;
+    fullName?: string;
     avatar?: string;
   };
   details?: any;
@@ -22,14 +24,21 @@ interface Activity {
     id: number;
     name: string;
     type: string;
+    project?: {
+      id: number;
+      name: string;
+    };
   };
 }
 
 const RecentActivityEnhanced = () => {
-  const { data: activities, isLoading, isError } = useQuery({
-    queryKey: ['/api/activities'],
+  const { data: analytics, isLoading, isError } = useQuery({
+    queryKey: ['dashboard-analytics'],
+    queryFn: () => getDashboardAnalytics('month'),
+    refetchInterval: 30000,
   });
 
+  const activities = analytics?.activities || [];
   const { showNotification } = useNotification();
 
   // Helper function to get icon based on activity type

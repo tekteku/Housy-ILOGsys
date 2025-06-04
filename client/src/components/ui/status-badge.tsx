@@ -8,8 +8,6 @@ type StatusType =
   | "cancelled" 
   | "onHold" 
   | "delayed"
-  | "draft"
-  | "review"
 
 interface StatusConfig {
   label: string

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import UserAvatar from "@/components/ui/user-avatar";
+import { getDashboardAnalytics } from "@/lib/mega-data-service";
 
 interface Resource {
   id: number;
@@ -94,9 +95,31 @@ const ResourceItem = ({ resource }: { resource: Resource }) => {
 };
 
 const ProjectResources = () => {
-  const { data: humanResources, isLoading: isLoadingHuman } = useQuery({
-    queryKey: ['/api/resources'],
+  const { data: analytics, isLoading: isLoadingAnalytics, error } = useQuery({
+    queryKey: ['dashboard-analytics-resources'],
+    queryFn: () => getDashboardAnalytics('month'),
+    refetchInterval: 30000,
   });
+
+  // Also fetch resources data (keeping the original query for now)
+  const { data: humanResources, isLoading: isLoadingHuman } = useQuery<Resource[]>({
+    queryKey: ['/api/resources'],
+    queryFn: async () => {
+      const response = await fetch('/api/resources');
+      if (!response.ok) {
+        throw new Error('Failed to fetch resources');
+      }
+      const data = await response.json();
+      // Ensure we return an array
+      return Array.isArray(data) ? data : (data.data && Array.isArray(data.data) ? data.data : []);
+    },
+  });
+
+  // Debug log
+  console.log('analytics:', analytics, 'humanResources:', humanResources);
+
+  // Safely get resources array
+  const safeHumanResources = Array.isArray(humanResources) ? humanResources : [];
 
   // Sample resources data (with types split)
   const resources = {
@@ -165,12 +188,12 @@ const ProjectResources = () => {
           </h3>
           
           <div className="space-y-2.5">
-            {isLoadingHuman ? (
+            {isLoadingHuman || isLoadingAnalytics ? (
               [...Array(3)].map((_, index) => (
                 <Skeleton key={index} className="h-12 w-full" />
               ))
-            ) : humanResources?.filter((r: Resource) => r.type === "human")?.length > 0 ? (
-              humanResources
+            ) : safeHumanResources.filter((r: Resource) => r.type === "human").length > 0 ? (
+              safeHumanResources
                 .filter((r: Resource) => r.type === "human")
                 .map((resource: Resource) => (
                   <ResourceItem key={resource.id} resource={resource} />
@@ -190,12 +213,12 @@ const ProjectResources = () => {
           </h3>
           
           <div className="space-y-2.5">
-            {isLoadingHuman ? (
+            {isLoadingHuman || isLoadingAnalytics ? (
               [...Array(3)].map((_, index) => (
                 <Skeleton key={index} className="h-12 w-full" />
               ))
-            ) : humanResources?.filter((r: Resource) => r.type !== "human")?.length > 0 ? (
-              humanResources
+            ) : safeHumanResources.filter((r: Resource) => r.type !== "human").length > 0 ? (
+              safeHumanResources
                 .filter((r: Resource) => r.type !== "human")
                 .map((resource: Resource) => (
                   <ResourceItem key={resource.id} resource={resource} />

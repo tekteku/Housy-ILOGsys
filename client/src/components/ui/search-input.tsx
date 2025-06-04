@@ -1,10 +1,10 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { Input, InputProps } from "@/components/ui/input"
+import { Input } from "@/components/ui/input"
 import { Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-interface SearchInputProps extends Omit<InputProps, "onChange"> {
+interface SearchInputProps extends Omit<React.ComponentProps<"input">, "onChange"> {
   onSearch?: (value: string) => void
   onChange?: (value: string) => void
   onClear?: () => void

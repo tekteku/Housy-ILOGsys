@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -8,23 +8,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Checkbox } from "@/components/ui/checkbox";
-import { apiRequest } from "@/lib/queryClient";
 import { formatCurrency } from "@/lib/utils";
+import { calculateEnhancedMaterialEstimation, MaterialEstimationResponse } from "@/lib/mega-data-service";
 
 interface MaterialEstimationResult {
   categories: Array<{
     category: string;
     totalCost: number;
     materials: Array<{
-      id: number;
       name: string;
       quantity: number;
       unit: string;
       unitPrice: number;
-      totalPrice: number;
+      totalCost: number;
     }>;
   }>;
   totalCost: number;
+  qualityLevel: string;
+  wastageIncluded: boolean;
+  calculatedAt: string;
 }
 
 const CategoryIcon = ({ category }: { category: string }) => {
@@ -58,7 +60,7 @@ const MaterialCalculator = () => {
     projectType: "apartment",
     area: 120,
     floors: 1,
-    qualityLevel: "PREMIUM",
+    qualityLevel: "PREMIUM" as 'STANDARD' | 'PREMIUM' | 'LUXE',
     includeWastage: true,
   });
 
@@ -66,10 +68,9 @@ const MaterialCalculator = () => {
 
   const calculateMutation = useMutation({
     mutationFn: async (data: typeof formData) => {
-      const response = await apiRequest('POST', '/api/estimation/calculate', data);
-      return response.json();
+      return await calculateEnhancedMaterialEstimation(data);
     },
-    onSuccess: (data) => {
+    onSuccess: (data: MaterialEstimationResponse) => {
       setEstimationResult(data);
     },
   });

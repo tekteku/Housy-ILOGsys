@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatCurrency } from "@/lib/utils";
+import { getEnhancedMaterialTrends, compareEnhancedMaterialPrices } from "@/lib/mega-data-service";
 import {
   LineChart,
   Line,
@@ -41,14 +42,19 @@ const MarketTrends = () => {
   const chartRef = useRef<HTMLDivElement>(null);
   const [chartHeight, setChartHeight] = useState(300);
   
-  // Query for material price trends
+  // Query for material price trends using enhanced API
   const { data: materialTrends, isLoading: isLoadingTrends } = useQuery({
-    queryKey: ['/api/materials/trends', '1,2,3'],
+    queryKey: ['enhanced-material-trends', { months: 6, category: 'gros_oeuvre' }],
+    queryFn: () => getEnhancedMaterialTrends({ months: 6, category: 'gros_oeuvre' }),
+    refetchInterval: 60000, // Refresh every minute
   });
   
+  console.log('MarketTrends - isLoadingTrends:', isLoadingTrends);
+  console.log('MarketTrends - materialTrends data:', materialTrends);
+
   // Format data for the chart
-  const formatChartData = (materialsData: MaterialPriceData[] = []) => {
-    if (!materialsData || materialsData.length === 0) return [];
+  const formatChartData = (materialsData: MaterialPriceData[] | undefined) => { // Allow undefined
+    if (!Array.isArray(materialsData) || materialsData.length === 0) return []; // Check if it's an array
     
     // Get all unique dates across all materials
     const allDates = new Set<string>();

@@ -51,28 +51,29 @@ const ProjectDetails = () => {
   }, []);
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
+    <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
       {/* Header with Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-heading font-bold text-neutral-900">
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-[#162032]">
             Détails du Projet
           </h1>
-          <p className="text-neutral-500 mt-1">
+          <p className="text-[#b0b8c1] mt-2">
             Résidence Les Oliviers - Suivi et gestion
           </p>
         </div>
-        <div className="flex gap-3">
-          <Button variant="outline" className="flex items-center">
+        <div className="flex gap-4">
+          <Button variant="outline" className="flex items-center rounded-xl px-6 py-3 text-base">
             <i className="fas fa-file-export mr-2"></i>
             Exporter
           </Button>
-          <Button className="flex items-center">
+          <Button className="flex items-center rounded-xl px-6 py-3 text-base">
             <i className="fas fa-edit mr-2"></i>
             Modifier
           </Button>
         </div>
-      </div>      {/* Project stats - grid on larger screens, horizontal scroll on mobile */}
+      </div>
+      {/* Project stats - grid on larger screens, horizontal scroll on mobile */}
       <div className="relative -mx-4 md:mx-0">
         <div className="flex md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 px-4 md:px-0 overflow-x-auto pb-2 md:overflow-visible md:pb-0">
           <div className="min-w-[260px] md:min-w-0 md:w-auto">
@@ -125,10 +126,11 @@ const ProjectDetails = () => {
       </div>
 
       {/* Project Timeline Section */}
-      <TimelineSection />      {/* Related Projects */}
+      <TimelineSection />
+      {/* Related Projects */}
       <div className="mb-6">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-semibold text-neutral-800">Autres Projets</h2>
+          <h2 className="text-lg font-semibold text-[#162032]">Autres Projets</h2>
           <button className="text-sm text-primary-600 hover:text-primary-700 md:hidden">
             Voir tout <i className="fas fa-arrow-right ml-1"></i>
           </button>

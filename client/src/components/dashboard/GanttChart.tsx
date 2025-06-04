@@ -6,13 +6,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { cn, formatDate, getDateDiff, isOverdue } from "@/lib/utils";
 import { LoadingIndicator } from "@/components/ui/loading-indicator"; 
 import { EmptyState } from "@/components/ui/empty-state"; 
+import { getEnhancedProjects } from "@/lib/mega-data-service"; 
 
 type TimeScale = "day" | "week" | "month";
 
 interface Task {
   id: number;
   name: string;
-  projectId: number;
+  projectId?: number; // Made optional for API compatibility
   projectName?: string;
   startDate: string;
   endDate: string;
@@ -20,16 +21,29 @@ interface Task {
   progress: number;
 }
 
+interface Project {
+  name: string;
+  tasks: Omit<Task, 'projectName'>[];
+}
+
 const GanttChart = () => {
   const [timeScale, setTimeScale] = useState<TimeScale>("week");
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  
-  const { data: projects, isLoading: isLoadingProjects } = useQuery({
-    queryKey: ['/api/projects'],
+
+  const { data: projectsData, isLoading: isLoadingProjects } = useQuery({
+    queryKey: ['enhanced-projects-gantt'],
+    queryFn: () => getEnhancedProjects(),
+    refetchInterval: 60000, // Refresh every minute for Gantt chart
+    select: (data) => data.projects.map(project => ({
+      name: project.name,
+      tasks: project.tasks || []
+    })),
   });
 
+  const projects = projectsData || [];
+
   // Extract tasks from all projects
-  const allTasks = projects?.reduce((acc: Task[], project: any) => {
+  const allTasks = projects.reduce((acc: Task[], project: Project) => {
     if (project.tasks) {
       return [
         ...acc,
@@ -40,7 +54,7 @@ const GanttChart = () => {
       ];
     }
     return acc;
-  }, []) || [];
+  }, [] as Task[]) || [];
 
   // Sort tasks by start date
   const sortedTasks = [...allTasks].sort(
@@ -50,41 +64,55 @@ const GanttChart = () => {
   // Generate dates for the header based on the selected time scale
   const generateDates = () => {
     const today = new Date();
-    const dates = [];
-    let numDays;
-
-    switch (timeScale) {
-      case "day":
-        numDays = 7;
-        break;
-      case "week":
-        numDays = 7;
-        break;
-      case "month":
-        numDays = 30;
-        break;
-      default:
-        numDays = 7;
+    let dates: Date[] = [];
+    if (timeScale === "day") {
+      // 7 consecutive days from today
+      for (let i = 0; i < 7; i++) {
+        const date = new Date(today);
+        date.setDate(today.getDate() + i);
+        dates.push(date);
+      }
+    } else if (timeScale === "week") {
+      // 7 weeks, each column is the Monday of the week
+      const startOfWeek = new Date(today);
+      startOfWeek.setDate(today.getDate() - today.getDay() + 1); // Monday
+      for (let i = 0; i < 7; i++) {
+        const weekDate = new Date(startOfWeek);
+        weekDate.setDate(startOfWeek.getDate() + i * 7);
+        dates.push(weekDate);
+      }
+    } else if (timeScale === "month") {
+      // All days of the current month
+      const year = today.getFullYear();
+      const month = today.getMonth();
+      const daysInMonth = new Date(year, month + 1, 0).getDate();
+      for (let i = 1; i <= daysInMonth; i++) {
+        dates.push(new Date(year, month, i));
+      }
     }
-
-    for (let i = 0; i < numDays; i++) {
-      const date = new Date(today);
-      date.setDate(date.getDate() + i);
-      dates.push(date);
-    }
-
     return dates;
   };
 
   const dates = generateDates();
 
   // Format date for display based on time scale
-  const formatHeaderDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      weekday: "short",
-      day: "numeric",
-    };
-    return date.toLocaleDateString("fr-FR", options);
+  const formatHeaderDate = (date: Date, index?: number) => {
+    if (timeScale === "day") {
+      const options: Intl.DateTimeFormatOptions = {
+        weekday: "short",
+        day: "numeric",
+      };
+      return date.toLocaleDateString("fr-FR", options);
+    } else if (timeScale === "week") {
+      // Show week number
+      const weekNumber = Math.ceil(
+        ((date.getTime() - new Date(date.getFullYear(), 0, 1).getTime()) / 86400000 + new Date(date.getFullYear(), 0, 1).getDay() + 1) / 7
+      );
+      return `Semaine ${weekNumber}`;
+    } else if (timeScale === "month") {
+      return date.getDate().toString();
+    }
+    return "";
   };
 
   // Calculate task position and width on the timeline
@@ -208,10 +236,17 @@ const GanttChart = () => {
             {/* Week Headers */}
             <div className="flex items-center mb-2">
               <div className="w-48 flex-shrink-0"></div>
-              <div className="flex-1 grid grid-cols-7">
+              <div className={"flex-1 grid " + `grid-cols-${dates.length}`}>
                 {dates.map((date, index) => (
-                  <div key={index} className="text-center text-sm text-neutral-500">
-                    {formatHeaderDate(date)}
+                  <div
+                    key={index}
+                    className={`text-center text-sm text-neutral-500 ${
+                      timeScale === "day" && date.toDateString() === new Date().toDateString()
+                        ? "bg-blue-100 font-bold rounded"
+                        : ""
+                    }`}
+                  >
+                    {formatHeaderDate(date, index)}
                   </div>
                 ))}
               </div>
@@ -233,11 +268,12 @@ const GanttChart = () => {
                       </p>
                       <p className="text-xs text-neutral-500">{task.projectName}</p>
                     </div>
-                    <div className="flex-1 h-8 grid grid-cols-7 gap-1">
+                    <div className={`flex-1 h-8 grid grid-cols-${dates.length} gap-1`}>
                       <div
                         className={cn(
                           `${bgColorClass} border rounded-md flex items-center px-2`,
-                          "col-start-1 col-end-8" // This will be overridden by inline style
+                          // The following is overridden by inline style
+                          `col-start-1 col-end-${dates.length + 1}`
                         )}
                         style={{
                           gridColumnStart,

@@ -50,7 +50,7 @@ const Projects = () => {
   }, []);
 
   // Fetch projects data
-  const { data: projects, isLoading, error } = useQuery({
+  const { data: projects, isLoading, error } = useQuery<Project[], Error>({
     queryKey: ['/api/projects'],
   });
 
@@ -70,11 +70,27 @@ const Projects = () => {
 
   // Sort projects
   const sortedProjects = filteredProjects ? [...filteredProjects].sort((a, b) => {
-    if (a[sortConfig.key] < b[sortConfig.key]) {
-      return sortConfig.direction === 'asc' ? -1 : 1;
+    const aValue = a[sortConfig.key];
+    const bValue = b[sortConfig.key];
+    const isAsc = sortConfig.direction === 'asc';
+
+    // Handle undefined values: undefined goes last in ascending, first in descending
+    if (aValue === undefined && bValue === undefined) {
+      return 0;
     }
-    if (a[sortConfig.key] > b[sortConfig.key]) {
-      return sortConfig.direction === 'asc' ? 1 : -1;
+    if (aValue === undefined) {
+      return isAsc ? 1 : -1;
+    }
+    if (bValue === undefined) {
+      return isAsc ? -1 : 1;
+    }
+
+    // Compare defined values
+    if (aValue < bValue) {
+      return isAsc ? -1 : 1;
+    }
+    if (aValue > bValue) {
+      return isAsc ? 1 : -1;
     }
     return 0;
   }) : [];
@@ -205,91 +221,43 @@ const Projects = () => {
   ];
 
   return (
-    <div className="p-4 md:p-6 space-y-6">
-      {/* Header with Actions */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+    <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
         <div>
-          <h1 className="text-2xl md:text-3xl font-heading font-bold text-neutral-900">
-            Projets
+          <h1 className="text-3xl md:text-4xl font-heading font-bold text-[#162032]">
+            Projets (Enhanced)
           </h1>
-          <p className="text-neutral-500 mt-1">
-            Gérez tous vos projets de construction
+          <p className="text-[#b0b8c1] mt-2">
+            Liste et gestion avancée de vos projets
           </p>
         </div>
-        <Button className="flex items-center">
-          <i className="fas fa-plus mr-2"></i>
-          Nouveau projet
-        </Button>
-      </div>
-
-      {/* Filters and Search */}
-      <div className="flex flex-col md:flex-row gap-4">
-        <div className="relative flex-1">
-          <SearchInput
-            placeholder="Rechercher un projet..."
-            value={searchTerm}
-            onChange={(value) => setSearchTerm(value)}
-            suggestions={["Projets résidentiels", "Projets commerciaux", "Projets en retard"]}
-            onSuggestionClick={(suggestion) => setSearchTerm(suggestion)}
-          />
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <Button
-            variant={filter === "all" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter("all")}
-          >
-            Tous
-          </Button>
-          <Button
-            variant={filter === "active" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter("active")}
-          >
-            Actifs
-          </Button>
-          <Button
-            variant={filter === "completed" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter("completed")}
-          >
-            Terminés
-          </Button>
-          <Button
-            variant={filter === "on_hold" ? "default" : "outline"}
-            size="sm"
-            onClick={() => setFilter("on_hold")}
-          >
-            En pause
+        <div className="flex gap-4">
+          <Button variant="outline" className="flex items-center rounded-xl px-6 py-3 text-base">
+            <i className="fas fa-plus mr-2"></i>
+            Nouveau projet
           </Button>
         </div>
       </div>
-
+      {/* Search and Filters */}
+      <div className="flex flex-col md:flex-row md:items-center gap-4 mb-6">
+        <SearchInput
+          value={searchTerm}
+          onChange={setSearchTerm}
+          placeholder="Rechercher un projet..."
+          className="rounded-xl shadow-sm border border-neutral-200 px-4 py-3 bg-white"
+        />
+        {/* Add filter and sort controls here if needed */}
+      </div>
       {/* Projects Table */}
-      <Card className="shadow-sm border border-neutral-200">
-        <CardContent className="p-0">
-          <ResponsiveTable
-            data={sortedProjects}
-            columns={columns}
-            isLoading={isLoading}
-            error={error ? "Impossible de charger les projets. Veuillez réessayer plus tard." : undefined}
-            emptyMessage="Aucun projet ne correspond à votre recherche."
-            emptyIcon="fa-building"
-            emptyAction={{
-              label: "Créer un projet",
-              onClick: () => showNotification({ 
-                title: "Fonctionnalité à venir", 
-                description: "La création de projets sera disponible prochainement.",
-                variant: "info" 
-              })
-            }}
-            onRowClick={handleViewProject}
-            sortKey={sortConfig.key}
-            sortDirection={sortConfig.direction}
-            onSort={handleSort}
-          />
-        </CardContent>
-      </Card>
+      <div className="bg-white rounded-2xl shadow-lg p-6">        <ResponsiveTable
+          columns={columns}
+          data={sortedProjects}
+          isLoading={isLoading}
+          onSort={handleSort}
+          emptyMessage="Aucun projet trouvé."
+        />
+      </div>
     </div>
   );
 };

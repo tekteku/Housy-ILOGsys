@@ -1,11 +1,11 @@
 import React, { useState } from "react"
-import { Input, type InputProps } from "@/components/ui/input"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 import { HelpTooltip } from "@/components/ui/enhanced-tooltip"
 import { Check, X, AlertCircle } from "lucide-react"
 
-export interface InputWithValidationProps extends Omit<InputProps, "onChange"> {
+export interface InputWithValidationProps extends Omit<React.ComponentProps<typeof Input>, "onChange"> {
   label?: string
   hint?: string
   helpText?: string
