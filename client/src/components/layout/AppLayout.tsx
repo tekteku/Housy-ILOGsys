@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import MobileNav from "./MobileNav";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CompanyLogo from "../ui/CompanyLogo";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -26,30 +27,33 @@ const AppLayout = ({ children }: AppLayoutProps) => {
     <div className="min-h-screen flex flex-col lg:flex-row bg-neutral-50 font-sans">
       {/* Mobile Header */}
       {isMobile && (
-        <header className="bg-white shadow-sm py-3 px-4 flex items-center justify-between z-10">
+        <header className="bg-white dark:bg-gray-800 shadow-sm py-3 px-4 flex items-center justify-between z-10">
           <div className="flex items-center">
             <CompanyLogo />
-            <span className="font-heading font-bold text-lg ml-2 text-neutral-800">Housy</span>
+            <span className="font-heading font-bold text-lg ml-2 text-neutral-800 dark:text-neutral-200">Housy</span>
           </div>
-          <button
-            onClick={toggleMobileSidebar}
-            className="p-2 text-neutral-500 hover:text-neutral-700 focus:outline-none"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
+            <button
+              onClick={toggleMobileSidebar}
+              className="p-2 text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300 focus:outline-none"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
+          </div>
         </header>
       )}
 

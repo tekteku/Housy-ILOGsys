@@ -28,6 +28,10 @@ import paymentRoutes from './routes/payments';
 import notificationRoutes from './routes/notifications';
 import projectCategoryRoutes from './routes/project-categories';
 
+// Import new enhanced component routes
+import progressTrackingRoutes from './routes/progress-tracking';
+import teamManagementRoutes from './routes/team-management';
+
 // Import enhanced mega routes
 import megaRoutes from './routes/mega-routes';
 
@@ -125,6 +129,10 @@ app.use('/api/project-updates', projectUpdateRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/project-categories', projectCategoryRoutes);
+
+// New enhanced component routes
+app.use('/api/projects', progressTrackingRoutes);
+app.use('/api/projects', teamManagementRoutes);
 
 // Enhanced mega routes with comprehensive features
 app.use('/api/mega', megaRoutes);

@@ -1,6 +1,7 @@
 import { useLocation, Link } from "wouter";
 import { cn } from "@/lib/utils";
 import CompanyLogo from "../ui/CompanyLogo";
+import { ThemeToggle } from "../ui/ThemeToggle";
 
 const navigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: 'home', label: "Tableau de bord" },
@@ -72,7 +73,12 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
           })}
         </nav>
         {/* Section Utilisateur en bas */}
-        <div className="p-6 border-t border-[#22304a]">
+        <div className="p-6 border-t border-[#22304a] space-y-4">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-[#b0b8c1]">Thème</span>
+            <ThemeToggle />
+          </div>
+          
           <div className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center text-[#162032] font-bold text-lg">
               AB

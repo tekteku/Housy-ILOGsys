@@ -658,4 +658,161 @@ router.get('/analytics/budget-vs-actual/:projectId', async (req, res) => {
   }
 });
 
+// Nouvel endpoint pour le dashboard financier global
+router.get('/dashboard', async (req, res) => {
+  try {
+    const { period = '6months' } = req.query;
+    const { startDate, endDate } = getDateRange(period as string);
+
+    // Métriques principales
+    const metrics = {
+      totalRevenue: 850000,
+      totalExpenses: 620000,
+      profit: 230000,
+      profitMargin: 27.1,
+      activeProjects: 12,
+      completedProjects: 45,
+      pendingPayments: 125000,
+      monthlyGrowth: 15.3
+    };
+
+    // Données pour les graphiques
+    const chartData = [
+      { month: 'Jan', revenue: 120000, expenses: 85000, profit: 35000 },
+      { month: 'Fév', revenue: 135000, expenses: 95000, profit: 40000 },
+      { month: 'Mar', revenue: 150000, expenses: 110000, profit: 40000 },
+      { month: 'Avr', revenue: 145000, expenses: 105000, profit: 40000 },
+      { month: 'Mai', revenue: 165000, expenses: 115000, profit: 50000 },
+      { month: 'Juin', revenue: 135000, expenses: 110000, profit: 25000 }
+    ];
+
+    // Projets par catégorie
+    const projectsByCategory = [
+      { name: 'Construction Villa', value: 8, color: '#0088FE' },
+      { name: 'Rénovation', value: 6, color: '#00C49F' },
+      { name: 'Extension', value: 4, color: '#FFBB28' },
+      { name: 'Commercial', value: 3, color: '#FF8042' },
+      { name: 'Aménagement', value: 2, color: '#8884D8' }
+    ];
+
+    res.json(createResponse(true, 'Dashboard financier récupéré avec succès', {
+      metrics,
+      chartData,
+      projectsByCategory
+    }));
+  } catch (error) {
+    console.error('Erreur dashboard financier:', error);
+    res.status(500).json(createResponse(false, 'Erreur lors de la récupération du dashboard', undefined, error.message));
+  }
+});
+
+// Endpoint pour les données financières d'un projet spécifique
+router.get('/project/:projectId', async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { period = '6months' } = req.query;
+
+    if (!projectId) {
+      return res.status(400).json(createResponse(false, 'ID du projet requis'));
+    }
+
+    // Métriques du projet
+    const metrics = {
+      totalRevenue: 185000,
+      totalExpenses: 135000,
+      profit: 50000,
+      profitMargin: 27.0,
+      activeProjects: 1,
+      completedProjects: 0,
+      pendingPayments: 35000,
+      monthlyGrowth: 8.5
+    };
+
+    // Données temporelles pour ce projet
+    const chartData = [
+      { month: 'Jan', revenue: 0, expenses: 0, profit: 0 },
+      { month: 'Fév', revenue: 55000, expenses: 40000, profit: 15000 },
+      { month: 'Mar', revenue: 65000, expenses: 45000, profit: 20000 },
+      { month: 'Avr', revenue: 65000, expenses: 50000, profit: 15000 }
+    ];
+
+    res.json(createResponse(true, 'Données financières du projet récupérées', {
+      metrics,
+      chartData,
+      projectsByCategory: [] // Pas applicable pour un projet spécifique
+    }));
+  } catch (error) {
+    console.error('Erreur données financières projet:', error);
+    res.status(500).json(createResponse(false, 'Erreur lors de la récupération des données', undefined, error.message));
+  }
+});
+
+// Endpoint pour l'export de données financières
+router.get('/export', async (req, res) => {
+  try {
+    const { format, period = '6months' } = req.query;
+
+    if (!format || !['csv', 'pdf'].includes(format as string)) {
+      return res.status(400).json(createResponse(false, 'Format d\'export invalide'));
+    }
+
+    if (format === 'csv') {
+      const csvContent = `Period,Revenue,Expenses,Profit,Margin\n` +
+        `Janvier,120000,85000,35000,29.2%\n` +
+        `Février,135000,95000,40000,29.6%\n` +
+        `Mars,150000,110000,40000,26.7%\n` +
+        `Avril,145000,105000,40000,27.6%\n` +
+        `Mai,165000,115000,50000,30.3%\n` +
+        `Juin,135000,110000,25000,18.5%`;
+
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', `attachment; filename="financial-report-${period}.csv"`);
+      res.send(csvContent);
+    } else {
+      // Simulation PDF
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="financial-report-${period}.pdf"`);
+      res.send('PDF content simulation');
+    }
+  } catch (error) {
+    console.error('Erreur export financier:', error);
+    res.status(500).json(createResponse(false, 'Erreur lors de l\'export', undefined, error.message));
+  }
+});
+
+// Endpoint pour l'export de données d'un projet spécifique
+router.get('/export/project/:projectId', async (req, res) => {
+  try {
+    const { projectId } = req.params;
+    const { format, period = '6months' } = req.query;
+
+    if (!projectId) {
+      return res.status(400).json(createResponse(false, 'ID du projet requis'));
+    }
+
+    if (!format || !['csv', 'pdf'].includes(format as string)) {
+      return res.status(400).json(createResponse(false, 'Format d\'export invalide'));
+    }
+
+    if (format === 'csv') {
+      const csvContent = `Date,Type,Description,Amount,Category\n` +
+        `2025-02-15,Income,Acompte client,55000,Payment\n` +
+        `2025-02-20,Expense,Matériaux construction,25000,Materials\n` +
+        `2025-03-01,Expense,Main d'oeuvre,15000,Labor\n` +
+        `2025-03-15,Income,Paiement intermédiaire,65000,Payment`;
+
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', `attachment; filename="project-${projectId}-financial-${period}.csv"`);
+      res.send(csvContent);
+    } else {
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="project-${projectId}-financial-${period}.pdf"`);
+      res.send('Project PDF content simulation');
+    }
+  } catch (error) {
+    console.error('Erreur export financier projet:', error);
+    res.status(500).json(createResponse(false, 'Erreur lors de l\'export du projet', undefined, error.message));
+  }
+});
+
 export default router;
