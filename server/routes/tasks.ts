@@ -141,10 +141,14 @@ export const getProjectTasks = async (req: Request, res: Response) => {
     }
 
     // Tri
-    filteredTasks.sort((a, b) => {
-      const aValue = a[sort as keyof Task];
+    filteredTasks.sort((a, b) => {      const aValue = a[sort as keyof Task];
       const bValue = b[sort as keyof Task];
       const multiplier = order === 'desc' ? -1 : 1;
+      
+      // Handle undefined/null values
+      if (aValue == null && bValue == null) return 0;
+      if (aValue == null) return 1 * multiplier;
+      if (bValue == null) return -1 * multiplier;
       
       if (aValue < bValue) return -1 * multiplier;
       if (aValue > bValue) return 1 * multiplier;

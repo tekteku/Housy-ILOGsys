@@ -2,7 +2,7 @@
 
 ## Vue d'ensemble
 
-Le composant `SearchInput` est un composant React réutilisable qui fournit une interface de recherche avancée avec des fonctionnalités de debouncing, de nettoyage et de gestion d'état. Il est conçu pour être flexible et personnalisable selon les besoins de l'application HousyTunisia.
+Le composant `SearchInput` est un composant React réutilisable qui fournit une interface de recherche avancée avec des fonctionnalités de debouncing, de nettoyage et de gestion d'état. Il est conçu pour être flexible et personnalisable selon les besoins de l'application Housy.
 
 ## Localisation du fichier
 ```
@@ -245,7 +245,7 @@ Le composant implémente un système de debouncing sophistiqué :
 - États hover et focus bien définis
 - Responsive design avec classes conditionnelles
 
-## Cas d'utilisation dans HousyTunisia
+## Cas d'utilisation dans Housy
 
 ### 1. Recherche de projets
 
@@ -338,4 +338,4 @@ Le composant `SearchInput` est un exemple bien conçu d'un composant React moder
 - **Accessibilité** : Standards web respectés
 - **Maintenabilité** : Code propre et documenté
 
-Il s'intègre parfaitement dans l'architecture de HousyTunisia et peut être facilement étendu pour répondre aux besoins futurs de l'application.
+Il s'intègre parfaitement dans l'architecture de Housy et peut être facilement étendu pour répondre aux besoins futurs de l'application.

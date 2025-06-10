@@ -327,7 +327,11 @@ router.get('/feed/project/:projectId', async (req, res) => {
         description: payment.description || `Paiement de ${payment.amount} DT reçu pour le projet.`,
         data: payment
       }))
-    ].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    ].sort((a, b) => {
+      const dateA = new Date(a.date || new Date());
+      const dateB = new Date(b.date || new Date());
+      return dateB.getTime() - dateA.getTime();
+    });
 
     res.json({
       message: "Feed de mises à jour récupéré avec succès",

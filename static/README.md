@@ -1,6 +1,6 @@
-# Static File Structure for HousyTunisia
+# Static File Structure for Housy
 
-Ce document explique la structure des fichiers statiques pour l'application HousyTunisia et comment les utiliser correctement.
+Ce document explique la structure des fichiers statiques pour l'application Housy et comment les utiliser correctement.
 
 ## Structure des dossiers
 

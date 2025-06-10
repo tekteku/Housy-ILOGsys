@@ -575,11 +575,13 @@ export const projectCategories = pgTable("project_categories", {
   name: text("name").notNull().unique(),
   description: text("description"),
   basePrice: decimal("base_price", { precision: 12, scale: 2 }).notNull(),
-  unit: text("unit").notNull().default("m²"), // m², piece, linear_m
-  complexity: text("complexity").notNull().default("medium"), // simple, medium, complex
+  unit: text("unit").notNull().default("m²"), // m², m lineaire, forfait
+  complexity: text("complexity").notNull().default("medium"), // low, medium, high
   duration: integer("duration").notNull(), // estimated duration in days
-  materials: jsonb("materials"), // predefined materials list
+  materials: jsonb("materials"), // material breakdown percentages
   laborCost: decimal("labor_cost", { precision: 10, scale: 2 }),
+  projectType: text("project_type").default("construction_neuve"), // construction_neuve, renovation, extension, achat_cle_en_main, amenagement, transformation, rehabilitation_energetique
+  tunisianSpecifics: jsonb("tunisian_specifics"), // climate considerations, local regulations, traditional materials
   isActive: boolean("is_active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
@@ -633,10 +635,10 @@ export const quotations = pgTable("quotations", {
   totalCost: decimal("total_cost", { precision: 12, scale: 2 }).notNull(),
   laborCost: decimal("labor_cost", { precision: 12, scale: 2 }).notNull(),
   materialCost: decimal("material_cost", { precision: 12, scale: 2 }).notNull(),
-  equipmentCost: decimal("equipment_cost", { precision: 12, scale: 2 }).default(0),
-  overheadCost: decimal("overhead_cost", { precision: 12, scale: 2 }).default(0),
+  equipmentCost: decimal("equipment_cost", { precision: 12, scale: 2 }).default("0"),
+  overheadCost: decimal("overhead_cost", { precision: 12, scale: 2 }).default("0"),
   profitMargin: doublePrecision("profit_margin").default(15), // percentage
-  discount: decimal("discount", { precision: 10, scale: 2 }).default(0),
+  discount: decimal("discount", { precision: 10, scale: 2 }).default("0"),
   finalAmount: decimal("final_amount", { precision: 12, scale: 2 }).notNull(),
   currency: text("currency").notNull().default("TND"),
   validUntil: timestamp("valid_until").notNull(),
@@ -675,7 +677,7 @@ export const activeProjects = pgTable("active_projects", {
   location: text("location").notNull(),
   area: doublePrecision("area").notNull(),
   contractValue: decimal("contract_value", { precision: 12, scale: 2 }).notNull(),
-  paidAmount: decimal("paid_amount", { precision: 12, scale: 2 }).default(0),
+  paidAmount: decimal("paid_amount", { precision: 12, scale: 2 }).default("0"),
   remainingAmount: decimal("remaining_amount", { precision: 12, scale: 2 }).notNull(),
   startDate: timestamp("start_date").notNull(),
   plannedEndDate: timestamp("planned_end_date").notNull(),
@@ -718,7 +720,7 @@ export const projectPhases = pgTable("project_phases", {
   status: text("status").notNull().default("not_started"), // not_started, in_progress, completed, delayed, cancelled
   progress: doublePrecision("progress").notNull().default(0),
   budget: decimal("budget", { precision: 12, scale: 2 }).notNull(),
-  actualCost: decimal("actual_cost", { precision: 12, scale: 2 }).default(0),
+  actualCost: decimal("actual_cost", { precision: 12, scale: 2 }).default("0"),
   materials: jsonb("materials"), // required materials for this phase
   laborRequired: jsonb("labor_required"), // labor requirements
   equipment: jsonb("equipment"), // required equipment
@@ -745,7 +747,7 @@ export const projectUpdates = pgTable("project_updates", {
   status: text("status").notNull().default("active"), // active, resolved, closed
   priority: text("priority").default("medium"), // low, medium, high, critical
   progress: doublePrecision("progress"),
-  budgetImpact: decimal("budget_impact", { precision: 10, scale: 2 }).default(0),
+  budgetImpact: decimal("budget_impact", { precision: 10, scale: 2 }).default("0"),
   scheduleImpact: integer("schedule_impact").default(0), // days
   qualityScore: doublePrecision("quality_score"),
   photos: jsonb("photos"), // update photos
@@ -761,13 +763,18 @@ export const projectUpdates = pgTable("project_updates", {
   isClientVisible: boolean("is_client_visible").default(false),
   isPublic: boolean("is_public").default(false),
   tags: jsonb("tags"),
-  parentUpdateId: integer("parent_update_id").references(() => projectUpdates.id),
+  parentUpdateId: integer("parent_update_id"),
   createdBy: integer("created_by").notNull().references(() => users.id),
   reviewedBy: integer("reviewed_by").references(() => users.id),
   reviewDate: timestamp("review_date"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => [
+  foreignKey({
+    columns: [table.parentUpdateId],
+    foreignColumns: [table.id],
+  }),
+]);
 
 // Payments table - Gestion des paiements
 export const payments = pgTable("payments", {
@@ -791,8 +798,8 @@ export const payments = pgTable("payments", {
   receiptPath: text("receipt_path"), // path to receipt file
   bankAccount: text("bank_account"),
   transactionId: text("transaction_id"),
-  fees: decimal("fees", { precision: 8, scale: 2 }).default(0),
-  taxes: decimal("taxes", { precision: 8, scale: 2 }).default(0),
+  fees: decimal("fees", { precision: 8, scale: 2 }).default("0"),
+  taxes: decimal("taxes", { precision: 8, scale: 2 }).default("0"),
   netAmount: decimal("net_amount", { precision: 12, scale: 2 }).notNull(),
   clientConfirmation: boolean("client_confirmation").default(false),
   confirmationDate: timestamp("confirmation_date"),
@@ -825,7 +832,7 @@ export const enhancedProjectDocuments = pgTable("enhanced_project_documents", {
   mimeType: text("mime_type"),
   version: text("version").default("1.0"),
   isLatest: boolean("is_latest").default(true),
-  previousVersionId: integer("previous_version_id").references(() => enhancedProjectDocuments.id),
+  previousVersionId: integer("previous_version_id"),
   tags: jsonb("tags"),
   metadata: jsonb("metadata"), // file metadata
   thumbnail: text("thumbnail"), // thumbnail path for images
@@ -840,7 +847,12 @@ export const enhancedProjectDocuments = pgTable("enhanced_project_documents", {
   approvalDate: timestamp("approval_date"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => [
+  foreignKey({
+    columns: [table.previousVersionId],
+    foreignColumns: [table.id],
+  }),
+]);
 
 // Admin statistics table - KPIs et statistiques
 export const adminStatistics = pgTable("admin_statistics", {
@@ -858,10 +870,10 @@ export const adminStatistics = pgTable("admin_statistics", {
   completedProjects: integer("completed_projects").default(0),
   delayedProjects: integer("delayed_projects").default(0),
   cancelledProjects: integer("cancelled_projects").default(0),
-  totalRevenue: decimal("total_revenue", { precision: 15, scale: 2 }).default(0),
-  pendingPayments: decimal("pending_payments", { precision: 12, scale: 2 }).default(0),
-  overduePayments: decimal("overdue_payments", { precision: 12, scale: 2 }).default(0),
-  averageProjectValue: decimal("average_project_value", { precision: 12, scale: 2 }).default(0),
+  totalRevenue: decimal("total_revenue", { precision: 15, scale: 2 }).default("0"),
+  pendingPayments: decimal("pending_payments", { precision: 12, scale: 2 }).default("0"),
+  overduePayments: decimal("overdue_payments", { precision: 12, scale: 2 }).default("0"),
+  averageProjectValue: decimal("average_project_value", { precision: 12, scale: 2 }).default("0"),
   averageProjectDuration: doublePrecision("average_project_duration").default(0), // in days
   clientSatisfactionAvg: doublePrecision("client_satisfaction_avg").default(0),
   qualityScoreAvg: doublePrecision("quality_score_avg").default(0),
@@ -911,14 +923,19 @@ export const enhancedNotifications = pgTable("enhanced_notifications", {
   deliveryStatus: jsonb("delivery_status"), // delivery status for each method
   metadata: jsonb("metadata"), // additional data
   tags: jsonb("tags"),
-  parentNotificationId: integer("parent_notification_id").references(() => enhancedNotifications.id),
+  parentNotificationId: integer("parent_notification_id"),
   batchId: text("batch_id"), // for grouping related notifications
   triggeredBy: integer("triggered_by").references(() => users.id),
   acknowledgedBy: integer("acknowledged_by").references(() => users.id),
   acknowledgedAt: timestamp("acknowledged_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+}, (table) => [
+  foreignKey({
+    columns: [table.parentNotificationId],
+    foreignColumns: [table.id],
+  }),
+]);
 
 // System settings table - Configuration système
 export const systemSettings = pgTable("system_settings", {

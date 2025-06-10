@@ -1,4 +1,4 @@
-# 🏗️ Base de Données PostgreSQL - HousyTunisia
+# 🏗️ Base de Données PostgreSQL - Housy
 ## Documentation Complète du Système de Gestion de Construction
 
 ---
@@ -650,7 +650,7 @@ Votre base de données PostgreSQL est l'épine dorsale de ce système sophistiqu
 ✅ **Performance optimisée** pour les opérations critiques  
 ✅ **Intégration transparente** avec l'écosystème technologique  
 
-Cette architecture de base de données robuste permet à HousyTunisia de servir efficacement l'industrie de la construction tunisienne avec des outils modernes, des analyses intelligentes et une gestion complète des projets ! 🏗️✨
+Cette architecture de base de données robuste permet à Housy de servir efficacement l'industrie de la construction tunisienne avec des outils modernes, des analyses intelligentes et une gestion complète des projets ! 🏗️✨
 
 ---
 

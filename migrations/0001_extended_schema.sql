@@ -649,8 +649,8 @@ INSERT INTO "project_categories" ("name", "description", "base_price", "unit", "
 
 -- Default system settings
 INSERT INTO "system_settings" ("category", "setting_key", "setting_name", "description", "data_type", "value", "default_value") VALUES
-('general', 'company_name', 'Nom de l''entreprise', 'Nom officiel de l''entreprise de construction', 'string', 'HousyTunisia', 'HousyTunisia'),
-('general', 'company_email', 'Email de l''entreprise', 'Adresse email principale de l''entreprise', 'string', 'contact@housytunisia.tn', 'contact@housytunisia.tn'),
+('general', 'company_name', 'Nom de l''entreprise', 'Nom officiel de l''entreprise de construction', 'string', 'Housy', 'Housy'),
+('general', 'company_email', 'Email de l''entreprise', 'Adresse email principale de l''entreprise', 'string', 'contact@housy.tn', 'contact@housy.tn'),
 ('general', 'company_phone', 'Téléphone de l''entreprise', 'Numéro de téléphone principal', 'string', '+216 XX XXX XXX', '+216 XX XXX XXX'),
 ('general', 'default_currency', 'Devise par défaut', 'Devise utilisée par défaut dans le système', 'string', 'TND', 'TND'),
 ('general', 'tax_rate', 'Taux de TVA', 'Taux de TVA appliqué aux devis et factures', 'number', '19', '19'),

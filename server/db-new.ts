@@ -1,4 +1,4 @@
-// filepath: c:\Users\TaherCh\Downloads\HousyTunisia\HousyTunisia\server\db.ts
+// filepath: c:\Users\TaherCh\Downloads\Housy\Housy\server\db.ts
 import * as schema from "../shared/schema.js";
 import pg from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';

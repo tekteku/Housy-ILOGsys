@@ -11,7 +11,7 @@ import {
   BarChart3,
   LineChart
 } from 'lucide-react';
-import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Cell, BarChart, Bar } from 'recharts';
+import { LineChart as RechartsLineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart as RechartsPieChart, Pie, Cell, BarChart, Bar } from 'recharts';
 
 interface FinancialMetrics {
   totalRevenue: number;
@@ -316,13 +316,12 @@ export const FinancialDashboard: React.FC<FinancialDashboardProps> = ({ projectI
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <RechartsPieChart>
-                <Tooltip formatter={(value) => `${value} projets`} />
-                <pie 
+                <Tooltip formatter={(value) => `${value} projets`} />                <Pie 
                   data={projectsByCategory}
                   cx="50%"
                   cy="50%"
                   labelLine={false}
-                  label={(entry) => entry.name}
+                  label={(entry: any) => entry.name}
                   outerRadius={80}
                   fill="#8884d8"
                   dataKey="value"
@@ -330,7 +329,7 @@ export const FinancialDashboard: React.FC<FinancialDashboardProps> = ({ projectI
                   {projectsByCategory.map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
-                </pie>
+                </Pie>
               </RechartsPieChart>
             </ResponsiveContainer>
           </div>

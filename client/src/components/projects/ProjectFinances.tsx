@@ -167,10 +167,16 @@ export default function ProjectFinances({ projectId }: ProjectFinancesProps) {
       queryClient.invalidateQueries({ queryKey: ['cash-flow', projectId] });
       setIsAddTransactionOpen(false);
       setNewTransaction({ type: 'expense', amount: '', description: '', category: '' });
-      showNotification('Transaction ajoutée avec succès', 'success');
+      showNotification({ 
+        title: 'Transaction ajoutée avec succès', 
+        variant: 'success' 
+      });
     },
     onError: () => {
-      showNotification('Erreur lors de l\'ajout de la transaction', 'error');
+      showNotification({ 
+        title: 'Erreur lors de l\'ajout de la transaction', 
+        variant: 'destructive' 
+      });
     }
   });
 
@@ -234,7 +240,10 @@ export default function ProjectFinances({ projectId }: ProjectFinancesProps) {
 
   const handleAddTransaction = () => {
     if (!newTransaction.amount || !newTransaction.description) {
-      showNotification('Veuillez remplir tous les champs obligatoires', 'error');
+      showNotification({ 
+        title: 'Veuillez remplir tous les champs obligatoires', 
+        variant: 'destructive' 
+      });
       return;
     }
     addTransactionMutation.mutate(newTransaction);
@@ -255,9 +264,15 @@ export default function ProjectFinances({ projectId }: ProjectFinancesProps) {
       document.body.removeChild(a);
       window.URL.revokeObjectURL(url);
       
-      showNotification('Rapport exporté avec succès', 'success');
+      showNotification({ 
+        title: 'Rapport exporté avec succès', 
+        variant: 'success' 
+      });
     } catch (error) {
-      showNotification('Erreur lors de l\'export du rapport', 'error');
+      showNotification({ 
+        title: 'Erreur lors de l\'export du rapport', 
+        variant: 'destructive' 
+      });
     }
   };
 

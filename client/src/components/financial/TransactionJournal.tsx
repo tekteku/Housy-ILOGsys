@@ -39,6 +39,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { useTheme } from '@/contexts/ThemeContext';
 import { formatDate, formatCurrency } from '@/lib/utils';
 
+// Animation imports
+import { FadeIn } from '../animations';
+
 interface FinancialTransaction {
   id: number;
   projectId?: number;
@@ -219,7 +222,7 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
   });
 
   // Calculate summary statistics
-  const summary = filteredTransactions.reduce((acc, transaction) => {
+  const summary = filteredTransactions.reduce((acc: any, transaction: any) => {
     if (transaction.transactionType === 'income') {
       acc.totalIncome += transaction.amount;
     } else if (transaction.transactionType === 'expense') {
@@ -274,9 +277,8 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
-
   // Get unique categories for filter
-  const categories = [...new Set(transactions.map((t: FinancialTransaction) => t.category))];
+  const categories = Array.from(new Set(transactions.map((t: FinancialTransaction) => t.category))).filter(Boolean) as string[];
 
   return (
     <div className="space-y-6">
@@ -314,14 +316,14 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
                 <Plus className="h-4 w-4" />
                 Nouvelle Transaction
               </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>Créer une nouvelle transaction</DialogTitle>
-                <DialogDescription>
-                  Ajoutez une nouvelle transaction financière au journal.
-                </DialogDescription>
-              </DialogHeader>
+            </DialogTrigger>            <DialogContent className="max-w-2xl">
+              <FadeIn>
+                <DialogHeader>
+                  <DialogTitle>Créer une nouvelle transaction</DialogTitle>
+                  <DialogDescription>
+                    Ajoutez une nouvelle transaction financière au journal.
+                  </DialogDescription>
+                </DialogHeader>
               
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -458,14 +460,14 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
                   onClick={() => setIsCreateDialogOpen(false)}
                 >
                   Annuler
-                </Button>
-                <Button
+                </Button>                <Button
                   onClick={() => createTransactionMutation.mutate(newTransaction)}
                   disabled={!newTransaction.description || !newTransaction.amount || !newTransaction.category}
                 >
                   Créer Transaction
                 </Button>
               </div>
+              </FadeIn>
             </DialogContent>
           </Dialog>
         </div>

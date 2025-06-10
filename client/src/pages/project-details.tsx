@@ -34,6 +34,9 @@ import ProgressTracking from '@/components/progress/ProgressTracking';
 import TeamManagement from '@/components/team/TeamManagement';
 import { FileDropzone } from '@/components/ui/FileDropzone';
 
+// Animation imports
+import { PageTransition, FadeIn, AnimatedButton, HoverCard, StaggeredList } from '@/components/animations';
+
 // Lazy load tab components for performance
 const ProjectInfo = React.lazy(() => import('@/components/project/ProjectInfo'));
 const ProjectFiles = React.lazy(() => import('@/components/projects/ProjectFiles'));
@@ -217,23 +220,23 @@ const ProjectDetailsPage: React.FC = () => {
   const statusConfig = getStatusConfig(project.status);
   const priorityConfig = getPriorityConfig(project.priority);
   const StatusIcon = statusConfig.icon;
-
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
-        <div className="p-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => window.history.back()}
-                className="flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Retour
-              </Button>
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <FadeIn direction="down" delay={0.1}>
+          <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+            <div className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">                  <AnimatedButton
+                    variant="secondary"
+                    size="sm"
+                    onClick={() => window.history.back()}
+                    className="flex items-center gap-2"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                    Retour
+                  </AnimatedButton>
               
               <div>
                 <div className="flex items-center space-x-3">
@@ -248,126 +251,124 @@ const ProjectDetailsPage: React.FC = () => {
                 </div>
                 <p className="text-muted-foreground mt-1">{project.description}</p>
               </div>
-            </div>
-
-            <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm">
+            </div>            <div className="flex items-center space-x-2">
+              <AnimatedButton variant="secondary" size="sm">
                 <i className="fas fa-edit mr-2 h-4 w-4"></i>
                 Modifier
-              </Button>
-              <Button size="sm">
+              </AnimatedButton>
+              <AnimatedButton size="sm">
                 <i className="fas fa-share mr-2 h-4 w-4"></i>
                 Partager
-              </Button>
+              </AnimatedButton>
             </div>
           </div>
         </div>
       </div>
-
-      {/* Stats Cards */}
-      <div className="p-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Progression</p>
-                  <p className="text-2xl font-bold">{project.progress}%</p>
+    </FadeIn>      {/* Stats Cards */}
+      <FadeIn direction="up" delay={0.2}>
+        <div className="p-6">
+          <StaggeredList className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Progression</p>
+                    <p className="text-2xl font-bold">{project.progress}%</p>
+                  </div>
+                  <Progress value={project.progress} className="w-16" />
                 </div>
-                <Progress value={project.progress} className="w-16" />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </HoverCard>
 
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Budget utilisé</p>
-                  <p className="text-xl font-bold">{formatCurrency(project.spent)}</p>
-                  <p className="text-xs text-muted-foreground">
-                    sur {formatCurrency(project.budget)}
-                  </p>
+            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Budget utilisé</p>
+                    <p className="text-xl font-bold">{formatCurrency(project.spent)}</p>
+                    <p className="text-xs text-muted-foreground">
+                      sur {formatCurrency(project.budget)}
+                    </p>
+                  </div>
+                  <DollarSign className="h-8 w-8 text-green-500" />
                 </div>
-                <DollarSign className="h-8 w-8 text-green-500" />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </HoverCard>            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Tâches</p>
+                    <p className="text-2xl font-bold">{project.tasksCompleted}/{project.tasksTotal}</p>
+                  </div>
+                  <CheckCircle className="h-8 w-8 text-blue-500" />
+                </div>
+              </CardContent>
+            </HoverCard>
 
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Tâches</p>
-                  <p className="text-2xl font-bold">{project.tasksCompleted}/{project.tasksTotal}</p>
+            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Équipe</p>
+                    <p className="text-2xl font-bold">{project.teamMembers}</p>
+                    <p className="text-xs text-muted-foreground">membres</p>
+                  </div>
+                  <Users className="h-8 w-8 text-purple-500" />
                 </div>
-                <CheckCircle className="h-8 w-8 text-blue-500" />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </HoverCard>
+          </StaggeredList>        {/* Additional Info Cards */}
+        <FadeIn direction="up" delay={0.3}>
+          <StaggeredList className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Dates du projet</p>
+                    <p className="text-xs text-muted-foreground">
+                      {formatDate(project.startDate)} - {formatDate(project.endDate)}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </HoverCard>
 
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-muted-foreground">Équipe</p>
-                  <p className="text-2xl font-bold">{project.teamMembers}</p>
-                  <p className="text-xs text-muted-foreground">membres</p>
+            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <MapPin className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Localisation</p>
+                    <p className="text-xs text-muted-foreground">{project.location}</p>
+                  </div>
                 </div>
-                <Users className="h-8 w-8 text-purple-500" />
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+              </CardContent>
+            </HoverCard>
 
-        {/* Additional Info Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <Calendar className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm font-medium">Dates du projet</p>
-                  <p className="text-xs text-muted-foreground">
-                    {formatDate(project.startDate)} - {formatDate(project.endDate)}
-                  </p>
+            <HoverCard>
+              <CardContent className="p-4">
+                <div className="flex items-center space-x-3">
+                  <Clock className="h-5 w-5 text-muted-foreground" />
+                  <div>
+                    <p className="text-sm font-medium">Dernière activité</p>
+                    <p className="text-xs text-muted-foreground">
+                      {new Intl.DateTimeFormat('fr-FR', {
+                        day: 'numeric',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      }).format(new Date(project.lastActivity))}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </HoverCard>
+          </StaggeredList>        </FadeIn>
 
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <MapPin className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm font-medium">Localisation</p>
-                  <p className="text-xs text-muted-foreground">{project.location}</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardContent className="p-4">
-              <div className="flex items-center space-x-3">
-                <Clock className="h-5 w-5 text-muted-foreground" />
-                <div>
-                  <p className="text-sm font-medium">Dernière activité</p>
-                  <p className="text-xs text-muted-foreground">
-                    {new Intl.DateTimeFormat('fr-FR', {
-                      day: 'numeric',
-                      month: 'short',
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    }).format(new Date(project.lastActivity))}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>        {/* Tabs */}
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
+        {/* Tabs */}
+        <FadeIn direction="up" delay={0.4}>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid grid-cols-6 w-full max-w-4xl">
             <TabsTrigger value="info" className="flex items-center gap-2">
               <Info className="h-4 w-4" />
@@ -439,14 +440,15 @@ const ProjectDetailsPage: React.FC = () => {
             </Card>            <Suspense fallback={<Skeleton className="h-96 w-full" />}>
               <ProjectFiles projectId={project.id} />
             </Suspense>
-          </TabsContent>
-
-          <TabsContent value="finances" className="space-y-6">
+          </TabsContent>          <TabsContent value="finances" className="space-y-6">
             <FinancialDashboard projectId={project.id} />
           </TabsContent>
         </Tabs>
+        </FadeIn>
       </div>
+    </FadeIn>
     </div>
+  </PageTransition>
   );
 };
 

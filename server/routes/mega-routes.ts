@@ -1,5 +1,5 @@
 /**
- * Enhanced Mega Routes File for HousyTunisia Construction Management
+ * Enhanced Mega Routes File for Housy Construction Management
  * 
  * This file consolidates all routes with enhanced features:
  * - Centralized error handling middleware
@@ -11,7 +11,7 @@
  * - Async handler utility
  * - JSDoc comments for API documentation
  * 
- * @author HousyTunisia Development Team
+ * @author Housy Development Team
  * @version 2.0.0
  */
 
@@ -26,6 +26,14 @@ import { projectService } from '../services/project-service';
 import { materialService } from '../services/material-service';
 import { reportService } from '../services/report-service';
 import { aiService } from '../services/ai-service';
+import { 
+  authenticateToken, 
+  requireRole, 
+  requireAdmin, 
+  requireUser, 
+  optionalAuth,
+  requirePermission
+} from '../middleware/auth.js';
 import {
   insertUserSchema,
   insertProjectSchema,
@@ -63,42 +71,10 @@ const asyncHandler = (fn: Function) => (req: Request, res: Response, next: NextF
 };
 
 /**
- * Authentication middleware - checks for valid user session/token
- * TODO: Implement proper JWT or session-based authentication
- * @param req - Express request object
- * @param res - Express response object  
- * @param next - Express next function
+ * Enhanced authentication middleware using JWT
+ * Replaces the previous mock authentication system
  */
-const authenticateUser = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    // TODO: Implement actual authentication logic
-    // For now, we'll use a simple header-based check
-    const authHeader = req.headers.authorization;
-    
-    if (!authHeader && req.path.includes('/protected/')) {
-      return res.status(401).json({
-        message: 'Token d\'authentification requis',
-        code: 'AUTH_REQUIRED'
-      });
-    }
-
-    // Mock user for development - replace with real auth
-    req.user = {
-      id: 1,
-      username: 'admin',
-      fullName: 'Administrateur Système',
-      email: 'admin@housy-tunisia.com',
-      role: 'admin'
-    };
-
-    next();
-  } catch (error) {
-    res.status(401).json({
-      message: 'Token d\'authentification invalide',
-      code: 'AUTH_INVALID'
-    });
-  }
-};
+const authenticateUser = authenticateToken;
 
 /**
  * Input validation middleware using Zod schemas
@@ -964,7 +940,8 @@ router.get('/notifications/:userId', asyncHandler(async (req: Request, res: Resp
  */
 router.put('/notifications/:id/read', asyncHandler(async (req: Request, res: Response) => {
   const notificationId = parseInt(req.params.id);
-  await storage.markNotificationAsRead(notificationId);
+  const userId = req.user?.id || 1; // Default to user ID 1 if not authenticated
+  await storage.markNotificationAsRead(notificationId, userId);
   
   res.json({
     success: true,
@@ -1082,15 +1059,19 @@ router.get('/analytics/dashboard',
       { month: 'Mai', workers: 30, machines: 16 },
       { month: 'Juin', workers: 28, machines: 15 },
       { month: 'Juil', workers: 32, machines: 18 },
-    ];
-      // Calculate task statistics from projects
-    const totalTasks = projects.reduce((sum, project) => {
-      return sum + (project.summary?.totalTasks || 0);
-    }, 0);
+    ];      // Calculate task statistics from projects
+    let allTasks: any[] = [];
+    for (const project of projects) {
+      try {
+        const projectTasks = await storage.getTasks(project.id);
+        allTasks = allTasks.concat(projectTasks);
+      } catch (error) {
+        console.warn(`Could not get tasks for project ${project.id}:`, error);
+      }
+    }
+    const totalTasks = allTasks.length;
     
-    const completedTasks = projects.reduce((sum, project) => {
-      return sum + (project.summary?.completedTasks || 0);
-    }, 0);
+    const completedTasks = allTasks.filter(task => task.status === 'completed').length;
     
     const analytics = {
       projects: {
@@ -1247,7 +1228,7 @@ router.get('/health', asyncHandler(async (req: Request, res: Response) => {
  */
 router.get('/info', asyncHandler(async (req: Request, res: Response) => {
   const apiInfo = {
-    name: 'HousyTunisia Enhanced Mega Routes API',
+    name: 'Housy Enhanced Mega Routes API',
     version: '2.0.0',
     description: 'Comprehensive construction management API with enhanced features',
     features: [

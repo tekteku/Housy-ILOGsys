@@ -2,14 +2,37 @@ import { useLocation, Link } from "wouter";
 import { cn } from "@/lib/utils";
 import CompanyLogo from "../ui/CompanyLogo";
 import { ThemeToggle } from "../ui/ThemeToggle";
+import { useAuth } from "@/contexts/AuthContext";
 
-const navigationItems = [
+// Navigation pour les administrateurs
+const adminNavigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: 'home', label: "Tableau de bord" },
   { name: 'Projects', href: '/projects', icon: 'folder-open', label: "Projets" },
-  { name: 'Estimation', href: '/estimation', icon: 'calculator', label: "Estimation" },
+  { name: 'Categories', href: '/admin/categories', icon: 'tags', label: "Catégories" },
+  { name: 'Client Requests', href: '/admin/requests', icon: 'inbox', label: "Demandes Clients" },
+  { name: 'Quotations', href: '/admin/quotations', icon: 'file-text', label: "Devis" },
+  { name: 'Users', href: '/admin/users', icon: 'users', label: "Utilisateurs" },
   { name: 'Materials', href: '/materials', icon: 'cubes', label: "Matériaux" },
-  { name: 'Chatbot AI', href: '/chatbot', icon: 'robot', label: "Chatbot IA" },
-  { name: 'Parameters', href: '/settings', icon: 'cog', label: "Paramètres" },
+  { name: 'Analytics', href: '/admin/analytics', icon: 'bar-chart', label: "Analytiques" },
+  { name: 'Notifications', href: '/admin/notifications', icon: 'bell', label: "Notifications" },
+  { name: 'System Control', href: '/admin/system-control', icon: 'server', label: "Contrôle Système" },
+  { name: 'Security Audit', href: '/admin/security-audit', icon: 'shield-alt', label: "Audit Sécurité" },
+  { name: 'Financial Management', href: '/admin/financial-management', icon: 'chart-line', label: "Gestion Financière" },
+  { name: 'Training Support', href: '/admin/training-support', icon: 'graduation-cap', label: "Support Formation" },
+  { name: 'Settings', href: '/settings', icon: 'cog', label: "Paramètres" },
+];
+
+// Navigation pour les clients
+const clientNavigationItems = [
+  { name: 'Dashboard', href: '/dashboard', icon: 'home', label: "Tableau de bord" },
+  { name: 'My Projects', href: '/client/projects', icon: 'folder-open', label: "Mes Projets" },
+  { name: 'New Request', href: '/client/request', icon: 'plus-circle', label: "Nouvelle Demande" },
+  { name: 'Quotations', href: '/client/quotations', icon: 'file-text', label: "Mes Devis" },
+  { name: 'Documents', href: '/client/documents', icon: 'paperclip', label: "Documents" },
+  { name: 'Payments', href: '/client/payments', icon: 'credit-card', label: "Paiements" },
+  { name: 'Estimation', href: '/estimation', icon: 'calculator', label: "Estimation" },
+  { name: 'Chatbot AI', href: '/chatbot', icon: 'robot', label: "Assistant IA" },
+  { name: 'Profile', href: '/client/profile', icon: 'user', label: "Profil" },
 ];
 
 interface SidebarProps {
@@ -20,6 +43,12 @@ interface SidebarProps {
 
 const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
   const [location] = useLocation();
+  const { user, logout } = useAuth();
+
+  // Sélectionner les éléments de navigation selon le rôle
+  const navigationItems = user?.role === 'admin' || user?.role === 'super_admin' 
+    ? adminNavigationItems 
+    : clientNavigationItems;
 
   if (!isVisible) {
     return null;
@@ -81,13 +110,24 @@ const Sidebar = ({ isVisible, onClose, isMobileView }: SidebarProps) => {
           
           <div className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-full bg-white flex items-center justify-center text-[#162032] font-bold text-lg">
-              AB
+              {user?.fullName ? user.fullName.charAt(0).toUpperCase() : 'U'}
             </div>
             <div>
-              <p className="text-base font-bold text-white">Adnen Ben Zineb</p>
-              <p className="text-xs text-[#b0b8c1]">Chef de Projet</p>
+              <p className="text-base font-bold text-white">{user?.fullName || 'Utilisateur'}</p>
+              <p className="text-xs text-[#b0b8c1]">
+                {user?.role === 'admin' || user?.role === 'super_admin' ? 'Administrateur' : 'Client'}
+              </p>
             </div>
           </div>
+          
+          {/* Logout Button */}
+          <button
+            onClick={logout}
+            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-base font-semibold transition-colors text-red-300 hover:bg-red-600 hover:text-white"
+          >
+            <i className="fas fa-sign-out-alt w-5 text-center"></i>
+            <span>Déconnexion</span>
+          </button>
         </div>
       </div>
     </>

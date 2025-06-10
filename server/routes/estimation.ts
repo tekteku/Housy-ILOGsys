@@ -54,12 +54,69 @@ router.post('/calculate', async (req, res) => {
   }
 });
 
+// POST /api/estimation/save - Sauvegarder une estimation
+router.post('/save', async (req, res) => {
+  try {
+    const {
+      name,
+      projectType,
+      area,
+      floors,
+      qualityLevel,
+      wastageIncluded,
+      totalCost,
+      costBreakdown,
+      materialsList,
+      createdBy
+    } = req.body;
+
+    if (!name || !projectType || !area || !totalCost) {
+      return res.status(400).json({
+        message: "Nom, type de projet, superficie et coût total requis"
+      });
+    }
+
+    // Create estimation data
+    const estimationData = {
+      name,
+      projectType,
+      area: parseFloat(area),
+      floors: parseInt(floors) || 1,
+      qualityLevel: qualityLevel || 'STANDARD',
+      wastageIncluded: wastageIncluded !== false,
+      totalCost: parseFloat(totalCost),
+      costBreakdown: costBreakdown || {},
+      materialsList: materialsList || [],
+      notes: `Estimation pour ${projectType} - ${area}m² - ${qualityLevel}`,
+      createdBy: createdBy || 1, // Default user ID
+      createdAt: new Date(),
+      updatedAt: new Date()
+    };
+
+    // Save to database
+    const savedEstimation = await storage.createProjectEstimation(estimationData);
+
+    res.status(201).json({
+      message: "Estimation sauvegardée avec succès",
+      data: savedEstimation
+    });
+  } catch (error) {
+    console.error('Erreur lors de la sauvegarde de l\'estimation:', error);
+    res.status(500).json({
+      message: "Erreur lors de la sauvegarde de l'estimation"
+    });
+  }
+});
+
 // GET /api/estimation/history - Obtenir l'historique des estimations
-router.get('/history', async (req, res) => {  try {
+router.get('/history', async (req, res) => {
+  try {
     const { projectId, userId } = req.query;
 
-    // For now, return empty array since we don't have estimation history table
-    const estimations: any[] = [];
+    // Get estimations from database
+    const estimations = await storage.getProjectEstimations(
+      projectId ? parseInt(projectId as string) : undefined
+    );
 
     res.json({
       message: "Historique des estimations récupéré avec succès",

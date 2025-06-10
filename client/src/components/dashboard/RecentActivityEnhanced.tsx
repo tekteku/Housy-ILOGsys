@@ -109,9 +109,9 @@ const RecentActivityEnhanced = () => {
       id: 1,
       actionType: "complete",
       entityType: "task",
-      timestamp: new Date().toISOString(),
-      user: {
+      timestamp: new Date().toISOString(),      user: {
         id: 1,
+        username: "adnen.benzineb",
         fullName: "Adnen Ben Zineb",
       },
       entity: {
@@ -124,9 +124,9 @@ const RecentActivityEnhanced = () => {
       id: 2,
       actionType: "comment",
       entityType: "project",
-      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),
-      user: {
+      timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(),      user: {
         id: 2,
+        username: "sonia.maalej",
         fullName: "Sonia Maalej",
       },
       entity: {
@@ -157,9 +157,9 @@ const RecentActivityEnhanced = () => {
       id: 5,
       actionType: "upload",
       entityType: "document",
-      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-      user: {
+      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),      user: {
         id: 3,
+        username: "farah.belhaj",
         fullName: "Farah Belhaj",
       },
       entity: {

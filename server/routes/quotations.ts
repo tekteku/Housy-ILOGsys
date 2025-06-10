@@ -363,6 +363,29 @@ router.delete('/:id', async (req, res) => {
     console.error('Erreur lors de la suppression du devis:', error);
     res.status(500).json({
       message: "Erreur lors de la suppression du devis"
+    });  }
+});
+
+// GET /api/quotations/stats - Obtenir les statistiques des devis
+router.get('/stats', async (req, res) => {
+  try {
+    const allQuotations = await storage.getAllQuotations({}, 'createdAt', 'desc', 1, 1000);
+    
+    const stats = {
+      total: allQuotations.length,
+      pending: allQuotations.filter(q => q.status === 'sent').length,
+      accepted: allQuotations.filter(q => q.status === 'accepted').length,
+      total_value: allQuotations.reduce((sum, q) => sum + (parseFloat(q.finalAmount?.toString() || '0') || 0), 0)
+    };
+
+    res.json({
+      message: "Statistiques récupérées avec succès",
+      data: stats
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des statistiques:', error);
+    res.status(500).json({
+      message: "Erreur lors de la récupération des statistiques"
     });
   }
 });

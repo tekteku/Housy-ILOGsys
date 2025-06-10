@@ -11,6 +11,9 @@ import { Separator } from "@/components/ui/separator";
 import { apiRequest } from "@/lib/queryClient";
 import { formatCurrency } from "@/lib/utils";
 
+// Animation imports
+import { PageTransition, FadeIn, AnimatedButton, HoverCard, StaggeredList } from "@/components/animations";
+
 interface MaterialCategory {
   category: string;
   totalCost: number;
@@ -91,7 +94,7 @@ const Estimation = () => {
   
   const [formData, setFormData] = useState({
     name: "Nouvelle estimation",
-    projectType: "apartment",
+    projectType: "construction_neuve",
     area: 120,
     floors: 1,
     qualityLevel: "PREMIUM",
@@ -173,219 +176,228 @@ const Estimation = () => {
   };
 
   return (
-    <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl md:text-4xl font-heading font-bold text-[#162032]">
-          Estimation de matériaux
-        </h1>
-        <p className="text-[#b0b8c1] mt-2">
-          Calculez les quantités et les coûts des matériaux pour vos projets
-        </p>
-      </div>
+    <PageTransition>
+      <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
+        {/* Header */}
+        <FadeIn direction="down" delay={0.1}>
+          <div>
+            <h1 className="text-3xl md:text-4xl font-heading font-bold text-[#162032]">
+              Estimation de matériaux
+            </h1>
+            <p className="text-[#b0b8c1] mt-2">
+              Calculez les quantités et les coûts des matériaux pour vos projets
+            </p>
+          </div>
+        </FadeIn>
 
-      {/* Tabs */}
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid grid-cols-3 mb-6 rounded-xl bg-white shadow-sm">
-          <TabsTrigger value="calculator">Calculateur</TabsTrigger>
-          <TabsTrigger value="results" disabled={!estimationResult?.categories?.length}>
-            Résultats
-          </TabsTrigger>
-          <TabsTrigger value="history">Historique</TabsTrigger>
-        </TabsList>
+        {/* Tabs */}
+        <FadeIn direction="up" delay={0.2}>
+          <Tabs value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="grid grid-cols-3 mb-6 rounded-xl bg-white shadow-sm">
+              <TabsTrigger value="calculator">Calculateur</TabsTrigger>
+              <TabsTrigger value="results" disabled={!estimationResult?.categories?.length}>
+                Résultats
+              </TabsTrigger>
+              <TabsTrigger value="history">Historique</TabsTrigger>
+            </TabsList>
 
         {/* Calculator Tab */}
         <TabsContent value="calculator">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
-            {/* Form */}
-            <Card className="rounded-2xl shadow-lg">
-              <CardHeader>
-                <CardTitle>Paramètres d'estimation</CardTitle>
-                <CardDescription>
-                  Entrez les détails de votre projet pour obtenir une estimation des matériaux
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {/* Project Name */}
-                <div className="space-y-2">
-                  <Label htmlFor="name">Nom de l'estimation</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
-                  />
-                </div>
+          <FadeIn direction="up" delay={0.3}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {/* Form */}              <HoverCard className="rounded-2xl shadow-lg">
+                <CardHeader>
+                  <CardTitle>Paramètres d'estimation</CardTitle>
+                  <CardDescription>
+                    Entrez les détails de votre projet pour obtenir une estimation des matériaux
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  {/* Project Name */}
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Nom de l'estimation</Label>
+                    <Input
+                      id="name"
+                      value={formData.name}
+                      onChange={(e) => handleChange("name", e.target.value)}
+                    />
+                  </div>
 
-                {/* Project Type */}
-                <div className="space-y-2">
-                  <Label htmlFor="projectType">Type de projet</Label>
-                  <Select
-                    value={formData.projectType}
-                    onValueChange={(value) => handleChange("projectType", value)}
+                  {/* Project Type */}
+                  <div className="space-y-2">
+                    <Label htmlFor="projectType">Type de projet</Label>
+                    <Select
+                      value={formData.projectType}
+                      onValueChange={(value) => handleChange("projectType", value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="construction_neuve">Construction neuve</SelectItem>
+                        <SelectItem value="renovation_complete">Rénovation complète</SelectItem>
+                        <SelectItem value="renovation_partielle">Rénovation partielle</SelectItem>
+                        <SelectItem value="extension_agrandissement">Extension / agrandissement</SelectItem>
+                        <SelectItem value="achat_cle_en_main">Achat clé en main</SelectItem>
+                        <SelectItem value="amenagement_interieur_exterieur">Aménagement intérieur/extérieur</SelectItem>
+                        <SelectItem value="transformation_batiment">Transformation de bâtiment</SelectItem>
+                        <SelectItem value="rehabilitation_energetique">Réhabilitation énergétique</SelectItem>
+                        <SelectItem value="achat_vente_immeuble">Achat/vente d'immeuble/appartement</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Area & Floors */}
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="area">Surface (m²)</Label>
+                      <Input
+                        id="area"
+                        type="number"
+                        value={formData.area}
+                        onChange={(e) => handleChange("area", parseFloat(e.target.value))}
+                        min="1"
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="floors">Nombre d'étages</Label>
+                      <Input
+                        id="floors"
+                        type="number"
+                        value={formData.floors}
+                        onChange={(e) => handleChange("floors", parseInt(e.target.value))}
+                        min="1"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Quality Level */}
+                  <div className="space-y-2">
+                    <Label>Qualité des finitions</Label>
+                    <StaggeredList className="flex space-x-2">
+                      <AnimatedButton
+                        type="button"
+                        variant={formData.qualityLevel === "STANDARD" ? "secondary" : "outline"}
+                        className="flex-1"
+                        onClick={() => handleChange("qualityLevel", "STANDARD")}
+                      >
+                        Standard
+                      </AnimatedButton>
+                      <AnimatedButton
+                        type="button"
+                        variant={formData.qualityLevel === "PREMIUM" ? "secondary" : "outline"}
+                        className="flex-1"
+                        onClick={() => handleChange("qualityLevel", "PREMIUM")}
+                      >
+                        Premium
+                      </AnimatedButton>
+                      <AnimatedButton
+                        type="button"
+                        variant={formData.qualityLevel === "LUXE" ? "secondary" : "outline"}
+                        className="flex-1"
+                        onClick={() => handleChange("qualityLevel", "LUXE")}
+                      >
+                        Luxe
+                      </AnimatedButton>
+                    </StaggeredList>
+                  </div>
+
+                  {/* Wastage */}
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      id="includeWastage"
+                      checked={formData.includeWastage}
+                      onCheckedChange={(checked) =>
+                        handleChange("includeWastage", checked === true)
+                      }
+                    />
+                    <Label htmlFor="includeWastage">
+                      Inclure les pertes (wastage) dans les calculs
+                    </Label>
+                  </div>
+
+                  {/* Calculate Button */}
+                  <AnimatedButton
+                    className="w-full mt-4"
+                    onClick={handleCalculate}
+                    disabled={calculateMutation.isPending}
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Sélectionner un type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="apartment">Appartement</SelectItem>
-                      <SelectItem value="villa">Villa</SelectItem>
-                      <SelectItem value="immeuble">Immeuble</SelectItem>
-                      <SelectItem value="commercial">Local commercial</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Area & Floors */}
-                <div className="grid grid-cols-2 gap-4">
+                    {calculateMutation.isPending
+                      ? "Calcul en cours..."
+                      : "Calculer l'estimation"}
+                  </AnimatedButton>
+                </CardContent>
+              </HoverCard>              {/* Information Card */}
+              <HoverCard>
+                <CardHeader>
+                  <CardTitle>Guide d'estimation</CardTitle>
+                  <CardDescription>
+                    Informations sur le calcul des matériaux
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="area">Surface (m²)</Label>
-                    <Input
-                      id="area"
-                      type="number"
-                      value={formData.area}
-                      onChange={(e) => handleChange("area", parseFloat(e.target.value))}
-                      min="1"
-                    />
+                    <h3 className="text-sm font-medium">Types de projets</h3>
+                    <p className="text-sm text-neutral-600">
+                      Différents types de projets nécessitent différentes quantités de matériaux. Les villas et immeubles ont généralement besoin de plus de matériaux de gros œuvre que les appartements.
+                    </p>
                   </div>
+
+                  <Separator />
+
                   <div className="space-y-2">
-                    <Label htmlFor="floors">Nombre d'étages</Label>
-                    <Input
-                      id="floors"
-                      type="number"
-                      value={formData.floors}
-                      onChange={(e) => handleChange("floors", parseInt(e.target.value))}
-                      min="1"
-                    />
+                    <h3 className="text-sm font-medium">Niveaux de qualité</h3>
+                    <div className="space-y-1">
+                      <p className="text-sm text-neutral-600">
+                        <span className="font-medium">Standard</span> : Matériaux de base, finitions simples
+                      </p>
+                      <p className="text-sm text-neutral-600">
+                        <span className="font-medium">Premium</span> : Matériaux de meilleure qualité, finitions soignées
+                      </p>
+                      <p className="text-sm text-neutral-600">
+                        <span className="font-medium">Luxe</span> : Matériaux haut de gamme, finitions exceptionnelles
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* Quality Level */}
-                <div className="space-y-2">
-                  <Label>Qualité des finitions</Label>
-                  <div className="flex space-x-2">
-                    <Button
-                      type="button"
-                      variant={formData.qualityLevel === "STANDARD" ? "secondary" : "outline"}
-                      className="flex-1"
-                      onClick={() => handleChange("qualityLevel", "STANDARD")}
-                    >
-                      Standard
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={formData.qualityLevel === "PREMIUM" ? "secondary" : "outline"}
-                      className="flex-1"
-                      onClick={() => handleChange("qualityLevel", "PREMIUM")}
-                    >
-                      Premium
-                    </Button>
-                    <Button
-                      type="button"
-                      variant={formData.qualityLevel === "LUXE" ? "secondary" : "outline"}
-                      className="flex-1"
-                      onClick={() => handleChange("qualityLevel", "LUXE")}
-                    >
-                      Luxe
-                    </Button>
+                  <Separator />
+
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium">Catégories de matériaux</h3>
+                    <div className="space-y-1">
+                      <p className="text-sm text-neutral-600">
+                        <span className="font-medium">Gros œuvre</span> : Ciment, sable, gravier, acier, briques, etc.
+                      </p>
+                      <p className="text-sm text-neutral-600">
+                        <span className="font-medium">Second œuvre</span> : Plomberie, électricité, isolation, cloisons, etc.
+                      </p>
+                      <p className="text-sm text-neutral-600">
+                        <span className="font-medium">Finitions</span> : Peinture, carrelage, menuiserie, sanitaires, etc.
+                      </p>
+                    </div>
                   </div>
-                </div>
 
-                {/* Wastage */}
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="includeWastage"
-                    checked={formData.includeWastage}
-                    onCheckedChange={(checked) =>
-                      handleChange("includeWastage", checked === true)
-                    }
-                  />
-                  <Label htmlFor="includeWastage">
-                    Inclure les pertes (wastage) dans les calculs
-                  </Label>
-                </div>
+                  <Separator />
 
-                {/* Calculate Button */}
-                <Button
-                  className="w-full mt-4"
-                  onClick={handleCalculate}
-                  disabled={calculateMutation.isPending}
-                >
-                  {calculateMutation.isPending
-                    ? "Calcul en cours..."
-                    : "Calculer l'estimation"}
-                </Button>
-              </CardContent>
-            </Card>
-
-            {/* Information Card */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Guide d'estimation</CardTitle>
-                <CardDescription>
-                  Informations sur le calcul des matériaux
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium">Types de projets</h3>
-                  <p className="text-sm text-neutral-600">
-                    Différents types de projets nécessitent différentes quantités de matériaux. Les villas et immeubles ont généralement besoin de plus de matériaux de gros œuvre que les appartements.
-                  </p>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium">Niveaux de qualité</h3>
-                  <div className="space-y-1">
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium">Pertes (Wastage)</h3>
                     <p className="text-sm text-neutral-600">
-                      <span className="font-medium">Standard</span> : Matériaux de base, finitions simples
-                    </p>
-                    <p className="text-sm text-neutral-600">
-                      <span className="font-medium">Premium</span> : Matériaux de meilleure qualité, finitions soignées
-                    </p>
-                    <p className="text-sm text-neutral-600">
-                      <span className="font-medium">Luxe</span> : Matériaux haut de gamme, finitions exceptionnelles
+                      Les pertes sont inévitables dans les projets de construction. Elles varient généralement entre 5% et 15% selon les matériaux. L'inclusion de ce facteur donne une estimation plus réaliste.
                     </p>
                   </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium">Catégories de matériaux</h3>
-                  <div className="space-y-1">
-                    <p className="text-sm text-neutral-600">
-                      <span className="font-medium">Gros œuvre</span> : Ciment, sable, gravier, acier, briques, etc.
-                    </p>
-                    <p className="text-sm text-neutral-600">
-                      <span className="font-medium">Second œuvre</span> : Plomberie, électricité, isolation, cloisons, etc.
-                    </p>
-                    <p className="text-sm text-neutral-600">
-                      <span className="font-medium">Finitions</span> : Peinture, carrelage, menuiserie, sanitaires, etc.
-                    </p>
-                  </div>
-                </div>
-
-                <Separator />
-
-                <div className="space-y-2">
-                  <h3 className="text-sm font-medium">Pertes (Wastage)</h3>
-                  <p className="text-sm text-neutral-600">
-                    Les pertes sont inévitables dans les projets de construction. Elles varient généralement entre 5% et 15% selon les matériaux. L'inclusion de ce facteur donne une estimation plus réaliste.
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+                </CardContent>
+              </HoverCard>
+            </div>
+          </FadeIn>
         </TabsContent>
 
         {/* Results Tab */}
         <TabsContent value="results">
-          {estimationResult && (
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              {/* Summary Card */}
-              <Card className="lg:col-span-1">
+          <FadeIn direction="up" delay={0.3}>
+            {estimationResult && (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Summary Card */}
+                <HoverCard className="lg:col-span-1">
                 <CardHeader>
                   <CardTitle>Résumé de l'estimation</CardTitle>
                   <CardDescription>
@@ -465,21 +477,21 @@ const Estimation = () => {
                   </div>
 
                   <div className="flex flex-col space-y-2">
-                    <Button onClick={handleSaveEstimation} disabled={saveEstimationMutation.isPending}>
+                    <AnimatedButton onClick={handleSaveEstimation} disabled={saveEstimationMutation.isPending}>
                       {saveEstimationMutation.isPending
                         ? "Enregistrement..."
                         : "Enregistrer l'estimation"}
-                    </Button>
-                    <Button variant="outline" className="flex items-center justify-center">
+                    </AnimatedButton>
+                    <AnimatedButton variant="outline" className="flex items-center justify-center">
                       <i className="fas fa-download mr-2"></i>
                       Exporter en PDF
-                    </Button>
+                    </AnimatedButton>
                   </div>
                 </CardContent>
-              </Card>
+              </HoverCard>
 
               {/* Detailed Materials Card */}
-              <Card className="lg:col-span-2">
+              <HoverCard className="lg:col-span-2">
                 <CardHeader>
                   <CardTitle>Liste détaillée des matériaux</CardTitle>
                   <CardDescription>
@@ -487,170 +499,177 @@ const Estimation = () => {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
-                  {estimationResult?.categories?.map((category) => (
-                    <div key={category.category}>
-                      <h3 className="text-sm font-medium flex items-center">
-                        <MaterialIcon category={category.category} />
-                        <span className="ml-2">{getCategoryLabel(category.category)}</span>
-                      </h3>
+                  <StaggeredList>
+                    {estimationResult?.categories?.map((category) => (
+                      <div key={category.category}>
+                        <h3 className="text-sm font-medium flex items-center">
+                          <MaterialIcon category={category.category} />
+                          <span className="ml-2">{getCategoryLabel(category.category)}</span>
+                        </h3>
 
-                      <div className={`p-3 rounded-lg border ${getCategoryColor(category.category)}`}>
-                        <table className="min-w-full divide-y divide-gray-200">
-                          <thead>
-                            <tr>
-                              <th className="px-2 py-1 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                                Matériau
-                              </th>
-                              <th className="px-2 py-1 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                                Quantité
-                              </th>
-                              <th className="px-2 py-1 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                                Prix unitaire
-                              </th>
-                              <th className="px-2 py-1 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
-                                Total
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody className="divide-y divide-gray-200">
-                            {category.materials.map((material, index) => (
-                              <tr key={index}>
-                                <td className="px-2 py-1 whitespace-nowrap text-sm text-neutral-800">
-                                  {material.name}
+                        <div className={`p-3 rounded-lg border ${getCategoryColor(category.category)}`}>
+                          <table className="min-w-full divide-y divide-gray-200">
+                            <thead>
+                              <tr>
+                                <th className="px-2 py-1 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                                  Matériau
+                                </th>
+                                <th className="px-2 py-1 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                                  Quantité
+                                </th>
+                                <th className="px-2 py-1 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                                  Prix unitaire
+                                </th>
+                                <th className="px-2 py-1 text-right text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                                  Total
+                                </th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-gray-200">
+                              {category.materials.map((material, index) => (
+                                <tr key={index}>
+                                  <td className="px-2 py-1 whitespace-nowrap text-sm text-neutral-800">
+                                    {material.name}
+                                  </td>
+                                  <td className="px-2 py-1 whitespace-nowrap text-sm text-right text-neutral-600">
+                                    {material.quantity} {material.unit}
+                                  </td>
+                                  <td className="px-2 py-1 whitespace-nowrap text-sm text-right text-neutral-600">
+                                    {formatCurrency(material.unitPrice)}
+                                  </td>
+                                  <td className="px-2 py-1 whitespace-nowrap text-sm text-right font-medium text-neutral-800">
+                                    {formatCurrency(material.totalPrice)}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                            <tfoot>
+                              <tr>
+                                <td colSpan={3} className="px-2 py-1 text-right text-sm font-medium text-neutral-600">
+                                  Total {getCategoryLabel(category.category)}
                                 </td>
-                                <td className="px-2 py-1 whitespace-nowrap text-sm text-right text-neutral-600">
-                                  {material.quantity} {material.unit}
-                                </td>
-                                <td className="px-2 py-1 whitespace-nowrap text-sm text-right text-neutral-600">
-                                  {formatCurrency(material.unitPrice)}
-                                </td>
-                                <td className="px-2 py-1 whitespace-nowrap text-sm text-right font-medium text-neutral-800">
-                                  {formatCurrency(material.totalPrice)}
+                                <td className="px-2 py-1 text-right text-sm font-bold text-neutral-800">
+                                  {formatCurrency(category.totalCost)}
                                 </td>
                               </tr>
-                            ))}
-                          </tbody>
-                          <tfoot>
-                            <tr>
-                              <td colSpan={3} className="px-2 py-1 text-right text-sm font-medium text-neutral-600">
-                                Total {getCategoryLabel(category.category)}
-                              </td>
-                              <td className="px-2 py-1 text-right text-sm font-bold text-neutral-800">
-                                {formatCurrency(category.totalCost)}
-                              </td>
-                            </tr>
-                          </tfoot>
-                        </table>
+                            </tfoot>
+                          </table>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </StaggeredList>
                 </CardContent>
-              </Card>
+              </HoverCard>
             </div>
-          )}
+            )}
+          </FadeIn>
         </TabsContent>
 
         {/* History Tab */}
         <TabsContent value="history">
-          <Card>
-            <CardHeader>
-              <CardTitle>Historique des estimations</CardTitle>
-              <CardDescription>
-                Vos estimations précédentes
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              {isLoadingHistory ? (
-                <div className="space-y-4">
-                  {[...Array(3)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="border border-neutral-200 rounded-lg p-4 animate-pulse"
-                    >
-                      <div className="h-5 bg-neutral-200 rounded w-1/3 mb-2"></div>
-                      <div className="h-4 bg-neutral-200 rounded w-1/4 mb-1"></div>
-                      <div className="h-4 bg-neutral-200 rounded w-1/5"></div>
-                    </div>
-                  ))}
-                </div>
-              ) : savedEstimations && savedEstimations.length > 0 ? (
-                <div className="space-y-4">
-                  {savedEstimations.map((estimation: SavedEstimation) => (
-                    <div
-                      key={estimation.id}
-                      className="border border-neutral-200 rounded-lg p-4 hover:bg-neutral-50 transition-colors"
-                    >
-                      <div className="flex justify-between items-start">
-                        <div>
-                          <h3 className="font-medium text-neutral-900">
-                            {estimation.name}
-                          </h3>
-                          <p className="text-sm text-neutral-500">
-                            {estimation.projectType === "apartment"
-                              ? "Appartement"
-                              : estimation.projectType === "villa"
-                              ? "Villa"
-                              : estimation.projectType === "immeuble"
-                              ? "Immeuble"
-                              : "Local commercial"}{" "}
-                            • {estimation.area} m² • {estimation.floors} étage(s)
-                          </p>
-                          <p className="text-sm text-neutral-500">
-                            Qualité:{" "}
-                            {estimation.qualityLevel === "STANDARD"
-                              ? "Standard"
-                              : estimation.qualityLevel === "PREMIUM"
-                              ? "Premium"
-                              : "Luxe"}
-                          </p>
+          <FadeIn direction="up" delay={0.3}>
+            <HoverCard>
+              <CardHeader>
+                <CardTitle>Historique des estimations</CardTitle>
+                <CardDescription>
+                  Vos estimations précédentes
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoadingHistory ? (
+                  <div className="space-y-4">
+                    {[...Array(3)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="border border-neutral-200 rounded-lg p-4 animate-pulse"
+                      >
+                        <div className="h-5 bg-neutral-200 rounded w-1/3 mb-2"></div>
+                        <div className="h-4 bg-neutral-200 rounded w-1/4 mb-1"></div>
+                        <div className="h-4 bg-neutral-200 rounded w-1/5"></div>
+                      </div>
+                    ))}
+                  </div>
+                ) : savedEstimations && savedEstimations.length > 0 ? (
+                  <StaggeredList className="space-y-4">
+                    {savedEstimations.map((estimation: SavedEstimation) => (
+                      <div
+                        key={estimation.id}
+                        className="border border-neutral-200 rounded-lg p-4 hover:bg-neutral-50 transition-colors"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <h3 className="font-medium text-neutral-900">
+                              {estimation.name}
+                            </h3>
+                            <p className="text-sm text-neutral-500">
+                              {estimation.projectType === "apartment"
+                                ? "Appartement"
+                                : estimation.projectType === "villa"
+                                ? "Villa"
+                                : estimation.projectType === "immeuble"
+                                ? "Immeuble"
+                                : "Local commercial"}{" "}
+                              • {estimation.area} m² • {estimation.floors} étage(s)
+                            </p>
+                            <p className="text-sm text-neutral-500">
+                              Qualité:{" "}
+                              {estimation.qualityLevel === "STANDARD"
+                                ? "Standard"
+                                : estimation.qualityLevel === "PREMIUM"
+                                ? "Premium"
+                                : "Luxe"}
+                            </p>
+                          </div>
+                          <div className="text-right">
+                            <p className="font-bold text-primary-600">
+                              {formatCurrency(estimation.totalCost)}
+                            </p>
+                            <p className="text-xs text-neutral-500">
+                              {new Date(estimation.createdAt).toLocaleDateString()}
+                            </p>
+                          </div>
                         </div>
-                        <div className="text-right">
-                          <p className="font-bold text-primary-600">
-                            {formatCurrency(estimation.totalCost)}
-                          </p>
-                          <p className="text-xs text-neutral-500">
-                            {new Date(estimation.createdAt).toLocaleDateString()}
-                          </p>
+                        <div className="flex justify-end mt-2 space-x-2">
+                          <AnimatedButton variant="outline" size="sm">
+                            Voir détails
+                          </AnimatedButton>
+                          <AnimatedButton
+                            variant="outline"
+                            size="sm"
+                            className="flex items-center"
+                            onClick={() =>
+                              generateReportMutation.mutate({
+                                estimationId: estimation.id,
+                                format: "pdf",
+                              })
+                            }
+                            disabled={generateReportMutation.isPending}
+                          >
+                            <i className="fas fa-download mr-1.5 text-xs"></i>
+                            PDF
+                          </AnimatedButton>
                         </div>
                       </div>
-                      <div className="flex justify-end mt-2 space-x-2">
-                        <Button variant="outline" size="sm">
-                          Voir détails
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="flex items-center"
-                          onClick={() =>
-                            generateReportMutation.mutate({
-                              estimationId: estimation.id,
-                              format: "pdf",
-                            })
-                          }
-                          disabled={generateReportMutation.isPending}
-                        >
-                          <i className="fas fa-download mr-1.5 text-xs"></i>
-                          PDF
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="text-center py-8 text-neutral-500">
-                  <i className="fas fa-calculator text-3xl mb-2"></i>
-                  <p>Aucune estimation sauvegardée</p>
-                  <p className="text-sm">
-                    Utilisez le calculateur pour créer votre première estimation
-                  </p>
-                </div>
-              )}
-            </CardContent>
-          </Card>
+                    ))}
+                  </StaggeredList>
+                ) : (
+                  <div className="text-center py-8 text-neutral-500">
+                    <i className="fas fa-calculator text-3xl mb-2"></i>
+                    <p>Aucune estimation sauvegardée</p>
+                    <p className="text-sm">
+                      Utilisez le calculateur pour créer votre première estimation
+                    </p>
+                  </div>
+                )}
+              </CardContent>
+            </HoverCard>
+          </FadeIn>
         </TabsContent>
       </Tabs>
+        </FadeIn>
     </div>
-  );
+  </PageTransition>
+);
 };
 
 export default Estimation;

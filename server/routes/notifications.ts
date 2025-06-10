@@ -109,6 +109,90 @@ router.get('/unread/user/:userId', async (req, res) => {
     console.error('Erreur lors de la récupération des notifications non lues:', error);
     res.status(500).json({
       message: "Erreur lors de la récupération des notifications non lues"
+    });  }
+});
+
+// GET /api/notifications/settings - Obtenir les paramètres de notification
+router.get('/settings', async (req, res) => {
+  try {
+    // For now, return default settings. In a real app, these would be stored per user
+    const defaultSettings = {
+      email_notifications: true,
+      push_notifications: true,
+      new_projects: true,
+      quotation_updates: true,
+      client_messages: true,
+      system_alerts: true,
+      payment_notifications: true
+    };
+
+    res.json({
+      message: "Paramètres de notification récupérés avec succès",
+      data: defaultSettings
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des paramètres de notification:', error);
+    res.status(500).json({
+      message: "Erreur lors de la récupération des paramètres de notification"
+    });
+  }
+});
+
+// PUT /api/notifications/settings - Mettre à jour les paramètres de notification
+router.put('/settings', async (req, res) => {
+  try {
+    const settings = req.body;
+    
+    // For now, just return success. In a real app, these would be stored in database
+    res.json({
+      message: "Paramètres de notification mis à jour avec succès",
+      data: settings
+    });
+  } catch (error) {
+    console.error('Erreur lors de la mise à jour des paramètres de notification:', error);
+    res.status(500).json({
+      message: "Erreur lors de la mise à jour des paramètres de notification"
+    });
+  }
+});
+
+// GET /api/notifications/stats - Statistiques générales des notifications (pour admin)
+router.get('/stats', async (req, res) => {
+  try {
+    // Get all notifications for admin stats
+    const allNotifications = await storage.getEnhancedNotifications();
+    
+    const stats = {
+      total: allNotifications.length,
+      unread: allNotifications.filter((n: any) => !n.isRead).length,
+      read: allNotifications.filter((n: any) => n.isRead).length,
+      byType: {
+        info: allNotifications.filter((n: any) => n.type === 'info').length,
+        success: allNotifications.filter((n: any) => n.type === 'success').length,
+        warning: allNotifications.filter((n: any) => n.type === 'warning').length,
+        error: allNotifications.filter((n: any) => n.type === 'error').length,
+        payment: allNotifications.filter((n: any) => n.type === 'payment').length,
+        project: allNotifications.filter((n: any) => n.type === 'project').length
+      },
+      byPriority: {
+        low: allNotifications.filter((n: any) => n.priority === 'low').length,
+        medium: allNotifications.filter((n: any) => n.priority === 'medium').length,
+        high: allNotifications.filter((n: any) => n.priority === 'high').length,
+        urgent: allNotifications.filter((n: any) => n.priority === 'urgent').length
+      },
+      recent: allNotifications.filter((n: any) => 
+        new Date(n.createdAt).getTime() > Date.now() - 7 * 24 * 60 * 60 * 1000
+      ).length
+    };
+
+    res.json({
+      message: "Statistiques des notifications récupérées avec succès",
+      data: stats
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des statistiques des notifications:', error);
+    res.status(500).json({
+      message: "Erreur lors de la récupération des statistiques des notifications"
     });
   }
 });

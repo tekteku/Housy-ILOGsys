@@ -699,10 +699,9 @@ router.get('/dashboard', async (req, res) => {
       metrics,
       chartData,
       projectsByCategory
-    }));
-  } catch (error) {
+    }));  } catch (error) {
     console.error('Erreur dashboard financier:', error);
-    res.status(500).json(createResponse(false, 'Erreur lors de la récupération du dashboard', undefined, error.message));
+    res.status(500).json(createResponse(false, 'Erreur lors de la récupération du dashboard', undefined, getErrorMessage(error)));
   }
 });
 
@@ -740,10 +739,9 @@ router.get('/project/:projectId', async (req, res) => {
       metrics,
       chartData,
       projectsByCategory: [] // Pas applicable pour un projet spécifique
-    }));
-  } catch (error) {
+    }));  } catch (error) {
     console.error('Erreur données financières projet:', error);
-    res.status(500).json(createResponse(false, 'Erreur lors de la récupération des données', undefined, error.message));
+    res.status(500).json(createResponse(false, 'Erreur lors de la récupération des données', undefined, getErrorMessage(error)));
   }
 });
 
@@ -773,10 +771,9 @@ router.get('/export', async (req, res) => {
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', `attachment; filename="financial-report-${period}.pdf"`);
       res.send('PDF content simulation');
-    }
-  } catch (error) {
+    }  } catch (error) {
     console.error('Erreur export financier:', error);
-    res.status(500).json(createResponse(false, 'Erreur lors de l\'export', undefined, error.message));
+    res.status(500).json(createResponse(false, 'Erreur lors de l\'export', undefined, getErrorMessage(error)));
   }
 });
 
@@ -808,10 +805,9 @@ router.get('/export/project/:projectId', async (req, res) => {
       res.setHeader('Content-Type', 'application/pdf');
       res.setHeader('Content-Disposition', `attachment; filename="project-${projectId}-financial-${period}.pdf"`);
       res.send('Project PDF content simulation');
-    }
-  } catch (error) {
+    }  } catch (error) {
     console.error('Erreur export financier projet:', error);
-    res.status(500).json(createResponse(false, 'Erreur lors de l\'export du projet', undefined, error.message));
+    res.status(500).json(createResponse(false, 'Erreur lors de l\'export du projet', undefined, getErrorMessage(error)));
   }
 });
 

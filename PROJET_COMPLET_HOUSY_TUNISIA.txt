@@ -1,4 +1,4 @@
-# PROJET COMPLET HOUSY TUNISIA - DOCUMENT DE SYNTHÈSE
+# PROJET COMPLET HOUSY - DOCUMENT DE SYNTHÈSE
 ===============================================================================
 
 📅 Date de création: Décembre 2024
@@ -9,7 +9,7 @@
 
 ## 📋 RÉSUMÉ EXÉCUTIF
 
-Housy Tunisia est une application complète de gestion de projets de construction
+Housy est une application complète de gestion de projets de construction
 spécialement conçue pour le marché tunisien. Elle offre une plateforme intégrée
 pour la planification, le suivi, l'estimation des coûts et la gestion des
 matériaux de construction.
@@ -61,7 +61,7 @@ OUTILS DE DÉVELOPPEMENT:
 
 ## 📁 STRUCTURE DU PROJET
 
-HousyTunisia/
+Housy/
 ├── client/                     # Frontend React
 │   ├── src/
 │   │   ├── components/         # Composants réutilisables
@@ -418,7 +418,7 @@ npm run db:push    # Migrations base données
 
 ===============================================================================
 
-📋 Ce document constitue la référence complète du projet Housy Tunisia.
+📋 Ce document constitue la référence complète du projet Housy.
    Pour questions techniques, consulter ARCHITECTURE_DOCUMENTATION.md
    Pour démarrage rapide, consulter README.md
 

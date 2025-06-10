@@ -13,6 +13,9 @@ import { useNotification } from '@/hooks/use-notification';
 import { formatDate, cn } from '@/lib/utils';
 import { Users, UserPlus, Mail, Phone, Calendar, Award, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
 
+// Animation imports
+import { FadeIn } from '../animations';
+
 interface TeamMember {
   id: number;
   userId: number;
@@ -284,16 +287,17 @@ const TeamManagement: React.FC<TeamManagementProps> = ({ projectId }) => {
                   <UserPlus className="h-4 w-4 mr-2" />
                   Ajouter membre
                 </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-md">
-                <DialogHeader>
-                  <DialogTitle>Ajouter un membre à l'équipe</DialogTitle>
-                </DialogHeader>
-                <AddMemberForm
-                  onSubmit={(data) => addMemberMutation.mutate(data)}
-                  isLoading={addMemberMutation.isPending}
-                  roles={roles || []}
-                />
+              </DialogTrigger>              <DialogContent className="max-w-md">
+                <FadeIn>
+                  <DialogHeader>
+                    <DialogTitle>Ajouter un membre à l'équipe</DialogTitle>
+                  </DialogHeader>
+                  <AddMemberForm
+                    onSubmit={(data) => addMemberMutation.mutate(data)}
+                    isLoading={addMemberMutation.isPending}
+                    roles={roles || []}
+                  />
+                </FadeIn>
               </DialogContent>
             </Dialog>
           </div>
@@ -437,8 +441,7 @@ const TeamManagement: React.FC<TeamManagementProps> = ({ projectId }) => {
         </CardContent>
       </Card>
 
-      {/* Member Detail Modal */}
-      {selectedMember && (
+      {/* Member Detail Modal */}      {selectedMember && (
         <MemberDetailModal
           member={selectedMember}
           onClose={() => setSelectedMember(null)}
@@ -451,6 +454,8 @@ const TeamManagement: React.FC<TeamManagementProps> = ({ projectId }) => {
             setSelectedMember(null);
           }}
           roles={roles || []}
+          getStatusColor={getStatusColor}
+          getPerformanceRating={getPerformanceRating}
         />
       )}
     </div>
@@ -562,7 +567,9 @@ const MemberDetailModal: React.FC<{
   onUpdate: (updates: any) => void;
   onRemove: () => void;
   roles: TeamRole[];
-}> = ({ member, onClose, onUpdate, onRemove, roles }) => {
+  getStatusColor: (status: string) => string;
+  getPerformanceRating: (rating: number) => { label: string; color: string };
+}> = ({ member, onClose, onUpdate, onRemove, roles, getStatusColor, getPerformanceRating }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editData, setEditData] = useState({
     status: member.status,
@@ -578,11 +585,11 @@ const MemberDetailModal: React.FC<{
   };
 
   return (
-    <Dialog open={true} onOpenChange={onClose}>
-      <DialogContent className="max-w-2xl">
-        <DialogHeader>
-          <DialogTitle>Détails du membre - {member.name}</DialogTitle>
-        </DialogHeader>
+    <Dialog open={true} onOpenChange={onClose}>      <DialogContent className="max-w-2xl">
+        <FadeIn>
+          <DialogHeader>
+            <DialogTitle>Détails du membre - {member.name}</DialogTitle>
+          </DialogHeader>
         
         <div className="space-y-6">
           {/* Member Info */}
@@ -732,9 +739,9 @@ const MemberDetailModal: React.FC<{
                   Modifier
                 </Button>
               )}
-            </div>
-          </div>
+            </div>          </div>
         </div>
+        </FadeIn>
       </DialogContent>
     </Dialog>
   );

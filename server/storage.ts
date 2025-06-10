@@ -213,7 +213,7 @@ export interface IStorage {
   // Notification operations
   createNotification(notification: InsertNotification): Promise<Notification>;
   getUserNotifications(userId: number): Promise<Notification[]>;
-  markNotificationAsRead(id: number): Promise<boolean>;
+  markBasicNotificationAsRead(id: number): Promise<boolean>;
   
   // Chat operations
   saveChatMessage(message: InsertChatMessage): Promise<ChatMessage>;
@@ -796,7 +796,7 @@ export class DatabaseStorage implements IStorage {
     return userNotifications;
   }
 
-  async markNotificationAsRead(id: number): Promise<boolean> {
+  async markBasicNotificationAsRead(id: number): Promise<boolean> {
     await db
       .update(notifications)
       .set({ read: true })
@@ -1384,8 +1384,6 @@ export class DatabaseStorage implements IStorage {
     page: number = 1, 
     limit: number = 50
   ): Promise<ProjectCategory[]> {
-    let query = db.select().from(projectCategories);
-    
     // Apply filters
     const conditions = [];
     if (filters.isActive !== undefined) {
@@ -1394,19 +1392,35 @@ export class DatabaseStorage implements IStorage {
     if (filters.name) {
       conditions.push(like(projectCategories.name, `%${filters.name}%`));
     }
-    if (conditions.length > 0) {
-      query = query.where(and(...conditions));
-    }
 
-    // Apply sorting
-    const sortField = projectCategories[sortBy as keyof typeof projectCategories] || projectCategories.name;
-    query = query.orderBy(sortOrder === 'desc' ? desc(sortField) : asc(sortField));
-
+    // Apply sorting - use asc/desc functions directly with column
+    const getSortColumn = () => {
+      switch (sortBy) {
+        case 'createdAt': return sortOrder === 'desc' ? desc(projectCategories.createdAt) : asc(projectCategories.createdAt);
+        case 'updatedAt': return sortOrder === 'desc' ? desc(projectCategories.updatedAt) : asc(projectCategories.updatedAt);
+        case 'isActive': return sortOrder === 'desc' ? desc(projectCategories.isActive) : asc(projectCategories.isActive);
+        default: return sortOrder === 'desc' ? desc(projectCategories.name) : asc(projectCategories.name);
+      }
+    };
+    
     // Apply pagination
     const offset = (page - 1) * limit;
-    query = query.limit(limit).offset(offset);
 
-    return await query;
+    // Build query with proper method chaining
+    let query = db.select().from(projectCategories);
+    
+    if (conditions.length > 0) {
+      return await query
+        .where(and(...conditions))
+        .orderBy(getSortColumn())
+        .limit(limit)
+        .offset(offset);
+    }
+    
+    return await query
+      .orderBy(getSortColumn())
+      .limit(limit)
+      .offset(offset);
   }
 
   async getActiveProjectCategories(): Promise<ProjectCategory[]> {
@@ -1440,19 +1454,26 @@ export class DatabaseStorage implements IStorage {
 
   // Client Request operations
   async getClientRequests(filters?: { status?: string, categoryId?: number, priority?: string }): Promise<ClientRequest[]> {
-    let query = db.select().from(clientRequests);
+    const conditions = [];
     
     if (filters?.status) {
-      query = query.where(eq(clientRequests.status, filters.status));
+      conditions.push(eq(clientRequests.status, filters.status));
     }
     if (filters?.categoryId) {
-      query = query.where(eq(clientRequests.categoryId, filters.categoryId));
+      conditions.push(eq(clientRequests.categoryId, filters.categoryId));
     }
     if (filters?.priority) {
-      query = query.where(eq(clientRequests.priority, filters.priority));
+      conditions.push(eq(clientRequests.priority, filters.priority));
     }
 
-    return await query.orderBy(desc(clientRequests.createdAt));
+    if (conditions.length > 0) {
+      return await db.select().from(clientRequests)
+        .where(and(...conditions))
+        .orderBy(desc(clientRequests.createdAt));
+    }
+
+    return await db.select().from(clientRequests)
+      .orderBy(desc(clientRequests.createdAt));
   }
 
   async getAllClientRequests(
@@ -1462,8 +1483,6 @@ export class DatabaseStorage implements IStorage {
     page: number = 1, 
     limit: number = 50
   ): Promise<ClientRequest[]> {
-    let query = db.select().from(clientRequests);
-    
     // Apply filters
     const conditions = [];
     if (filters.status) {
@@ -1478,19 +1497,36 @@ export class DatabaseStorage implements IStorage {
     if (filters.clientName) {
       conditions.push(like(clientRequests.clientName, `%${filters.clientName}%`));
     }
-    if (conditions.length > 0) {
-      query = query.where(and(...conditions));
-    }
 
-    // Apply sorting
-    const sortField = clientRequests[sortBy as keyof typeof clientRequests] || clientRequests.createdAt;
-    query = query.orderBy(sortOrder === 'desc' ? desc(sortField) : asc(sortField));
-
+    // Apply sorting - use asc/desc functions directly with column
+    const getSortColumn = () => {
+      switch (sortBy) {
+        case 'updatedAt': return sortOrder === 'desc' ? desc(clientRequests.updatedAt) : asc(clientRequests.updatedAt);
+        case 'status': return sortOrder === 'desc' ? desc(clientRequests.status) : asc(clientRequests.status);
+        case 'priority': return sortOrder === 'desc' ? desc(clientRequests.priority) : asc(clientRequests.priority);
+        case 'clientName': return sortOrder === 'desc' ? desc(clientRequests.clientName) : asc(clientRequests.clientName);
+        default: return sortOrder === 'desc' ? desc(clientRequests.createdAt) : asc(clientRequests.createdAt);
+      }
+    };
+    
     // Apply pagination
     const offset = (page - 1) * limit;
-    query = query.limit(limit).offset(offset);
 
-    return await query;
+    // Build query with proper method chaining
+    let query = db.select().from(clientRequests);
+    
+    if (conditions.length > 0) {
+      return await query
+        .where(and(...conditions))
+        .orderBy(getSortColumn())
+        .limit(limit)
+        .offset(offset);
+    }
+    
+    return await query
+      .orderBy(getSortColumn())
+      .limit(limit)
+      .offset(offset);
   }
 
   async getClientRequest(id: number): Promise<ClientRequest | undefined> {
@@ -1531,16 +1567,23 @@ export class DatabaseStorage implements IStorage {
 
   // Quotation operations
   async getQuotations(filters?: { requestId?: number, status?: string }): Promise<Quotation[]> {
-    let query = db.select().from(quotations);
+    const conditions = [];
     
     if (filters?.requestId) {
-      query = query.where(eq(quotations.requestId, filters.requestId));
+      conditions.push(eq(quotations.requestId, filters.requestId));
     }
     if (filters?.status) {
-      query = query.where(eq(quotations.status, filters.status));
+      conditions.push(eq(quotations.status, filters.status));
     }
 
-    return await query.orderBy(desc(quotations.createdAt));
+    if (conditions.length > 0) {
+      return await db.select().from(quotations)
+        .where(and(...conditions))
+        .orderBy(desc(quotations.createdAt));
+    }
+
+    return await db.select().from(quotations)
+      .orderBy(desc(quotations.createdAt));
   }
 
   async getAllQuotations(
@@ -1550,8 +1593,6 @@ export class DatabaseStorage implements IStorage {
     page: number = 1, 
     limit: number = 50
   ): Promise<Quotation[]> {
-    let query = db.select().from(quotations);
-    
     // Apply filters
     const conditions = [];
     if (filters.requestId) {
@@ -1563,19 +1604,35 @@ export class DatabaseStorage implements IStorage {
     if (filters.quotationNumber) {
       conditions.push(like(quotations.quotationNumber, `%${filters.quotationNumber}%`));
     }
-    if (conditions.length > 0) {
-      query = query.where(and(...conditions));
-    }
 
-    // Apply sorting
-    const sortField = quotations[sortBy as keyof typeof quotations] || quotations.createdAt;
-    query = query.orderBy(sortOrder === 'desc' ? desc(sortField) : asc(sortField));
-
+    // Apply sorting - use asc/desc functions directly with column
+    const getSortColumn = () => {
+      switch (sortBy) {
+        case 'updatedAt': return sortOrder === 'desc' ? desc(quotations.updatedAt) : asc(quotations.updatedAt);
+        case 'status': return sortOrder === 'desc' ? desc(quotations.status) : asc(quotations.status);
+        case 'quotationNumber': return sortOrder === 'desc' ? desc(quotations.quotationNumber) : asc(quotations.quotationNumber);
+        case 'finalAmount': return sortOrder === 'desc' ? desc(quotations.finalAmount) : asc(quotations.finalAmount);
+        case 'totalAmount': return sortOrder === 'desc' ? desc(quotations.finalAmount) : asc(quotations.finalAmount); // alias for finalAmount
+        default: return sortOrder === 'desc' ? desc(quotations.createdAt) : asc(quotations.createdAt);
+      }
+    };
+    
     // Apply pagination
     const offset = (page - 1) * limit;
-    query = query.limit(limit).offset(offset);
 
-    return await query;
+    // Build query with proper method chaining
+    if (conditions.length > 0) {
+      return await db.select().from(quotations)
+        .where(and(...conditions))
+        .orderBy(getSortColumn())
+        .limit(limit)
+        .offset(offset);
+    }
+    
+    return await db.select().from(quotations)
+      .orderBy(getSortColumn())
+      .limit(limit)
+      .offset(offset);
   }
 
   async getQuotation(id: number): Promise<Quotation | undefined> {
@@ -1624,19 +1681,21 @@ export class DatabaseStorage implements IStorage {
 
   // Active Project operations
   async getActiveProjects(filters?: { status?: string, teamLead?: number, priority?: string }): Promise<ActiveProject[]> {
-    let query = db.select().from(activeProjects).where(eq(activeProjects.isActive, true));
+    const conditions = [eq(activeProjects.isActive, true)];
     
     if (filters?.status) {
-      query = query.where(eq(activeProjects.status, filters.status));
+      conditions.push(eq(activeProjects.status, filters.status));
     }
     if (filters?.teamLead) {
-      query = query.where(eq(activeProjects.teamLead, filters.teamLead));
+      conditions.push(eq(activeProjects.teamLead, filters.teamLead));
     }
     if (filters?.priority) {
-      query = query.where(eq(activeProjects.priority, filters.priority));
+      conditions.push(eq(activeProjects.priority, filters.priority));
     }
 
-    return await query.orderBy(desc(activeProjects.createdAt));
+    return await db.select().from(activeProjects)
+      .where(and(...conditions))
+      .orderBy(desc(activeProjects.createdAt));
   }
 
   async getAllActiveProjects(
@@ -1646,8 +1705,6 @@ export class DatabaseStorage implements IStorage {
     page: number = 1, 
     limit: number = 50
   ): Promise<ActiveProject[]> {
-    let query = db.select().from(activeProjects);
-    
     // Apply filters
     const conditions = [eq(activeProjects.isActive, true)]; // Only active by default
     if (filters.status) {
@@ -1659,25 +1716,31 @@ export class DatabaseStorage implements IStorage {
     if (filters.priority) {
       conditions.push(eq(activeProjects.priority, filters.priority));
     }
-    if (filters.categoryId) {
-      conditions.push(eq(activeProjects.categoryId, filters.categoryId));
-    }
     if (filters.projectName) {
-      conditions.push(like(activeProjects.projectName, `%${filters.projectName}%`));
-    }
-    if (conditions.length > 0) {
-      query = query.where(and(...conditions));
+      conditions.push(like(activeProjects.name, `%${filters.projectName}%`));
     }
 
-    // Apply sorting
-    const sortField = activeProjects[sortBy as keyof typeof activeProjects] || activeProjects.createdAt;
-    query = query.orderBy(sortOrder === 'desc' ? desc(sortField) : asc(sortField));
-
+    // Apply sorting - use asc/desc functions directly with column
+    const getSortColumn = () => {
+      switch (sortBy) {
+        case 'updatedAt': return sortOrder === 'desc' ? desc(activeProjects.updatedAt) : asc(activeProjects.updatedAt);
+        case 'status': return sortOrder === 'desc' ? desc(activeProjects.status) : asc(activeProjects.status);
+        case 'priority': return sortOrder === 'desc' ? desc(activeProjects.priority) : asc(activeProjects.priority);
+        case 'name': return sortOrder === 'desc' ? desc(activeProjects.name) : asc(activeProjects.name);
+        case 'teamLead': return sortOrder === 'desc' ? desc(activeProjects.teamLead) : asc(activeProjects.teamLead);
+        default: return sortOrder === 'desc' ? desc(activeProjects.createdAt) : asc(activeProjects.createdAt);
+      }
+    };
+    
     // Apply pagination
     const offset = (page - 1) * limit;
-    query = query.limit(limit).offset(offset);
 
-    return await query;
+    // Build query with proper method chaining
+    return await db.select().from(activeProjects)
+      .where(and(...conditions))
+      .orderBy(getSortColumn())
+      .limit(limit)
+      .offset(offset);
   }
 
   async getActiveProject(id: number): Promise<ActiveProject | undefined> {
@@ -1764,26 +1827,27 @@ export class DatabaseStorage implements IStorage {
 
   // Project Update operations
   async getProjectUpdates(activeProjectId: number, filters?: { phaseId?: number, updateType?: string }): Promise<ProjectUpdate[]> {
-    let query = db.select().from(projectUpdates)
-      .where(eq(projectUpdates.activeProjectId, activeProjectId));
+    const conditions = [eq(projectUpdates.activeProjectId, activeProjectId)];
     
     if (filters?.phaseId) {
-      query = query.where(eq(projectUpdates.phaseId, filters.phaseId));
+      conditions.push(eq(projectUpdates.phaseId, filters.phaseId));
     }
     if (filters?.updateType) {
-      query = query.where(eq(projectUpdates.updateType, filters.updateType));
+      conditions.push(eq(projectUpdates.updateType, filters.updateType));
     }
 
-    return await query.orderBy(desc(projectUpdates.createdAt));
+    return await db.select().from(projectUpdates)
+      .where(and(...conditions))
+      .orderBy(desc(projectUpdates.createdAt)) as ProjectUpdate[];
   }
 
   async getProjectUpdate(id: number): Promise<ProjectUpdate | undefined> {
-    const [update] = await db.select().from(projectUpdates).where(eq(projectUpdates.id, id));
+    const [update] = await db.select().from(projectUpdates).where(eq(projectUpdates.id, id)) as ProjectUpdate[];
     return update;
   }
 
   async createProjectUpdate(update: InsertProjectUpdate): Promise<ProjectUpdate> {
-    const [newUpdate] = await db.insert(projectUpdates).values(update).returning();
+    const [newUpdate] = await db.insert(projectUpdates).values(update).returning() as ProjectUpdate[];
     return newUpdate;
   }
 
@@ -1791,7 +1855,7 @@ export class DatabaseStorage implements IStorage {
     const [updatedUpdate] = await db.update(projectUpdates)
       .set(update)
       .where(eq(projectUpdates.id, id))
-      .returning();
+      .returning() as ProjectUpdate[];
     return updatedUpdate;
   }
 
@@ -1808,42 +1872,59 @@ export class DatabaseStorage implements IStorage {
     page: number = 1, 
     limit: number = 50
   ): Promise<ProjectUpdate[]> {
-    let query = db.select().from(projectUpdates)
-      .where(eq(projectUpdates.activeProjectId, activeProjectId));
-    
     // Apply filters
+    const conditions = [eq(projectUpdates.activeProjectId, activeProjectId)];
     if (filters.phaseId) {
-      query = query.where(eq(projectUpdates.phaseId, filters.phaseId));
+      conditions.push(eq(projectUpdates.phaseId, filters.phaseId));
     }
     if (filters.updateType) {
-      query = query.where(eq(projectUpdates.updateType, filters.updateType));
+      conditions.push(eq(projectUpdates.updateType, filters.updateType));
     }
 
-    // Apply sorting
-    const sortField = projectUpdates[sortBy as keyof typeof projectUpdates] || projectUpdates.createdAt;
-    query = query.orderBy(sortOrder === 'desc' ? desc(sortField) : asc(sortField));
-
+    // Apply sorting - use asc/desc functions directly with column
+    const getSortColumn = () => {
+      switch (sortBy) {
+        case 'updatedAt': return sortOrder === 'desc' ? desc(projectUpdates.updatedAt) : asc(projectUpdates.updatedAt);
+        case 'title': return sortOrder === 'desc' ? desc(projectUpdates.title) : asc(projectUpdates.title);
+        case 'status': return sortOrder === 'desc' ? desc(projectUpdates.status) : asc(projectUpdates.status);
+        case 'updateType': return sortOrder === 'desc' ? desc(projectUpdates.updateType) : asc(projectUpdates.updateType);
+        default: return sortOrder === 'desc' ? desc(projectUpdates.createdAt) : asc(projectUpdates.createdAt);
+      }
+    };
+    
     // Apply pagination
     const offset = (page - 1) * limit;
-    query = query.limit(limit).offset(offset);
 
-    return await query;
+    // Build query with proper method chaining and type assertion
+    return await db.select().from(projectUpdates)
+      .where(and(...conditions))
+      .orderBy(getSortColumn())
+      .limit(limit)
+      .offset(offset) as ProjectUpdate[];
   }
 
   // Payment operations
   async getPayments(activeProjectId?: number, filters?: { status?: string, paymentType?: string }): Promise<Payment[]> {
-    let query = db.select().from(payments);
+    const conditions = [];
     
     if (activeProjectId) {
-      query = query.where(eq(payments.activeProjectId, activeProjectId));
+      conditions.push(eq(payments.activeProjectId, activeProjectId));
     }
     if (filters?.status) {
-      query = query.where(eq(payments.status, filters.status));
+      conditions.push(eq(payments.status, filters.status));
     }
     if (filters?.paymentType) {
-      query = query.where(eq(payments.paymentType, filters.paymentType));
+      conditions.push(eq(payments.paymentType, filters.paymentType));
     }
 
+    let query = db.select().from(payments);
+    
+    if (conditions.length > 0) {
+      return await query
+        .where(and(...conditions))
+        .orderBy(desc(payments.createdAt));
+    }
+    
     return await query.orderBy(desc(payments.createdAt));
   }
 
@@ -1894,28 +1975,35 @@ export class DatabaseStorage implements IStorage {
 
   // Enhanced Project Document operations
   async getEnhancedProjectDocuments(filters?: { activeProjectId?: number, category?: string, isClientVisible?: boolean }): Promise<EnhancedProjectDocument[]> {
-    let query = db.select().from(enhancedProjectDocuments);
+    const conditions = [];
     
     if (filters?.activeProjectId) {
-      query = query.where(eq(enhancedProjectDocuments.activeProjectId, filters.activeProjectId));
+      conditions.push(eq(enhancedProjectDocuments.activeProjectId, filters.activeProjectId));
     }
     if (filters?.category) {
-      query = query.where(eq(enhancedProjectDocuments.category, filters.category));
+      conditions.push(eq(enhancedProjectDocuments.category, filters.category));
     }
     if (filters?.isClientVisible !== undefined) {
-      query = query.where(eq(enhancedProjectDocuments.isClientVisible, filters.isClientVisible));
+      conditions.push(eq(enhancedProjectDocuments.isClientVisible, filters.isClientVisible));
     }
 
-    return await query.orderBy(desc(enhancedProjectDocuments.createdAt));
+    if (conditions.length > 0) {
+      return await db.select().from(enhancedProjectDocuments)
+        .where(and(...conditions))
+        .orderBy(desc(enhancedProjectDocuments.createdAt)) as EnhancedProjectDocument[];
+    }
+    
+    return await db.select().from(enhancedProjectDocuments)
+      .orderBy(desc(enhancedProjectDocuments.createdAt)) as EnhancedProjectDocument[];
   }
 
   async getEnhancedProjectDocument(id: number): Promise<EnhancedProjectDocument | undefined> {
-    const [document] = await db.select().from(enhancedProjectDocuments).where(eq(enhancedProjectDocuments.id, id));
+    const [document] = await db.select().from(enhancedProjectDocuments).where(eq(enhancedProjectDocuments.id, id)) as EnhancedProjectDocument[];
     return document;
   }
 
   async createEnhancedProjectDocument(document: InsertEnhancedProjectDocument): Promise<EnhancedProjectDocument> {
-    const [newDocument] = await db.insert(enhancedProjectDocuments).values(document).returning();
+    const [newDocument] = await db.insert(enhancedProjectDocuments).values(document).returning() as EnhancedProjectDocument[];
     return newDocument;
   }
 
@@ -1923,7 +2011,7 @@ export class DatabaseStorage implements IStorage {
     const [updatedDocument] = await db.update(enhancedProjectDocuments)
       .set(document)
       .where(eq(enhancedProjectDocuments.id, id))
-      .returning();
+      .returning() as EnhancedProjectDocument[];
     return updatedDocument;
   }
 
@@ -1934,18 +2022,26 @@ export class DatabaseStorage implements IStorage {
 
   // Admin Statistics operations
   async getAdminStatistics(period?: string, periodStart?: Date, periodEnd?: Date): Promise<AdminStatistic[]> {
-    let query = db.select().from(adminStatistics);
+    const conditions = [];
     
     if (period) {
-      query = query.where(eq(adminStatistics.period, period));
+      conditions.push(eq(adminStatistics.period, period));
     }
     if (periodStart) {
-      query = query.where(gte(adminStatistics.periodStart, periodStart));
+      conditions.push(gte(adminStatistics.periodStart, periodStart));
     }
     if (periodEnd) {
-      query = query.where(lte(adminStatistics.periodEnd, periodEnd));
+      conditions.push(lte(adminStatistics.periodEnd, periodEnd));
     }
 
+    let query = db.select().from(adminStatistics);
+    
+    if (conditions.length > 0) {
+      return await query
+        .where(and(...conditions))
+        .orderBy(desc(adminStatistics.periodStart));
+    }
+    
     return await query.orderBy(desc(adminStatistics.periodStart));
   }
 
@@ -1984,31 +2080,33 @@ export class DatabaseStorage implements IStorage {
 
   // Enhanced Notification operations
   async getEnhancedNotifications(userId?: number, filters?: { isRead?: boolean, type?: string, priority?: string }): Promise<EnhancedNotification[]> {
-    let query = db.select().from(enhancedNotifications).where(eq(enhancedNotifications.isArchived, false));
+    const conditions = [eq(enhancedNotifications.isArchived, false)];
     
     if (userId) {
-      query = query.where(eq(enhancedNotifications.userId, userId));
+      conditions.push(eq(enhancedNotifications.userId, userId));
     }
     if (filters?.isRead !== undefined) {
-      query = query.where(eq(enhancedNotifications.isRead, filters.isRead));
+      conditions.push(eq(enhancedNotifications.isRead, filters.isRead));
     }
     if (filters?.type) {
-      query = query.where(eq(enhancedNotifications.type, filters.type));
+      conditions.push(eq(enhancedNotifications.type, filters.type));
     }
     if (filters?.priority) {
-      query = query.where(eq(enhancedNotifications.priority, filters.priority));
+      conditions.push(eq(enhancedNotifications.priority, filters.priority));
     }
 
-    return await query.orderBy(desc(enhancedNotifications.createdAt));
+    return await db.select().from(enhancedNotifications)
+      .where(and(...conditions))
+      .orderBy(desc(enhancedNotifications.createdAt)) as EnhancedNotification[];
   }
 
   async getEnhancedNotification(id: number): Promise<EnhancedNotification | undefined> {
-    const [notification] = await db.select().from(enhancedNotifications).where(eq(enhancedNotifications.id, id));
+    const [notification] = await db.select().from(enhancedNotifications).where(eq(enhancedNotifications.id, id)) as EnhancedNotification[];
     return notification;
   }
 
   async createEnhancedNotification(notification: InsertEnhancedNotification): Promise<EnhancedNotification> {
-    const [newNotification] = await db.insert(enhancedNotifications).values(notification).returning();
+    const [newNotification] = await db.insert(enhancedNotifications).values(notification).returning() as EnhancedNotification[];
     return newNotification;
   }
 
@@ -2016,7 +2114,7 @@ export class DatabaseStorage implements IStorage {
     const [updatedNotification] = await db.update(enhancedNotifications)
       .set(notification)
       .where(eq(enhancedNotifications.id, id))
-      .returning();
+      .returning() as EnhancedNotification[];
     return updatedNotification;
   }
 
@@ -2029,12 +2127,12 @@ export class DatabaseStorage implements IStorage {
     const [readNotification] = await db.update(enhancedNotifications)
       .set({ isRead: true, readAt: new Date(), acknowledgedBy: userId, acknowledgedAt: new Date() })
       .where(eq(enhancedNotifications.id, id))
-      .returning();
+      .returning() as EnhancedNotification[];
     return readNotification;
   }
 
   async sendBulkNotifications(notifications: InsertEnhancedNotification[]): Promise<EnhancedNotification[]> {
-    const createdNotifications = await db.insert(enhancedNotifications).values(notifications).returning();
+    const createdNotifications = await db.insert(enhancedNotifications).values(notifications).returning() as EnhancedNotification[];
     return createdNotifications;
   }
 
@@ -2043,7 +2141,9 @@ export class DatabaseStorage implements IStorage {
     let query = db.select().from(systemSettings);
     
     if (category) {
-      query = query.where(eq(systemSettings.category, category));
+      return await query
+        .where(eq(systemSettings.category, category))
+        .orderBy(asc(systemSettings.category), asc(systemSettings.settingKey));
     }
 
     return await query.orderBy(asc(systemSettings.category), asc(systemSettings.settingKey));

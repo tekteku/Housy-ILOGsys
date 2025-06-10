@@ -1,4 +1,4 @@
-// filepath: c:\\Users\\TaherCh\\Desktop\\Essay\\HousyTunisia\\HousyTunisia\\client\\src\\pages\\projects.tsx
+// filepath: c:\\Users\\TaherCh\\Desktop\\Essay\\Housy\\Housy\\client\\src\\pages\\projects.tsx
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";

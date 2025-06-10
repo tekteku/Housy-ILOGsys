@@ -1,4 +1,4 @@
-# Housy Tunisia - Architecture & Codebase Documentation
+# Housy - Architecture & Codebase Documentation
 
 ## 📋 Table des Matières
 
@@ -17,7 +17,7 @@
 
 ## Vue d'ensemble du projet
 
-**Housy Tunisia** est une application complète de gestion de projets de construction spécialement conçue pour le marché tunisien. Elle offre une plateforme intégrée pour la planification, le suivi, l'estimation des coûts et la gestion des matériaux de construction.
+**Housy** est une application complète de gestion de projets de construction spécialement conçue pour le marché tunisien. Elle offre une plateforme intégrée pour la planification, le suivi, l'estimation des coûts et la gestion des matériaux de construction.
 
 ### Objectifs principaux:
 - **Gestion de projets de construction** avec suivi en temps réel
@@ -63,7 +63,7 @@ L'application suit une architecture **Full-Stack TypeScript** avec séparation c
 ## Structure des dossiers
 
 ```
-HousyTunisia/
+Housy/
 ├── 📁 client/                    # Application frontend React
 │   ├── 📁 src/
 │   │   ├── 📁 components/        # Composants réutilisables
@@ -821,7 +821,7 @@ export const insertProjectSchema = z.object({
 
 ## Conclusion
 
-**Housy Tunisia** est une application moderne et complète utilisant les meilleures pratiques du développement web. L'architecture modulaire, le typage strict TypeScript, et l'intégration d'IA en font une solution robuste pour la gestion de projets de construction en Tunisie.
+**Housy** est une application moderne et complète utilisant les meilleures pratiques du développement web. L'architecture modulaire, le typage strict TypeScript, et l'intégration d'IA en font une solution robuste pour la gestion de projets de construction en Tunisie.
 
 ### Points forts:
 ✅ **Architecture moderne** (React + Express + PostgreSQL)  

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 import Sidebar from "./Sidebar";
 import MobileNav from "./MobileNav";
+import { AuthHeader } from "./AuthHeader";
 import { useIsMobile } from "@/hooks/use-mobile";
 import CompanyLogo from "../ui/CompanyLogo";
 import { ThemeToggle } from "../ui/ThemeToggle";
@@ -11,6 +13,7 @@ interface AppLayoutProps {
 
 const AppLayout = ({ children }: AppLayoutProps) => {
   const isMobile = useIsMobile();
+  const { isAuthenticated } = useAuth();
   const [showMobileSidebar, setShowMobileSidebar] = useState(false);
 
   useEffect(() => {
@@ -25,8 +28,10 @@ const AppLayout = ({ children }: AppLayoutProps) => {
 
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-neutral-50 font-sans">
-      {/* Mobile Header */}
-      {isMobile && (
+      {/* Use AuthHeader when authenticated, otherwise keep mobile header */}
+      {isMobile && isAuthenticated ? (
+        <AuthHeader onMobileMenuToggle={toggleMobileSidebar} />
+      ) : isMobile ? (
         <header className="bg-white dark:bg-gray-800 shadow-sm py-3 px-4 flex items-center justify-between z-10">
           <div className="flex items-center">
             <CompanyLogo />
@@ -55,7 +60,7 @@ const AppLayout = ({ children }: AppLayoutProps) => {
             </button>
           </div>
         </header>
-      )}
+      ) : null}
 
       {/* Sidebar - visible on desktop and conditionally on mobile */}
       <Sidebar

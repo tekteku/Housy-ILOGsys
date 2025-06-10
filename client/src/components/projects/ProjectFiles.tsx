@@ -27,6 +27,9 @@ import {
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+// Animation imports
+import { ModalAnimation, HoverCard, FadeIn } from '../animations';
+
 interface ProjectFile {
   id: string;
   name: string;
@@ -207,9 +210,8 @@ export default function ProjectFiles({ projectId }: ProjectFilesProps) {
     console.log('Files uploaded:', uploadedFiles);
     setIsUploadModalOpen(false);
   };
-
   const FileGridItem: React.FC<{ file: ProjectFile }> = ({ file }) => (
-    <Card className="hover:shadow-md transition-shadow cursor-pointer group">
+    <HoverCard className="cursor-pointer group">
       <CardContent className="p-4">
         <div className="space-y-3">
           <div className="flex items-start justify-between">
@@ -281,19 +283,17 @@ export default function ProjectFiles({ projectId }: ProjectFilesProps) {
             <Button variant="outline" size="sm" className="flex-1">
               <Eye className="h-3 w-3 mr-1" />
               Voir
-            </Button>
-            <Button variant="outline" size="sm" className="flex-1">
+            </Button>            <Button variant="outline" size="sm" className="flex-1">
               <Download className="h-3 w-3 mr-1" />
               Télécharger
             </Button>
           </div>
         </div>
       </CardContent>
-    </Card>
+    </HoverCard>
   );
-
   const FileListItem: React.FC<{ file: ProjectFile }> = ({ file }) => (
-    <Card className="hover:shadow-sm transition-shadow">
+    <HoverCard>
       <CardContent className="p-4">
         <div className="flex items-center gap-4">
           <div className="flex-shrink-0">
@@ -355,10 +355,9 @@ export default function ProjectFiles({ projectId }: ProjectFilesProps) {
                 </Button>
               </div>
             </div>
-          </div>
-        </div>
+          </div>        </div>
       </CardContent>
-    </Card>
+    </HoverCard>
   );
 
   return (
@@ -411,28 +410,29 @@ export default function ProjectFiles({ projectId }: ProjectFilesProps) {
                     <Upload className="h-4 w-4 mr-2" />
                     Téléverser
                   </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Téléverser des fichiers</DialogTitle>
-                    <DialogDescription>
-                      Glissez-déposez vos fichiers ou cliquez pour les sélectionner
-                    </DialogDescription>
-                  </DialogHeader>
-                  <FileDropzone
-                    onFilesUploaded={handleFileUpload}
-                    accept={{
-                      'application/pdf': ['.pdf'],
-                      'application/msword': ['.doc'],
-                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': ['.docx'],
-                      'image/*': ['.png', '.jpg', '.jpeg', '.gif'],
-                      'video/*': ['.mp4', '.avi', '.mov'],
-                      'application/zip': ['.zip'],
-                      'application/x-rar-compressed': ['.rar']
-                    }}
-                    maxSize={50 * 1024 * 1024} // 50MB
-                    maxFiles={10}
-                  />
+                </DialogTrigger>                <DialogContent className="max-w-2xl">
+                  <FadeIn>
+                    <DialogHeader>
+                      <DialogTitle>Téléverser des fichiers</DialogTitle>
+                      <DialogDescription>
+                        Glissez-déposez vos fichiers ou cliquez pour les sélectionner
+                      </DialogDescription>
+                    </DialogHeader>
+                    <FileDropzone
+                      onFilesChange={handleFileUpload}
+                      acceptedFileTypes={[
+                        '.pdf',
+                        '.doc',
+                        '.docx', 
+                        'image/*',
+                        '.mp4', '.avi', '.mov',
+                        '.zip',
+                        '.rar'
+                      ]}
+                      maxFileSize={50 * 1024 * 1024} // 50MB
+                      maxFiles={10}
+                    />
+                  </FadeIn>
                 </DialogContent>
               </Dialog>
             </div>

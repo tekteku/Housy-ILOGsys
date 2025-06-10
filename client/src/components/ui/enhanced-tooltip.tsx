@@ -29,12 +29,11 @@ export function EnhancedTooltip({
   if (!content || disabled) {
     return <>{children}</>
   }
-
   return (
     <TooltipProvider delayDuration={delay}>
       <Tooltip>
         <TooltipTrigger asChild className={className}>
-          <span>{children}</span>
+          {children}
         </TooltipTrigger>
         <TooltipContent
           side={side}

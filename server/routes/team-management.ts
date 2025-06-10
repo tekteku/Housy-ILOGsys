@@ -40,9 +40,8 @@ router.get('/:projectId/team', async (req, res) => {
         avatar: null,
         skills: ["Gestion de projet", "Leadership", "Planning"],
         workload: 85,
-        availability: "busy",
-        currentTasks: tasks.filter(t => t.assignedTo === 'user1' && t.status !== 'completed').length,
-        completedTasks: tasks.filter(t => t.assignedTo === 'user1' && t.status === 'completed').length,
+        availability: "busy",        currentTasks: tasks.filter(t => t.assignedTo === 1 && t.status !== 'completed').length,
+        completedTasks: tasks.filter(t => t.assignedTo === 1 && t.status === 'completed').length,
         performance: {
           rating: 4.8,
           onTimeDelivery: 95,
@@ -64,9 +63,8 @@ router.get('/:projectId/team', async (req, res) => {
         avatar: null,
         skills: ["Architecture", "AutoCAD", "Design", "BIM"],
         workload: 70,
-        availability: "available",
-        currentTasks: tasks.filter(t => t.assignedTo === 'user2' && t.status !== 'completed').length,
-        completedTasks: tasks.filter(t => t.assignedTo === 'user2' && t.status === 'completed').length,
+        availability: "available",        currentTasks: tasks.filter(t => t.assignedTo === 2 && t.status !== 'completed').length,
+        completedTasks: tasks.filter(t => t.assignedTo === 2 && t.status === 'completed').length,
         performance: {
           rating: 4.6,
           onTimeDelivery: 88,
@@ -88,9 +86,8 @@ router.get('/:projectId/team', async (req, res) => {
         avatar: null,
         skills: ["Génie civil", "Calcul structures", "Supervision chantier"],
         workload: 60,
-        availability: "available",
-        currentTasks: tasks.filter(t => t.assignedTo === 'user3' && t.status !== 'completed').length,
-        completedTasks: tasks.filter(t => t.assignedTo === 'user3' && t.status === 'completed').length,
+        availability: "available",        currentTasks: tasks.filter(t => t.assignedTo === 3 && t.status !== 'completed').length,
+        completedTasks: tasks.filter(t => t.assignedTo === 3 && t.status === 'completed').length,
         performance: {
           rating: 4.4,
           onTimeDelivery: 82,
@@ -112,9 +109,8 @@ router.get('/:projectId/team', async (req, res) => {
         avatar: null,
         skills: ["Supervision", "Sécurité chantier", "Coordination équipes"],
         workload: 90,
-        availability: "busy",
-        currentTasks: tasks.filter(t => t.assignedTo === 'user4' && t.status !== 'completed').length,
-        completedTasks: tasks.filter(t => t.assignedTo === 'user4' && t.status === 'completed').length,
+        availability: "busy",        currentTasks: tasks.filter(t => t.assignedTo === 4 && t.status !== 'completed').length,
+        completedTasks: tasks.filter(t => t.assignedTo === 4 && t.status === 'completed').length,
         performance: {
           rating: 4.3,
           onTimeDelivery: 90,
@@ -283,7 +279,7 @@ router.patch('/:projectId/team/:memberId', async (req, res) => {
       await storage.createEnhancedNotification({
         userId: 1,
         title: 'Statut membre mis à jour',
-        message: `Le membre d'équipe ${statusMessages[updates.status] || 'a changé de statut'}`,
+        message: `Le membre d'équipe ${statusMessages[updates.status as keyof typeof statusMessages] || 'a changé de statut'}`,
         type: 'info',
         category: 'team',
         priority: 'low',
@@ -437,14 +433,14 @@ router.get('/:projectId/team/workload', async (req, res) => {
           memberId: 1,
           name: "Mohammed Trabelsi",
           workload: 85,
-          tasks: tasks.filter(t => t.assignedTo === 'user1').length,
+          tasks: tasks.filter(t => t.assignedTo === 1).length,
           recommendation: "Déléguer certaines tâches administratives"
         },
         {
           memberId: 4,
           name: "Karim Hajji", 
           workload: 90,
-          tasks: tasks.filter(t => t.assignedTo === 'user4').length,
+          tasks: tasks.filter(t => t.assignedTo === 4).length,
           recommendation: "Ajouter un assistant contremaître"
         }
       ],
@@ -453,14 +449,14 @@ router.get('/:projectId/team/workload', async (req, res) => {
           memberId: 2,
           name: "Ahmed Ben Ali",
           workload: 70,
-          tasks: tasks.filter(t => t.assignedTo === 'user2').length,
+          tasks: tasks.filter(t => t.assignedTo === 2).length,
           status: "Charge de travail optimale"
         },
         {
           memberId: 3,
           name: "Fatima Kassem",
           workload: 60,
-          tasks: tasks.filter(t => t.assignedTo === 'user3').length,
+          tasks: tasks.filter(t => t.assignedTo === 3).length,
           status: "Peut prendre des tâches supplémentaires"
         }
       ],
