@@ -5,6 +5,8 @@
  */
 
 import { aiService } from './ai-service';
+import IntelligentEstimationService from './intelligent-estimation-service';
+import DataAnalysisService from './data-analysis-service';
 
 export interface EstimationRequest {
   projectType: string;
@@ -25,6 +27,13 @@ export interface EstimationAIRequest {
 }
 
 export class EstimationAIService {
+  private intelligentEstimationService: IntelligentEstimationService;
+  private dataAnalysisService: DataAnalysisService;
+
+  constructor() {
+    this.intelligentEstimationService = new IntelligentEstimationService();
+    this.dataAnalysisService = new DataAnalysisService();
+  }
   
   /**
    * Vérifie si l'utilisateur peut utiliser Ollama pour l'estimation
@@ -56,9 +65,9 @@ export class EstimationAIService {
     // Pour les clients, on utilise les modèles cloud
     return preferredModel || 'openai';
   }
-
   /**
    * Génère une estimation de matériaux avec IA selon les permissions utilisateur
+   * ENRICHIE avec les données JSON certifiées
    */
   async generateMaterialEstimationWithAI(request: EstimationAIRequest): Promise<string> {
     const { prompt, context, userId, userRole, preferredModel } = request;
@@ -71,11 +80,37 @@ export class EstimationAIService {
       console.log(`🔒 OLLAMA ACCESS GRANTED - Admin estimation request from user ${userId} (role: ${userRole})`);
     }
 
-    // Créer un prompt spécialisé pour l'estimation
-    const estimationPrompt = this.buildEstimationPrompt(prompt, context, userRole);
+    try {
+      // 🚀 NOUVEAU: Générer une estimation intelligente avec données réelles
+      const projectDetails = {
+        projectType: context.projectType,
+        surface: context.area,
+        region: 'Tunis', // Par défaut, peut être étendu
+        qualityLevel: context.qualityLevel
+      };
 
-    // Utiliser le service IA avec le modèle autorisé
-    const sessionId = `estimation_${userId}_${Date.now()}`;
+      const intelligentAnalysis = await this.intelligentEstimationService.generateSmartEstimation(
+        prompt,
+        projectDetails
+      );
+
+      // Utiliser le prompt enrichi avec les données certifiées
+      const enrichedPrompt = intelligentAnalysis.prompt_enrichi;      // Utiliser le service IA avec le modèle autorisé
+      const sessionId = `estimation_${userId}_${Date.now()}`;
+      
+      const aiResponse = await aiService.processChatMessage(sessionId, userId || null, enrichedPrompt, selectedModel);
+
+      // Enrichir la réponse avec les analyses de données
+      const enhancedResponse = this.enhanceAIResponse(aiResponse, intelligentAnalysis);
+
+      return enhancedResponse;
+
+    } catch (error) {
+      console.error('Erreur estimation intelligente:', error);
+      
+      // Fallback vers l'ancien système en cas d'erreur
+      const estimationPrompt = this.buildEstimationPrompt(prompt, context, userRole);
+      const sessionId = `estimation_fallback_${userId}_${Date.now()}`;
     
     try {
       const response = await aiService.processChatMessage(
@@ -104,6 +139,7 @@ export class EstimationAIService {
       }
       
       throw error;
+    }
     }
   }
 
@@ -178,13 +214,11 @@ Question: ${userPrompt}`;
     }
 
     return await aiService.processChatMessage(sessionId, null, prompt, selectedModel);
-  }
-
-  /**
+  }  /**
    * Obtient les modèles disponibles selon le rôle utilisateur
    */
   getAvailableModelsForUser(userRole?: string): Array<{id: string, name: string, description: string, restricted?: boolean}> {
-    const baseModels = [
+    const baseModels: Array<{id: string, name: string, description: string, restricted?: boolean}> = [
       {
         id: 'openai',
         name: 'GPT-4 (OpenAI)',
@@ -213,6 +247,34 @@ Question: ${userPrompt}`;
     }
 
     return baseModels;
+  }
+
+  /**
+   * Enrichit la réponse IA avec les analyses de données réelles
+   */
+  private enhanceAIResponse(aiResponse: string, intelligentAnalysis: any): string {
+    const analysis = intelligentAnalysis.recommandations_ia;
+    
+    return `${aiResponse}
+
+## 📊 ANALYSE BASÉE SUR DONNÉES CERTIFIÉES
+
+### 💰 Estimation Détaillée
+- **Budget total estimé**: ${analysis.budget_estime.toLocaleString()} TND
+- **Économies possibles**: ${analysis.economies_possibles.toLocaleString()} TND
+
+### 🔧 Matériaux Alternatifs Recommandés
+${analysis.materiaux_alternatifs.map((alt: string) => `• ${alt}`).join('\n')}
+
+### 🌍 Conseils Régionaux
+${analysis.conseils_region.map((conseil: string) => `• ${conseil}`).join('\n')}
+
+### ⚡ Optimisations Suggérées
+${analysis.optimisations.map((opt: string) => `• ${opt}`).join('\n')}
+
+---
+*Analyse basée sur 525+ matériaux et 6,036+ propriétés du marché tunisien*
+`;
   }
 }
 

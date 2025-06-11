@@ -19,6 +19,7 @@ import estimationRoutes from './routes/estimation';
 import estimationAIRoutes from './routes/estimation-ai';
 import activitiesRoutes from './routes/activities';
 import resourcesRoutes from './routes/resources';
+import dataAnalysisRoutes from './routes/data-analysis';
 
 // Import new extended routes
 import clientRequestRoutes from './routes/client-requests';
@@ -126,6 +127,7 @@ app.use('/api/estimation', estimationRoutes);
 app.use('/api/estimation-ai', estimationAIRoutes);
 app.use('/api/activities', activitiesRoutes);
 app.use('/api/resources', resourcesRoutes);
+app.use('/api/data-analysis', dataAnalysisRoutes);
 
 // Extended schema routes
 app.use('/api/client-requests', clientRequestRoutes);
