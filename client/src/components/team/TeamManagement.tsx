@@ -288,16 +288,14 @@ const TeamManagement: React.FC<TeamManagementProps> = ({ projectId }) => {
                   Ajouter membre
                 </Button>
               </DialogTrigger>              <DialogContent className="max-w-md">
-                <FadeIn>
-                  <DialogHeader>
-                    <DialogTitle>Ajouter un membre à l'équipe</DialogTitle>
-                  </DialogHeader>
-                  <AddMemberForm
-                    onSubmit={(data) => addMemberMutation.mutate(data)}
-                    isLoading={addMemberMutation.isPending}
-                    roles={roles || []}
-                  />
-                </FadeIn>
+                <DialogHeader>
+                  <DialogTitle>Ajouter un membre à l'équipe</DialogTitle>
+                </DialogHeader>
+                <AddMemberForm
+                  onSubmit={(data) => addMemberMutation.mutate(data)}
+                  isLoading={addMemberMutation.isPending}
+                  roles={roles || []}
+                />
               </DialogContent>
             </Dialog>
           </div>
@@ -583,15 +581,13 @@ const MemberDetailModal: React.FC<{
     onUpdate(editData);
     setIsEditing(false);
   };
-
   return (
     <Dialog open={true} onOpenChange={onClose}>      <DialogContent className="max-w-2xl">
-        <FadeIn>
-          <DialogHeader>
-            <DialogTitle>Détails du membre - {member.name}</DialogTitle>
-          </DialogHeader>
-        
-        <div className="space-y-6">
+        <DialogHeader>
+          <DialogTitle>Détails du membre - {member.name}</DialogTitle>
+        </DialogHeader>
+      
+      <div className="space-y-6">
           {/* Member Info */}
           <div className="flex items-start space-x-4">
             <Avatar className="h-16 w-16">
@@ -738,10 +734,8 @@ const MemberDetailModal: React.FC<{
                 <Button onClick={() => setIsEditing(true)}>
                   Modifier
                 </Button>
-              )}
-            </div>          </div>
+              )}            </div>          </div>
         </div>
-        </FadeIn>
       </DialogContent>
     </Dialog>
   );

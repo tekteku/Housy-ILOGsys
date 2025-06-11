@@ -16,6 +16,7 @@ import analyticsRoutes from './routes/analytics';
 import financialRoutes from './routes/financial';
 import authRoutes from './routes/auth';
 import estimationRoutes from './routes/estimation';
+import estimationAIRoutes from './routes/estimation-ai';
 import activitiesRoutes from './routes/activities';
 import resourcesRoutes from './routes/resources';
 
@@ -35,6 +36,9 @@ import teamManagementRoutes from './routes/team-management';
 
 // Import enhanced mega routes
 import megaRoutes from './routes/mega-routes';
+
+// Import admin routes
+import adminRoutes from './routes/admin';
 
 const app = express();
 
@@ -119,6 +123,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api/financial', financialRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/estimation', estimationRoutes);
+app.use('/api/estimation-ai', estimationAIRoutes);
 app.use('/api/activities', activitiesRoutes);
 app.use('/api/resources', resourcesRoutes);
 
@@ -138,6 +143,9 @@ app.use('/api/projects', teamManagementRoutes);
 
 // Enhanced mega routes with comprehensive features
 app.use('/api/mega', megaRoutes);
+
+// Admin routes (protected)
+app.use('/api/admin', adminRoutes);
 
 // Simple test routes to verify modular structure works
 app.get('/api/test', (req, res) => {

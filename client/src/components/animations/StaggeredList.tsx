@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 interface StaggeredListProps {
-  children: React.ReactNode[];
+  children?: React.ReactNode;
   staggerDelay?: number;
   initialDelay?: number;
   className?: string;
@@ -38,7 +38,6 @@ const StaggeredList: React.FC<StaggeredListProps> = ({
       }
     }
   };
-
   return (
     <motion.div
       className={className}
@@ -46,7 +45,7 @@ const StaggeredList: React.FC<StaggeredListProps> = ({
       initial="hidden"
       animate="visible"
     >
-      {children.map((child, index) => (
+      {React.Children.toArray(children).map((child, index) => (
         <motion.div key={index} variants={itemVariants}>
           {child}
         </motion.div>

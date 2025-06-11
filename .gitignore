@@ -49,5 +49,39 @@ postgres.session.sql
 generated-icon.png
 
 # Large asset files - you might want to consider if these should be versioned
+attached_assets/*.csv
+attached_assets/Pasted--*.txt
+
+# Package manager caches
+.npm/
+.yarn/
+.pnpm-store/
+pnpm-lock.yaml
+
+# Build caches
+.vite/
+.turbo/
+.next/
+.nuxt/
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Logs and debugging
+*.log.*
+debug.log
+error.log
+
+# OS and editor caches
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# Large binaries and executables
+esbuild.exe
 # If not, uncomment the line below
 attached_assets/

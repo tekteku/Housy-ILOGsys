@@ -317,15 +317,14 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
                 Nouvelle Transaction
               </Button>
             </DialogTrigger>            <DialogContent className="max-w-2xl">
-              <FadeIn>
-                <DialogHeader>
-                  <DialogTitle>Créer une nouvelle transaction</DialogTitle>
-                  <DialogDescription>
-                    Ajoutez une nouvelle transaction financière au journal.
-                  </DialogDescription>
-                </DialogHeader>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <DialogHeader>
+                <DialogTitle>Créer une nouvelle transaction</DialogTitle>
+                <DialogDescription>
+                  Ajoutez une nouvelle transaction financière au journal.
+                </DialogDescription>
+              </DialogHeader>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <Label htmlFor="type">Type</Label>
                   <Select
@@ -452,9 +451,7 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
                     rows={3}
                   />
                 </div>
-              </div>
-
-              <div className="flex justify-end gap-2 mt-6">
+              </div>              <div className="flex justify-end gap-2 mt-6">
                 <Button
                   variant="outline"
                   onClick={() => setIsCreateDialogOpen(false)}
@@ -467,7 +464,6 @@ const TransactionJournal: React.FC<TransactionJournalProps> = ({
                   Créer Transaction
                 </Button>
               </div>
-              </FadeIn>
             </DialogContent>
           </Dialog>
         </div>

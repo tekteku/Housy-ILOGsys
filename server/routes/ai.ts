@@ -33,6 +33,29 @@ router.post('/chat', async (req, res) => {
   }
 });
 
+// GET /api/ai/chat/:sessionId - Récupérer une session de chat spécifique
+router.get('/chat/:sessionId', async (req, res) => {
+  try {
+    const { sessionId } = req.params;
+    
+    // Pour l'instant, retourner une réponse basique
+    // Dans une vraie application, on récupérerait l'historique de la session
+    res.json({
+      message: "Session trouvée",
+      data: {
+        sessionId,
+        messages: [],
+        timestamp: new Date()
+      }
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération de la session:', error);
+    res.status(500).json({
+      message: "Erreur lors de la récupération de la session"
+    });
+  }
+});
+
 // POST /api/ai/analyze-csv - Analyser des données CSV
 router.post('/analyze-csv', async (req, res) => {
   try {

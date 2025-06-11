@@ -33,7 +33,10 @@ import {
   Building,
   DollarSign,
   Wrench,
-  AlertTriangle
+  AlertTriangle,
+  Brain,
+  Sparkles,
+  Zap
 } from 'lucide-react';
 
 export function ClientDashboard() {
@@ -249,9 +252,60 @@ export function ClientDashboard() {
                 </div>
               </div>
             ))}
-          </CardContent>
-        </Card>
+          </CardContent>        </Card>
       </div>
+
+      {/* Section Vitrine IA - Nouveau */}
+      <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0 overflow-hidden">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Brain className="h-6 w-6" />
+            Découvrez Housy AI - Votre Assistant Intelligent
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-col md:flex-row items-start gap-6">
+            <div className="flex-1">
+              <p className="text-blue-100 mb-4 leading-relaxed">
+                Explorez notre révolution technologique avec des modèles d'IA avancés qui transforment votre expérience de construction. 
+                Conseils personnalisés, estimations précises et support 24/7 en trois langues.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-4">
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <Sparkles className="h-4 w-4" />
+                  <span className="text-sm">95% de précision</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <Zap className="h-4 w-4" />
+                  <span className="text-sm">Support 24/7</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <MessageSquare className="h-4 w-4" />
+                  <span className="text-sm">Multilingue</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => setLocation('/ai-showcase')}
+                variant="secondary"
+                className="bg-white text-blue-600 hover:bg-blue-50 font-semibold"
+              >
+                <Brain className="mr-2 h-4 w-4" />
+                Découvrir la Vitrine IA
+              </Button>
+              <Button
+                onClick={() => setLocation('/chatbot')}
+                variant="outline"
+                className="border-white text-white hover:bg-white hover:text-blue-600"
+              >
+                <MessageSquare className="mr-2 h-4 w-4" />
+                Essayer l'Assistant
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Devis récents */}

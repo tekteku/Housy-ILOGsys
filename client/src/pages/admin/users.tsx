@@ -48,11 +48,10 @@ import {
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,  AlertDialogTrigger,
+  AlertDialogFooter,  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
 } from '../../components/ui/alert-dialog';
-import { FadeIn } from '../../components/animations';
 
 interface User {
   id: number;
@@ -86,62 +85,12 @@ interface UserStats {
 }
 
 export function UserManagementPage() {
-  const [users, setUsers] = useState<User[]>([
-    {
-      id: 1,
-      first_name: 'Ahmed',
-      last_name: 'Ben Ali',
-      email: 'ahmed.benali@email.com',
-      role: 'client',
-      status: 'active',
-      created_at: '2025-01-15T08:00:00Z',
-      last_login: '2025-06-06T10:30:00Z',
-      projects_count: 3,
-      username: 'ahmed.benali',
-      fullName: 'Ahmed Ben Ali',
-      lastLogin: '2025-06-06T10:30:00Z',
-      createdAt: '2025-01-15T08:00:00Z',
-      projectsCount: 3
-    },
-    {
-      id: 2,
-      first_name: 'Leila',
-      last_name: 'Troudi',
-      email: 'leila.troudi@email.com',
-      role: 'admin',
-      status: 'active',
-      created_at: '2025-01-10T08:00:00Z',
-      last_login: '2025-06-06T09:15:00Z',
-      projects_count: 15,
-      username: 'leila.troudi',
-      fullName: 'Leila Troudi',
-      lastLogin: '2025-06-06T09:15:00Z',
-      createdAt: '2025-01-10T08:00:00Z',
-      projectsCount: 15
-    },
-    {
-      id: 3,
-      first_name: 'Mohamed',
-      last_name: 'Sassi',
-      email: 'mohamed.sassi@email.com',
-      role: 'client',
-      status: 'inactive',
-      created_at: '2025-02-01T08:00:00Z',
-      last_login: '2025-06-04T14:20:00Z',
-      projects_count: 1,
-      username: 'mohamed.sassi',
-      fullName: 'Mohamed Sassi',
-      lastLogin: '2025-06-04T14:20:00Z',
-      createdAt: '2025-02-01T08:00:00Z',
-      projectsCount: 1
-    }
-  ]);
-
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('all');
   const [statusFilter, setStatusFilter] = useState('all');
   const [showNewUserDialog, setShowNewUserDialog] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [newUser, setNewUser] = useState({
     username: '',
     fullName: '',
@@ -149,7 +98,114 @@ export function UserManagementPage() {
     role: 'client' as 'client' | 'admin' | 'super_admin',
     password: ''
   });
-  const filteredUsers = users.filter(user => {
+
+  const queryClient = useQueryClient();
+
+  // Fetch users with filters
+  const { data: usersResponse, isLoading: usersLoading, error: usersError } = useQuery({
+    queryKey: ['admin-users', { search: searchTerm, role: roleFilter, status: statusFilter }],
+    queryFn: async () => {
+      const token = localStorage.getItem('accessToken');
+      const params = new URLSearchParams({
+        page: '1',
+        limit: '50',
+        ...(searchTerm && { search: searchTerm }),
+        ...(roleFilter !== 'all' && { role: roleFilter }),
+        ...(statusFilter !== 'all' && { status: statusFilter })
+      });
+
+      const response = await fetch(`/api/admin/users?${params}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch users');
+      }
+
+      return response.json();
+    },
+    enabled: true
+  });
+
+  // Fetch user statistics
+  const { data: statsResponse, isLoading: statsLoading } = useQuery({
+    queryKey: ['admin-user-stats'],
+    queryFn: async () => {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch('/api/admin/users/stats', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch user statistics');
+      }
+
+      return response.json();
+    }
+  });
+
+  // Delete user mutation
+  const deleteUserMutation = useMutation({
+    mutationFn: async (userId: number) => {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch(`/api/admin/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete user');
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+      queryClient.invalidateQueries({ queryKey: ['admin-user-stats'] });
+    }
+  });
+
+  // Update user status mutation
+  const updateStatusMutation = useMutation({
+    mutationFn: async ({ userId, status }: { userId: number; status: string }) => {
+      const token = localStorage.getItem('accessToken');
+      const response = await fetch(`/api/admin/users/${userId}/status`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ status })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to update user status');
+      }
+
+      return response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-users'] });
+    }
+  });
+
+  const users = usersResponse?.data || [];
+  const stats = statsResponse?.data || {
+    total_users: 0,
+    active_users: 0,
+    new_this_month: 0,
+    clients: 0,
+    admins: 0
+  };  const filteredUsers = users.filter((user: User) => {
     const matchesSearch = (user.fullName || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
                          user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
                          (user.username || '').toLowerCase().includes(searchTerm.toLowerCase());
@@ -158,8 +214,8 @@ export function UserManagementPage() {
     const matchesStatus = statusFilter === 'all' || user.status === statusFilter;
     
     return matchesSearch && matchesRole && matchesStatus;
-  });
-  const handleCreateUser = () => {
+  });const handleCreateUser = () => {
+    // TODO: Implement create user API call
     const user: User = {
       id: Date.now(),
       first_name: newUser.fullName.split(' ')[0] || '',
@@ -177,7 +233,7 @@ export function UserManagementPage() {
       projectsCount: 0
     };
     
-    setUsers([...users, user]);
+    // For now, just reset the form
     setNewUser({
       username: '',
       fullName: '',
@@ -189,15 +245,12 @@ export function UserManagementPage() {
   };
 
   const handleDeleteUser = (userId: number) => {
-    setUsers(users.filter(user => user.id !== userId));
+    deleteUserMutation.mutate(userId);
   };
 
-  const handleToggleUserStatus = (userId: number) => {
-    setUsers(users.map(user => 
-      user.id === userId 
-        ? { ...user, status: user.status === 'active' ? 'suspended' : 'active' }
-        : user
-    ));
+  const handleToggleUserStatus = (userId: number, currentStatus: string) => {
+    const newStatus = currentStatus === 'active' ? 'suspended' : 'active';
+    updateStatusMutation.mutate({ userId, status: newStatus });
   };
 
   const getRoleColor = (role: string) => {
@@ -220,13 +273,37 @@ export function UserManagementPage() {
         return 'bg-gray-100 text-gray-800 border-gray-200';
     }
   };
-
   const userStats = {
-    total: users.length,
-    active: users.filter(u => u.status === 'active').length,
-    clients: users.filter(u => u.role === 'client').length,
-    admins: users.filter(u => u.role === 'admin' || u.role === 'super_admin').length
+    total: stats.total_users,
+    active: stats.active_users,
+    clients: stats.clients,
+    admins: stats.admins
   };
+
+  // Loading state
+  if (usersLoading || statsLoading) {
+    return (
+      <div className="flex items-center justify-center h-96">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  // Error state
+  if (usersError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-12 text-center">
+            <h3 className="text-lg font-medium text-red-900 mb-2">Erreur de chargement</h3>
+            <p className="text-red-600">
+              Impossible de charger les utilisateurs. Vérifiez votre connexion ou vos permissions.
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <div className="p-6 space-y-6">
@@ -240,78 +317,77 @@ export function UserManagementPage() {
           <Button variant="outline" size="sm">
             <Download className="h-4 w-4 mr-2" />
             Exporter
-          </Button>
-          <Dialog open={showNewUserDialog} onOpenChange={setShowNewUserDialog}>
+          </Button>          <Dialog open={showNewUserDialog} onOpenChange={setShowNewUserDialog}>
             <DialogTrigger asChild>
               <Button size="sm">
                 <UserPlus className="h-4 w-4 mr-2" />
                 Nouvel Utilisateur
-              </Button>            </DialogTrigger>            <DialogContent className="sm:max-w-md">
-              <FadeIn>
-                <DialogHeader>
-                  <DialogTitle>Créer un Utilisateur</DialogTitle>
-                  <DialogDescription>
-                    Ajoutez un nouvel utilisateur à la plateforme
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="newUsername">Nom d'utilisateur</Label>
-                    <Input
-                      id="newUsername"
-                      value={newUser.username}
-                      onChange={(e) => setNewUser({...newUser, username: e.target.value})}
-                      placeholder="nom.utilisateur"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="newFullName">Nom complet</Label>
-                    <Input
-                      id="newFullName"
-                      value={newUser.fullName}
-                      onChange={(e) => setNewUser({...newUser, fullName: e.target.value})}
-                      placeholder="Nom Prénom"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="newEmail">Email</Label>
-                    <Input
-                      id="newEmail"
-                      type="email"
-                      value={newUser.email}
-                      onChange={(e) => setNewUser({...newUser, email: e.target.value})}
-                      placeholder="email@example.com"
-                    />
-                  </div>                <div className="space-y-2">
-                    <Label htmlFor="newRole">Rôle</Label>
-                    <Select value={newUser.role} onValueChange={(value: 'client' | 'admin' | 'super_admin') => setNewUser({...newUser, role: value})}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="client">Client</SelectItem>
-                        <SelectItem value="admin">Administrateur</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="newPassword">Mot de passe temporaire</Label>
-                    <Input
-                      id="newPassword"
-                      type="password"
-                      value={newUser.password}
-                      onChange={(e) => setNewUser({...newUser, password: e.target.value})}
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <Button onClick={handleCreateUser} className="flex-1">
-                      Créer l'utilisateur
-                    </Button>
-                    <Button variant="outline" onClick={() => setShowNewUserDialog(false)}>
-                      Annuler                    </Button>
-                  </div>
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Créer un Utilisateur</DialogTitle>
+                <DialogDescription>
+                  Ajoutez un nouvel utilisateur à la plateforme
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="newUsername">Nom d'utilisateur</Label>
+                  <Input
+                    id="newUsername"
+                    value={newUser.username}
+                    onChange={(e) => setNewUser({...newUser, username: e.target.value})}
+                    placeholder="nom.utilisateur"
+                  />
                 </div>
-              </FadeIn>
+                <div className="space-y-2">
+                  <Label htmlFor="newFullName">Nom complet</Label>
+                  <Input
+                    id="newFullName"
+                    value={newUser.fullName}
+                    onChange={(e) => setNewUser({...newUser, fullName: e.target.value})}
+                    placeholder="Nom Prénom"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="newEmail">Email</Label>
+                  <Input
+                    id="newEmail"
+                    type="email"
+                    value={newUser.email}
+                    onChange={(e) => setNewUser({...newUser, email: e.target.value})}
+                    placeholder="email@example.com"
+                  />
+                </div>                <div className="space-y-2">
+                  <Label htmlFor="newRole">Rôle</Label>
+                  <Select value={newUser.role} onValueChange={(value: 'client' | 'admin' | 'super_admin') => setNewUser({...newUser, role: value})}>
+                    <SelectTrigger>
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="client">Client</SelectItem>
+                      <SelectItem value="admin">Administrateur</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="newPassword">Mot de passe temporaire</Label>
+                  <Input
+                    id="newPassword"
+                    type="password"
+                    value={newUser.password}
+                    onChange={(e) => setNewUser({...newUser, password: e.target.value})}
+                  />
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={handleCreateUser} className="flex-1">
+                    Créer l'utilisateur
+                  </Button>
+                  <Button variant="outline" onClick={() => setShowNewUserDialog(false)}>
+                    Annuler                  </Button>
+                </div>
+              </div>
             </DialogContent>
           </Dialog>
         </div>
@@ -414,13 +490,12 @@ export function UserManagementPage() {
           <CardTitle>Utilisateurs ({filteredUsers.length})</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="space-y-4">
-            {filteredUsers.map((user) => (
+          <div className="space-y-4">            {filteredUsers.map((user: User) => (
               <div key={user.id} className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors">
                 <div className="flex items-center gap-4">                  <Avatar>
                     <AvatarImage src="" />
                     <AvatarFallback className="bg-blue-100 text-blue-600">
-                      {(user.fullName || user.first_name + ' ' + user.last_name || 'U').split(' ').map(n => n[0]).join('').toUpperCase()}
+                      {(user.fullName || user.first_name + ' ' + user.last_name || 'U').split(' ').map((n: string) => n[0]).join('').toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                   <div>                    <div className="flex items-center gap-2 mb-1">
@@ -451,33 +526,33 @@ export function UserManagementPage() {
                   <Button size="sm" variant="outline">
                     <Edit className="h-4 w-4 mr-1" />
                     Modifier
-                  </Button>
-                  <Button
+                  </Button>                  <Button
                     size="sm"
                     variant="outline"
-                    onClick={() => handleToggleUserStatus(user.id)}
+                    onClick={() => handleToggleUserStatus(user.id, user.status)}
                     className={user.status === 'active' ? 'text-red-600 hover:text-red-700' : 'text-green-600 hover:text-green-700'}
+                    disabled={updateStatusMutation.isPending}
                   >
                     {user.status === 'active' ? <Ban className="h-4 w-4" /> : <CheckCircle className="h-4 w-4" />}
-                  </Button>
-                  <AlertDialog>
+                  </Button>                  <AlertDialog>
                     <AlertDialogTrigger asChild>
                       <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
                         <Trash2 className="h-4 w-4" />
-                      </Button>                    </AlertDialogTrigger>                    <AlertDialogContent>
-                      <FadeIn>
-                        <AlertDialogHeader>
-                          <AlertDialogTitle>Supprimer l'utilisateur</AlertDialogTitle>                        <AlertDialogDescription>
-                            Êtes-vous sûr de vouloir supprimer {user.fullName || `${user.first_name} ${user.last_name}`} ? Cette action est irréversible.
-                          </AlertDialogDescription>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter>
-                          <AlertDialogCancel>Annuler</AlertDialogCancel>
-                          <AlertDialogAction onClick={() => handleDeleteUser(user.id)} className="bg-red-600 hover:bg-red-700">
-                            Supprimer
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </FadeIn>
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Supprimer l'utilisateur</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Êtes-vous sûr de vouloir supprimer {user.fullName || `${user.first_name} ${user.last_name}`} ? Cette action est irréversible.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Annuler</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => handleDeleteUser(user.id)} className="bg-red-600 hover:bg-red-700">
+                          Supprimer
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
                     </AlertDialogContent>
                   </AlertDialog>
                 </div>

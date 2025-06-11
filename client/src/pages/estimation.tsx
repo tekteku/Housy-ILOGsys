@@ -10,6 +10,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { apiRequest } from "@/lib/queryClient";
 import { formatCurrency } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
+import { EstimationAIModelSelector } from "@/components/estimation/EstimationAIModelSelector";
 
 // Animation imports
 import { PageTransition, FadeIn, AnimatedButton, HoverCard, StaggeredList } from "@/components/animations";
@@ -99,12 +101,30 @@ const Estimation = () => {
     floors: 1,
     qualityLevel: "PREMIUM",
     includeWastage: true,
+    projectDescription: "",
+    estimatedBudget: 0,
   });
   
   const [estimationResult, setEstimationResult] = useState<EstimationResult>({
     totalCost: 0,
     categories: [],
   });
+
+  const [aiEstimationResult, setAiEstimationResult] = useState<{
+    response: string;
+    recommendations: string[];
+    estimatedCost?: number;
+    materials?: Array<{
+      category: string;
+      items: Array<{
+        name: string;
+        quantity: string;
+        estimatedCost: number;
+      }>;
+    }>;
+  } | null>(null);
+
+  const [selectedAIModel, setSelectedAIModel] = useState<string>('');
 
   // Fetch saved estimations
   const { data: savedEstimations, isLoading: isLoadingHistory } = useQuery<SavedEstimation[]>({
@@ -136,6 +156,30 @@ const Estimation = () => {
     mutationFn: async (data: { estimationId: number; format: string }) => {
       const response = await apiRequest('POST', '/api/reports/materials', data);
       return response.json();
+    },
+  });
+
+  // Mutation for AI estimation
+  const aiEstimationMutation = useMutation({
+    mutationFn: async (data: {
+      projectDescription: string;
+      projectType?: string;
+      estimatedBudget?: number;
+      preferredModel?: string;
+    }) => {
+      const response = await apiRequest('POST', '/api/estimation-ai/generate', data);
+      return response.json();
+    },
+    onSuccess: (data) => {
+      console.log('AI Estimation Response:', data);
+      // S'assurer que les données sont dans le bon format
+      const aiResult = data.data || data;
+      setAiEstimationResult(aiResult);
+      setActiveTab("ai-results");
+    },
+    onError: (error) => {
+      console.error('Erreur AI Estimation:', error);
+      // Optionnel: Afficher un toast d'erreur
     },
   });
 
@@ -175,6 +219,19 @@ const Estimation = () => {
     saveEstimationMutation.mutate(dataToSave);
   };
 
+  const handleAIEstimation = () => {
+    if (!formData.projectDescription || formData.projectDescription.length < 20) return;
+
+    const aiData = {
+      projectDescription: formData.projectDescription,
+      projectType: formData.projectType,
+      estimatedBudget: formData.estimatedBudget > 0 ? formData.estimatedBudget : undefined,
+      preferredModel: selectedAIModel,
+    };
+
+    aiEstimationMutation.mutate(aiData);
+  };
+
   return (
     <PageTransition>
       <div className="p-8 md:p-12 space-y-10 bg-[#f4f6fa] min-h-screen">
@@ -193,10 +250,14 @@ const Estimation = () => {
         {/* Tabs */}
         <FadeIn direction="up" delay={0.2}>
           <Tabs value={activeTab} onValueChange={setActiveTab}>
-            <TabsList className="grid grid-cols-3 mb-6 rounded-xl bg-white shadow-sm">
+            <TabsList className="grid grid-cols-5 mb-6 rounded-xl bg-white shadow-sm">
               <TabsTrigger value="calculator">Calculateur</TabsTrigger>
+              <TabsTrigger value="ai-estimation">Estimation IA</TabsTrigger>
               <TabsTrigger value="results" disabled={!estimationResult?.categories?.length}>
                 Résultats
+              </TabsTrigger>
+              <TabsTrigger value="ai-results" disabled={!aiEstimationResult}>
+                Résultats IA
               </TabsTrigger>
               <TabsTrigger value="history">Historique</TabsTrigger>
             </TabsList>
@@ -391,6 +452,168 @@ const Estimation = () => {
           </FadeIn>
         </TabsContent>
 
+        {/* AI Estimation Tab */}
+        <TabsContent value="ai-estimation">
+          <FadeIn direction="up" delay={0.3}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+              {/* AI Estimation Form */}
+              <HoverCard className="rounded-2xl shadow-lg">
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <i className="fas fa-robot mr-2 text-blue-600"></i>
+                    Estimation intelligente par IA
+                  </CardTitle>
+                  <CardDescription>
+                    Utilisez l'intelligence artificielle pour obtenir une estimation personnalisée et des conseils d'experts
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  {/* AI Model Selector */}
+                  <EstimationAIModelSelector 
+                    selectedModel={selectedAIModel}
+                    onModelSelect={setSelectedAIModel}
+                  />
+                  
+                  {/* Project Description */}
+                  <div className="space-y-2">
+                    <Label htmlFor="ai-description">Description détaillée du projet</Label>
+                    <textarea
+                      id="ai-description"
+                      className="w-full p-3 border border-gray-300 rounded-lg resize-none h-32 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Décrivez votre projet en détail : type de construction, surface, matériaux souhaités, budget approximatif, particularités, etc."
+                      value={formData.projectDescription || ''}
+                      onChange={(e) => handleChange("projectDescription", e.target.value)}
+                    />
+                  </div>
+
+                  {/* Quick Project Type Selection */}
+                  <div className="space-y-2">
+                    <Label>Type de projet (optionnel)</Label>
+                    <Select
+                      value={formData.projectType}
+                      onValueChange={(value) => handleChange("projectType", value)}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Sélectionner un type" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="construction_neuve">Construction neuve</SelectItem>
+                        <SelectItem value="renovation_complete">Rénovation complète</SelectItem>
+                        <SelectItem value="renovation_partielle">Rénovation partielle</SelectItem>
+                        <SelectItem value="extension_agrandissement">Extension / agrandissement</SelectItem>
+                        <SelectItem value="achat_cle_en_main">Achat clé en main</SelectItem>
+                        <SelectItem value="amenagement_interieur_exterieur">Aménagement intérieur/extérieur</SelectItem>
+                        <SelectItem value="transformation_batiment">Transformation de bâtiment</SelectItem>
+                        <SelectItem value="rehabilitation_energetique">Réhabilitation énergétique</SelectItem>
+                        <SelectItem value="achat_vente_immeuble">Achat/vente d'immeuble/appartement</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Budget Range */}
+                  <div className="space-y-2">
+                    <Label htmlFor="ai-budget">Budget approximatif (optionnel)</Label>
+                    <Input
+                      id="ai-budget"
+                      type="number"
+                      placeholder="Ex: 150000"
+                      value={formData.estimatedBudget || ''}
+                      onChange={(e) => handleChange("estimatedBudget", parseFloat(e.target.value) || 0)}
+                    />
+                  </div>
+
+                  {/* Generate AI Estimation Button */}
+                  <AnimatedButton
+                    className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                    onClick={handleAIEstimation}
+                    disabled={!formData.projectDescription || formData.projectDescription.length < 20 || aiEstimationMutation.isPending}
+                  >
+                    <i className="fas fa-magic mr-2"></i>
+                    {aiEstimationMutation.isPending ? "Génération en cours..." : "Générer l'estimation IA"}
+                  </AnimatedButton>
+                </CardContent>
+              </HoverCard>
+
+              {/* AI Features Information */}
+              <HoverCard>
+                <CardHeader>
+                  <CardTitle className="flex items-center">
+                    <i className="fas fa-lightbulb mr-2 text-yellow-600"></i>
+                    Fonctionnalités IA
+                  </CardTitle>
+                  <CardDescription>
+                    Découvrez ce que l'IA peut faire pour votre projet
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-4">
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                        <i className="fas fa-chart-line text-blue-600 text-sm"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium">Estimation personnalisée</h3>
+                        <p className="text-sm text-neutral-600">
+                          Analyse votre description pour fournir une estimation précise et adaptée à vos besoins spécifiques.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                        <i className="fas fa-clipboard-list text-green-600 text-sm"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium">Liste de matériaux intelligente</h3>
+                        <p className="text-sm text-neutral-600">
+                          Génère automatiquement une liste détaillée des matériaux nécessaires avec les quantités optimales.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                        <i className="fas fa-users text-purple-600 text-sm"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium">Conseils d'experts</h3>
+                        <p className="text-sm text-neutral-600">
+                          Recommandations professionnelles sur les meilleures pratiques et alternatives économiques.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-3">
+                      <div className="flex-shrink-0 w-8 h-8 bg-red-100 rounded-full flex items-center justify-center">
+                        <i className="fas fa-exclamation-triangle text-red-600 text-sm"></i>
+                      </div>
+                      <div>
+                        <h3 className="text-sm font-medium">Alertes et optimisations</h3>
+                        <p className="text-sm text-neutral-600">
+                          Identifie les points d'attention et propose des optimisations pour réduire les coûts.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  <div className="space-y-2">
+                    <h3 className="text-sm font-medium">Conseils pour une meilleure estimation</h3>
+                    <ul className="text-sm text-neutral-600 space-y-1">
+                      <li>• Décrivez précisément les dimensions et la surface</li>
+                      <li>• Mentionnez le type de finitions souhaité</li>
+                      <li>• Indiquez votre budget approximatif si possible</li>
+                      <li>• Précisez les particularités du terrain ou du bâtiment</li>
+                      <li>• Mentionnez vos préférences en matériaux</li>
+                    </ul>
+                  </div>
+                </CardContent>
+              </HoverCard>
+            </div>
+          </FadeIn>
+        </TabsContent>
+
         {/* Results Tab */}
         <TabsContent value="results">
           <FadeIn direction="up" delay={0.3}>
@@ -561,6 +784,143 @@ const Estimation = () => {
                 </CardContent>
               </HoverCard>
             </div>
+            )}
+          </FadeIn>
+        </TabsContent>
+
+        {/* AI Results Tab */}
+        <TabsContent value="ai-results">
+          <FadeIn direction="up" delay={0.3}>
+            {aiEstimationMutation.isPending ? (
+              <div className="flex justify-center items-center py-12">
+                <div className="text-center">
+                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+                  <p className="text-gray-600">Génération de l'estimation IA en cours...</p>
+                </div>
+              </div>
+            ) : aiEstimationResult ? (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* AI Response Summary */}
+                <HoverCard className="lg:col-span-2">
+                  <CardHeader>
+                    <CardTitle className="flex items-center">
+                      <i className="fas fa-brain mr-2 text-purple-600"></i>
+                      Analyse IA de votre projet
+                    </CardTitle>
+                    <CardDescription>
+                      Estimation et recommandations générées par l'intelligence artificielle
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {aiEstimationResult.response && (
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                        <h3 className="font-medium text-blue-900 mb-2">Réponse de l'IA</h3>
+                        <div className="text-blue-800 whitespace-pre-wrap">
+                          {aiEstimationResult.response}
+                        </div>
+                      </div>
+                    )}
+
+                    {aiEstimationResult.estimatedCost && (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <h3 className="font-medium text-green-900 mb-2">Estimation budgétaire</h3>
+                        <div className="text-2xl font-bold text-green-800">
+                          {formatCurrency(aiEstimationResult.estimatedCost)}
+                        </div>
+                      </div>
+                    )}
+
+                    {aiEstimationResult.recommendations && aiEstimationResult.recommendations.length > 0 && (
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <h3 className="font-medium text-yellow-900 mb-2">Recommandations</h3>
+                        <ul className="space-y-1">
+                          {aiEstimationResult.recommendations.map((rec, index) => (
+                            <li key={index} className="text-yellow-800 flex items-start">
+                              <i className="fas fa-lightbulb mr-2 text-yellow-600 mt-0.5 flex-shrink-0"></i>
+                              {rec}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </CardContent>
+                </HoverCard>
+
+                {/* Materials Breakdown */}
+                {aiEstimationResult.materials && aiEstimationResult.materials.length > 0 && (
+                  <HoverCard className="lg:col-span-2">
+                    <CardHeader>
+                      <CardTitle>Liste des matériaux suggérés</CardTitle>
+                      <CardDescription>
+                        Matériaux recommandés par l'IA pour votre projet
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <StaggeredList className="space-y-4">
+                        {aiEstimationResult.materials.map((category, catIndex) => (
+                          <div key={catIndex} className="border border-gray-200 rounded-lg p-4">
+                            <h3 className="font-medium text-gray-900 mb-3 flex items-center">
+                              <MaterialIcon category={category.category} />
+                              <span className="ml-2">{getCategoryLabel(category.category)}</span>
+                            </h3>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                              {category.items && category.items.map((item, itemIndex) => (
+                                <div key={itemIndex} className="bg-gray-50 rounded p-3">
+                                  <div className="font-medium text-gray-800">{item.name}</div>
+                                  <div className="text-sm text-gray-600">{item.quantity}</div>
+                                  <div className="text-sm font-medium text-green-600 mt-1">
+                                    {formatCurrency(item.estimatedCost)}
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ))}
+                      </StaggeredList>
+                    </CardContent>
+                  </HoverCard>
+                )}
+
+                {/* Action Buttons */}
+                <HoverCard className="lg:col-span-2">
+                  <CardContent className="pt-6">
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <AnimatedButton
+                        onClick={() => setActiveTab("ai-estimation")}
+                        variant="outline"
+                        className="flex-1"
+                      >
+                        <i className="fas fa-edit mr-2"></i>
+                        Modifier les paramètres
+                      </AnimatedButton>
+                      <AnimatedButton
+                        onClick={() => setActiveTab("calculator")}
+                        variant="outline"
+                        className="flex-1"
+                      >
+                        <i className="fas fa-calculator mr-2"></i>
+                        Utiliser le calculateur
+                      </AnimatedButton>
+                      <AnimatedButton
+                        variant="outline"
+                        className="flex-1"
+                      >
+                        <i className="fas fa-download mr-2"></i>
+                        Exporter
+                      </AnimatedButton>
+                    </div>
+                  </CardContent>
+                </HoverCard>
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <i className="fas fa-robot text-4xl text-gray-400 mb-4"></i>
+                <h3 className="text-lg font-medium text-gray-900 mb-2">Aucune estimation IA générée</h3>
+                <p className="text-gray-600 mb-4">Utilisez l'onglet "Estimation IA" pour générer une estimation.</p>
+                <AnimatedButton onClick={() => setActiveTab("ai-estimation")}>
+                  Créer une estimation IA
+                </AnimatedButton>
+              </div>
             )}
           </FadeIn>
         </TabsContent>

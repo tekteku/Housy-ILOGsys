@@ -11,5 +11,55 @@
             "password": "0000",
             "connectionTimeout": 50
         }
-    ]
+    ],
+    
+    // Performance optimizations for large projects
+    "files.watcherExclude": {
+        "**/node_modules/**": true,
+        "**/.git/**": true,
+        "**/dist/**": true,
+        "**/build/**": true,
+        "**/attached_assets/**": true,
+        "**/.vite/**": true
+    },
+    
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/build": true,
+        "**/*.csv": true,
+        "**/attached_assets/Pasted--*.txt": true,
+        "**/.git": true
+    },
+    
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/.git": true,
+        "**/dist": true,
+        "**/build": true
+    },
+    
+    // TypeScript performance
+    "typescript.preferences.includePackageJsonAutoImports": "off",
+    "typescript.disableAutomaticTypeAcquisition": true,
+    "typescript.suggest.autoImports": false,
+    
+    // Editor performance
+    "editor.semanticHighlighting.enabled": false,
+    "editor.bracketPairColorization.enabled": false,
+    "editor.guides.bracketPairs": false,
+    "editor.minimap.enabled": false,
+    
+    // File associations to prevent parsing large files
+    "files.associations": {
+        "*.csv": "plaintext"
+    },
+    
+    // Limit file size for syntax highlighting
+    "editor.largeFileOptimizations": true,
+    
+    // Git performance
+    "git.enabled": true,
+    "git.autorefresh": false,
+    "git.autofetch": false
 }

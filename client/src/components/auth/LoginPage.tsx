@@ -18,6 +18,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 import { Label } from '../ui/label';
 import { Eye, EyeOff } from 'lucide-react';
 import { Alert, AlertDescription } from '../ui/alert';
+import HousyImage from '../ui/housy-image';
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -51,24 +52,15 @@ const LoginPage: React.FC = () => {
             </svg>
             <span className="text-2xl font-bold">HOUSY</span>
           </div>
-        </div>
-          {/* Image bannière HACIENDA */}
+        </div>          {/* Image bannière HACIENDA */}
         <div className="rounded-t-xl overflow-hidden mb-0">
           <div className="relative">
-            <img 
-              src="/static/images/modern_house_1.png" 
-              alt="HACIENDA - Construction Moderne" 
-              className="w-full h-48 object-cover"
-              onError={(e) => {
-                // Fallback si l'image n'existe pas
-                const target = e.target as HTMLImageElement;
-                target.style.display = 'none';
-                target.parentElement!.innerHTML = `
-                  <div class="w-full h-48 bg-gradient-to-r from-orange-500 to-amber-500 flex items-center justify-center">
-                    <h2 class="text-white text-4xl font-bold">HACIENDA</h2>
-                  </div>
-                `;
-              }}
+            <HousyImage
+              src="/static/images/d1.png"
+              alt="HACIENDA - Construction Moderne"
+              className="w-full h-48"
+              objectFit="cover"
+              fallbackSrc="/static/images/modern_house_1.png"
             />
             <div className="absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center">
               <h2 className="text-white text-4xl font-bold">HACIENDA</h2>

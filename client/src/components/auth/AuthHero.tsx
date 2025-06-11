@@ -33,7 +33,7 @@ export function AuthHero() {
       avatar: "AB"
     },
     {
-      name: "Leila Mansouri",
+      name: "Adnen Ben Zineb ",
       role: "Architecte",
       location: "Tunis",
       content: "En tant qu'architecte, j'apprécie la précision des calculs et la qualité des matériaux proposés. Une plateforme incontournable pour les professionnels.",

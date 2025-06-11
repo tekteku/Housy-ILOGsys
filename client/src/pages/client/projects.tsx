@@ -290,14 +290,12 @@ export default function ClientProjectsPage() {
                       <Eye className="w-4 h-4" />
                     </Button>
                   </DialogTrigger>                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-                    <FadeIn>
-                      <DialogHeader>
-                        <DialogTitle>{project.title}</DialogTitle>
-                      </DialogHeader>
-                      {selectedProject && (
-                        <ProjectDetails project={selectedProject} />
-                      )}
-                    </FadeIn>
+                    <DialogHeader>
+                      <DialogTitle>{project.title}</DialogTitle>
+                    </DialogHeader>
+                    {selectedProject && (
+                      <ProjectDetails project={selectedProject} />
+                    )}
                   </DialogContent>
                 </Dialog>
               </div>

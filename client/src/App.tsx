@@ -18,6 +18,7 @@ import Projects from "@/pages/projects";
 import Estimation from "@/pages/estimation";
 import Materials from "@/pages/materials";
 import Chatbot from "@/pages/chatbot";
+import { AIShowcasePage } from "@/pages/ai-showcase";
 import { ProtectedRoute, AdminRoute, ClientRoute } from "@/components/auth/ProtectedRoute";
 
 // Admin Pages
@@ -102,6 +103,11 @@ function Router() {
           <Route path="/chatbot">
             <ProtectedRoute>
               <Chatbot />
+            </ProtectedRoute>
+          </Route>
+          <Route path="/ai-showcase">
+            <ProtectedRoute>
+              <AIShowcasePage />
             </ProtectedRoute>
           </Route>
           

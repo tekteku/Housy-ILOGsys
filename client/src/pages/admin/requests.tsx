@@ -557,12 +557,11 @@ export default function ClientRequestsPage() {
         })}
       </div>      {/* Modal détails demande */}      <Dialog open={isDetailsModalOpen} onOpenChange={setIsDetailsModalOpen}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-          <FadeIn>
-            <DialogHeader>
-              <DialogTitle>Détails de la demande</DialogTitle>
-            </DialogHeader>
-            {selectedRequest && (
-              <div className="space-y-6">
+          <DialogHeader>
+            <DialogTitle>Détails de la demande</DialogTitle>
+          </DialogHeader>
+          {selectedRequest && (
+            <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>
                     <h4 className="font-semibold mb-2">Informations du projet</h4>
@@ -602,15 +601,12 @@ export default function ClientRequestsPage() {
                     </p>
                   </div>              )}          </div>
           )}
-          </FadeIn>
         </DialogContent>
-      </Dialog>{/* Modal création devis */}      <Dialog open={isQuoteModalOpen} onOpenChange={setIsQuoteModalOpen}>
-        <DialogContent className="max-w-2xl">
-          <FadeIn>
-            <DialogHeader>
-              <DialogTitle>Créer un devis</DialogTitle>
-            </DialogHeader>
-            <form onSubmit={handleQuoteSubmit} className="space-y-4">
+      </Dialog>{/* Modal création devis */}      <Dialog open={isQuoteModalOpen} onOpenChange={setIsQuoteModalOpen}>        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Créer un devis</DialogTitle>
+          </DialogHeader>
+          <form onSubmit={handleQuoteSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="amount">Montant total (TND)</Label>
@@ -693,11 +689,9 @@ export default function ClientRequestsPage() {
                   }}
                 >
                   Annuler
-                </Button>
-                <Button type="submit" disabled={createQuoteMutation.isPending}>
+                </Button>                <Button type="submit" disabled={createQuoteMutation.isPending}>
                   Créer le devis                </Button>              </div>
             </form>
-          </FadeIn>
         </DialogContent>
       </Dialog>
 

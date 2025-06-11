@@ -8,6 +8,7 @@ import { useAuth } from "@/contexts/AuthContext";
 const adminNavigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: 'home', label: "Tableau de bord" },
   { name: 'Projects', href: '/projects', icon: 'folder-open', label: "Projets" },
+  { name: 'AI Showcase', href: '/ai-showcase', icon: 'brain', label: "Vitrine IA" },
   { name: 'Categories', href: '/admin/categories', icon: 'tags', label: "Catégories" },
   { name: 'Client Requests', href: '/admin/requests', icon: 'inbox', label: "Demandes Clients" },
   { name: 'Quotations', href: '/admin/quotations', icon: 'file-text', label: "Devis" },
@@ -26,6 +27,7 @@ const adminNavigationItems = [
 const clientNavigationItems = [
   { name: 'Dashboard', href: '/dashboard', icon: 'home', label: "Tableau de bord" },
   { name: 'My Projects', href: '/client/projects', icon: 'folder-open', label: "Mes Projets" },
+  { name: 'AI Showcase', href: '/ai-showcase', icon: 'brain', label: "Vitrine IA" },
   { name: 'New Request', href: '/client/request', icon: 'plus-circle', label: "Nouvelle Demande" },
   { name: 'Quotations', href: '/client/quotations', icon: 'file-text', label: "Mes Devis" },
   { name: 'Documents', href: '/client/documents', icon: 'paperclip', label: "Documents" },

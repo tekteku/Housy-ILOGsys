@@ -12,6 +12,7 @@
 
 import React from 'react';
 import { Button } from '../ui/button';
+import HousyImage from '../ui/housy-image';
 
 interface HeroHeaderProps {
   title: string;
@@ -28,21 +29,15 @@ const HeroHeader: React.FC<HeroHeaderProps> = ({
   subtitle,
   imagePath,
   actionButton
-}) => {
-  return (
+}) => {  return (
     <div className="relative w-full h-64 md:h-80 mb-6 rounded-xl overflow-hidden">
-      {/* Image de fond */}
-      <div className="absolute inset-0">        <img 
-          src={imagePath} 
-          alt={title} 
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            // Fallback si l'image n'existe pas - utilise une classe CSS au lieu d'innerHTML
-            const target = e.target as HTMLImageElement;
-            target.style.display = 'none';
-            const parent = target.parentElement!;
-            parent.className = "w-full h-full bg-gradient-to-r from-orange-500 to-amber-500";
-          }}
+      {/* Image de fond avec HousyImage component */}
+      <div className="absolute inset-0">        <HousyImage
+          src={imagePath}
+          alt={title}
+          className="w-full h-full"
+          objectFit="cover"
+          fallbackSrc="/static/images/modern_house_2.png"
         />
         {/* Overlay dégradé pour améliorer la lisibilité du texte */}
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30"></div>

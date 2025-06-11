@@ -161,16 +161,14 @@ export const CreateMaterialModal: React.FC<CreateMaterialModalProps> = ({
     });
     onOpenChange(false);
   };
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-        <FadeIn>
-          <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
-              <i className="fas fa-plus-circle text-primary"></i>
-              Ajouter un nouveau matériau
-            </DialogTitle>
-          </DialogHeader>
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <i className="fas fa-plus-circle text-primary"></i>
+            Ajouter un nouveau matériau
+          </DialogTitle>
+        </DialogHeader>
 
         <div className="space-y-6 py-4">
           {/* Basic Information */}
@@ -325,10 +323,8 @@ export const CreateMaterialModal: React.FC<CreateMaterialModalProps> = ({
               <>
                 <i className="fas fa-save mr-2"></i>
                 Ajouter
-              </>
-            )}          </Button>
+              </>            )}          </Button>
         </DialogFooter>
-        </FadeIn>
       </DialogContent>
     </Dialog>
   );

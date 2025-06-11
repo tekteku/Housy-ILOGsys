@@ -11,6 +11,7 @@
  */
 
 import React from 'react';
+import { useLocation } from 'wouter';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -26,10 +27,15 @@ import {
   Plus,
   Settings,
   UserPlus,
-  FileBarChart
+  FileBarChart,
+  Brain,
+  Zap,
+  Shield
 } from 'lucide-react';
 
 export function AdminDashboard() {
+  const [, setLocation] = useLocation();
+  
   const stats = [
     {
       title: "Projets Actifs",
@@ -246,9 +252,60 @@ export function AdminDashboard() {
                 </Button>
               );
             })}
-          </CardContent>
-        </Card>
+          </CardContent>        </Card>
       </div>
+
+      {/* Section Vitrine IA - Administrateur */}
+      <Card className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-0 overflow-hidden">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Brain className="h-6 w-6" />
+            Housy AI - Plateforme Intelligence Artificielle
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <div className="flex flex-col md:flex-row items-start gap-6">
+            <div className="flex-1">
+              <p className="text-indigo-100 mb-4 leading-relaxed">
+                Gérez et supervisez les modèles d'IA avancés : Ollama Local pour la sécurité, DeepSeek Coder pour le développement, 
+                et Qwen Local pour l'analyse prédictive. Contrôle administrateur complet des capacités IA.
+              </p>
+              <div className="flex flex-wrap gap-3 mb-4">
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <Shield className="h-4 w-4" />
+                  <span className="text-sm">Traitement Local</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <Zap className="h-4 w-4" />
+                  <span className="text-sm">Analyse Prédictive</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 px-3 py-1 rounded-full">
+                  <FileBarChart className="h-4 w-4" />
+                  <span className="text-sm">Rapports Avancés</span>
+                </div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-3">
+              <Button
+                onClick={() => setLocation('/ai-showcase')}
+                variant="secondary"
+                className="bg-white text-indigo-600 hover:bg-indigo-50 font-semibold"
+              >
+                <Brain className="mr-2 h-4 w-4" />
+                Voir la Vitrine IA
+              </Button>
+              <Button
+                onClick={() => setLocation('/chatbot')}
+                variant="outline"
+                className="border-white text-white hover:bg-white hover:text-indigo-600"
+              >
+                <Activity className="mr-2 h-4 w-4" />
+                Tester l'Assistant
+              </Button>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Graphique des performances (placeholder) */}
       <Card>

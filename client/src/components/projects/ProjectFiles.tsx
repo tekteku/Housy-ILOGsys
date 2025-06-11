@@ -411,28 +411,26 @@ export default function ProjectFiles({ projectId }: ProjectFilesProps) {
                     Téléverser
                   </Button>
                 </DialogTrigger>                <DialogContent className="max-w-2xl">
-                  <FadeIn>
-                    <DialogHeader>
-                      <DialogTitle>Téléverser des fichiers</DialogTitle>
-                      <DialogDescription>
-                        Glissez-déposez vos fichiers ou cliquez pour les sélectionner
-                      </DialogDescription>
-                    </DialogHeader>
-                    <FileDropzone
-                      onFilesChange={handleFileUpload}
-                      acceptedFileTypes={[
-                        '.pdf',
-                        '.doc',
-                        '.docx', 
-                        'image/*',
-                        '.mp4', '.avi', '.mov',
-                        '.zip',
-                        '.rar'
-                      ]}
-                      maxFileSize={50 * 1024 * 1024} // 50MB
-                      maxFiles={10}
-                    />
-                  </FadeIn>
+                  <DialogHeader>
+                    <DialogTitle>Téléverser des fichiers</DialogTitle>
+                    <DialogDescription>
+                      Glissez-déposez vos fichiers ou cliquez pour les sélectionner
+                    </DialogDescription>
+                  </DialogHeader>
+                  <FileDropzone
+                    onFilesChange={handleFileUpload}
+                    acceptedFileTypes={[
+                      '.pdf',
+                      '.doc',
+                      '.docx', 
+                      'image/*',
+                      '.mp4', '.avi', '.mov',
+                      '.zip',
+                      '.rar'
+                    ]}
+                    maxFileSize={50 * 1024 * 1024} // 50MB
+                    maxFiles={10}
+                  />
                 </DialogContent>
               </Dialog>
             </div>

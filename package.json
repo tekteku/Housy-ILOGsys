@@ -121,6 +121,7 @@
     "cross-env": "^7.0.3",
     "drizzle-kit": "^0.30.4",
     "esbuild": "^0.25.0",
+    "node-fetch": "^3.3.2",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.17",
     "tsx": "^4.19.1",
