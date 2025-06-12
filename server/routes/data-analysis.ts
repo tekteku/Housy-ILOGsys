@@ -163,7 +163,7 @@ router.get('/statistics', authenticateToken, async (req, res) => {
       materiaux: {
         total: materialData.metadonnees.nombre_materiaux,
         economies_moyennes: materialData.metadonnees.economies_moyennes,
-        categories: materialData.materiaux.map(m => m.category).filter((v, i, a) => a.indexOf(v) === i)
+        categories: materialData.materiaux.map(m => m.categorie).filter((v, i, a) => a.indexOf(v) === i)
       },
       immobilier: {
         total_proprietes: propertyData.metadonnees.nombre_total_proprietes,
@@ -199,20 +199,19 @@ router.get('/statistics', authenticateToken, async (req, res) => {
 router.get('/materials/categories', authenticateToken, async (req, res) => {
   try {
     const materialData = await dataAnalysisService.loadMaterialData();
-    
-    const categories = materialData.materiaux.reduce((acc, material) => {
-      if (!acc[material.category]) {
-        acc[material.category] = {
-          nom: material.category,
+      const categories = materialData.materiaux.reduce((acc, material) => {
+      if (!acc[material.categorie]) {
+        acc[material.categorie] = {
+          nom: material.categorie,
           materiaux: [],
           prix_moyen: 0
         };
       }
       
-      acc[material.category].materiaux.push({
+      acc[material.categorie].materiaux.push({
         nom: material.nom,
-        prix: material.prix.prix_unitaire,
-        unite: material.prix.unite
+        prix: material.prix.unitaire_tnd,
+        unite: material.unite
       });
       
       return acc;
@@ -237,6 +236,34 @@ router.get('/materials/categories', authenticateToken, async (req, res) => {
     res.status(500).json({
       success: false,
       error: "Erreur lors du chargement des catégories"
+    });
+  }
+});
+
+/**
+ * GET /api/data-analysis/test
+ * Test simple pour vérifier le fonctionnement de base
+ */
+router.get('/test', async (req, res) => {
+  try {
+    res.json({
+      success: true,
+      data: {
+        message: "Service d'analyse de données fonctionnel",
+        timestamp: new Date().toISOString(),
+        endpoints_disponibles: [
+          "/api/data-analysis/statistics",
+          "/api/data-analysis/materials/categories",
+          "/api/data-analysis/materials (POST)",
+          "/api/data-analysis/properties (POST)",
+          "/api/data-analysis/ai-context (POST)"
+        ]
+      }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: "Erreur dans le test"
     });
   }
 });
