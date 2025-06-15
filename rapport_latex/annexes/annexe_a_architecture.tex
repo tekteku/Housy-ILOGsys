@@ -1,0 +1,459 @@
+% ========================================================================
+% ANNEXE A : ARCHITECTURE DÉTAILLÉE
+% ========================================================================
+
+\chapter{Architecture Technique Détaillée}
+\label{annexe:architecture}
+
+\section{Diagrammes d'Architecture}
+
+\subsection{Architecture Globale du Système}
+
+Cette annexe présente l'architecture technique complète du système Housy Tunisia, incluant tous les composants, leurs interactions et les flux de données.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[node distance=2.5cm, auto]
+    % Styles
+    \tikzstyle{frontend} = [rectangle, draw, fill=blue!20, text width=2.5cm, text centered, minimum height=1cm]
+    \tikzstyle{backend} = [rectangle, draw, fill=green!20, text width=2.5cm, text centered, minimum height=1cm]
+    \tikzstyle{data} = [cylinder, draw, fill=orange!20, text width=2cm, text centered, minimum height=1cm]
+    \tikzstyle{external} = [ellipse, draw, fill=gray!20, text width=2cm, text centered]
+    \tikzstyle{arrow} = [thick,->,>=stealth]
+
+    % Couche Présentation
+    \node [frontend] (web) {Interface Web React};
+    \node [frontend, right of=web, xshift=1cm] (mobile) {App Mobile};
+    
+    % Couche API Gateway
+    \node [backend, below of=web, xshift=0.5cm] (gateway) {API Gateway Nginx};
+    
+    % Couche Services
+    \node [backend, below of=gateway, xshift=-2cm] (auth) {Service Auth};
+    \node [backend, below of=gateway] (main) {Service Principal};
+    \node [backend, below of=gateway, xshift=2cm] (ai) {Service IA};
+    
+    % Couche Données
+    \node [data, below of=auth] (db_users) {DB Utilisateurs};
+    \node [data, below of=main] (db_main) {DB Principale};
+    \node [data, below of=ai] (models) {Modèles ML};
+    
+    % Services Externes
+    \node [external, right of=ai, xshift=2cm] (osm) {OpenStreetMap};
+    \node [external, below of=osm] (apis) {APIs Externes};
+    
+    % Connexions
+    \draw [arrow] (web) -- (gateway);
+    \draw [arrow] (mobile) -- (gateway);
+    \draw [arrow] (gateway) -- (auth);
+    \draw [arrow] (gateway) -- (main);
+    \draw [arrow] (gateway) -- (ai);
+    \draw [arrow] (auth) -- (db_users);
+    \draw [arrow] (main) -- (db_main);
+    \draw [arrow] (ai) -- (models);
+    \draw [arrow] (ai) -- (osm);
+    \draw [arrow] (ai) -- (apis);
+\end{tikzpicture}
+\caption{Architecture globale du système Housy Tunisia}
+\end{figure}
+
+\subsection{Architecture des Microservices}
+
+\begin{table}[H]
+\centering
+\caption{Détail des microservices}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Service} & \textbf{Technologie} & \textbf{Port} & \textbf{Responsabilité} \\
+\hline
+API Gateway & Nginx & 80/443 & Routage, SSL, Load Balancing \\
+Auth Service & Node.js & 3001 & Authentification, JWT \\
+Property Service & Node.js & 3002 & Gestion des biens immobiliers \\
+User Service & Node.js & 3003 & Gestion des utilisateurs \\
+AI Service & Python/FastAPI & 8000 & Prédictions IA \\
+Notification Service & Node.js & 3004 & Emails, notifications \\
+File Service & Node.js & 3005 & Upload, stockage fichiers \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Schémas de Base de Données}
+
+\subsection{Schéma Principal}
+
+\begin{lstlisting}[language=SQL, caption=Structure de la base de données principale]
+-- Table des biens immobiliers
+CREATE TABLE properties (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    property_type property_type_enum NOT NULL,
+    price DECIMAL(12,2),
+    surface DECIMAL(8,2),
+    rooms INTEGER,
+    bedrooms INTEGER,
+    bathrooms INTEGER,
+    floor INTEGER,
+    total_floors INTEGER,
+    age INTEGER,
+    condition property_condition_enum,
+    
+    -- Localisation
+    address TEXT,
+    latitude DECIMAL(10,8),
+    longitude DECIMAL(11,8),
+    governorate VARCHAR(50),
+    delegation VARCHAR(50),
+    locality VARCHAR(50),
+    postal_code VARCHAR(10),
+    
+    -- Géométrie spatiale
+    geom GEOMETRY(POINT, 4326),
+    
+    -- Métadonnées
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    is_active BOOLEAN DEFAULT TRUE,
+    source VARCHAR(50),
+    
+    -- Index spatial
+    CONSTRAINT valid_location CHECK (
+        latitude BETWEEN 30.0 AND 38.0 AND 
+        longitude BETWEEN 7.0 AND 12.0
+    )
+);
+
+-- Index spatiaux
+CREATE INDEX idx_properties_geom ON properties USING GIST (geom);
+CREATE INDEX idx_properties_location ON properties (governorate, delegation);
+CREATE INDEX idx_properties_type_price ON properties (property_type, price);
+
+-- Table des estimations
+CREATE TABLE price_estimations (
+    id SERIAL PRIMARY KEY,
+    property_id INTEGER REFERENCES properties(id),
+    user_id INTEGER,
+    estimated_price DECIMAL(12,2) NOT NULL,
+    confidence_interval_min DECIMAL(12,2),
+    confidence_interval_max DECIMAL(12,2),
+    model_version VARCHAR(20),
+    features_used JSONB,
+    explanation JSONB,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table des utilisateurs
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    phone VARCHAR(20),
+    role user_role_enum DEFAULT 'user',
+    is_verified BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    last_login TIMESTAMP
+);
+
+-- Types énumérés
+CREATE TYPE property_type_enum AS ENUM (
+    'apartment', 'villa', 'duplex', 'studio', 'office', 'shop', 'land'
+);
+
+CREATE TYPE property_condition_enum AS ENUM (
+    'new', 'excellent', 'good', 'fair', 'needs_renovation'
+);
+
+CREATE TYPE user_role_enum AS ENUM (
+    'user', 'premium', 'agent', 'admin'
+);
+\end{lstlisting}
+
+\section{Configuration des Environnements}
+
+\subsection{Variables d'Environnement}
+
+\begin{lstlisting}[language=bash, caption=Configuration des variables d'environnement]
+# Environment général
+NODE_ENV=production
+PORT=5000
+API_VERSION=v1
+
+# Base de données
+DATABASE_URL=postgresql://user:password@localhost:5432/housy
+DATABASE_POOL_SIZE=20
+DATABASE_TIMEOUT=30000
+
+# Authentification
+JWT_SECRET=your-super-secret-jwt-key
+JWT_EXPIRATION=24h
+BCRYPT_ROUNDS=12
+
+# Service IA
+AI_SERVICE_URL=http://ai-service:8000
+AI_SERVICE_TIMEOUT=30000
+MODEL_VERSION=v2.1.0
+
+# APIs externes
+OPENSTREETMAP_API_URL=https://nominatim.openstreetmap.org
+GOOGLE_MAPS_API_KEY=your-google-maps-api-key
+WEATHER_API_KEY=your-weather-api-key
+
+# Stockage
+UPLOAD_DIR=/app/uploads
+MAX_FILE_SIZE=10MB
+ALLOWED_FILE_TYPES=jpg,jpeg,png,pdf
+
+# Cache Redis
+REDIS_URL=redis://redis:6379
+REDIS_TTL=3600
+
+# Monitoring
+PROMETHEUS_PORT=9090
+GRAFANA_URL=http://grafana:3000
+LOG_LEVEL=info
+
+# Email/Notifications
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=noreply@housy.tn
+SMTP_PASSWORD=your-smtp-password
+
+# Sécurité
+CORS_ORIGINS=https://housy.tn,https://www.housy.tn
+RATE_LIMIT_WINDOW=15
+RATE_LIMIT_MAX=100
+\end{lstlisting}
+
+\subsection{Configuration Docker}
+
+\begin{lstlisting}[language=dockerfile, caption=Dockerfile optimisé pour la production]
+# Multi-stage build pour le frontend
+FROM node:18-alpine AS frontend-build
+WORKDIR /app/frontend
+COPY frontend/package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+COPY frontend/ .
+RUN npm run build
+
+# Multi-stage build pour le backend
+FROM node:18-alpine AS backend-build
+WORKDIR /app/backend
+COPY backend/package*.json ./
+RUN npm ci --only=production && npm cache clean --force
+COPY backend/ .
+
+# Image finale
+FROM node:18-alpine
+WORKDIR /app
+
+# Installation des dépendances système
+RUN apk add --no-cache \
+    postgresql-client \
+    curl \
+    && rm -rf /var/cache/apk/*
+
+# Création utilisateur non-root
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nextjs -u 1001
+
+# Copie des artefacts
+COPY --from=backend-build /app/backend ./backend
+COPY --from=frontend-build /app/frontend/build ./frontend/build
+
+# Configuration des permissions
+RUN chown -R nextjs:nodejs /app
+USER nextjs
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:5000/health || exit 1
+
+EXPOSE 5000
+CMD ["node", "backend/server.js"]
+\end{lstlisting}
+
+\section{Scripts de Déploiement}
+
+\subsection{Script de Déploiement Automatisé}
+
+\begin{lstlisting}[language=bash, caption=Script de déploiement complet]
+#!/bin/bash
+# deploy-housy.sh - Script de déploiement automatisé
+
+set -e
+
+# Variables
+APP_NAME="housy-tunisia"
+VERSION=${1:-latest}
+ENVIRONMENT=${2:-production}
+BACKUP_DIR="/opt/backups"
+DEPLOY_DIR="/opt/housy"
+
+echo "🚀 Démarrage du déploiement Housy Tunisia v$VERSION"
+
+# Fonction de logging
+log() {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
+# Fonction de rollback
+rollback() {
+    log "❌ Erreur détectée - Rollback en cours..."
+    docker-compose -f docker-compose.yml down
+    docker-compose -f docker-compose.backup.yml up -d
+    exit 1
+}
+
+# Trap pour rollback automatique
+trap rollback ERR
+
+# 1. Sauvegarde de l'état actuel
+log "📦 Sauvegarde de l'état actuel..."
+mkdir -p $BACKUP_DIR/$(date +%Y%m%d_%H%M%S)
+cp docker-compose.yml $BACKUP_DIR/$(date +%Y%m%d_%H%M%S)/
+pg_dump $DATABASE_URL > $BACKUP_DIR/$(date +%Y%m%d_%H%M%S)/database.sql
+
+# 2. Arrêt des services non-critiques
+log "⏸️ Arrêt des services non-critiques..."
+docker-compose scale ai-service=0
+docker-compose scale worker=0
+
+# 3. Mise à jour des images
+log "🔄 Téléchargement des nouvelles images..."
+docker-compose pull
+
+# 4. Mise à jour de la base de données
+log "🗄️ Migration de la base de données..."
+npm run migrate:latest
+
+# 5. Déploiement rolling
+log "🔄 Déploiement rolling..."
+for service in frontend backend ai-service; do
+    log "Mise à jour du service $service..."
+    docker-compose up -d --no-deps $service
+    
+    # Attente de la santé du service
+    timeout 60 bash -c "until docker-compose exec $service curl -f http://localhost/health; do sleep 2; done"
+    
+    log "✅ Service $service déployé avec succès"
+done
+
+# 6. Tests de fumée
+log "🧪 Tests de fumée..."
+curl -f http://localhost/health || rollback
+curl -f http://localhost/api/v1/health || rollback
+
+# 7. Redémarrage des services mis à l'échelle
+log "🔄 Redémarrage des services..."
+docker-compose scale ai-service=3
+docker-compose scale worker=2
+
+# 8. Nettoyage
+log "🧹 Nettoyage des anciennes images..."
+docker system prune -f
+docker image prune -a -f --filter "until=24h"
+
+log "✅ Déploiement terminé avec succès!"
+log "📊 Status des services:"
+docker-compose ps
+\end{lstlisting}
+
+\section{Configuration de Monitoring}
+
+\subsection{Configuration Prometheus}
+
+\begin{lstlisting}[language=yaml, caption=prometheus.yml]
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+rule_files:
+  - "rules/*.yml"
+
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+scrape_configs:
+  # Prometheus lui-même
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # Services Housy
+  - job_name: 'housy-backend'
+    static_configs:
+      - targets: ['backend:5000']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  - job_name: 'housy-ai-service'
+    static_configs:
+      - targets: ['ai-service:8000']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # Base de données
+  - job_name: 'postgres'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+
+  # Infrastructure
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+
+  # Nginx
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+\end{lstlisting}
+
+\subsection{Règles d'Alerting}
+
+\begin{lstlisting}[language=yaml, caption=Règles d'alerting Prometheus]
+groups:
+  - name: housy-alerts
+    rules:
+      # Alertes application
+      - alert: HousyHighErrorRate
+        expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Taux d'erreur élevé sur Housy"
+          description: "Le taux d'erreur est de {{ $value }} sur les 5 dernières minutes"
+
+      - alert: HousyHighLatency
+        expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 2
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Latence élevée sur Housy"
+          description: "La latence P95 est de {{ $value }}s"
+
+      # Alertes infrastructure
+      - alert: HousyServiceDown
+        expr: up{job=~"housy-.*"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Service Housy indisponible"
+          description: "Le service {{ $labels.job }} est indisponible"
+
+      - alert: DatabaseConnectionsHigh
+        expr: pg_stat_database_numbackends > 80
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Nombre élevé de connexions à la base"
+          description: "{{ $value }} connexions actives à la base de données"
+\end{lstlisting}

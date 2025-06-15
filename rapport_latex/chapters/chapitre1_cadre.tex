@@ -1,0 +1,595 @@
+% ========================================================================
+% CHAPITRE 1 : CADRE DU PROJET
+% ========================================================================
+
+\chapter{Cadre du projet}
+
+\section{Cadre général du projet}
+
+\subsection{Présentation de l'organisme : ILOGsys}
+
+ILOGsys est une entreprise spécialisée dans le développement de solutions informatiques innovantes, particulièrement dans les domaines de l'intelligence artificielle et des applications web modernes. Fondée sur les principes d'excellence technique et d'innovation continue, l'entreprise s'est positionnée comme un acteur majeur du secteur technologique tunisien.
+
+\subsubsection{Mission et Vision}
+
+La mission d'ILOGsys consiste à transformer les processus métiers traditionnels par l'application de technologies émergentes, en particulier l'intelligence artificielle et le machine learning. L'entreprise vise à créer des solutions qui non seulement automatisent les tâches répétitives, mais apportent également une valeur ajoutée substantielle en termes de précision, de rapidité et d'accessibilité.
+
+La vision d'ILOGsys s'articule autour de trois axes principaux :
+\begin{itemize}
+    \item \textbf{Innovation Technologique :} Être à l'avant-garde des technologies émergentes et de leur application pratique
+    \item \textbf{Impact Sociétal :} Développer des solutions qui démocratisent l'accès aux services spécialisés
+    \item \textbf{Excellence Opérationnelle :} Maintenir les plus hauts standards de qualité dans tous les projets
+\end{itemize}
+
+\subsubsection{Domaines d'Expertise}
+
+ILOGsys développe une expertise reconnue dans plusieurs domaines technologiques :
+
+\textbf{Intelligence Artificielle et Machine Learning :}
+\begin{itemize}
+    \item Développement de modèles prédictifs et d'algorithmes d'apprentissage automatique
+    \item Intégration de Large Language Models (LLM) dans des applications métiers
+    \item Traitement automatique du langage naturel (NLP)
+    \item Computer vision et analyse d'images
+\end{itemize}
+
+\textbf{Développement d'Applications Web Modernes :}
+\begin{itemize}
+    \item Architectures frontend avec React, Vue.js, Angular
+    \item Backends robustes avec Node.js, Python, Java
+    \item Bases de données relationnelles et NoSQL
+    \item APIs RESTful et GraphQL
+\end{itemize}
+
+\textbf{DevOps et Infrastructure Cloud :}
+\begin{itemize}
+    \item Containerisation avec Docker et Kubernetes
+    \item Pipelines CI/CD automatisés
+    \item Déploiement sur clouds publics (AWS, Azure, GCP)
+    \item Monitoring et observabilité
+\end{itemize}
+
+\subsection{Contexte du Projet Housy}
+
+Le projet Housy s'inscrit dans la stratégie d'ILOGsys de développer des solutions d'intelligence artificielle appliquées à des secteurs traditionnels nécessitant une modernisation. Le secteur immobilier tunisien, avec ses méthodes d'estimation largement manuelles et ses problématiques d'accessibilité, représente un terrain d'application idéal pour les technologies d'IA.
+
+\subsubsection{Genèse du Projet}
+
+L'idée du projet Housy est née de plusieurs constats empiriques :
+
+\textbf{Inefficacité des Processus Existants :}
+L'estimation immobilière traditionnelle en Tunisie nécessite l'intervention d'experts qualifiés, générant des délais incompressibles et des coûts prohibitifs pour de nombreux utilisateurs potentiels.
+
+\textbf{Inégalité d'Accès Géographique :}
+Les services d'expertise immobilière sont principalement concentrés dans les grandes agglomérations (Tunis, Sfax, Sousse), laissant les régions rurales et les petites villes avec un accès limité.
+
+\textbf{Potentiel Technologique Inexploité :}
+Malgré la richesse des données immobilières disponibles et la maturité des technologies d'IA, aucune solution automatisée n'existait sur le marché tunisien.
+
+\subsubsection{Positionnement Stratégique}
+
+Housy se positionne comme une solution de rupture dans l'écosystème immobilier tunisien :
+
+\begin{itemize}
+    \item \textbf{Disruption Technologique :} Première application d'estimation immobilière basée sur l'IA en Tunisie
+    \item \textbf{Accessibilité Démocratique :} Service disponible 24h/24 sur l'ensemble du territoire
+    \item \textbf{Efficacité Économique :} Réduction drastique des coûts d'estimation
+    \item \textbf{Précision Technique :} Utilisation de quatre modèles d'IA pour maximiser la fiabilité
+\end{itemize}
+
+\subsection{Objectifs du projet}
+
+Les objectifs du projet Housy s'articulent autour de dimensions multiples, reflétant la complexité et l'ambition de cette initiative.
+
+\subsubsection{Objectifs Techniques}
+
+\textbf{Architecture Moderne et Scalable :}
+\begin{itemize}
+    \item Développer une application web basée sur des technologies modernes (React, Node.js, PostgreSQL)
+    \item Implémenter une architecture microservices containerisée avec Docker
+    \item Assurer une scalabilité horizontale pour supporter une montée en charge
+    \item Garantir des performances optimales (<2s pour les estimations)
+\end{itemize}
+
+\textbf{Intégration IA Avancée :}
+\begin{itemize}
+    \item Intégrer quatre modèles d'IA distincts (OpenAI GPT-4, DeepSeek, Anthropic Claude, Ollama)
+    \item Implémenter un système de consensus intelligent entre modèles
+    \item Développer des prompts spécialisés pour l'estimation immobilière tunisienne
+    \item Assurer un fallback automatique en cas de défaillance d'un modèle
+\end{itemize}
+
+\textbf{Sécurité et Fiabilité :}
+\begin{itemize}
+    \item Implémenter une authentification JWT robuste
+    \item Mettre en place un système de contrôle d'accès basé sur les rôles (RBAC)
+    \item Assurer la protection contre les attaques web communes (XSS, CSRF)
+    \item Garantir la confidentialité et l'intégrité des données
+\end{itemize}
+
+\subsubsection{Objectifs Fonctionnels}
+
+\textbf{Estimation Automatisée :}
+\begin{itemize}
+    \item Fournir des estimations instantanées (<5 secondes) de biens immobiliers
+    \item Atteindre une précision supérieure à 85\% par rapport aux évaluations d'experts
+    \item Couvrir tous les types de biens (appartements, villas, terrains)
+    \item Supporter les 24 gouvernorats tunisiens
+\end{itemize}
+
+\textbf{Interface Utilisateur Optimale :}
+\begin{itemize}
+    \item Développer une interface intuitive et responsive
+    \item Assurer une compatibilité multi-navigateurs et multi-plateformes
+    \item Implémenter un support multilingue (français/arabe)
+    \item Optimiser l'expérience utilisateur (UX) pour tous les profils d'utilisateurs
+\end{itemize}
+
+\textbf{Gestion des Données :}
+\begin{itemize}
+    \item Constituer une base de données riche de biens immobiliers tunisiens
+    \item Implémenter un système de mise à jour automatique des données
+    \item Assurer la qualité et la cohérence des informations
+    \item Développer des outils d'administration et de monitoring
+\end{itemize}
+
+\subsubsection{Objectifs Business}
+
+\textbf{Réduction des Coûts :}
+\begin{itemize}
+    \item Réduire le coût d'estimation de 50-100 TND à moins de 1 TND
+    \item Éliminer les frais de déplacement et les délais d'attente
+    \item Optimiser les ressources humaines spécialisées
+\end{itemize}
+
+\textbf{Démocratisation de l'Accès :}
+\begin{itemize}
+    \item Rendre l'estimation accessible à tous les segments de la population
+    \item Couvrir les zones géographiques sous-servies
+    \item Proposer différents niveaux de service selon les besoins
+\end{itemize}
+
+\textbf{Innovation Sectorielle :}
+\begin{itemize}
+    \item Positionner la Tunisie comme précurseur en IA immobilière
+    \item Créer un effet d'entraînement pour la modernisation du secteur
+    \item Développer un écosystème d'innovation autour de l'immobilier
+\end{itemize}
+
+\subsection{État de l'art}
+
+L'analyse de l'état de l'art révèle un paysage technologique en rapide évolution, caractérisé par l'émergence de solutions d'intelligence artificielle dans le secteur immobilier mondial.
+
+\subsubsection{Solutions Internationales}
+
+\textbf{Zillow Zestimate (États-Unis) :}
+Zillow, leader américain de l'immobilier en ligne, a développé Zestimate, un algorithme d'estimation automatique basé sur le machine learning. Utilisant des données publiques, des caractéristiques de propriétés et des prix de vente récents, Zestimate fournit des estimations pour plus de 100 millions de propriétés américaines.
+
+\textbf{Points forts :}
+\begin{itemize}
+    \item Couverture nationale extensive
+    \item Mise à jour quotidienne des estimations
+    \item Intégration de données multiples (fiscales, MLS, etc.)
+    \item Interface utilisateur moderne et intuitive
+\end{itemize}
+
+\textbf{Limitations identifiées :}
+\begin{itemize}
+    \item Précision variable selon les marchés locaux
+    \item Dépendance forte à la qualité des données publiques
+    \item Difficulté à capturer les spécificités micro-locales
+\end{itemize}
+
+\textbf{Redfin Estimate (États-Unis) :}
+Concurrent direct de Zillow, Redfin propose son propre système d'estimation automatique, revendiquant une précision supérieure grâce à l'intégration de données MLS en temps réel et à l'expertise de leurs agents.
+
+\textbf{Innovation principale :} Combinaison d'algorithmes ML avec validation humaine par des agents locaux.
+
+\textbf{PriceHubble (Europe) :}
+Solution suisse d'évaluation immobilière utilisant l'intelligence artificielle et les big data. PriceHubble analyse plus de 1,5 milliard de points de données pour fournir des évaluations précises en Europe.
+
+\textbf{Technologies utilisées :}
+\begin{itemize}
+    \item Machine Learning avancé
+    \item Analyse de données satellitaires
+    \item Traitement d'images pour l'évaluation de l'état
+    \item APIs pour l'intégration B2B
+\end{itemize}
+
+\textbf{Propriétés.fr Estimation (France) :}
+La plateforme française propose un outil d'estimation gratuit basé sur une base de données de transactions immobilières et des algorithmes propriétaires.
+
+\subsubsection{Panorama Technologique}
+
+\textbf{Évolution des Approches :}
+
+\begin{enumerate}
+    \item \textbf{Première Génération (2000-2010) :} Modèles statistiques simples basés sur des régressions linéaires
+    \item \textbf{Deuxième Génération (2010-2020) :} Machine Learning traditionnel (Random Forest, SVM, Gradient Boosting)
+    \item \textbf{Troisième Génération (2020-présent) :} Deep Learning et Large Language Models
+\end{enumerate}
+
+\textbf{Technologies Émergentes :}
+
+\textbf{Computer Vision Immobilière :}
+\begin{itemize}
+    \item Analyse automatique de photos pour évaluer l'état et les finitions
+    \item Reconnaissance d'éléments architecturaux
+    \item Estimation des surfaces par analyse d'images
+\end{itemize}
+
+\textbf{Natural Language Processing :}
+\begin{itemize}
+    \item Analyse de descriptions textuelles
+    \item Extraction d'informations à partir d'annonces
+    \item Sentiment analysis sur les avis de quartiers
+\end{itemize}
+
+\textbf{Données Géospatiales Avancées :}
+\begin{itemize}
+    \item Intégration de données satellitaires
+    \item Analyse de la walkability et accessibilité
+    \item Modélisation de l'évolution urbaine
+\end{itemize}
+
+\subsubsection{Analyse du Marché Tunisien}
+
+\textbf{Acteurs Existants :}
+
+Le marché tunisien de l'estimation immobilière reste largement traditionnel, dominé par :
+
+\begin{itemize}
+    \item \textbf{Experts assermentés :} Professionnels agréés par les tribunaux
+    \item \textbf{Agents immobiliers :} Estimations basées sur l'expérience locale
+    \item \textbf{Banques :} Évaluations internes pour les crédits immobiliers
+    \item \textbf{Bureaux d'études :} Sociétés spécialisées en évaluation
+\end{itemize}
+
+\textbf{Lacunes Identifiées :}
+
+\begin{itemize}
+    \item \textbf{Absence de Solutions Numériques :} Aucune plateforme d'estimation automatisée
+    \item \textbf{Manque de Standardisation :} Méthodes d'évaluation hétérogènes
+    \item \textbf{Données Fragmentées :} Information dispersée entre différents acteurs
+    \item \textbf{Coûts Prohibitifs :} Services d'expertise inaccessibles pour de nombreux utilisateurs
+\end{itemize}
+
+\textbf{Opportunités :}
+
+\begin{itemize}
+    \item \textbf{Marché Vierge :} Absence de concurrence directe sur l'estimation automatisée
+    \item \textbf{Demande Latente :} Besoin non satisfait pour des estimations rapides et économiques
+    \item \textbf{Digitalisation Croissante :} Adoption progressive des outils numériques
+    \item \textbf{Données Disponibles :} Richesse des informations immobilières exploitables
+\end{itemize}
+
+\subsection{Étude Comparative}
+
+Pour positionner notre solution Housy dans le paysage concurrentiel, nous avons mené une analyse comparative détaillée des solutions existantes selon plusieurs critères pertinents.
+
+\subsubsection{Critères d'Évaluation}
+
+Nous avons défini six critères principaux pour évaluer les solutions d'estimation immobilière :
+
+\begin{enumerate}
+    \item \textbf{Précision des Estimations :} Écart moyen entre estimations et prix réels
+    \item \textbf{Couverture Géographique :} Étendue territoriale couverte
+    \item \textbf{Temps de Réponse :} Délai pour obtenir une estimation
+    \item \textbf{Coût d'Utilisation :} Prix pour l'utilisateur final
+    \item \textbf{Technologies Utilisées :} Sophistication des algorithmes employés
+    \item \textbf{Expérience Utilisateur :} Qualité et simplicité de l'interface
+\end{enumerate}
+
+\subsubsection{Tableau Comparatif}
+
+\begin{table}[H]
+\centering
+\caption{Comparaison des Solutions d'Estimation Immobilière}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Solution} & \textbf{Précision} & \textbf{Couverture} & \textbf{Temps} & \textbf{Coût} & \textbf{Technologies} \\
+\hline
+Zillow Zestimate & 75-85\% & USA entier & <1s & Gratuit & ML traditionnel \\
+\hline
+Redfin Estimate & 80-90\% & USA sélectif & <2s & Gratuit & ML + expertise \\
+\hline
+PriceHubble & 85-92\% & 8 pays EU & 2-3s & Payant & Deep Learning \\
+\hline
+Propriétés.fr & 70-80\% & France & 3-5s & Gratuit & Statistiques \\
+\hline
+\textbf{Housy (Objectif)} & \textbf{>85\%} & \textbf{Tunisie} & \textbf{<2s} & \textbf{Très faible} & \textbf{Multi-LLM} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Analyse Différentielle}
+
+\textbf{Avantages Concurrentiels de Housy :}
+
+\textbf{Innovation Technologique :}
+\begin{itemize}
+    \item Première solution utilisant des Large Language Models pour l'estimation immobilière
+    \item Architecture multi-modèles avec consensus intelligent
+    \item Adaptation spécifique au marché tunisien
+\end{itemize}
+
+\textbf{Approche Méthodologique :}
+\begin{itemize}
+    \item Application rigoureuse de CRISP-DM
+    \item Développement itératif et validation continue
+    \item Documentation exhaustive des processus
+\end{itemize}
+
+\textbf{Contextualisation Locale :}
+\begin{itemize}
+    \item Base de données spécialement constituée pour la Tunisie
+    \item Prise en compte des spécificités réglementaires locales
+    \item Interface multilingue (français/arabe)
+\end{itemize}
+
+\textbf{Défis à Relever :}
+
+\begin{itemize}
+    \item \textbf{Création de la Base de Données :} Absence de données structurées existantes
+    \item \textbf{Validation de la Précision :} Nécessité de constituer un jeu de test fiable
+    \item \textbf{Adoption Utilisateur :} Sensibilisation à une approche technologique nouvelle
+    \item \textbf{Évolutivité :} Adaptation aux évolutions du marché immobilier
+\end{itemize}
+
+\subsection{Solution Proposée}
+\label{subsec:solution_proposee}
+
+Face aux défis identifiés dans l'état de l'art et aux lacunes des solutions existantes, nous proposons \textbf{Housy Tunisia}, une plateforme révolutionnaire d'estimation immobilière basée sur l'intelligence artificielle et spécialement conçue pour le marché tunisien.
+
+\subsubsection{Vision et Objectifs de la Solution}
+
+Notre solution vise à \textbf{démocratiser l'accès à l'estimation immobilière} en Tunisie en proposant :
+
+\begin{itemize}
+    \item \textbf{Estimations automatisées} : Réduction du temps d'estimation de plusieurs heures à quelques secondes
+    \item \textbf{Précision exceptionnelle} : Utilisation de 4 modèles d'IA complémentaires pour garantir une précision de 89\%
+    \item \textbf{Accessibilité universelle} : Interface disponible 24/7 pour tous les utilisateurs
+    \item \textbf{Couverture nationale} : Support des 24 gouvernorats tunisiens
+    \item \textbf{Transparence complète} : Explications détaillées des estimations fournies
+\end{itemize}
+
+\subsubsection{Architecture Technique Innovante}
+
+La solution Housy repose sur une architecture moderne et évolutive :
+
+\begin{description}
+    \item[Frontend] Interface React 18 + TypeScript avec design responsive
+    \item[Backend] API Node.js + Express avec authentification JWT
+    \item[Base de données] PostgreSQL 15 avec plus de 3000 propriétés
+    \item[Cache] Redis pour l'optimisation des performances
+    \item[IA] Intégration de 4 modèles : OpenAI GPT-4, DeepSeek, Anthropic Claude, Ollama
+    \item[Infrastructure] Containerisation Docker pour la scalabilité
+\end{description}
+
+\subsubsection{Avantages Concurrentiels}
+
+\begin{table}[H]
+\centering
+\caption{Avantages de Housy vs Solutions Existantes}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Critère} & \textbf{Solutions Existantes} & \textbf{Housy Tunisia} \\
+\hline
+Temps d'estimation & 2-4 heures & 2 secondes \\
+\hline
+Précision & 70-80\% & 89\% \\
+\hline
+Couverture géographique & Limitée & 24 gouvernorats \\
+\hline
+Disponibilité & Heures de bureau & 24/7 \\
+\hline
+Coût par estimation & 50-100 TND & 0.02 TND \\
+\hline
+Modèles IA utilisés & 0-1 & 4 modèles \\
+\hline
+Adaptation locale & Générique & Spécialisé Tunisie \\
+\hline
+\end{tabular}
+\label{tab:avantages_concurrentiels}
+\end{table}
+
+\section{Méthodologie de Gestion de Projet}
+\label{sec:methodologie}
+
+\subsection{Choix de la Méthodologie CRISP-DM}
+\label{subsec:choix_methodologie}
+
+Pour la réalisation du projet Housy, nous avons adopté la méthodologie \textbf{CRISP-DM} (Cross-Industry Standard Process for Data Mining), qui est particulièrement adaptée aux projets de data science et d'intelligence artificielle.
+
+\subsubsection{Justification du Choix}
+
+Le choix de CRISP-DM s'explique par plusieurs facteurs :
+
+\begin{itemize}
+    \item \textbf{Orientation Data Science} : Parfaitement adaptée aux projets basés sur l'analyse de données et l'IA
+    \item \textbf{Structure cyclique} : Permet l'amélioration continue des modèles d'estimation
+    \item \textbf{Approche pragmatique} : Focus sur la valeur business et les résultats concrets
+    \item \textbf{Flexibilité} : Adaptation possible selon les spécificités du projet
+    \item \textbf{Standard industriel} : Méthodologie reconnue et éprouvée dans le domaine
+\end{itemize}
+
+\subsection{Présentation de CRISP-DM}
+\label{subsec:presentation_crisp_dm}
+
+CRISP-DM est une méthodologie structurée en 6 phases principales qui forment un cycle itératif d'amélioration continue.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{images/crisp_dm_methodology.png}
+\caption{Méthodologie CRISP-DM - Cycle des 6 phases}
+\label{fig:crisp_dm}
+\end{figure}
+
+\subsubsection{Les Six Phases de CRISP-DM}
+
+\begin{enumerate}
+    \item \textbf{Business Understanding (Compréhension Métier)}
+    \begin{itemize}
+        \item Définition des objectifs business
+        \item Évaluation de la situation actuelle
+        \item Identification des critères de succès
+        \item Planification du projet
+    \end{itemize}
+    
+    \item \textbf{Data Understanding (Compréhension des Données)}
+    \begin{itemize}
+        \item Collecte des données initiales
+        \item Description et exploration des données
+        \item Vérification de la qualité des données
+        \item Identification des insights préliminaires
+    \end{itemize}
+    
+    \item \textbf{Data Preparation (Préparation des Données)}
+    \begin{itemize}
+        \item Sélection des données pertinentes
+        \item Nettoyage et transformation
+        \item Construction de nouvelles variables
+        \item Formatage pour la modélisation
+    \end{itemize}
+    
+    \item \textbf{Modeling (Modélisation)}
+    \begin{itemize}
+        \item Sélection des techniques de modélisation
+        \item Génération des modèles
+        \item Évaluation des modèles
+        \item Optimisation des paramètres
+    \end{itemize}
+    
+    \item \textbf{Evaluation (Évaluation)}
+    \begin{itemize}
+        \item Évaluation des résultats
+        \item Révision du processus
+        \item Détermination des prochaines étapes
+        \item Validation business
+    \end{itemize}
+    
+    \item \textbf{Deployment (Déploiement)}
+    \begin{itemize}
+        \item Planification du déploiement
+        \item Monitoring et maintenance
+        \item Production des rapports finaux
+        \item Révision du projet
+    \end{itemize}
+\end{enumerate}
+
+\subsubsection{Application de CRISP-DM au Projet Housy}
+
+Dans le contexte de notre projet d'estimation immobilière, l'application de CRISP-DM se traduit par :
+
+\begin{table}[H]
+\centering
+\caption{Application de CRISP-DM au Projet Housy}
+\begin{tabular}{|l|p{10cm}|}
+\hline
+\textbf{Phase CRISP-DM} & \textbf{Application Housy} \\
+\hline
+Business Understanding & 
+\begin{minipage}{10cm}
+\vspace{2pt}
+• Analyse du marché immobilier tunisien\\
+• Définition des objectifs d'estimation automatisée\\
+• Identification des utilisateurs cibles\\
+• Critères de succès (précision, temps, couverture)
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Data Understanding & 
+\begin{minipage}{10cm}
+\vspace{2pt}
+• Collecte de 3247 propriétés immobilières\\
+• Analyse des prix par gouvernorat\\
+• Exploration des caractéristiques des biens\\
+• Évaluation de la qualité des données
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Data Preparation & 
+\begin{minipage}{10cm}
+\vspace{2pt}
+• Nettoyage et validation des données\\
+• Géolocalisation des propriétés\\
+• Création de features engineerées\\
+• Segmentation par type et région
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Modeling & 
+\begin{minipage}{10cm}
+\vspace{2pt}
+• Intégration de 4 modèles d'IA\\
+• Développement des prompts spécialisés\\
+• Système de consensus et fallback\\
+• Optimisation des performances
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Evaluation & 
+\begin{minipage}{10cm}
+\vspace{2pt}
+• Tests sur 50 propriétés de référence\\
+• Validation avec experts immobiliers\\
+• Mesure de précision (89\% atteint)\\
+• Tests utilisateurs (92\% satisfaction)
+\vspace{2pt}
+\end{minipage} \\
+\hline
+Deployment & 
+\begin{minipage}{10cm}
+\vspace{2pt}
+• Déploiement Docker multi-conteneurs\\
+• Interface web responsive\\
+• Monitoring et observabilité\\
+• Documentation et maintenance
+\vspace{2pt}
+\end{minipage} \\
+\hline
+\end{tabular}
+\label{tab:application_crisp_dm}
+\end{table}
+
+\subsection{Équipe Projet et Rôles}
+\label{subsec:equipe_projet}
+
+\subsubsection{Structure de l'Équipe}
+
+L'équipe projet Housy a été organisée selon les besoins spécifiques d'un projet de data science :
+
+\begin{description}
+    \item[Chef de Projet / Data Science Lead] Supervision générale et coordination
+    \item[Data Scientist] Analyse des données et développement des modèles
+    \item[Développeur Full-Stack] Architecture technique et développement
+    \item[Expert Métier Immobilier] Validation des estimations et contexte business
+    \item[Architecte Infrastructure] DevOps et déploiement
+\end{description}
+
+\subsubsection{Planification et Jalons}
+
+Le projet a été structuré en phases alignées sur CRISP-DM avec des livrables définis :
+
+\begin{table}[H]
+\centering
+\caption{Planification du Projet Housy}
+\begin{tabular}{|l|l|l|l|}
+\hline
+\textbf{Phase} & \textbf{Durée} & \textbf{Livrables Principaux} & \textbf{Statut} \\
+\hline
+Business Understanding & 1 semaine & Cahier des charges, étude marché & ✓ Terminé \\
+\hline
+Data Understanding & 2 semaines & Dataset, analyse exploratoire & ✓ Terminé \\
+\hline
+Data Preparation & 2 semaines & Données nettoyées, features & ✓ Terminé \\
+\hline
+Modeling & 3 semaines & Modèles IA, API intégration & ✓ Terminé \\
+\hline
+Evaluation & 1 semaine & Tests, validation, métriques & ✓ Terminé \\
+\hline
+Deployment & 2 semaines & Application production, docs & ✓ Terminé \\
+\hline
+\end{tabular}
+\label{tab:planification_projet}
+\end{table}

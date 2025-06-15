@@ -1,0 +1,29 @@
+{
+    "recommendations": [
+        // Essential for performance
+        "ms-vscode.vscode-typescript-next",
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        
+        // Performance monitoring
+        "MS-vsliveshare.vsliveshare",
+        
+        // Database (lightweight)
+        "mtxr.sqltools",
+        "mtxr.sqltools-driver-pg",
+        
+        // Git (optimized)
+        "eamodio.gitlens",
+        
+        // React/TypeScript (essential only)
+        "ms-vscode.vscode-json"
+    ],
+    "unwantedRecommendations": [
+        // Heavy extensions that can slow down VS Code
+        "ms-python.python",
+        "ms-dotnettools.csharp",
+        "ms-vscode.powershell",
+        "redhat.java",
+        "golang.go"
+    ]
+}

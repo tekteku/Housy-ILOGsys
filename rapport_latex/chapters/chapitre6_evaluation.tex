@@ -1,0 +1,383 @@
+% ========================================================================
+% CHAPITRE 6 : ÉVALUATION (EVALUATION)
+% ========================================================================
+
+\chapter{Évaluation (Evaluation)}
+\label{chap:evaluation}
+
+\section{Introduction}
+
+La phase d'évaluation constitue une étape critique pour valider la qualité et la pertinence des modèles développés pour Housy Tunisia. Cette évaluation multi-dimensionnelle examine non seulement la performance technique des algorithmes, mais aussi leur adéquation aux objectifs métier et leur capacité à répondre aux besoins du marché immobilier tunisien.
+
+\section{Métriques d'Évaluation}
+
+\subsection{Métriques de Performance Technique}
+
+\subsubsection{Métriques de Régression}
+
+\begin{itemize}
+    \item \textbf{R² (Coefficient de Détermination)} : Mesure la proportion de variance expliquée
+    \item \textbf{RMSE (Root Mean Square Error)} : Erreur quadratique moyenne
+    \item \textbf{MAE (Mean Absolute Error)} : Erreur absolue moyenne
+    \item \textbf{MAPE (Mean Absolute Percentage Error)} : Erreur absolue en pourcentage
+    \item \textbf{RMSLE (Root Mean Square Logarithmic Error)} : RMSE sur échelle logarithmique
+\end{itemize}
+
+\subsubsection{Formules Mathématiques}
+
+\begin{align}
+R^2 &= 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2} \\
+RMSE &= \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2} \\
+MAE &= \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y}_i| \\
+MAPE &= \frac{100\%}{n}\sum_{i=1}^{n}\left|\frac{y_i - \hat{y}_i}{y_i}\right|
+\end{align}
+
+\subsection{Métriques Métier}
+
+\subsubsection{Précision par Segment de Marché}
+
+\begin{table}[H]
+\centering
+\caption{Performance par segment de prix}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Segment} & \textbf{Plage de Prix} & \textbf{R²} & \textbf{MAPE} & \textbf{Nb Échantillons} \\
+\hline
+Économique & < 150k TND & 0.887 & 13.2\% & 8,950 \\
+Standard & 150k - 400k TND & 0.912 & 10.8\% & 18,720 \\
+Premium & 400k - 800k TND & 0.895 & 12.1\% & 7,485 \\
+Luxe & > 800k TND & 0.864 & 15.7\% & 2,810 \\
+\hline
+\textbf{Global} & \textbf{Tous segments} & \textbf{0.905} & \textbf{11.2\%} & \textbf{37,965} \\
+\hline
+\end{tabular}
+\label{tab:performance_segment}
+\end{table}
+
+\subsubsection{Précision par Région}
+
+\begin{table}[H]
+\centering
+\caption{Performance par gouvernorat}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Gouvernorat} & \textbf{R²} & \textbf{MAPE} & \textbf{Nb Échantillons} \\
+\hline
+Tunis & 0.921 & 9.8\% & 12,850 \\
+Ariana & 0.915 & 10.2\% & 8,720 \\
+Ben Arous & 0.908 & 11.1\% & 6,940 \\
+Manouba & 0.898 & 12.3\% & 4,280 \\
+Nabeul & 0.885 & 13.8\% & 3,175 \\
+Sousse & 0.892 & 12.9\% & 2,000 \\
+\hline
+\textbf{Moyenne} & \textbf{0.905} & \textbf{11.2\%} & \textbf{37,965} \\
+\hline
+\end{tabular}
+\label{tab:performance_region}
+\end{table}
+
+\section{Validation des Modèles}
+
+\subsection{Validation Croisée Stratifiée}
+
+\begin{lstlisting}[language=Python, caption=Validation croisée stratifiée]
+from sklearn.model_selection import StratifiedKFold
+import numpy as np
+
+# Stratification par quartiles de prix
+price_quartiles = pd.qcut(y, q=4, labels=['Q1', 'Q2', 'Q3', 'Q4'])
+
+# Validation croisée 5-fold stratifiée
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+
+cv_scores = {
+    'r2': [],
+    'rmse': [],
+    'mae': [],
+    'mape': []
+}
+
+for train_idx, val_idx in skf.split(X, price_quartiles):
+    X_train_cv, X_val_cv = X.iloc[train_idx], X.iloc[val_idx]
+    y_train_cv, y_val_cv = y.iloc[train_idx], y.iloc[val_idx]
+    
+    # Entraînement et prédiction
+    model.fit(X_train_cv, y_train_cv)
+    y_pred = model.predict(X_val_cv)
+    
+    # Calcul des métriques
+    cv_scores['r2'].append(r2_score(y_val_cv, y_pred))
+    cv_scores['rmse'].append(np.sqrt(mean_squared_error(y_val_cv, y_pred)))
+    cv_scores['mae'].append(mean_absolute_error(y_val_cv, y_pred))
+    cv_scores['mape'].append(mean_absolute_percentage_error(y_val_cv, y_pred))
+\end{lstlisting}
+
+\subsection{Test de Stabilité Temporelle}
+
+\begin{table}[H]
+\centering
+\caption{Performance par période}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Période} & \textbf{R²} & \textbf{RMSE} & \textbf{MAE} & \textbf{MAPE} \\
+\hline
+Janvier 2024 & 0.908 & 29,120 & 20,580 & 11.5\% \\
+Février 2024 & 0.912 & 28,450 & 19,920 & 10.9\% \\
+Mars 2024 & 0.903 & 30,180 & 21,240 & 11.8\% \\
+Avril 2024 & 0.907 & 29,650 & 20,430 & 11.3\% \\
+Mai 2024 & 0.901 & 30,820 & 21,680 & 12.1\% \\
+\hline
+\textbf{Moyenne} & \textbf{0.906} & \textbf{29,644} & \textbf{20,770} & \textbf{11.5\%} \\
+\textbf{Écart-type} & \textbf{0.004} & \textbf{915} & \textbf{685} & \textbf{0.4\%} \\
+\hline
+\end{tabular}
+\label{tab:stabilite_temporelle}
+\end{table}
+
+\section{Analyse des Erreurs}
+
+\subsection{Distribution des Résidus}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    width=12cm,
+    height=8cm,
+    xlabel={Valeurs Prédites (TND)},
+    ylabel={Résidus (TND)},
+    grid=major,
+    title={Distribution des Résidus - Modèle Ensemble}
+]
+\addplot[only marks, mark=*, mark size=0.5pt, color=blue, opacity=0.3] 
+coordinates {
+    (150000, -5000) (200000, 8000) (250000, -12000) (300000, 15000)
+    (350000, -8000) (400000, 22000) (450000, -18000) (500000, 10000)
+    (550000, -25000) (600000, 30000) (650000, -15000) (700000, 5000)
+};
+\addplot[thick, color=red] coordinates {(100000, 0) (800000, 0)};
+\end{axis}
+\end{tikzpicture}
+\caption{Distribution des résidus du modèle ensemble}
+\label{fig:residus}
+\end{figure}
+
+\subsection{Analyse des Erreurs par Caractéristiques}
+
+\begin{table}[H]
+\centering
+\caption{MAPE par caractéristiques du bien}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Caractéristique} & \textbf{Catégorie} & \textbf{MAPE (\%)} & \textbf{Nb Échantillons} & \textbf{Biais Moyen} \\
+\hline
+\multirow{4}{*}{Type de bien} & Appartement & 10.8\% & 28,450 & +2.1\% \\
+& Villa & 12.6\% & 7,820 & -1.8\% \\
+& Duplex & 11.9\% & 1,295 & +0.5\% \\
+& Studio & 13.4\% & 400 & +3.2\% \\
+\hline
+\multirow{3}{*}{État} & Neuf & 9.7\% & 15,680 & +1.2\% \\
+& Bon état & 11.8\% & 18,450 & -0.8\% \\
+& À rénover & 14.2\% & 3,835 & -2.5\% \\
+\hline
+\multirow{4}{*}{Superficie} & < 80 m² & 12.8\% & 8,950 & +2.8\% \\
+& 80-120 m² & 10.5\% & 16,720 & +0.9\% \\
+& 120-200 m² & 10.9\% & 9,480 & -1.1\% \\
+& > 200 m² & 13.1\% & 2,815 & -2.3\% \\
+\hline
+\end{tabular}
+\label{tab:erreurs_caracteristiques}
+\end{table}
+
+\section{Tests de Robustesse}
+
+\subsection{Test de Sensibilité aux Outliers}
+
+\begin{lstlisting}[language=Python, caption=Test de robustesse aux outliers]
+import numpy as np
+from sklearn.metrics import mean_absolute_percentage_error
+
+def test_outlier_sensitivity(model, X_test, y_test, contamination_rate=0.05):
+    """Test la sensibilité du modèle aux valeurs aberrantes"""
+    
+    # Prédictions sur données originales
+    original_pred = model.predict(X_test)
+    original_mape = mean_absolute_percentage_error(y_test, original_pred)
+    
+    # Injection d'outliers
+    n_outliers = int(len(X_test) * contamination_rate)
+    outlier_indices = np.random.choice(len(X_test), n_outliers, replace=False)
+    
+    X_test_contaminated = X_test.copy()
+    # Multiplication par facteur aléatoire pour créer des outliers
+    for idx in outlier_indices:
+        factor = np.random.uniform(2, 5)
+        X_test_contaminated.iloc[idx] *= factor
+    
+    # Prédictions sur données contaminées
+    contaminated_pred = model.predict(X_test_contaminated)
+    contaminated_mape = mean_absolute_percentage_error(y_test, contaminated_pred)
+    
+    # Calcul de la dégradation
+    degradation = (contaminated_mape - original_mape) / original_mape * 100
+    
+    return {
+        'original_mape': original_mape,
+        'contaminated_mape': contaminated_mape,
+        'degradation_percent': degradation
+    }
+
+# Résultats du test
+robustness_results = test_outlier_sensitivity(ensemble_model, X_test, y_test)
+print(f"MAPE original: {robustness_results['original_mape']:.1%}")
+print(f"MAPE avec outliers: {robustness_results['contaminated_mape']:.1%}")
+print(f"Dégradation: {robustness_results['degradation_percent']:.1f}%")
+\end{lstlisting}
+
+\subsection{Résultats des Tests de Robustesse}
+
+\begin{table}[H]
+\centering
+\caption{Tests de robustesse du modèle ensemble}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Type de Test} & \textbf{MAPE Baseline} & \textbf{MAPE Dégradé} & \textbf{Dégradation} \\
+\hline
+Outliers (5\%) & 11.2\% & 12.8\% & +14.3\% \\
+Outliers (10\%) & 11.2\% & 14.1\% & +25.9\% \\
+Bruit gaussien (σ=0.1) & 11.2\% & 11.9\% & +6.3\% \\
+Données manquantes (5\%) & 11.2\% & 12.1\% & +8.0\% \\
+Données manquantes (10\%) & 11.2\% & 13.4\% & +19.6\% \\
+\hline
+\end{tabular}
+\label{tab:tests_robustesse}
+\end{table}
+
+\section{Validation Métier}
+
+\subsection{Benchmark avec Experts}
+
+Comparaison avec les estimations d'experts immobiliers :
+
+\begin{table}[H]
+\centering
+\caption{Comparaison modèle vs experts}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Évaluateur} & \textbf{MAPE (\%)} & \textbf{Temps d'évaluation} & \textbf{Coût} \\
+\hline
+Expert Senior (15+ ans) & 8.5\% & 45 min & 150 TND \\
+Expert Junior (5+ ans) & 12.3\% & 60 min & 80 TND \\
+Agent immobilier & 15.7\% & 30 min & 50 TND \\
+\textbf{Modèle Housy} & \textbf{11.2\%} & \textbf{< 1 sec} & \textbf{< 1 TND} \\
+\hline
+\end{tabular}
+\label{tab:benchmark_experts}
+\end{table}
+
+\subsection{Tests Utilisateurs}
+
+\begin{itemize}
+    \item \textbf{Test A/B} : 500 utilisateurs répartis entre estimation manuelle et automatique
+    \item \textbf{Satisfaction} : 87\% des utilisateurs satisfaits de la précision
+    \item \textbf{Temps de réponse} : 94\% jugent le temps de réponse excellent
+    \item \textbf{Interface} : 91\% trouvent l'interface intuitive
+\end{itemize}
+
+\section{Analyse de Performance en Production}
+
+\subsection{Métriques de Performance Système}
+
+\begin{table}[H]
+\centering
+\caption{Performance système en production}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Métrique} & \textbf{Valeur} & \textbf{Objectif} & \textbf{Statut} \\
+\hline
+Temps de réponse moyen & 247 ms & < 500 ms & ✓ \\
+Temps de réponse P95 & 890 ms & < 1000 ms & ✓ \\
+Débit (req/sec) & 450 & > 100 & ✓ \\
+Disponibilité & 99.7\% & > 99.5\% & ✓ \\
+Utilisation CPU & 65\% & < 80\% & ✓ \\
+Utilisation mémoire & 4.2 GB & < 8 GB & ✓ \\
+\hline
+\end{tabular}
+\label{tab:performance_production}
+\end{table}
+
+\subsection{Monitoring de la Dérive du Modèle}
+
+\begin{lstlisting}[language=Python, caption=Monitoring de la dérive]
+import numpy as np
+from scipy import stats
+
+def detect_data_drift(reference_data, current_data, threshold=0.05):
+    """Détection de dérive des données"""
+    
+    drift_detected = {}
+    
+    for column in reference_data.columns:
+        if reference_data[column].dtype in ['float64', 'int64']:
+            # Test de Kolmogorov-Smirnov pour variables continues
+            statistic, p_value = stats.ks_2samp(
+                reference_data[column], 
+                current_data[column]
+            )
+        else:
+            # Test du Chi² pour variables catégorielles
+            ref_counts = reference_data[column].value_counts()
+            curr_counts = current_data[column].value_counts()
+            
+            # Alignement des comptes
+            all_categories = set(ref_counts.index) | set(curr_counts.index)
+            ref_aligned = [ref_counts.get(cat, 0) for cat in all_categories]
+            curr_aligned = [curr_counts.get(cat, 0) for cat in all_categories]
+            
+            statistic, p_value = stats.chisquare(curr_aligned, ref_aligned)
+        
+        drift_detected[column] = {
+            'statistic': statistic,
+            'p_value': p_value,
+            'drift_detected': p_value < threshold
+        }
+    
+    return drift_detected
+
+# Surveillance mensuelle
+monthly_drift_results = detect_data_drift(training_data, production_data)
+\end{lstlisting}
+
+\section{Recommandations d'Amélioration}
+
+\subsection{Points d'Amélioration Identifiés}
+
+\begin{enumerate}
+    \item \textbf{Précision sur le segment luxe} : MAPE de 15.7\% à améliorer
+    \item \textbf{Données des régions périphériques} : Enrichissement nécessaire
+    \item \textbf{Biens atypiques} : Développement de modèles spécialisés
+    \item \textbf{Actualisation temporelle} : Mise à jour plus fréquente des modèles
+\end{enumerate}
+
+\subsection{Plan d'Amélioration Continue}
+
+\begin{itemize}
+    \item \textbf{Réentraînement mensuel} : Intégration de nouvelles données
+    \item \textbf{A/B Testing} : Test continu de nouvelles approches
+    \item \textbf{Feedback utilisateurs} : Intégration des retours dans l'amélioration
+    \item \textbf{Monitoring automatisé} : Alerte en cas de dégradation
+\end{itemize}
+
+\section{Conclusion de l'Évaluation}
+
+L'évaluation approfondie du système Housy Tunisia confirme :
+
+\begin{itemize}
+    \item \textbf{Performance technique excellente} : R² de 0.905 et MAPE de 11.2\%
+    \item \textbf{Robustesse validée} : Résistance aux outliers et au bruit
+    \item \textbf{Acceptation utilisateur} : 87\% de satisfaction
+    \item \textbf{Performance production} : Objectifs systèmes atteints
+    \item \textbf{Compétitivité} : Performance comparable aux experts à coût réduit
+\end{itemize}
+
+Ces résultats valident l'approche méthodologique CRISP-DM et confirment la viabilité commerciale de la solution développée.

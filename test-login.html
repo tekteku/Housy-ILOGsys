@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Housy Tunisia - Test Login & AI Estimation</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .content {
+            padding: 30px;
+        }
+        .section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+        .btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+        .btn-success { background: #28a745; }
+        .btn-success:hover { background: #1e7e34; }
+        .btn-warning { background: #ffc107; color: #212529; }
+        .btn-warning:hover { background: #d39e00; }
+        .btn-danger { background: #dc3545; }
+        .btn-danger:hover { background: #a71e2a; }
+        .form-group {
+            margin: 15px 0;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 14px;
+            box-sizing: border-box;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            display: none;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .status.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+        .user-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            display: inline-block;
+            min-width: 200px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        .user-card:hover {
+            border-color: #007bff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .user-card.admin { border-color: #dc3545; }
+        .user-card.client { border-color: #28a745; }
+        .estimation-result {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 20px;
+            border-radius: 0 8px 8px 0;
+            margin: 20px 0;
+        }
+        .model-selector {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .json-output {
+            background: #2d3748;
+            color: #68d391;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏠 Housy Tunisia</h1>
+            <p>Test Interface de Connexion & Estimation IA</p>
+        </div>
+        
+        <div class="content">
+            <!-- Login Section -->
+            <div class="section">
+                <h2>🔐 Connexion Utilisateur</h2>
+                <p>Choisissez un utilisateur de test ou connectez-vous manuellement:</p>
+                
+                <div class="form-group">
+                    <h3>Utilisateurs de Test Disponibles:</h3>
+                    <div class="user-card admin" onclick="quickLogin('admin@housy.tn', 'admin123')">
+                        <h4>👨‍💼 Admin</h4>
+                        <p>admin@housy.tn</p>
+                        <small>Accès complet + Ollama</small>
+                    </div>
+                    
+                    <div class="user-card client" onclick="quickLogin('client1@housy.tn', 'client123')">
+                        <h4>👤 Client 1</h4>
+                        <p>client1@housy.tn</p>
+                        <small>Mohamed Ben Ali</small>
+                    </div>
+                    
+                    <div class="user-card admin" onclick="quickLogin('taher@housy.tn', 'taher123')">
+                        <h4>👨‍💻 Taher</h4>
+                        <p>taher@housy.tn</p>
+                        <small>Admin développeur</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" class="form-control" placeholder="admin@housy.tn">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Mot de passe:</label>
+                    <input type="password" id="password" class="form-control" placeholder="admin123">
+                </div>
+                
+                <button class="btn btn-success" onclick="login()">🔓 Se Connecter</button>
+                <button class="btn btn-warning" onclick="checkAuth()">✅ Vérifier Connexion</button>
+                <button class="btn btn-danger" onclick="logout()">🚪 Se Déconnecter</button>
+                
+                <div id="authStatus" class="status"></div>
+            </div>
+            
+            <!-- AI Models Section -->
+            <div class="section">
+                <h2>🤖 Modèles IA Disponibles</h2>
+                <button class="btn" onclick="getAvailableModels()">📋 Voir Modèles Disponibles</button>
+                <button class="btn" onclick="checkPermissions()">🔐 Vérifier Permissions</button>
+                
+                <div class="model-selector">
+                    <label for="aiModel">Modèle IA:</label>
+                    <select id="aiModel" class="form-control">
+                        <option value="openai">OpenAI GPT-4 (Public)</option>
+                        <option value="claude">Claude (Anthropic)</option>
+                        <option value="deepseek">DeepSeek</option>
+                        <option value="ollama">Ollama Local (Admin seulement)</option>
+                    </select>
+                </div>
+                
+                <div id="modelsInfo" class="status"></div>
+            </div>
+            
+            <!-- AI Estimation Section -->
+            <div class="section">
+                <h2>🏗️ Estimation IA avec Données Réelles</h2>
+                
+                <div class="form-group">
+                    <label for="projectType">Type de Projet:</label>
+                    <select id="projectType" class="form-control">
+                        <option value="villa">Villa Moderne</option>
+                        <option value="apartment">Appartement</option>
+                        <option value="commercial">Bâtiment Commercial</option>
+                        <option value="renovation">Rénovation</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="area">Surface (m²):</label>
+                    <input type="number" id="area" class="form-control" value="250" min="1">
+                </div>
+                
+                <div class="form-group">
+                    <label for="location">Localisation:</label>
+                    <select id="location" class="form-control">
+                        <option value="tunis">Tunis</option>
+                        <option value="sfax">Sfax</option>
+                        <option value="sousse">Sousse</option>
+                        <option value="ariana">Ariana</option>
+                        <option value="la_marsa">La Marsa</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="qualityLevel">Niveau de Qualité:</label>
+                    <select id="qualityLevel" class="form-control">
+                        <option value="STANDARD">Standard</option>
+                        <option value="PREMIUM">Premium</option>
+                        <option value="LUXE">Luxe</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-success" onclick="generateAIEstimation()">🚀 Générer Estimation IA</button>
+                <button class="btn" onclick="getEstimationHistory()">📊 Historique</button>
+                <button class="btn btn-warning" onclick="testOllama()">🧪 Test Ollama (Admin)</button>
+                
+                <div id="estimationResult" class="estimation-result" style="display: none;"></div>
+            </div>
+            
+            <!-- Market Analysis Section -->
+            <div class="section">
+                <h2>📈 Analyse de Marché IA</h2>
+                <button class="btn" onclick="analyzeMarket()">📊 Analyser Marché Tunisien</button>
+                <button class="btn" onclick="analyzeMarket('tunis')">🏛️ Analyser Tunis</button>
+                <button class="btn" onclick="analyzeMarket('sfax')">🏭 Analyser Sfax</button>
+                
+                <div id="marketAnalysis" class="status"></div>
+            </div>
+            
+            <!-- Database Data Section -->
+            <div class="section">
+                <h2>🗄️ Données Base de Données</h2>
+                <button class="btn" onclick="getMaterials()">🧱 Matériaux Tunisiens</button>
+                <button class="btn" onclick="getProjects()">🏗️ Projets</button>
+                <button class="btn" onclick="getUsers()">👥 Utilisateurs</button>
+                
+                <div id="databaseData" class="json-output" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:3000/api';
+        let authToken = localStorage.getItem('authToken');
+        
+        // Quick login function
+        function quickLogin(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            login();
+        }
+        
+        // Authentication functions
+        async function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            if (!email || !password) {
+                showStatus('authStatus', 'Veuillez saisir email et mot de passe', 'error');
+                return;
+            }
+            
+            try {
+                showStatus('authStatus', 'Connexion en cours...', 'info');
+                
+                const response = await fetch(`${API_BASE}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    authToken = data.accessToken;
+                    localStorage.setItem('authToken', authToken);
+                    showStatus('authStatus', `✅ Connecté: ${data.user.fullName} (${data.user.role})`, 'success');
+                    
+                    // Auto-load available models after login
+                    setTimeout(getAvailableModels, 1000);
+                } else {
+                    showStatus('authStatus', `❌ Erreur: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showStatus('authStatus', `❌ Erreur de connexion: ${error.message}`, 'error');
+            }
+        }
+        
+        async function checkAuth() {
+            if (!authToken) {
+                showStatus('authStatus', '❌ Non connecté', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/auth/me`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('authStatus', `✅ Connecté: ${data.user.fullName} (${data.user.role})`, 'success');
+                } else {
+                    showStatus('authStatus', '❌ Token invalide', 'error');
+                    localStorage.removeItem('authToken');
+                    authToken = null;
+                }
+            } catch (error) {
+                showStatus('authStatus', `❌ Erreur: ${error.message}`, 'error');
+            }
+        }
+        
+        function logout() {
+            localStorage.removeItem('authToken');
+            authToken = null;
+            showStatus('authStatus', '🚪 Déconnecté', 'info');
+        }
+        
+        // AI Models functions
+        async function getAvailableModels() {
+            if (!authToken) {
+                showStatus('modelsInfo', '❌ Connexion requise', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/estimation-ai/models`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    let modelsText = '🤖 Modèles disponibles:\\n';
+                    data.data.models.forEach(model => {
+                        modelsText += `• ${model.name}: ${model.description}\\n`;
+                        if (model.restricted) modelsText += '  ⚠️ Restreint\\n';
+                    });
+                    modelsText += `\\n👤 Votre rôle: ${data.data.userRole}`;
+                    
+                    showStatus('modelsInfo', modelsText, 'success');
+                } else {
+                    showStatus('modelsInfo', `❌ Erreur: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showStatus('modelsInfo', `❌ Erreur: ${error.message}`, 'error');
+            }
+        }
+        
+        async function checkPermissions() {
+            if (!authToken) {
+                showStatus('modelsInfo', '❌ Connexion requise', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/estimation-ai/permissions`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    let permText = '🔐 Vos permissions:\\n';
+                    permText += `• Ollama Local: ${data.data.permissions.canUseOllama ? '✅' : '❌'}\\n`;
+                    permText += `• Modèles Cloud: ✅\\n`;
+                    if (data.data.recommendations) {
+                        permText += `\\n💡 ${data.data.recommendations}`;
+                    }
+                    
+                    showStatus('modelsInfo', permText, 'info');
+                } else {
+                    showStatus('modelsInfo', `❌ Erreur: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showStatus('modelsInfo', `❌ Erreur: ${error.message}`, 'error');
+            }
+        }
+        
+        // AI Estimation functions
+        async function generateAIEstimation() {
+            if (!authToken) {
+                alert('❌ Connexion requise');
+                return;
+            }
+            
+            const projectType = document.getElementById('projectType').value;
+            const area = parseInt(document.getElementById('area').value);
+            const location = document.getElementById('location').value;
+            const qualityLevel = document.getElementById('qualityLevel').value;
+            const aiModel = document.getElementById('aiModel').value;
+            
+            const prompt = `Génère une estimation détaillée pour un projet de construction en Tunisie:
+            
+Type: ${projectType}
+Surface: ${area} m²
+Localisation: ${location}
+Niveau de qualité: ${qualityLevel}
+
+Inclus:
+1. Coût total estimé en TND
+2. Répartition par catégorie (matériaux, main d'œuvre, etc.)
+3. Durée estimée du projet
+4. Recommandations spécifiques à la Tunisie
+5. Matériaux recommandés disponibles localement
+
+Format de réponse en JSON structuré.`;
+            
+            try {
+                document.getElementById('estimationResult').style.display = 'block';
+                document.getElementById('estimationResult').innerHTML = '🤖 Génération de l\\'estimation IA en cours...';
+                
+                const response = await fetch(`${API_BASE}/estimation-ai/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        prompt,
+                        context: {
+                            projectType,
+                            area,
+                            floors: 1,
+                            qualityLevel,
+                            includeWastage: true
+                        },
+                        preferredModel: aiModel
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    let resultHtml = `
+                        <h3>🎯 Estimation IA Générée</h3>
+                        <p><strong>Modèle utilisé:</strong> ${data.data.modelUsed || aiModel}</p>
+                        <p><strong>Projet:</strong> ${projectType} - ${area}m² à ${location}</p>
+                        <div class="json-output">${JSON.stringify(data.data.estimation, null, 2)}</div>
+                    `;
+                    
+                    if (data.data.metadata) {
+                        resultHtml += `<p><small>Généré le: ${data.data.metadata.timestamp}</small></p>`;
+                    }
+                    
+                    document.getElementById('estimationResult').innerHTML = resultHtml;
+                } else {
+                    document.getElementById('estimationResult').innerHTML = `❌ Erreur: ${data.message}`;
+                }
+            } catch (error) {
+                document.getElementById('estimationResult').innerHTML = `❌ Erreur: ${error.message}`;
+            }
+        }
+        
+        async function testOllama() {
+            if (!authToken) {
+                alert('❌ Connexion requise');
+                return;
+            }
+            
+            try {
+                document.getElementById('estimationResult').style.display = 'block';
+                document.getElementById('estimationResult').innerHTML = '🧪 Test de Ollama en cours...';
+                
+                const response = await fetch(`${API_BASE}/estimation-ai/test-ollama`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('estimationResult').innerHTML = `
+                        <h3>✅ Test Ollama Réussi</h3>
+                        <div class="json-output">${JSON.stringify(data.data, null, 2)}</div>
+                    `;
+                } else {
+                    document.getElementById('estimationResult').innerHTML = `❌ Test Ollama échoué: ${data.message}`;
+                }
+            } catch (error) {
+                document.getElementById('estimationResult').innerHTML = `❌ Erreur: ${error.message}`;
+            }
+        }
+        
+        async function analyzeMarket(location = '') {
+            if (!authToken) {
+                alert('❌ Connexion requise');
+                return;
+            }
+            
+            try {
+                showStatus('marketAnalysis', '📊 Analyse du marché en cours...', 'info');
+                
+                const response = await fetch(`${API_BASE}/estimation-ai/market-analysis`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({
+                        location: location || 'Tunisie',
+                        analysisType: 'detailed'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showStatus('marketAnalysis', `📈 Analyse de marché pour ${data.data.location}:\\n${data.data.analysis}`, 'success');
+                } else {
+                    showStatus('marketAnalysis', `❌ Erreur: ${data.message}`, 'error');
+                }
+            } catch (error) {
+                showStatus('marketAnalysis', `❌ Erreur: ${error.message}`, 'error');
+            }
+        }
+        
+        // Database functions
+        async function getMaterials() {
+            try {
+                const response = await fetch(`${API_BASE}/materials`);
+                const data = await response.json();
+                
+                document.getElementById('databaseData').style.display = 'block';
+                document.getElementById('databaseData').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('databaseData').textContent = `Erreur: ${error.message}`;
+            }
+        }
+        
+        async function getProjects() {
+            try {
+                const response = await fetch(`${API_BASE}/projects`);
+                const data = await response.json();
+                
+                document.getElementById('databaseData').style.display = 'block';
+                document.getElementById('databaseData').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('databaseData').textContent = `Erreur: ${error.message}`;
+            }
+        }
+        
+        async function getUsers() {
+            if (!authToken) {
+                alert('❌ Connexion requise');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/users`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                const data = await response.json();
+                
+                document.getElementById('databaseData').style.display = 'block';
+                document.getElementById('databaseData').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('databaseData').textContent = `Erreur: ${error.message}`;
+            }
+        }
+        
+        async function getEstimationHistory() {
+            if (!authToken) {
+                alert('❌ Connexion requise');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/estimation/history`, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+                const data = await response.json();
+                
+                document.getElementById('estimationResult').style.display = 'block';
+                document.getElementById('estimationResult').innerHTML = `
+                    <h3>📊 Historique des Estimations</h3>
+                    <div class="json-output">${JSON.stringify(data, null, 2)}</div>
+                `;
+            } catch (error) {
+                document.getElementById('estimationResult').innerHTML = `❌ Erreur: ${error.message}`;
+            }
+        }
+        
+        // Utility function
+        function showStatus(elementId, message, type) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `status ${type}`;
+            element.style.display = 'block';
+        }
+        
+        // Auto-check auth on page load
+        window.onload = function() {
+            if (authToken) {
+                checkAuth();
+            }
+        };
+    </script>
+</body>
+</html>

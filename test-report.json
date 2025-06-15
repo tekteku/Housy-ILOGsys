@@ -1,0 +1,18 @@
+{
+  "timestamp": "2025-06-13T12:27:52.324Z",
+  "results": {
+    "total": 9,
+    "passed": 8,
+    "failed": 1,
+    "errors": [
+      {
+        "test": "AI Integration with JSON Data",
+        "error": "socket hang up"
+      }
+    ]
+  },
+  "application": "Housy - Construction & Immobilier",
+  "company": "ILOGsys",
+  "version": "1.0.0",
+  "environment": "Development"
+}

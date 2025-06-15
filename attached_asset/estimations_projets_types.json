@@ -1,0 +1,169 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Estimations projets construction",
+    "projets_inclus": [
+      "Maison_100m2",
+      "Villa_200m2",
+      "Rénovation_80m2"
+    ]
+  },
+  "estimations": {
+    "Maison_100m2": {
+      "description": "Maison individuelle 100m² - Gros œuvre et finitions",
+      "surface": 100,
+      "estimations": {},
+      "coût_total": 24151.0,
+      "détail": [
+        {
+          "catégorie": "Outillage",
+          "quantité": 1,
+          "unité": "lot complet",
+          "gamme": "moyen",
+          "prix_unitaire": 499.0,
+          "coût_total": 499.0
+        },
+        {
+          "catégorie": "Quincaillerie",
+          "quantité": 1,
+          "unité": "lot complet",
+          "gamme": "moyen",
+          "prix_unitaire": 89.0,
+          "coût_total": 89.0
+        },
+        {
+          "catégorie": "Carrelage et revêtements",
+          "quantité": 100,
+          "unité": "m²",
+          "gamme": "moyen",
+          "prix_unitaire": 225.0,
+          "coût_total": 22500.0
+        },
+        {
+          "catégorie": "Peinture et enduits",
+          "quantité": 15,
+          "unité": "bidons",
+          "gamme": "moyen",
+          "prix_unitaire": 69.0,
+          "coût_total": 1035.0
+        },
+        {
+          "catégorie": "Fer et métallurgie",
+          "quantité": 2,
+          "unité": "tonnes",
+          "gamme": "économique",
+          "prix_unitaire": 14.0,
+          "coût_total": 28.0
+        }
+      ],
+      "coût_par_m2": 241.51
+    },
+    "Villa_200m2": {
+      "description": "Villa 200m² - Construction complète",
+      "surface": 200,
+      "estimations": {},
+      "coût_total": 1138154.0,
+      "détail": [
+        {
+          "catégorie": "Outillage",
+          "quantité": 1.5,
+          "unité": "lot complet",
+          "gamme": "premium",
+          "prix_unitaire": 23890.0,
+          "coût_total": 35835.0
+        },
+        {
+          "catégorie": "Quincaillerie",
+          "quantité": 2,
+          "unité": "lot complet",
+          "gamme": "moyen",
+          "prix_unitaire": 89.0,
+          "coût_total": 178.0
+        },
+        {
+          "catégorie": "Carrelage et revêtements",
+          "quantité": 200,
+          "unité": "m²",
+          "gamme": "premium",
+          "prix_unitaire": 5499.0,
+          "coût_total": 1099800.0
+        },
+        {
+          "catégorie": "Peinture et enduits",
+          "quantité": 25,
+          "unité": "bidons",
+          "gamme": "moyen",
+          "prix_unitaire": 69.0,
+          "coût_total": 1725.0
+        },
+        {
+          "catégorie": "Fer et métallurgie",
+          "quantité": 4,
+          "unité": "tonnes",
+          "gamme": "moyen",
+          "prix_unitaire": 154.0,
+          "coût_total": 616.0
+        }
+      ],
+      "coût_par_m2": 5690.77
+    },
+    "Rénovation_80m2": {
+      "description": "Rénovation appartement 80m²",
+      "surface": 80,
+      "estimations": {},
+      "coût_total": 18850.0,
+      "détail": [
+        {
+          "catégorie": "Outillage",
+          "quantité": 0.5,
+          "unité": "lot partiel",
+          "gamme": "économique",
+          "prix_unitaire": 18.0,
+          "coût_total": 9.0
+        },
+        {
+          "catégorie": "Quincaillerie",
+          "quantité": 1,
+          "unité": "lot standard",
+          "gamme": "économique",
+          "prix_unitaire": 13.0,
+          "coût_total": 13.0
+        },
+        {
+          "catégorie": "Carrelage et revêtements",
+          "quantité": 80,
+          "unité": "m²",
+          "gamme": "moyen",
+          "prix_unitaire": 225.0,
+          "coût_total": 18000.0
+        },
+        {
+          "catégorie": "Peinture et enduits",
+          "quantité": 12,
+          "unité": "bidons",
+          "gamme": "moyen",
+          "prix_unitaire": 69.0,
+          "coût_total": 828.0
+        }
+      ],
+      "coût_par_m2": 235.62
+    }
+  }
+}

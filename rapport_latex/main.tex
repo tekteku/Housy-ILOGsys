@@ -1,0 +1,216 @@
+% ========================================================================
+% RAPPORT FINAL - PROJET HOUSY TUNISIA
+% Application d'Estimation Immobilière avec Intelligence Artificielle
+% Méthodologie CRISP-DM
+% ========================================================================
+
+\documentclass[12pt,a4paper,oneside]{report}
+
+% Packages essentiels
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{geometry}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage{xcolor}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{appendix}
+
+% Configuration de la page
+\geometry{
+    left=2.5cm,
+    right=2cm,
+    top=2.5cm,
+    bottom=2.5cm,
+    headheight=15pt
+}
+
+% Configuration des en-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\leftmark}
+\fancyhead[R]{\thepage}
+\fancyfoot[C]{Projet Housy Tunisia - Rapport Final CRISP-DM}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Configuration des couleurs
+\definecolor{housyblue}{RGB}{37, 99, 235}
+\definecolor{housygreen}{RGB}{34, 197, 94}
+\definecolor{housygray}{RGB}{107, 114, 128}
+\definecolor{housyorange}{RGB}{249, 115, 22}
+
+% Configuration des liens hypertexte
+\hypersetup{
+    colorlinks=true,
+    linkcolor=housyblue,
+    filecolor=housyblue,
+    urlcolor=housyblue,
+    citecolor=housyblue,
+    pdfinfo={
+        Title={Rapport Final - Projet Housy Tunisia},
+        Author={ILOGsys Development Team},
+        Subject={Application d'Estimation Immobilière avec IA},
+        Keywords={CRISP-DM, Intelligence Artificielle, Immobilier, Tunisie}
+    }
+}
+
+% Configuration du code source
+\lstdefinestyle{codestyle}{
+    backgroundcolor=\color{gray!10},
+    commentstyle=\color{green!60!black},
+    keywordstyle=\color{blue},
+    numberstyle=\tiny\color{gray},
+    stringstyle=\color{orange},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    keepspaces=true,
+    numbers=left,
+    numbersep=5pt,
+    showspaces=false,
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{gray!30}
+}
+\lstset{style=codestyle}
+
+% Configuration des titres
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{housyblue}}
+{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+\titleformat{\section}
+{\normalfont\Large\bfseries\color{housyblue}}
+{\thesection}{1em}{}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries\color{housygray}}
+{\thesubsection}{1em}{}
+
+% Espacement des lignes
+\onehalfspacing
+
+% Variables du document
+\newcommand{\projetnom}{Housy Tunisia}
+\newcommand{\projetsubtitle}{Application d'Estimation Immobilière avec Intelligence Artificielle}
+\newcommand{\auteur}{ILOGsys Development Team}
+\newcommand{\encadrant}{Équipe Technique ILOGsys}
+\newcommand{\etablissement}{Institut Supérieur d'Informatique et de Multimédia de Sfax}
+\newcommand{\annee}{2024-2025}
+\newcommand{\dateremise}{13 Juin 2025}
+
+% ========================================================================
+% DÉBUT DU DOCUMENT
+% ========================================================================
+
+\begin{document}
+
+% Page de titre
+\input{sections/page_titre}
+
+% Pages préliminaires
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+% Dédicaces
+\input{sections/dedicaces}
+
+% Remerciements
+\input{sections/remerciements}
+
+% Résumé
+\input{sections/resume}
+
+% Abstract
+\input{sections/abstract}
+
+% Table des matières
+\tableofcontents
+\addcontentsline{toc}{chapter}{Table des matières}
+
+% Liste des figures
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}
+
+% Liste des tableaux
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+
+% Liste des abréviations
+\input{sections/abreviations}
+
+% ========================================================================
+% CORPS DU DOCUMENT
+% ========================================================================
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% Introduction générale
+\input{chapters/introduction}
+
+% Chapitre 1 : Cadre du projet
+\input{chapters/chapitre1_cadre}
+
+% Chapitre 2 : Compréhension métier (Business Understanding)
+\input{chapters/chapitre2_business_understanding}
+
+% Chapitre 3 : Compréhension des données (Data Understanding)
+\input{chapters/chapitre3_data_understanding}
+
+% Chapitre 4 : Préparation des données (Data Preparation)
+\input{chapters/chapitre4_data_preparation}
+
+% Chapitre 5 : Modélisation (Modeling)
+\input{chapters/chapitre5_modeling}
+
+% Chapitre 6 : Évaluation (Evaluation)
+\input{chapters/chapitre6_evaluation}
+
+% Chapitre 7 : Déploiement (Deployment)
+\input{chapters/chapitre7_deployment}
+
+% Conclusion générale
+\input{chapters/conclusion}
+
+% ========================================================================
+% SECTIONS FINALES
+% ========================================================================
+
+% Bibliographie
+\input{sections/bibliographie}
+
+% Annexes
+\begin{appendices}
+\input{annexes/annexe_a_architecture}
+\input{annexes/annexe_b_code}
+\input{annexes/annexe_c_donnees}
+\input{annexes/annexe_d_tests}
+\end{appendices}
+
+\end{document}

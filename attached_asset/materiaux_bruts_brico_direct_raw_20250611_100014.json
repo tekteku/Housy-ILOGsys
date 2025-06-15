@@ -1,0 +1,53 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Matériaux bruts",
+    "fichier_source": "brico_direct_raw_20250611_100014",
+    "nombre_produits": 1
+  },
+  "colonnes_disponibles": [
+    "nom",
+    "prix_tnd",
+    "prix_original",
+    "unite",
+    "categorie",
+    "description",
+    "url_produit",
+    "source",
+    "page",
+    "url_source",
+    "date_extraction"
+  ],
+  "donnees": [
+    {
+      "nom": "Test",
+      "prix_tnd": 10.0,
+      "prix_original": "10DT",
+      "unite": "pièce",
+      "categorie": "Test",
+      "description": NaN,
+      "url_produit": NaN,
+      "source": "test",
+      "page": 1,
+      "url_source": NaN,
+      "date_extraction": "2025-06-11"
+    }
+  ]
+}

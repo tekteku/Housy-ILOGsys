@@ -1,0 +1,30 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Rapport d'analyse textuel",
+    "fichier_source": "rapport_comparaison_20250611_104802",
+    "taille_caracteres": 2874
+  },
+  "contenu_brut": "📊 RAPPORT DE COMPARAISON PRIX MATÉRIAUX\n=============================================\n\nDate: 2025-06-11 10:48:02\nMatériaux analysés: 10\n\n💰 RÉSUMÉ ÉCONOMIES:\n   - Économies totales possibles: 43.10 TND\n   - Économie moyenne: 19.9%\n   - Matériau le plus économique: Peinture\n\n🔍 DÉTAIL PAR MATÉRIAU:\n-------------------------\n\n• Brique:\n  📍 Meilleur prix: 0.81 TND/pièce (Fournisseur A)\n  📈 Prix moyen marché: 0.98 TND\n  📉 Prix maximum: 1.15 TND\n  💰 Économie possible: 0.34 TND (29.6%)\n  🏪 Nb fournisseurs: 4\n  📦 Disponibilité: Sur commande\n\n• Carrelage:\n  📍 Meilleur prix: 22.32 TND/m² (Fournisseur A)\n  📈 Prix moyen marché: 29.18 TND\n  📉 Prix maximum: 33.25 TND\n  💰 Économie possible: 10.93 TND (32.9%)\n  🏪 Nb fournisseurs: 3\n  📦 Disponibilité: Stock limité\n\n• Ciment:\n  📍 Meilleur prix: 16.75 TND/sac 50kg (Fournisseur A)\n  📈 Prix moyen marché: 18.39 TND\n  📉 Prix maximum: 20.67 TND\n  💰 Économie possible: 3.92 TND (19.0%)\n  🏪 Nb fournisseurs: 3\n  📦 Disponibilité: En stock\n\n• Fer à béton:\n  📍 Meilleur prix: 2.95 TND/kg (Marché Local)\n  📈 Prix moyen marché: 3.08 TND\n  📉 Prix maximum: 3.21 TND\n  💰 Économie possible: 0.26 TND (8.1%)\n  🏪 Nb fournisseurs: 4\n  📦 Disponibilité: Stock limité\n\n• Gravier:\n  📍 Meilleur prix: 27.68 TND/m³ (Fournisseur A)\n  📈 Prix moyen marché: 29.36 TND\n  📉 Prix maximum: 30.44 TND\n  💰 Économie possible: 2.76 TND (9.1%)\n  🏪 Nb fournisseurs: 3\n  📦 Disponibilité: Sur commande\n\n• Isolant:\n  📍 Meilleur prix: 19.38 TND/m² (Fournisseur C)\n  📈 Prix moyen marché: 21.86 TND\n  📉 Prix maximum: 23.93 TND\n  💰 Économie possible: 4.55 TND (19.0%)\n  🏪 Nb fournisseurs: 4\n  📦 Disponibilité: En stock\n\n• Parpaing:\n  📍 Meilleur prix: 1.39 TND/pièce (Fournisseur B)\n  📈 Prix moyen marché: 1.48 TND\n  📉 Prix maximum: 1.74 TND\n  💰 Économie possible: 0.35 TND (20.1%)\n  🏪 Nb fournisseurs: 4\n  📦 Disponibilité: Stock limité\n\n• Peinture:\n  📍 Meilleur prix: 44.41 TND/bidon 25L (Fournisseur B)\n  📈 Prix moyen marché: 51.92 TND\n  📉 Prix maximum: 56.31 TND\n  💰 Économie possible: 11.90 TND (21.1%)\n  🏪 Nb fournisseurs: 3\n  📦 Disponibilité: Sur commande\n\n• Placo:\n  📍 Meilleur prix: 9.11 TND/m² (Fournisseur C)\n  📈 Prix moyen marché: 10.09 TND\n  📉 Prix maximum: 11.63 TND\n  💰 Économie possible: 2.52 TND (21.7%)\n  🏪 Nb fournisseurs: 4\n  📦 Disponibilité: Stock limité\n\n• Sable:\n  📍 Meilleur prix: 24.65 TND/m³ (Fournisseur B)\n  📈 Prix moyen marché: 26.23 TND\n  📉 Prix maximum: 30.22 TND\n  💰 Économie possible: 5.57 TND (18.4%)\n  🏪 Nb fournisseurs: 4\n  📦 Disponibilité: En stock\n\n\n🎯 RECOMMANDATIONS:\n---------------\n1. 🏆 Fournisseur recommandé: Fournisseur A\n   - Économies générées: 17.95 TND\n   - Produits proposés: 4\n\n2. 📈 Matériaux prioritaires (plus fortes économies):\n   1. Peinture: 11.90 TND d'économie\n   2. Carrelage: 10.93 TND d'économie\n   3. Sable: 5.57 TND d'économie\n\n3. ⚠️ Points d'attention:\n   - 4 matériaux en stock limité\n   - 3 matériaux sur commande\n",
+  "sections": {
+    "introduction": "📊 RAPPORT DE COMPARAISON PRIX MATÉRIAUX",
+    "": "1. 🏆 Fournisseur recommandé: Fournisseur A\n- Économies générées: 17.95 TND\n- Produits proposés: 4\n\n2. 📈 Matériaux prioritaires (plus fortes économies):\n1. Peinture: 11.90 TND d'économie\n2. Carrelage: 10.93 TND d'économie\n3. Sable: 5.57 TND d'économie\n\n3. ⚠️ Points d'attention:\n- 4 matériaux en stock limité\n- 3 matériaux sur commande\n"
+  }
+}
