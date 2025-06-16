@@ -1,0 +1,543 @@
+% ========================================================================
+% CHAPITRE : ARCHITECTURE TECHNIQUE ET INTÉGRATION IA AVANCÉE
+% ========================================================================
+
+\chapter{Architecture Technique et Intégration IA}
+\label{chap:architecture_ia}
+
+\begin{objectivebox}
+Ce chapitre présente l'architecture technique réelle de Housy Tunisia, avec un focus particulier sur l'intégration IA multi-providers, l'utilisation des LLM, et l'exploitation des données JSON certifiées pour l'estimation immobilière tunisienne.
+\end{objectivebox}
+
+\section{Architecture Backend Réelle}
+
+\subsection{Stack Technologique Vérifiée}
+
+L'analyse approfondie du codebase révèle une architecture moderne et sécurisée :
+
+\begin{table}[H]
+\centering
+\caption{Stack technologique réel de Housy Tunisia}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Composant} & \textbf{Technologie} & \textbf{Version} \\
+\hline
+Runtime & Node.js & 18+ Alpine \\
+\hline
+Langage & TypeScript & ES Modules \\
+\hline
+Framework Web & Express.js & Avec middleware sécurisé \\
+\hline
+Base de Données & PostgreSQL & 15 Alpine \\
+\hline
+ORM & Drizzle & Type-safe SQL \\
+\hline
+Cache & Redis & 7 Alpine avec persistance \\
+\hline
+Conteneurisation & Docker & Multi-stage optimisé \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Services Backend Identifiés}
+
+L'architecture suit une approche service-oriented avec une séparation claire des responsabilités :
+
+\begin{itemize}
+    \item \textbf{Services d'Estimation :}
+    \begin{itemize}
+        \item \texttt{estimation-ai-service.ts} - Service principal d'estimation IA
+        \item \texttt{intelligent-estimation-service.ts} - Estimation intelligente avec données réelles
+        \item \texttt{data-service.ts} - Service de lecture et analyse des données JSON
+    \end{itemize}
+    
+    \item \textbf{Services d'Intelligence Artificielle :}
+    \begin{itemize}
+        \item \texttt{ai-service.ts} - Service central IA multi-providers
+        \item Support : OpenAI GPT, Anthropic Claude, DeepSeek, Ollama Local
+    \end{itemize}
+    
+    \item \textbf{Services de Données :}
+    \begin{itemize}
+        \item \texttt{data-analysis-service.ts} - Analyse des données immobilières
+        \item Lecture intelligente de fichiers JSON structurés
+    \end{itemize}
+\end{itemize}
+
+\section{Intégration IA Multi-Providers}
+
+\subsection{Architecture IA Hybride}
+
+Housy Tunisia implémente une architecture IA hybride unique combinant services cloud et local :
+
+\begin{lstlisting}[language=TypeScript, caption=Configuration des providers IA]
+// OpenAI GPT
+const openai = new OpenAI({ 
+  apiKey: process.env.OPENAI_API_KEY || "sk-" 
+});
+
+// Anthropic Claude
+const anthropic = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY || "",
+});
+
+// DeepSeek (API compatible OpenAI)
+const deepseek = new OpenAI({
+  apiKey: process.env.DEEPSEEK_API_KEY || "",
+  baseURL: "https://api.deepseek.com/v1"
+});
+
+// Ollama Local pour les administrateurs
+async function callOllamaApi(
+  prompt: string, 
+  model: OllamaModel = "llama2",
+  options: {
+    system?: string;
+    format?: "json" | "text";
+    temperature?: number;
+  } = {}
+) {
+  const baseUrl = process.env.OLLAMA_API_URL || "http://localhost:11434";
+  // Implementation complète avec gestion d'erreurs...
+}
+\end{lstlisting}
+
+\subsection{Système de Permissions IA Avancé}
+
+Une innovation remarquable de Housy Tunisia est son système de permissions IA à plusieurs niveaux :
+
+\begin{lstlisting}[language=TypeScript, caption=Contrôle d'accès Ollama pour administrateurs]
+/**
+ * Vérifie si l'utilisateur peut utiliser Ollama pour l'estimation
+ * RESTRICTION: Ollama Local réservé aux administrateurs UNIQUEMENT
+ */
+private canUseOllamaForEstimation(userRole?: string): boolean {
+  return userRole === 'admin' || userRole === 'super_admin';
+}
+
+/**
+ * Détermine le modèle IA approprié selon le rôle utilisateur
+ */
+private determineModelForEstimation(
+  userRole?: string, 
+  preferredModel?: string
+): string {
+  if (preferredModel === 'ollama') {
+    if (this.canUseOllamaForEstimation(userRole)) {
+      return 'ollama';
+    } else {
+      console.warn(`User ${userRole} attempted Ollama access - DENIED`);
+      return 'openai'; // Fallback sécurisé
+    }
+  }
+  
+  // Administrateurs : Ollama par défaut (sécurité locale)
+  if (this.canUseOllamaForEstimation(userRole)) {
+    return preferredModel || 'ollama';
+  }
+  
+  // Clients : Modèles cloud uniquement
+  return preferredModel || 'openai';
+}
+\end{lstlisting}
+
+\begin{table}[H]
+\centering
+\caption{Matrice de permissions par rôle utilisateur}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Rôle Utilisateur} & \textbf{OpenAI} & \textbf{Claude} & \textbf{DeepSeek} & \textbf{Ollama Local} \\
+\hline
+Administrateur & ✅ & ✅ & ✅ & ✅ (Par défaut) \\
+\hline
+Super Admin & ✅ & ✅ & ✅ & ✅ (Par défaut) \\
+\hline
+Utilisateur Standard & ✅ & ✅ & ✅ & ❌ \\
+\hline
+Client & ✅ (Limité) & ✅ (Limité) & ✅ & ❌ \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Utilisation des Données JSON Certifiées}
+
+\subsection{Structure des Données Vérifiée}
+
+L'analyse du répertoire \texttt{/server/data/} révèle une organisation sophistiquée des données :
+
+\begin{lstlisting}[language=bash, caption=Structure des données JSON certifiées]
+server/data/
+├── materiaux/
+│   ├── catalogue_estimation_materiaux_complet.json (525+ produits)
+│   └── catalogue_brico_direct_detaille.json
+├── immobilier/
+│   └── proprietes_consolidees_resume.json (6,036+ propriétés)
+└── INDEX_GENERAL.json (métadonnées système)
+\end{lstlisting}
+
+\subsection{Service de Lecture JSON Intelligent}
+
+Le \texttt{DataService} implémente une lecture intelligente avec cache et gestion d'erreurs :
+
+\begin{lstlisting}[language=TypeScript, caption=Service de données avec cache intelligent]
+class DataService {
+  private dataCache: DataSet | null = null;
+  private readonly CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
+
+  async loadData(): Promise<DataSet> {
+    // Cache intelligent pour performance
+    if (this.dataCache && (now - this.lastLoadTime) < this.CACHE_DURATION) {
+      return this.dataCache;
+    }
+
+    try {
+      console.log("Loading fresh data from JSON files...");
+      
+      // Chargement des matériaux avec gestion d'erreurs
+      let materiauxData: any = { materiaux: [] };
+      try {
+        const materiauxPath = path.join(dataDir, 'materiaux', 
+          'catalogue_estimation_materiaux_complet.json');
+        const materiauxRaw = fs.readFileSync(materiauxPath, 'utf-8');
+        materiauxData = JSON.parse(materiauxRaw);
+      } catch (error) {
+        console.warn("Could not load materials data:", error);
+      }
+      
+      // Nettoyage intelligent des valeurs NaN
+      let proprietesRaw = fs.readFileSync(proprietesPath, 'utf-8');
+      
+      // Replace NaN values with null before parsing
+      proprietesRaw = proprietesRaw.replace(/:\s*NaN\s*([,}])/g, ': null$1');
+      proprietesRaw = proprietesRaw.replace(/\[\s*NaN\s*([,\]])/g, '[null$1');
+      
+      proprietesData = JSON.parse(proprietesRaw);
+      
+      return {
+        materiaux: materiauxData.materiaux || [],
+        proprietes: proprietesData.proprietes || [],
+        indexGeneral: indexData
+      };
+    } catch (error) {
+      console.error("Error loading data:", error);
+      throw error;
+    }
+  }
+}
+\end{lstlisting}
+
+\subsection{Enrichissement Contextuel Automatique}
+
+Une fonctionnalité remarquable est l'enrichissement automatique des requêtes IA avec les données réelles :
+
+\begin{lstlisting}[language=TypeScript, caption=Enrichissement contextuel avec données certifiées]
+private async enrichContextWithRealData(userMessage: string): Promise<string> {
+  try {
+    const summary = await dataService.getDataSummary();
+    
+    // Détection automatique de demandes d'estimation
+    const isConstructionEstimate = userMessage.toLowerCase().includes('cout') || 
+                                 userMessage.toLowerCase().includes('prix') ||
+                                 userMessage.toLowerCase().includes('construction');
+    
+    let contextData = `
+## DONNÉES RÉELLES DISPONIBLES:
+- ${summary.nb_materiaux} matériaux catalogués avec prix réels
+- ${summary.nb_proprietes} propriétés immobilières tunisiennes
+- Villes: ${summary.villes_disponibles.slice(0, 10).join(', ')}
+- Prix moyen matériaux: ${summary.prix_moyen_materiaux_tnd} TND
+- Prix moyen immobilier: ${summary.prix_moyen_immobilier_par_m2_tnd} TND/m²
+`;
+
+    if (isConstructionEstimate) {
+      // Extraction automatique de surface et ville
+      const surfaceMatch = userMessage.match(/(\d+)\s*m[²2]/i);
+      const cityMatch = userMessage.match(/(?:à|dans|de)\s+([a-zà-ù]+)/i);
+      
+      if (surfaceMatch) {
+        const surface = parseInt(surfaceMatch[1]);
+        const city = cityMatch ? cityMatch[1] : undefined;
+        
+        // Calcul automatique avec données réelles
+        const estimation = await dataService.calculateConstructionCost(surface, city);
+        
+        contextData += `
+## ESTIMATION CALCULÉE AVEC VRAIES DONNÉES:
+- Surface: ${surface} m²
+- Ville: ${city || 'Non spécifiée'}
+- Estimation totale: ${estimation.estimation_totale_tnd.toLocaleString()} TND
+- Prix par m²: ${estimation.estimation_par_m2_tnd.toLocaleString()} TND/m²
+- Basée sur: ${estimation.proprietes_reference.length} propriétés de référence
+`;
+      }
+    }
+    
+    return contextData;
+  } catch (error) {
+    console.error("Error enriching context:", error);
+    return "## DONNÉES: Erreur lors du chargement des données réelles.\n";
+  }
+}
+\end{lstlisting}
+
+\section{Architecture Docker Avancée}
+
+\subsection{Dockerfile Multi-Stage Optimisé}
+
+L'architecture Docker suit les meilleures pratiques avec un build multi-stage :
+
+\begin{lstlisting}[language=dockerfile, caption=Dockerfile multi-stage sécurisé]
+# Stage 1: Frontend Builder
+FROM node:18-alpine AS frontend-builder
+LABEL stage=frontend-builder
+LABEL maintainer="Housy Development Team <dev@housy.tn>"
+
+WORKDIR /app/client
+COPY client/package*.json ./
+RUN npm ci --only=production --silent
+COPY client/ ./
+RUN npm run build
+
+# Stage 2: Backend Builder
+FROM node:18-alpine AS backend-builder
+WORKDIR /app
+COPY package*.json ./
+COPY server/ ./server/
+COPY shared/ ./shared/
+RUN npm ci --only=production --silent
+RUN npm run build
+
+# Stage 3: Production
+FROM node:18-alpine AS production
+LABEL version="1.0.0"
+LABEL description="Housy - Construction & Immobilier Platform"
+
+# Sécurité : utilisateur non-root
+RUN addgroup -g 1001 -S nodejs && adduser -S housy -u 1001
+
+WORKDIR /app
+
+# Copie optimisée avec permissions
+COPY --from=backend-builder --chown=housy:nodejs /app/dist ./dist
+COPY --from=backend-builder --chown=housy:nodejs /app/node_modules ./node_modules
+COPY --chown=housy:nodejs server/data ./server/data
+
+# Variables d'environnement optimisées
+ENV NODE_ENV=production
+ENV NODE_OPTIONS="--max-old-space-size=512"
+ENV TZ=Africa/Tunis
+
+USER housy
+
+# Health check intégré
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000/health || exit 1
+
+CMD ["node", "dist/index.js"]
+\end{lstlisting}
+
+\subsection{Orchestration Docker Compose}
+
+\begin{lstlisting}[language=yaml, caption=Docker Compose avec services complets]
+services:
+  # Base de données PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: housy-postgres
+    environment:
+      POSTGRES_DB: housy_tunisia
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "0000"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d housy_tunisia"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - housy-network
+
+  # Cache Redis
+  redis:
+    image: redis:7-alpine
+    container_name: housy-redis
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+    networks:
+      - housy-network
+
+  # Application Housy
+  housy-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: housy-application
+    environment:
+      DATABASE_URL: postgresql://postgres:0000@postgres:5432/housy_tunisia
+      REDIS_URL: redis://redis:6379
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY}
+      JWT_SECRET: ${JWT_SECRET}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - housy-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  housy-network:
+    driver: bridge
+\end{lstlisting}
+
+\section{Sécurité et Middleware}
+
+\subsection{Middleware de Sécurité Complet}
+
+\begin{lstlisting}[language=TypeScript, caption=Configuration sécurité avancée]
+// Helmet pour sécurité des headers HTTP
+app.use(helmet({
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com"],
+      scriptSrc: ["'self'", ...(process.env.NODE_ENV === 'development' 
+        ? ["'unsafe-inline'"] : [])],
+      imgSrc: ["'self'", "data:", "https:"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"]
+    },
+  },
+  crossOriginEmbedderPolicy: false
+}));
+
+// CORS configuré pour production/développement
+app.use(cors({
+  origin: process.env.NODE_ENV === 'production' 
+    ? ['https://housy-tunisia.com', 'https://www.housy-tunisia.com']
+    : ['http://localhost:5173', 'http://localhost:9876'],
+  credentials: true
+}));
+
+// Rate limiting intelligent
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 1000, // 1000 requêtes par IP
+  message: {
+    error: 'Trop de requêtes depuis cette IP, veuillez réessayer plus tard.'
+  },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+\end{lstlisting}
+
+\section{APIs et Routes Principales}
+
+\subsection{Routes d'Estimation IA}
+
+\begin{table}[H]
+\centering
+\caption{APIs d'estimation avec contrôle d'accès}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Route} & \textbf{Méthode} & \textbf{Description} \\
+\hline
+/api/estimation-ai/generate & POST & Estimation IA (restrictions Ollama) \\
+\hline
+/api/estimation-ai/market-analysis & POST & Analyse de marché tunisien \\
+\hline
+/api/ai/chat & POST & Chat assistant enrichi \\
+\hline
+/api/ai/chat/:sessionId & GET & Historique conversation \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Authentification JWT avec Vérifications}
+
+\begin{lstlisting}[language=TypeScript, caption=Middleware d'authentification avec permissions]
+router.post('/generate', authenticateToken, async (req, res) => {
+  try {
+    const validatedData = estimationAISchema.parse(req.body);
+    const user = (req as any).user;
+    
+    // Log de sécurité
+    console.log(`📊 Estimation AI request from user ${user?.id} (${user?.role}) 
+                 with model: ${validatedData.preferredModel || 'auto'}`);
+
+    const response = await estimationAIService.generateMaterialEstimationWithAI({
+      ...validatedData,
+      userId: user?.id,
+      userRole: user?.role
+    });
+
+    res.json({
+      success: true,
+      data: {
+        response,
+        modelUsed: validatedData.preferredModel || 'auto-selected',
+        userRole: user?.role,
+        canUseOllama: user?.role === 'admin' || user?.role === 'super_admin',
+        timestamp: new Date().toISOString()
+      }
+    });
+  } catch (error) {
+    // Gestion d'erreurs sécurisée...
+  }
+});
+\end{lstlisting}
+
+\section{Innovation et Points Remarquables}
+
+\subsection{Caractéristiques Uniques de l'Architecture}
+
+\begin{enumerate}
+    \item \textbf{IA Hybride Sécurisée :} Combinaison unique locale (Ollama) + cloud avec permissions granulaires
+    
+    \item \textbf{Données Certifiées Intégrées :} Enrichissement automatique avec 6,000+ propriétés et 525+ matériaux réels
+    
+    \item \textbf{Sécurité Multi-Niveaux :} Permissions, rate limiting, sanitisation, utilisateurs non-root
+    
+    \item \textbf{Performance Optimisée :} Cache intelligent Redis, optimisations Docker multi-stage
+    
+    \item \textbf{Observabilité Complète :} Health checks, logs structurés, monitoring intégré
+\end{enumerate}
+
+\subsection{Métadonnées de Certification}
+
+\begin{lstlisting}[language=json, caption=Certification des données système]
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    }
+  },
+  "statistiques_globales": {
+    "materiaux_construction": 525,
+    "proprietes_immobilieres": 6036,
+    "villes_couvertes": 24,
+    "sources_certifiees": 7
+  }
+}
+\end{lstlisting}
+
+\begin{resultbox}
+L'architecture de Housy Tunisia représente une implémentation production-ready sophistiquée avec une intégration IA avancée, spécifiquement adaptée au marché tunisien de la construction et de l'immobilier. L'utilisation de données certifiées, combinée à un système de permissions IA granulaire et une sécurité multi-niveaux, en fait une solution technique remarquable.
+\end{resultbox}
+
+\textbf{[CAPTURE À AJOUTER : Diagramme d'architecture technique complète avec flux de données IA]}
+
+\textbf{[CAPTURE À AJOUTER : Interface d'administration montrant les permissions IA]}
+
+\textbf{[CAPTURE À AJOUTER : Dashboard de monitoring Docker avec health checks]}

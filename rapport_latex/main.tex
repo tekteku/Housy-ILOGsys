@@ -1,23 +1,22 @@
-% ========================================================================
-% RAPPORT FINAL - PROJET HOUSY TUNISIA
-% Application d'Estimation Immobilière avec Intelligence Artificielle
-% Méthodologie CRISP-DM
-% ========================================================================
-
-\documentclass[12pt,a4paper,oneside]{report}
-
-% Packages essentiels
+\documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
 \usepackage[french]{babel}
 \usepackage{geometry}
-\usepackage{fancyhdr}
 \usepackage{graphicx}
-\usepackage{color}
+\usepackage{fancyhdr}
+\usepackage{listings}
 \usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{caption}
+\usepackage{subcaption}
 \usepackage{amsmath}
-\usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{tcolorbox}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{booktabs}
 \usepackage{float}
 \usepackage{caption}
 \usepackage{subcaption}
@@ -37,28 +36,72 @@
 \usepackage{appendix}
 
 % Configuration de la page
-\geometry{
-    left=2.5cm,
-    right=2cm,
-    top=2.5cm,
-    bottom=2.5cm,
-    headheight=15pt
-}
+\geometry{left=3cm,right=2.5cm,top=3cm,bottom=2.5cm}
 
 % Configuration des en-têtes et pieds de page
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\leftmark}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{Projet Housy Tunisia - Rapport Final CRISP-DM}
+\rhead{\thepage}
+\lhead{\leftmark}
 \renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\footrulewidth}{0.4pt}
 
 % Configuration des couleurs
-\definecolor{housyblue}{RGB}{37, 99, 235}
-\definecolor{housygreen}{RGB}{34, 197, 94}
-\definecolor{housygray}{RGB}{107, 114, 128}
-\definecolor{housyorange}{RGB}{249, 115, 22}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{ilogsysblue}{rgb}{0.1,0.3,0.6}
+\definecolor{housygreen}{rgb}{0.0,0.5,0.3}
+
+% Configuration des listings de code
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% Configuration des liens hypertexte
+\hypersetup{
+    colorlinks=true,
+    linkcolor=ilogsysblue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Rapport de Projet Housy - ILOGsys},
+    pdfauthor={Taher Chabaane - ILOGsys},
+}
+
+% Configuration des boîtes colorées
+\newtcolorbox{objectivebox}{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    title=Objectifs du chapitre
+}
+
+\newtcolorbox{resultbox}{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=Résultats obtenus
+}
+
+\newtcolorbox{warningbox}{
+    colback=orange!5!white,
+    colframe=orange!75!black,
+    title=Points d'attention
+}
 
 % Configuration des liens hypertexte
 \hypersetup{
@@ -163,6 +206,9 @@
 % Liste des abréviations
 \input{sections/abreviations}
 
+% Résumé exécutif
+\input{sections/resume_executif}
+
 % ========================================================================
 % CORPS DU DOCUMENT
 % ========================================================================
@@ -189,14 +235,26 @@
 % Chapitre 5 : Modélisation (Modeling)
 \input{chapters/chapitre5_modeling}
 
+% Architecture Technique et Intégration IA
+\input{chapters/architecture_technique_ia}
+
+% Utilisation Avancée des LLM et Données JSON
+\input{chapters/llm_donnees_avancees}
+
+% Conception et Diagrammes UML
+\input{chapters/diagrammes_uml}
+
 % Chapitre 6 : Évaluation (Evaluation)
 \input{chapters/chapitre6_evaluation}
 
 % Chapitre 7 : Déploiement (Deployment)
-\input{chapters/chapitre7_deployment}
+\input{chapters/chapitre7_deployment_new}
+
+% Résultats Concrets et Impact du Projet
+\input{chapters/resultats_concrets_impact}
 
 % Conclusion générale
-\input{chapters/conclusion}
+\input{chapters/conclusion_finale}
 
 % ========================================================================
 % SECTIONS FINALES

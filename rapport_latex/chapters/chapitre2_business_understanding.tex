@@ -1,32 +1,125 @@
-\chapter{Phase 1 : Compréhension Métier (Business Understanding)}
-\label{chap:business_understanding}
+\chapter{Compréhension du Métier - Business Understanding}
 
-\section{Introduction}
-\label{sec:bu_introduction}
+\begin{objectivebox}
+Cette phase CRISP-DM vise à comprendre les objectifs et exigences business du projet Housy Tunisia, à définir les critères de succès, et à transformer les objectifs métier en objectifs techniques.
+\end{objectivebox}
 
-La phase de \textbf{Compréhension Métier} constitue le fondement de notre projet d'estimation immobilière intelligente. Cette première étape de la méthodologie CRISP-DM vise à transformer une problématique business en objectifs de data science clairement définis.
+\section{Analyse du Secteur de la Construction en Tunisie}
 
-Dans le contexte du marché immobilier tunisien, cette phase revêt une importance particulière car elle nécessite une compréhension approfondie des spécificités locales, des pratiques du secteur et des attentes des utilisateurs.
+\subsection{Contexte Économique}
 
-\section{Analyse du Contexte Business}
-\label{sec:contexte_business}
-
-\subsection{Le Marché Immobilier Tunisien}
-\label{subsec:marche_immobilier}
-
-\subsubsection{Caractéristiques du Marché}
-
-Le marché immobilier tunisien présente des spécificités uniques qui influencent directement notre approche :
+Le secteur de la construction en Tunisie représente environ 8\% du PIB national et emploie plus de 400,000 personnes. Ce secteur présente des caractéristiques spécifiques :
 
 \begin{itemize}
-    \item \textbf{Diversité géographique} : 24 gouvernorats avec des variations de prix importantes
-    \item \textbf{Mixité urbain/rural} : Contraste marqué entre zones développées et périphériques
-    \item \textbf{Évolution économique} : Impact des fluctuations économiques sur les prix
-    \item \textbf{Préférences culturelles} : Influence des traditions sur les types de propriétés
-    \item \textbf{Réglementation locale} : Spécificités juridiques et administratives
+    \item \textbf{Fragmentation :} Multitude de petites et moyennes entreprises
+    \item \textbf{Informalité partielle :} Coexistence de secteurs formel et informel
+    \item \textbf{Dépendance aux importations :} 40\% des matériaux sont importés
+    \item \textbf{Saisonnalité :} Activité réduite pendant les périodes estivales
+    \item \textbf{Réglementation complexe :} Multiplicité des intervenants administratifs
 \end{itemize}
 
-\subsubsection{Problématiques Identifiées}
+\textbf{[CAPTURE À AJOUTER : Graphique de l'évolution du secteur construction en Tunisie]}
+
+\subsection{Types de Projets de Construction}
+
+Le marché tunisien se segmente en plusieurs catégories :
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|c|c|l|}
+\hline
+\textbf{Type de Projet} & \textbf{Durée Moyenne} & \textbf{Coût Moyen} & \textbf{Spécificités} \\
+\hline
+Villa Individuelle & 8-12 mois & 80-150k TND & Personnalisation élevée \\
+\hline
+Immeuble Résidentiel & 12-18 mois & 300-800k TND & Réglementation stricte \\
+\hline
+Bureau Commercial & 6-10 mois & 120-300k TND & Normes techniques spécifiques \\
+\hline
+Infrastructure & 18-36 mois & 1M+ TND & Appels d'offres publics \\
+\hline
+\end{tabular}
+\caption{Segmentation des projets de construction en Tunisie}
+\end{table}
+
+\textbf{[CAPTURE À AJOUTER : Répartition des types de projets par volume et valeur]}
+
+\section{Identification des Parties Prenantes}
+
+\subsection{Parties Prenantes Primaires}
+
+\begin{itemize}
+    \item \textbf{Entrepreneurs en construction :}
+    \begin{itemize}
+        \item Besoin : Optimisation de la gestion de projets
+        \item Attentes : Réduction des coûts et délais
+        \item Contraintes : Budgets limités, résistance au changement
+    \end{itemize}
+    
+    \item \textbf{Architectes et bureaux d'études :}
+    \begin{itemize}
+        \item Besoin : Outils d'estimation précis
+        \item Attentes : Interfaces professionnelles et ergonomiques
+        \item Contraintes : Intégration avec outils existants
+    \end{itemize}
+    
+    \item \textbf{Clients finaux (particuliers/entreprises) :}
+    \begin{itemize}
+        \item Besoin : Transparence sur les coûts et délais
+        \item Attentes : Communication claire et suivi en temps réel
+        \item Contraintes : Compréhension technique limitée
+    \end{itemize}
+\end{itemize}
+
+\textbf{[CAPTURE À AJOUTER : Carte des parties prenantes et leurs interactions]}
+
+\section{Définition des Objectifs Business}
+
+\subsection{Objectifs Stratégiques}
+
+\begin{enumerate}
+    \item \textbf{Digitalisation du secteur :}
+    \begin{itemize}
+        \item Moderniser les pratiques de gestion de projet
+        \item Réduire la dépendance aux outils traditionnels
+        \item Améliorer la productivité globale du secteur
+    \end{itemize}
+    
+    \item \textbf{Optimisation économique :}
+    \begin{itemize}
+        \item Réduction des coûts de gestion : -25\%
+        \item Amélioration de la précision des devis : +40\%
+        \item Accélération des processus : -50\% du temps
+    \end{itemize}
+\end{enumerate}
+
+\textbf{[CAPTURE À AJOUTER : Dashboard KPI avec les objectifs définis]}
+
+\section{Critères de Succès}
+
+\subsection{Critères Techniques}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Critère} & \textbf{Objectif} & \textbf{Méthode de Mesure} \\
+\hline
+Performance & < 2s temps de réponse & Tests de charge automatisés \\
+\hline
+Disponibilité & 99.5\% uptime & Monitoring continu \\
+\hline
+Sécurité & 0 faille critique & Audits de sécurité \\
+\hline
+Scalabilité & 1000 utilisateurs concurrents & Tests de montée en charge \\
+\hline
+\end{tabular}
+\caption{Critères de succès techniques}
+\end{table}
+
+\begin{resultbox}
+Cette phase de compréhension du métier a permis de clarifier les objectifs business, d'identifier les parties prenantes, de définir les besoins fonctionnels et d'établir les critères de succès du projet Housy Tunisia.
+\end{resultbox}
 
 Notre analyse du marché a révélé plusieurs défis majeurs :
 

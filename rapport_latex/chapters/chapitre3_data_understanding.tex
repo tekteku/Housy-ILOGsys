@@ -1,779 +1,149 @@
-\chapter{Phase 2 : Compréhension des Données (Data Understanding)}
-\label{chap:data_understanding}
+\chapter{Compréhension des Données - Data Understanding}
 
-\section{Introduction}
-\label{sec:du_introduction}
-
-La phase de \textbf{Compréhension des Données} constitue l'étape cruciale où nous transformons les objectifs business définis précédemment en une compréhension approfondie des données disponibles et nécessaires pour notre système d'estimation immobilière.
-
-Cette phase nous permet de passer d'une vision conceptuelle à une approche concrète basée sur l'analyse des données réelles du marché immobilier tunisien. Elle nous guide dans l'identification, la collecte, l'exploration et l'évaluation de la qualité des données qui alimenteront nos modèles d'intelligence artificielle.
+\begin{objectivebox}
+Cette phase CRISP-DM se concentre sur la collecte initiale des données, leur exploration et leur qualification pour comprendre la nature et la qualité des informations disponibles pour le projet Housy Tunisia.
+\end{objectivebox}
 
 \section{Collecte des Données Initiales}
-\label{sec:collecte_donnees}
 
-\subsection{Stratégie de Collecte}
-\label{subsec:strategie_collecte}
+\subsection{Sources de Données Identifiées}
 
-\subsubsection{Sources de Données Identifiées}
-
-Notre stratégie de collecte s'appuie sur une approche multi-sources pour garantir la représentativité et la qualité des données :
+Pour le projet Housy Tunisia, plusieurs sources de données ont été identifiées et exploitées :
 
 \begin{enumerate}
-    \item \textbf{Sources Primaires}
+    \item \textbf{Données de projets de construction :}
     \begin{itemize}
-        \item Partenariats avec agences immobilières tunisiennes
-        \item Collaborations avec notaires et experts immobiliers
-        \item Données de transactions récentes (2020-2025)
-        \item Enquêtes terrain dans les 24 gouvernorats
+        \item Historique des projets réalisés
+        \item Types de construction (villas, immeubles, bureaux)
+        \item Surfaces et caractéristiques techniques
+        \item Coûts réalisés et délais
     \end{itemize}
     
-    \item \textbf{Sources Secondaires}
+    \item \textbf{Données des matériaux de construction :}
     \begin{itemize}
-        \item Plateformes immobilières en ligne (Tunisie.com, Mytek.tn)
-        \item Données publiques (Institut National de la Statistique)
-        \item Archives de transactions immobilières
-        \item Études de marché sectorielles
+        \item Catalogues fournisseurs tunisiens
+        \item Prix des matériaux par région
+        \item Évolution historique des prix
+        \item Spécifications techniques
     \end{itemize}
     
-    \item \textbf{Sources Complémentaires}
+    \item \textbf{Données de main-d'œuvre :}
     \begin{itemize}
-        \item Données géographiques (OpenStreetMap, Google Maps)
-        \item Informations économiques régionales
-        \item Indices de développement par gouvernorat
-        \item Catalogues de matériaux de construction
+        \item Tarifs par corps de métier
+        \item Productivité moyenne par région
+        \item Disponibilité des compétences
+        \item Coûts sociaux et charges
+    \end{itemize}
+    
+    \item \textbf{Données réglementaires :}
+    \begin{itemize}
+        \item Normes de construction tunisiennes
+        \item Réglementations locales par gouvernorat
+        \item Procédures administratives
+        \item Taxes et frais applicables
     \end{itemize}
 \end{enumerate}
 
-\subsubsection{Méthodes de Collecte}
+\textbf{[CAPTURE À AJOUTER : Schéma des sources de données et leurs interconnexions]}
 
-\begin{table}[H]
+\section{Structure de la Base de Données}
+
+La base de données Housy Tunisia est organisée en 43 tables réparties en 6 domaines fonctionnels :
+
+\subsection{Domaine Gestion de Projets (10 tables)}
+
+\begin{itemize}
+    \item \texttt{users} : Utilisateurs du système
+    \item \texttt{projects} : Projets de construction
+    \item \texttt{tasks} : Tâches et activités
+    \item \texttt{resources} : Ressources allouées
+    \item \texttt{project\_phases} : Phases de réalisation
+    \item \texttt{project\_estimations} : Estimations de coûts
+\end{itemize}
+
+\textbf{[CAPTURE À AJOUTER : Diagramme ERD du domaine Gestion de Projets]}
+
+\subsection{Volume et Couverture des Données}
+
+\begin{table}[h]
 \centering
-\caption{Méthodes de Collecte par Type de Données}
-\begin{tabular}{|l|l|l|l|}
+\begin{tabular}{|l|c|c|l|}
 \hline
-\textbf{Type de Données} & \textbf{Méthode} & \textbf{Fréquence} & \textbf{Volume Cible} \\
+\textbf{Type de Données} & \textbf{Volume} & \textbf{Période} & \textbf{Source} \\
 \hline
-Propriétés immobilières & Web scraping + API & Hebdomadaire & 3000+ biens \\
+Projets de construction & 1,200+ entrées & 2020-2025 & Bases internes + partenaires \\
 \hline
-Prix de transactions & Partenariats & Mensuelle & 1000+ transactions \\
+Matériaux de construction & 800+ références & 2023-2025 & Catalogues fournisseurs \\
 \hline
-Caractéristiques techniques & Formulaires & Continue & 100\% complétude \\
+Prix main-d'œuvre & 50+ métiers & 2024-2025 & Enquêtes terrain \\
 \hline
-Données géographiques & API géolocalisation & Une fois & 24 gouvernorats \\
-\hline
-Matériaux construction & Catalogues & Trimestrielle & 1200+ références \\
+Données géographiques & 24 gouvernorats & Permanent & Données officielles \\
 \hline
 \end{tabular}
-\label{tab:methodes_collecte}
-\end{table}
-
-\subsection{Dataset Principal : Propriétés Immobilières}
-\label{subsec:dataset_principal}
-
-\subsubsection{Structure des Données}
-
-Le dataset principal contient les informations détaillées sur 3,247 propriétés immobilières tunisiennes :
-
-\begin{lstlisting}[language=JSON,caption=Structure Type d'une Propriété]
-{
-  "id": "unique_identifier",
-  "type": "appartement|villa|terrain|local_commercial",
-  "prix": 185000,
-  "superficie": 125,
-  "superficie_terrain": 200,
-  "chambres": 3,
-  "salles_bain": 2,
-  "gouvernorat": "Tunis",
-  "delegation": "La Manouba",
-  "ville": "Manouba",
-  "quartier": "Centre ville",
-  "adresse_complete": "Rue Habib Bourguiba, Manouba",
-  "coordonnees": {
-    "latitude": 36.8083,
-    "longitude": 10.0963
-  },
-  "etat": "neuf|bon|a_renover|a_demolir",
-  "annee_construction": 2020,
-  "etage": 2,
-  "ascenseur": true,
-  "parking": true,
-  "jardin": false,
-  "piscine": false,
-  "caracteristiques": [
-    "cuisine_equipee",
-    "climatisation",
-    "chauffage_central"
-  ],
-  "prix_par_m2": 1480,
-  "date_transaction": "2024-03-15",
-  "source": "agence_partenaire",
-  "validite": "verified"
-}
-\end{lstlisting}
-
-\subsubsection{Distribution Géographique}
-
-\begin{table}[H]
-\centering
-\caption{Répartition des Propriétés par Gouvernorat}
-\begin{tabular}{|l|r|r|l|r|r|}
-\hline
-\textbf{Gouvernorat} & \textbf{Nb Prop.} & \textbf{\%} & \textbf{Gouvernorat} & \textbf{Nb Prop.} & \textbf{\%} \\
-\hline
-Tunis & 486 & 15.0\% & Nabeul & 162 & 5.0\% \\
-\hline
-Ariana & 324 & 10.0\% & Monastir & 130 & 4.0\% \\
-\hline
-Ben Arous & 292 & 9.0\% & Bizerte & 129 & 4.0\% \\
-\hline
-Sfax & 259 & 8.0\% & Gabès & 97 & 3.0\% \\
-\hline
-Sousse & 227 & 7.0\% & Médenine & 97 & 3.0\% \\
-\hline
-Manouba & 195 & 6.0\% & Autres (14 gouv.) & 849 & 26.0\% \\
-\hline
-\end{tabular}
-\label{tab:repartition_gouvernorats}
-\end{table}
-
-\section{Description des Données}
-\label{sec:description_donnees}
-
-\subsection{Analyse Statistique Descriptive}
-\label{subsec:analyse_statistique}
-
-\subsubsection{Variables Numériques Principales}
-
-\begin{table}[H]
-\centering
-\caption{Statistiques Descriptives - Variables Numériques}
-\begin{tabular}{|l|r|r|r|r|r|}
-\hline
-\textbf{Variable} & \textbf{Moyenne} & \textbf{Médiane} & \textbf{Min} & \textbf{Max} & \textbf{Écart-type} \\
-\hline
-Prix (TND) & 185,420 & 165,000 & 45,000 & 850,000 & 89,340 \\
-\hline
-Superficie (m²) & 124.5 & 120 & 35 & 450 & 45.2 \\
-\hline
-Prix/m² (TND) & 1,489 & 1,375 & 800 & 3,200 & 435 \\
-\hline
-Chambres & 2.8 & 3 & 1 & 6 & 1.1 \\
-\hline
-Année construction & 2015 & 2018 & 1980 & 2025 & 8.5 \\
-\hline
-\end{tabular}
-\label{tab:stats_descriptives}
-\end{table}
-
-\subsubsection{Distribution des Types de Propriétés}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    ybar,
-    bar width=20pt,
-    xlabel=Type de Propriété,
-    ylabel=Nombre de Propriétés,
-    symbolic x coords={Appartement,Villa,Terrain,Local Commercial,Autre},
-    xtick=data,
-    x tick label style={rotate=45,anchor=east},
-    ymin=0,
-    ymax=2000,
-    grid=major,
-    width=12cm,
-    height=8cm
-]
-\addplot coordinates {
-    (Appartement,1623)
-    (Villa,973)
-    (Terrain,390)
-    (Local Commercial,162)
-    (Autre,99)
-};
-\end{axis}
-\end{tikzpicture}
-\caption{Distribution des Types de Propriétés}
-\label{fig:distribution_types}
-\end{figure}
-
-\subsection{Variables Catégorielles}
-\label{subsec:variables_categorielles}
-
-\subsubsection{État des Propriétés}
-
-\begin{table}[H]
-\centering
-\caption{Répartition par État de la Propriété}
-\begin{tabular}{|l|r|r|}
-\hline
-\textbf{État} & \textbf{Nombre} & \textbf{Pourcentage} \\
-\hline
-Neuf & 1,298 & 40.0\% \\
-\hline
-Bon état & 1,623 & 50.0\% \\
-\hline
-À rénover & 292 & 9.0\% \\
-\hline
-À démolir & 34 & 1.0\% \\
-\hline
-\textbf{Total} & \textbf{3,247} & \textbf{100.0\%} \\
-\hline
-\end{tabular}
-\label{tab:etat_proprietes}
-\end{table}
-
-\subsubsection{Caractéristiques Premium}
-
-\begin{table}[H]
-\centering
-\caption{Présence des Caractéristiques Premium}
-\begin{tabular}{|l|r|r|r|}
-\hline
-\textbf{Caractéristique} & \textbf{Présente} & \textbf{Pourcentage} & \textbf{Impact Prix} \\
-\hline
-Cuisine équipée & 2,273 & 70.0\% & +8\% \\
-\hline
-Climatisation & 1,948 & 60.0\% & +5\% \\
-\hline
-Parking & 1,623 & 50.0\% & +12\% \\
-\hline
-Ascenseur & 1,298 & 40.0\% & +15\% \\
-\hline
-Jardin & 973 & 30.0\% & +18\% \\
-\hline
-Piscine & 324 & 10.0\% & +25\% \\
-\hline
-\end{tabular}
-\label{tab:caracteristiques_premium}
+\caption{Volume et couverture des données collectées}
 \end{table}
 
 \section{Exploration des Données}
-\label{sec:exploration_donnees}
 
-\subsection{Analyse Univariée}
-\label{subsec:analyse_univariee}
+\subsection{Répartition des Projets par Type}
 
-\subsubsection{Distribution des Prix}
-
-L'analyse de la distribution des prix révèle une asymétrie positive typique du marché immobilier :
-
-\begin{figure}[H]
+\begin{table}[h]
 \centering
-\begin{tikzpicture}
-\begin{axis}[
-    xlabel=Prix (TND en milliers),
-    ylabel=Fréquence,
-    grid=major,
-    width=12cm,
-    height=8cm,
-    ybar interval,
-    xmin=40, xmax=500
-]
-\addplot[fill=blue!20] coordinates {
-    (50,245) (75,423) (100,651) (125,724) (150,589) 
-    (175,398) (200,287) (225,186) (250,123) (275,82) 
-    (300,56) (350,38) (400,21) (450,12) (500,8)
-};
-\end{axis}
-\end{tikzpicture}
-\caption{Distribution des Prix Immobiliers}
-\label{fig:distribution_prix}
-\end{figure}
-
-\textbf{Observations clés :}
-\begin{itemize}
-    \item Mode autour de 125,000 TND (segment populaire)
-    \item Queue longue vers les prix élevés (propriétés de luxe)
-    \item 80\% des propriétés entre 75,000 et 250,000 TND
-    \item Présence d'outliers au-delà de 500,000 TND
-\end{itemize}
-
-\subsubsection{Évolution Temporelle des Prix}
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    xlabel=Année,
-    ylabel=Prix moyen (TND),
-    grid=major,
-    width=12cm,
-    height=8cm,
-    legend pos=north west
-]
-\addplot[blue,mark=*] coordinates {
-    (2020,165000) (2021,172000) (2022,178000) (2023,183000) (2024,189000) (2025,195000)
-};
-\addlegendentry{Prix moyen}
-
-\addplot[red,mark=square] coordinates {
-    (2020,1250) (2021,1285) (2022,1320) (2023,1365) (2024,1420) (2025,1480)
-};
-\addlegendentry{Prix/m² moyen}
-\end{axis}
-\end{tikzpicture}
-\caption{Évolution des Prix Immobiliers 2020-2025}
-\label{fig:evolution_prix}
-\end{figure}
-
-\subsection{Analyse Bivariée}
-\label{subsec:analyse_bivariee}
-
-\subsubsection{Corrélation Prix vs Superficie}
-
-L'analyse de corrélation révèle une relation forte entre le prix et la superficie :
-
-\begin{figure}[H]
-\centering
-\begin{tikzpicture}
-\begin{axis}[
-    xlabel=Superficie (m²),
-    ylabel=Prix (TND en milliers),
-    grid=major,
-    width=12cm,
-    height=8cm,
-    only marks,
-    mark size=1pt
-]
-\addplot[blue] coordinates {
-    (45,65) (52,75) (65,95) (78,115) (85,125) (92,135) (105,155) (118,175)
-    (125,185) (135,205) (145,225) (158,245) (175,275) (195,315) (225,375)
-    (265,425) (315,525) (385,675) (450,825)
-};
-\addplot[red,thick] coordinates {(40,60) (460,840)};
-\end{axis}
-\end{tikzpicture}
-\caption{Corrélation Prix vs Superficie (r = 0.78)}
-\label{fig:correlation_prix_superficie}
-\end{figure}
-
-\subsubsection{Analyse par Gouvernorat}
-
-\begin{table}[H]
-\centering
-\caption{Prix Moyen par Gouvernorat (Top 10)}
-\begin{tabular}{|l|r|r|r|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Gouvernorat} & \textbf{Prix Moyen (TND)} & \textbf{Prix/m² Moyen} & \textbf{Nb Propriétés} \\
+\textbf{Type de Projet} & \textbf{Nombre} & \textbf{Pourcentage} & \textbf{Coût Moyen (TND)} \\
 \hline
-Tunis & 285,400 & 2,150 & 486 \\
+Villa Individuelle & 450 & 37.5\% & 125,000 \\
 \hline
-Ariana & 245,800 & 1,890 & 324 \\
+Immeuble Résidentiel & 320 & 26.7\% & 550,000 \\
 \hline
-Ben Arous & 198,500 & 1,620 & 292 \\
+Bureau Commercial & 280 & 23.3\% & 210,000 \\
 \hline
-Sousse & 189,200 & 1,580 & 227 \\
+Infrastructure & 150 & 12.5\% & 1,200,000 \\
 \hline
-Sfax & 175,600 & 1,450 & 259 \\
-\hline
-Nabeul & 168,900 & 1,380 & 162 \\
-\hline
-Manouba & 155,300 & 1,280 & 195 \\
-\hline
-Monastir & 152,800 & 1,260 & 130 \\
-\hline
-Bizerte & 142,100 & 1,180 & 129 \\
-\hline
-Gabès & 128,500 & 1,050 & 97 \\
+\textbf{Total} & \textbf{1,200} & \textbf{100\%} & \textbf{346,750} \\
 \hline
 \end{tabular}
-\label{tab:prix_par_gouvernorat}
+\caption{Distribution des projets par type dans la base de données}
 \end{table}
 
-\subsection{Analyse Multivariée}
-\label{subsec:analyse_multivariee}
+\textbf{[CAPTURE À AJOUTER : Graphique en secteurs de la répartition des projets]}
 
-\subsubsection{Matrice de Corrélation}
+\subsection{Analyse de la Qualité des Données}
 
-\begin{table}[H]
+\begin{table}[h]
 \centering
-\caption{Matrice de Corrélation des Variables Numériques}
-\begin{tabular}{|l|r|r|r|r|r|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-& \textbf{Prix} & \textbf{Superficie} & \textbf{Chambres} & \textbf{Année} & \textbf{Étage} \\
+\textbf{Champ} & \textbf{Complétude} & \textbf{Valeurs Manquantes} & \textbf{Qualité} \\
 \hline
-\textbf{Prix} & 1.00 & 0.78 & 0.65 & 0.42 & 0.23 \\
+Nom du projet & 100\% & 0 & Excellente \\
 \hline
-\textbf{Superficie} & 0.78 & 1.00 & 0.72 & 0.35 & 0.18 \\
+Surface totale & 98.5\% & 18 & Très bonne \\
 \hline
-\textbf{Chambres} & 0.65 & 0.72 & 1.00 & 0.28 & 0.15 \\
+Coût total & 96.2\% & 46 & Bonne \\
 \hline
-\textbf{Année} & 0.42 & 0.35 & 0.28 & 1.00 & 0.31 \\
-\hline
-\textbf{Étage} & 0.23 & 0.18 & 0.15 & 0.31 & 1.00 \\
+Date de fin & 92.1\% & 95 & Acceptable \\
 \hline
 \end{tabular}
-\label{tab:matrice_correlation}
+\caption{Analyse de complétude des données}
 \end{table}
 
-\subsubsection{Analyse des Facteurs d'Impact}
+\textbf{[CAPTURE À AJOUTER : Dashboard de qualité des données]}
 
-Nous avons identifié les facteurs ayant le plus d'impact sur le prix :
+\section{Types de Construction Tunisiens}
 
-\begin{enumerate}
-    \item \textbf{Superficie} (r = 0.78) : Facteur principal d'influence
-    \item \textbf{Nombre de chambres} (r = 0.65) : Indicateur de taille et confort
-    \item \textbf{Année de construction} (r = 0.42) : Modernité et état
-    \item \textbf{Gouvernorat} : Variation géographique importante
-    \item \textbf{Caractéristiques premium} : Impact cumulatif significatif
-\end{enumerate}
-
-\section{Qualité des Données}
-\label{sec:qualite_donnees}
-
-\subsection{Évaluation de la Complétude}
-\label{subsec:evaluation_completude}
-
-\subsubsection{Taux de Remplissage par Variable}
-
-\begin{table}[H]
-\centering
-\caption{Complétude des Données par Variable}
-\begin{tabular}{|l|r|r|l|}
-\hline
-\textbf{Variable} & \textbf{Valeurs Remplies} & \textbf{Taux} & \textbf{Qualité} \\
-\hline
-Prix & 3,247 & 100.0\% & Excellente \\
-\hline
-Superficie & 3,247 & 100.0\% & Excellente \\
-\hline
-Type propriété & 3,247 & 100.0\% & Excellente \\
-\hline
-Gouvernorat & 3,247 & 100.0\% & Excellente \\
-\hline
-Coordonnées GPS & 3,247 & 100.0\% & Excellente \\
-\hline
-Chambres & 3,182 & 98.0\% & Très bonne \\
-\hline
-Année construction & 3,117 & 96.0\% & Très bonne \\
-\hline
-État propriété & 3,085 & 95.0\% & Très bonne \\
-\hline
-Étage & 2,922 & 90.0\% & Bonne \\
-\hline
-Caractéristiques & 2,760 & 85.0\% & Acceptable \\
-\hline
-\end{tabular}
-\label{tab:completude_donnees}
-\end{table}
-
-\subsection{Détection des Anomalies}
-\label{subsec:detection_anomalies}
-
-\subsubsection{Outliers Identifiés}
-
-L'analyse statistique a permis d'identifier plusieurs types d'anomalies :
-
-\begin{table}[H]
-\centering
-\caption{Anomalies Détectées et Traitées}
-\begin{tabular}{|l|r|l|l|}
-\hline
-\textbf{Type d'Anomalie} & \textbf{Nb Cas} & \textbf{Critère} & \textbf{Action} \\
-\hline
-Prix aberrants & 89 & Prix < 30k ou > 1M TND & Suppression \\
-\hline
-Superficie impossible & 45 & Surf < 20m² ou > 1000m² & Vérification \\
-\hline
-Prix/m² extrême & 67 & <500 ou >5000 TND/m² & Investigation \\
-\hline
-Coordonnées GPS invalides & 23 & Hors territoire tunisien & Correction \\
-\hline
-Dates incohérentes & 34 & Année > 2025 ou < 1900 & Correction \\
-\hline
-\textbf{Total traité} & \textbf{258} & \textbf{8.0\% du dataset} & \\
-\hline
-\end{tabular}
-\label{tab:anomalies_detectees}
-\end{table}
-
-\subsubsection{Méthodes de Détection}
-
-\begin{enumerate}
-    \item \textbf{Analyse statistique} : IQR, Z-score, percentiles
-    \item \textbf{Règles métier} : Contraintes logiques immobilières
-    \item \textbf{Validation géographique} : Vérification coordonnées GPS
-    \item \textbf{Cohérence temporelle} : Validation des dates
-    \item \textbf{Validation croisée} : Comparaison avec sources externes
-\end{enumerate}
-
-\section{Données Complémentaires}
-\label{sec:donnees_complementaires}
-
-\subsection{Catalogue des Matériaux de Construction}
-\label{subsec:catalogue_materiaux}
-
-\subsubsection{Structure du Catalogue}
-
-Notre base de données inclut un catalogue complet de 1,200 références de matériaux :
-
-\begin{lstlisting}[language=JSON,caption=Structure d'une Référence Matériau]
-{
-  "id": "MAT_001",
-  "nom": "Carrelage sol 60x60 cm",
-  "categorie": "Revêtements",
-  "sous_categorie": "Carrelage",
-  "unite": "m²",
-  "prix_unitaire": 45.50,
-  "qualite": "standard|premium|luxe",
-  "fournisseur": "Ceramica Tunisia",
-  "disponibilite_gouvernorats": ["Tunis", "Ariana", "Ben Arous"],
-  "coefficient_regional": {
-    "Tunis": 1.0,
-    "Sfax": 0.95,
-    "Sousse": 0.98,
-    "Autres": 0.90
-  },
-  "derniere_mise_a_jour": "2024-12-01"
-}
-\end{lstlisting}
-
-\subsubsection{Répartition par Catégories}
-
-\begin{table}[H]
-\centering
-\caption{Répartition du Catalogue Matériaux}
-\begin{tabular}{|l|r|r|r|}
-\hline
-\textbf{Catégorie} & \textbf{Nb Références} & \textbf{Pourcentage} & \textbf{Prix Moyen (TND)} \\
-\hline
-Gros œuvre & 245 & 20.4\% & 125.80 \\
-\hline
-Revêtements & 198 & 16.5\% & 58.90 \\
-\hline
-Menuiserie & 167 & 13.9\% & 185.40 \\
-\hline
-Plomberie & 143 & 11.9\% & 95.60 \\
-\hline
-Électricité & 128 & 10.7\% & 75.30 \\
-\hline
-Peinture & 115 & 9.6\% & 45.20 \\
-\hline
-Isolation & 98 & 8.2\% & 85.70 \\
-\hline
-Autres & 106 & 8.8\% & 112.50 \\
-\hline
-\textbf{Total} & \textbf{1,200} & \textbf{100.0\%} & \textbf{98.55} \\
-\hline
-\end{tabular}
-\label{tab:catalogue_materiaux}
-\end{table}
-
-\subsection{Données Géographiques et Économiques}
-\label{subsec:donnees_geo_eco}
-
-\subsubsection{Indices de Développement Régional}
-
-\begin{table}[H]
-\centering
-\caption{Indices de Développement par Gouvernorat}
-\begin{tabular}{|l|r|r|r|r|}
-\hline
-\textbf{Gouvernorat} & \textbf{IDH} & \textbf{PIB/hab} & \textbf{Urbanisation} & \textbf{Coefficient Marché} \\
-\hline
-Tunis & 0.85 & 15,800 & 95\% & 1.25 \\
-\hline
-Ariana & 0.82 & 13,200 & 88\% & 1.15 \\
-\hline
-Ben Arous & 0.79 & 11,500 & 82\% & 1.08 \\
-\hline
-Sousse & 0.76 & 10,200 & 75\% & 1.05 \\
-\hline
-Sfax & 0.74 & 9,800 & 68\% & 1.02 \\
-\hline
-Nabeul & 0.71 & 8,900 & 65\% & 0.98 \\
-\hline
-Monastir & 0.69 & 8,500 & 62\% & 0.95 \\
-\hline
-Bizerte & 0.67 & 7,800 & 58\% & 0.92 \\
-\hline
-Moyenne nationale & 0.65 & 7,200 & 55\% & 0.88 \\
-\hline
-\end{tabular}
-\label{tab:indices_developpement}
-\end{table}
-
-\section{Insights Préliminaires}
-\label{sec:insights_preliminaires}
-
-\subsection{Découvertes Clés}
-\label{subsec:decouvertes_cles}
-
-\subsubsection{Patterns de Prix Identifiés}
-
-L'exploration des données a révélé plusieurs patterns significatifs :
-
-\begin{enumerate}
-    \item \textbf{Gradient géographique} : Prix décroissant du Nord (Tunis) vers le Sud
-    \item \textbf{Prime urbaine} : +30\% en moyenne pour les zones urbaines
-    \item \textbf{Effet taille} : Économies d'échelle inversées (prix/m² croissant)
-    \item \textbf{Impact modernité} : +2\% par année de construction récente
-    \item \textbf{Caractéristiques premium} : Impact cumulatif jusqu'à +50\%
-\end{enumerate}
-
-\subsubsection{Segmentation du Marché}
-
-\begin{table}[H]
-\centering
-\caption{Segmentation du Marché Immobilier Tunisien}
-\begin{tabular}{|l|l|r|r|r|}
-\hline
-\textbf{Segment} & \textbf{Critères} & \textbf{Prix Moyen} & \textbf{Part Marché} & \textbf{Nb Propriétés} \\
-\hline
-Économique & Prix < 120k TND & 95,500 & 35\% & 1,136 \\
-\hline
-Moyen & 120k-250k TND & 185,000 & 45\% & 1,461 \\
-\hline
-Moyen-supérieur & 250k-400k TND & 315,800 & 15\% & 487 \\
-\hline
-Luxe & Prix > 400k TND & 565,200 & 5\% & 163 \\
-\hline
-\end{tabular}
-\label{tab:segmentation_marche}
-\end{table}
-
-\subsection{Implications pour la Modélisation}
-\label{subsec:implications_modelisation}
-
-\subsubsection{Features Prioritaires}
-
-Basé sur notre analyse, nous avons identifié les features les plus importantes pour la modélisation :
-
-\begin{enumerate}
-    \item \textbf{Features géographiques} (Impact élevé)
-    \begin{itemize}
-        \item Gouvernorat, délégation, ville
-        \item Coordonnées GPS précises
-        \item Indice de développement régional
-        \item Distance centres d'intérêt
-    \end{itemize}
-    
-    \item \textbf{Features structurelles} (Impact élevé)
-    \begin{itemize}
-        \item Superficie totale et habitable
-        \item Nombre de chambres et salles de bain
-        \item Type de propriété
-        \item Étage et présence ascenseur
-    \end{itemize}
-    
-    \item \textbf{Features qualitatives} (Impact moyen)
-    \begin{itemize}
-        \item État de la propriété
-        \item Année de construction
-        \item Caractéristiques premium
-        \item Orientation et vue
-    \end{itemize}
-    
-    \item \textbf{Features contextuelles} (Impact faible-moyen)
-    \begin{itemize}
-        \item Tendance du marché local
-        \item Saisonnalité
-        \item Indices économiques régionaux
-    \end{itemize}
-\end{enumerate}
-
-\subsubsection{Défis de Modélisation Identifiés}
+\subsection{Spécificités Locales}
 
 \begin{itemize}
-    \item \textbf{Hétérogénéité régionale} : Modèles différenciés par zone
-    \item \textbf{Données manquantes} : Stratégies d'imputation nécessaires
-    \item \textbf{Outliers} : Traitement spécial pour le segment luxe
-    \item \textbf{Évolution temporelle} : Mise à jour régulière des modèles
-    \item \textbf{Features engineering} : Création de variables dérivées
+    \item \textbf{Villa traditionnelle :} Architecture arabo-andalouse
+    \item \textbf{Villa moderne :} Design contemporain
+    \item \textbf{Immeuble R+4 :} Standard urbain tunisien
+    \item \textbf{Logement social :} Programmes gouvernementaux
 \end{itemize}
 
-\section{Recommandations pour la Préparation des Données}
-\label{sec:recommandations_preparation}
+\textbf{[CAPTURE À AJOUTER : Galerie des types de construction tunisiens]}
 
-\subsection{Actions Prioritaires}
-\label{subsec:actions_prioritaires}
-
-Basé sur notre analyse de la qualité des données, nous recommandons :
-
-\begin{enumerate}
-    \item \textbf{Nettoyage avancé}
-    \begin{itemize}
-        \item Suppression définitive des 89 outliers prix
-        \item Correction des 23 coordonnées GPS invalides
-        \item Imputation intelligente des 162 valeurs manquantes critiques
-    \end{itemize}
-    
-    \item \textbf{Enrichissement}
-    \begin{itemize}
-        \item Géocodage précis des adresses incomplètes
-        \item Calcul des distances aux points d'intérêt
-        \item Intégration des indices de développement
-        \item Création de features temporelles
-    \end{itemize}
-    
-    \item \textbf{Validation}
-    \begin{itemize}
-        \item Contrôle qualité par échantillonnage
-        \item Validation croisée avec experts immobiliers
-        \item Tests de cohérence inter-variables
-        \item Documentation des transformations
-    \end{itemize}
-\end{enumerate}
-
-\subsection{Stratégie de Features Engineering}
-\label{subsec:strategie_features}
-
-\subsubsection{Features Dérivées à Créer}
-
-\begin{table}[H]
-\centering
-\caption{Features Engineering Planifiées}
-\begin{tabular}{|l|l|l|}
-\hline
-\textbf{Feature} & \textbf{Calcul} & \textbf{Justification} \\
-\hline
-Prix/m² & Prix ÷ Superficie & Normalisation taille \\
-\hline
-Âge propriété & 2025 - Année construction & Impact dépréciation \\
-\hline
-Densité chambres & Chambres ÷ Superficie & Optimisation espace \\
-\hline
-Score luxe & Somme caractéristiques premium & Indicateur standing \\
-\hline
-Distance centre & GPS → Distance ville principale & Accessibilité \\
-\hline
-Indice quartier & Moyenne prix zone & Effet localisation \\
-\hline
-Tendance locale & Évolution prix 12 mois & Dynamique marché \\
-\hline
-\end{tabular}
-\label{tab:features_engineering}
-\end{table}
-
-\section{Conclusion de la Phase Data Understanding}
-\label{sec:conclusion_du}
-
-\subsection{Synthèse des Acquis}
-\label{subsec:synthese_acquis_du}
-
-La phase de Compréhension des Données nous a permis d'établir une base solide pour notre projet :
-
-\begin{itemize}
-    \item \textbf{Dataset de qualité} : 3,247 propriétés avec 95\% de complétude
-    \item \textbf{Couverture exhaustive} : 24 gouvernorats représentés
-    \item \textbf{Patterns identifiés} : Relations clés prix-caractéristiques établies
-    \item \textbf{Anomalies traitées} : 8\% d'outliers détectés et corrigés
-    \item \textbf{Features prioritaires} : Variables d'impact identifiées
-    \item \textbf{Insights business} : Segmentation marché validée
-\end{itemize}
-
-\subsection{Préparatifs pour Data Preparation}
-\label{subsec:preparatifs_data_prep}
-
-Cette analyse nous prépare optimalement pour la phase suivante :
-
-\begin{description}
-    \item[Plan de nettoyage] Actions précises définies pour chaque type d'anomalie
-    \item[Stratégie d'enrichissement] Features engineering planifiées et documentées
-    \item[Méthodes validation] Processus de contrôle qualité établis
-    \item[Segmentation données] Approche différenciée par segment de marché
-    \item[Baseline performance] Métriques de référence pour évaluation des modèles
-\end{description}
-
-Cette transition marque le passage de l'exploration à la transformation, avec une roadmap claire pour optimiser nos données en vue de la modélisation IA.
+\begin{resultbox}
+Cette phase d'exploration des données a permis de comprendre la structure, la qualité et les caractéristiques des données disponibles. La base constituée de 43 tables et plus de 1,200 projets de référence offre une foundation solide pour les phases suivantes.
+\end{resultbox}

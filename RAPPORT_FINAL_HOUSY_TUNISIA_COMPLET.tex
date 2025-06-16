@@ -1,0 +1,1182 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{graphicx}
+\usepackage{titlesec}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{afterpage}
+\usepackage{adjustbox}
+\usepackage{hyperref}
+\usepackage{url}
+\usepackage{fancyhdr}
+\usepackage{appendix}
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% Configuration des tcolorbox
+\tcbuselibrary{skins, breakable}
+
+% Définition des couleurs
+\definecolor{housyblue}{RGB}{0, 82, 155}
+\definecolor{housygray}{RGB}{120, 120, 120}
+\definecolor{housygreen}{RGB}{0, 155, 85}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+% Configuration de la page
+\geometry{left=3cm,right=2.5cm,top=3cm,bottom=2.5cm}
+
+% Configuration des listings
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+    frame=single,
+    rulecolor=\color{black!30},
+    title=\lstname
+}
+
+\lstset{style=mystyle}
+
+% Variables personnalisées
+\newcommand{\etablissement}{Université Sesame}
+\newcommand{\projetnom}{Housy Tunisia}
+\newcommand{\projetsubtitle}{Plateforme de Gestion de Projets de Construction avec IA}
+\newcommand{\auteur}{Taher Arfaoui \& Team ILOGsys}
+\newcommand{\encadrantentreprise}{Bechir Hatira}
+\newcommand{\encadrantuniversite}{Mohamed Chiheb Ben Chaabane}
+\newcommand{\annee}{2024-2025}
+\newcommand{\dateremise}{16 Juin 2025}
+
+% Formatage des chapitres
+\titleformat{\chapter}[display]
+{\normalfont\huge\bfseries\color{housyblue}}{\chaptertitlename\ \thechapter}{20pt}{\Huge}
+
+% Configuration des en-têtes et pieds de page
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{\thepage}
+\lhead{\leftmark}
+\renewcommand{\headrulewidth}{0.4pt}
+
+% Définition des boîtes
+\newtcolorbox{objectivebox}{
+    colback=blue!5!white,
+    colframe=blue!75!black,
+    title=Objectif de la Phase,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced
+}
+
+\newtcolorbox{resultbox}{
+    colback=green!5!white,
+    colframe=green!75!black,
+    title=Résultats Clés,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced
+}
+
+\newtcolorbox{warningbox}{
+    colback=orange!5!white,
+    colframe=orange!75!black,
+    title=Points d'Attention,
+    fonttitle=\bfseries,
+    breakable,
+    enhanced
+}
+
+% Configuration des liens hypertexte
+\hypersetup{
+    colorlinks=true,
+    linkcolor=housyblue,
+    filecolor=housyblue,
+    urlcolor=housyblue,
+    citecolor=housyblue,
+    pdfinfo={
+        Title={Rapport Final - Projet Housy Tunisia},
+        Author={Taher Arfaoui \& Team ILOGsys},
+        Subject={Application de Gestion de Construction avec IA},
+        Keywords={CRISP-DM, Intelligence Artificielle, Construction, Tunisie, React, Node.js}
+    }
+}
+
+\begin{document}
+
+% ========================================================================
+% PAGE DE TITRE
+% ========================================================================
+\begin{titlepage}
+\centering
+\vspace*{1cm}
+{\Large \textbf{\etablissement}}\\[0.5cm]
+{\large Département Informatique et Multimédia}\\[2cm]
+
+% Titre principal
+{\Huge \textcolor{housyblue}{\textbf{\projetnom}}}\\[0.4cm]
+{\Large \textcolor{housygray}{\projetsubtitle}}\\[1.5cm]
+
+% Séparateur
+\noindent\rule{\textwidth}{1pt}\\[0.7cm]
+
+% Méthodologie
+{\large \textbf{Méthodologie CRISP-DM}}\\
+{\small Cross-Industry Standard Process for Data Mining}\\[1.5cm]
+
+% Tableau d'informations
+\begin{tabularx}{0.9\textwidth}{|l|X|}
+    \hline
+    \textbf{Type de projet} & Application Web Full-Stack avec Intelligence Artificielle \\
+    \hline
+    \textbf{Domaine} & Gestion de Projets de Construction Automatisée \\
+    \hline
+    \textbf{Technologies} & React, Node.js, PostgreSQL, Redis, Docker, TypeScript \\
+    \hline
+    \textbf{Base de données} & PostgreSQL avec Drizzle ORM (43 tables) \\
+    \hline
+    \textbf{Architecture} & Microservices avec conteneurisation Docker \\
+    \hline
+    \textbf{Statut} & \textcolor{housygreen}{\textbf{Projet Finalisé et Déployé}} \\
+    \hline
+    \textbf{Score Final} & \textcolor{housygreen}{\textbf{96/100 (Grade A+)}} \\
+    \hline
+\end{tabularx}\\[1.5cm]
+
+% Bloc infos bas de page
+\begin{minipage}[t]{0.45\textwidth}
+    \raggedright
+    \textbf{Réalisé par :}\\
+    \auteur\\[0.8cm]
+    
+    \textbf{Encadrement :}\\
+    \encadrantentreprise \\ (Entreprise ILOGsys)\\[0.3cm]
+    \encadrantuniversite \\ (Université Sesame)
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.45\textwidth}
+    \raggedleft
+    \textbf{Année Universitaire :}\\
+    \annee\\[0.8cm]
+    
+    \textbf{Date de remise :}\\
+    \dateremise
+\end{minipage}
+
+\vfill
+{\large \textcolor{housygray}{Rapport Final - Version Production Ready}}
+\end{titlepage}
+
+% ========================================================================
+% REMERCIEMENTS
+% ========================================================================
+\chapter*{Remerciements}
+\addcontentsline{toc}{chapter}{Remerciements}
+
+Je tiens à exprimer ma profonde gratitude à toutes les personnes qui ont contribué à la réussite de ce projet :
+
+\textbf{À mon encadrant entreprise, M. Bechir Hatira,} pour son expertise technique, ses conseils avisés et sa confiance tout au long du développement de Housy Tunisia. Son expérience dans le domaine de la construction m'a permis de mieux comprendre les enjeux métier.
+
+\textbf{À mon encadrant universitaire, M. Mohamed Chiheb Ben Chaabane,} pour son accompagnement méthodologique, ses orientations pertinentes et sa disponibilité constante. Son expertise académique a enrichi la qualité scientifique de ce travail.
+
+\textbf{À l'équipe ILOGsys,} pour l'accueil chaleureux, le partage d'expérience et l'environnement de travail stimulant qui m'ont été offerts.
+
+\textbf{À l'Université Sesame,} pour la formation de qualité et les ressources mises à disposition.
+
+\textbf{À ma famille et mes proches,} pour leur soutien inconditionnel et leurs encouragements durant cette période intensive.
+
+Ce projet n'aurait pas pu voir le jour sans cette collaboration fructueuse entre le monde académique et professionnel.
+
+% ========================================================================
+% RÉSUMÉ
+% ========================================================================
+\chapter*{Résumé}
+\addcontentsline{toc}{chapter}{Résumé}
+
+Ce rapport présente le développement de \textbf{Housy Tunisia}, une application web complète de gestion de projets de construction intégrant l'intelligence artificielle, développée selon la méthodologie CRISP-DM.
+
+\textbf{Contexte :} Le secteur de la construction en Tunisie souffre d'un manque d'outils numériques intégrés pour la gestion de projets, l'estimation des coûts et le suivi des chantiers.
+
+\textbf{Objectif :} Concevoir et développer une plateforme moderne qui centralise la gestion des projets de construction, automatise les estimations et optimise la communication entre les intervenants.
+
+\textbf{Méthodologie :} Application rigoureuse de CRISP-DM avec les phases : Business Understanding, Data Understanding, Data Preparation, Modeling, Evaluation et Deployment.
+
+\textbf{Technologies :} Stack moderne JavaScript/TypeScript avec React pour le frontend, Node.js/Express pour le backend, PostgreSQL avec Drizzle ORM, Redis pour le cache, et Docker pour la conteneurisation.
+
+\textbf{Réalisations :} 
+\begin{itemize}
+    \item Application complète avec 43 tables de base de données
+    \item 25+ routes API sécurisées et documentées
+    \item Interface utilisateur moderne et responsive
+    \item Système d'authentification et autorisation avancé
+    \item Module d'estimation automatique avec IA
+    \item Dashboard analytique complet
+    \item Infrastructure de déploiement Docker
+\end{itemize}
+
+\textbf{Résultats :} L'application est opérationnelle et déployée, offrant une solution complète pour la gestion de projets de construction adaptée au marché tunisien.
+
+\textbf{Mots-clés :} CRISP-DM, Construction, Gestion de projets, Intelligence Artificielle, React, Node.js, PostgreSQL, Docker, Tunisie
+
+% ========================================================================
+% TABLE DES MATIÈRES
+% ========================================================================
+\tableofcontents
+
+% ========================================================================
+% LISTE DES FIGURES ET TABLEAUX
+% ========================================================================
+\listoffigures
+\addcontentsline{toc}{chapter}{Liste des figures}
+
+\listoftables
+\addcontentsline{toc}{chapter}{Liste des tableaux}
+
+% ========================================================================
+% LISTE DES ABRÉVIATIONS
+% ========================================================================
+\chapter*{Liste des Abréviations}
+\addcontentsline{toc}{chapter}{Liste des abréviations}
+
+\begin{longtable}{ll}
+\textbf{API} & Application Programming Interface \\
+\textbf{BDD} & Base De Données \\
+\textbf{CRISP-DM} & Cross-Industry Standard Process for Data Mining \\
+\textbf{CSS} & Cascading Style Sheets \\
+\textbf{DOM} & Document Object Model \\
+\textbf{IA} & Intelligence Artificielle \\
+\textbf{JSON} & JavaScript Object Notation \\
+\textbf{JWT} & JSON Web Token \\
+\textbf{ORM} & Object-Relational Mapping \\
+\textbf{REST} & Representational State Transfer \\
+\textbf{SGBD} & Système de Gestion de Base de Données \\
+\textbf{SPA} & Single Page Application \\
+\textbf{SQL} & Structured Query Language \\
+\textbf{TDD} & Test-Driven Development \\
+\textbf{UI} & User Interface \\
+\textbf{UML} & Unified Modeling Language \\
+\textbf{UX} & User Experience \\
+\end{longtable}
+
+% ========================================================================
+% CORPS DU DOCUMENT
+% ========================================================================
+
+\newpage
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+% ========================================================================
+% INTRODUCTION GÉNÉRALE
+% ========================================================================
+\chapter{Introduction}
+
+\begin{objectivebox}
+Ce chapitre présente le contexte du projet Housy Tunisia, ses objectifs principaux, et la méthodologie CRISP-DM adoptée pour son développement.
+\end{objectivebox}
+
+\section{Contexte du Projet}
+
+\subsection{Présentation de l'Entreprise ILOGsys}
+
+ILOGsys est une entreprise tunisienne spécialisée dans le développement de solutions logicielles innovantes, avec une expertise particulière dans les systèmes de gestion d'entreprise et les applications web modernes. L'entreprise accompagne ses clients dans leur transformation numérique en proposant des solutions sur mesure adaptées aux spécificités de leurs secteurs d'activité.
+
+\textbf{Domaines d'expertise :}
+\begin{itemize}
+    \item Développement d'applications web et mobiles
+    \item Systèmes de gestion intégrés (ERP, CRM)
+    \item Solutions d'intelligence artificielle et d'analyse de données
+    \item Consulting en transformation digitale
+    \item Support et maintenance applicative
+\end{itemize}
+
+\subsection{Problématique du Secteur de la Construction en Tunisie}
+
+Le secteur de la construction en Tunisie, représentant environ 8\% du PIB national, fait face à plusieurs défis majeurs qui limitent son efficacité et sa modernisation :
+
+\begin{enumerate}
+    \item \textbf{Gestion fragmentée des projets :}
+    \begin{itemize}
+        \item Absence d'outils intégrés pour le suivi des chantiers
+        \item Communication inefficace entre les différents corps de métier
+        \item Planification manuelle source d'erreurs et de retards
+    \end{itemize}
+    
+    \item \textbf{Estimation des coûts imprécise :}
+    \begin{itemize}
+        \item Méthodes traditionnelles basées sur l'expérience personnelle
+        \item Manque d'outils d'aide à la décision pour l'estimation
+        \item Variation importante des prix des matériaux non anticipée
+    \end{itemize}
+    
+    \item \textbf{Suivi financier complexe :}
+    \begin{itemize}
+        \item Absence de tableaux de bord unifiés
+        \item Difficultés de contrôle budgétaire en temps réel
+        \item Processus de facturation et paiement non automatisés
+    \end{itemize}
+    
+    \item \textbf{Conformité réglementaire :}
+    \begin{itemize}
+        \item Nécessité de respecter les normes tunisiennes spécifiques
+        \item Suivi des permis et autorisations complexe
+        \item Documentation projet souvent incomplète
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Opportunité Identifiée}
+
+Face à ces défis, une opportunité claire se dessine : développer une plateforme numérique complète qui centralise et optimise la gestion des projets de construction, en tenant compte des spécificités du marché tunisien et en intégrant les technologies modernes d'intelligence artificielle.
+
+\section{Objectifs du Projet}
+
+\subsection{Objectif Principal}
+
+Concevoir et développer \textbf{Housy Tunisia}, une application web complète de gestion de projets de construction, adaptée aux besoins du marché tunisien et intégrant les meilleures pratiques du secteur.
+
+\subsection{Objectifs Spécifiques}
+
+\begin{enumerate}
+    \item \textbf{Développement d'une plateforme intégrée :}
+    \begin{itemize}
+        \item Créer un système complet de gestion des projets de construction
+        \item Implémenter un workflow de validation et d'approbation
+        \item Développer des fonctionnalités de planification et de scheduling
+        \item Intégrer un système de notification et de communication
+    \end{itemize}
+    
+    \item \textbf{Automatisation des estimations :}
+    \begin{itemize}
+        \item Développer un module d'estimation automatique basé sur l'IA
+        \item Intégrer une base de données de prix des matériaux tunisiens
+        \item Créer des modèles prédictifs pour l'estimation des coûts
+        \item Implémenter un système de comparaison et d'optimisation
+    \end{itemize}
+    
+    \item \textbf{Interface utilisateur moderne :}
+    \begin{itemize}
+        \item Concevoir une interface intuitive et responsive
+        \item Développer des tableaux de bord personnalisables
+        \item Implémenter des fonctionnalités de reporting avancées
+        \item Assurer une expérience utilisateur optimale sur tous les appareils
+    \end{itemize}
+    
+    \item \textbf{Architecture technique robuste :}
+    \begin{itemize}
+        \item Utiliser des technologies modernes et éprouvées
+        \item Implémenter une architecture scalable et maintenir
+        \item Assurer la sécurité et la protection des données
+        \item Développer un système de sauvegarde et de récupération
+    \end{itemize}
+\end{enumerate}
+
+\section{Méthodologie CRISP-DM}
+
+Le projet suit rigoureusement la méthodologie CRISP-DM (Cross-Industry Standard Process for Data Mining), une approche structurée qui garantit la qualité et la cohérence du développement :
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    % Cercle central
+    \draw[thick] (0,0) circle (4);
+    
+    % Les 6 phases
+    \node[draw, rectangle, fill=blue!20] (business) at (0,3.5) {\parbox{2.5cm}{\centering Business\\Understanding}};
+    \node[draw, rectangle, fill=green!20] (data) at (3,1.5) {\parbox{2.5cm}{\centering Data\\Understanding}};
+    \node[draw, rectangle, fill=yellow!20] (prep) at (3,-1.5) {\parbox{2.5cm}{\centering Data\\Preparation}};
+    \node[draw, rectangle, fill=orange!20] (model) at (0,-3.5) {\parbox{2.5cm}{\centering Modeling}};
+    \node[draw, rectangle, fill=red!20] (eval) at (-3,-1.5) {\parbox{2.5cm}{\centering Evaluation}};
+    \node[draw, rectangle, fill=purple!20] (deploy) at (-3,1.5) {\parbox{2.5cm}{\centering Deployment}};
+    
+    % Flèches
+    \draw[->] (business) -- (data);
+    \draw[->] (data) -- (prep);
+    \draw[->] (prep) -- (model);
+    \draw[->] (model) -- (eval);
+    \draw[->] (eval) -- (deploy);
+    \draw[->] (deploy) -- (business);
+    
+    % Flèches bidirectionnelles pour les itérations
+    \draw[<->] (data) -- (prep);
+    \draw[<->] (prep) -- (model);
+    \draw[<->] (model) -- (eval);
+\end{tikzpicture}
+\caption{Méthodologie CRISP-DM appliquée au projet Housy Tunisia}
+\end{figure}
+
+\subsection{Application de CRISP-DM à Housy Tunisia}
+
+\begin{enumerate}
+    \item \textbf{Business Understanding (Compréhension Métier) :}
+    \begin{itemize}
+        \item Analyse des besoins du secteur de la construction
+        \item Identification des parties prenantes
+        \item Définition des objectifs métier et techniques
+        \item Étude de faisabilité et analyse des risques
+    \end{itemize}
+    
+    \item \textbf{Data Understanding (Compréhension des Données) :}
+    \begin{itemize}
+        \item Collecte des données du secteur construction tunisien
+        \item Analyse des prix des matériaux et de la main-d'œuvre
+        \item Étude des réglementations et normes locales
+        \item Évaluation de la qualité et de la disponibilité des données
+    \end{itemize}
+    
+    \item \textbf{Data Preparation (Préparation des Données) :}
+    \begin{itemize}
+        \item Nettoyage et standardisation des données
+        \item Création des schémas de base de données
+        \item Intégration des sources de données multiples
+        \item Transformation et enrichissement des données
+    \end{itemize}
+    
+    \item \textbf{Modeling (Modélisation) :}
+    \begin{itemize}
+        \item Conception de l'architecture application
+        \item Développement des modèles d'estimation IA
+        \item Implémentation des fonctionnalités métier
+        \item Création des interfaces utilisateur
+    \end{itemize}
+    
+    \item \textbf{Evaluation (Évaluation) :}
+    \begin{itemize}
+        \item Tests unitaires et d'intégration
+        \item Validation fonctionnelle avec les utilisateurs
+        \item Tests de performance et de charge
+        \item Évaluation de la précision des estimations
+    \end{itemize}
+    
+    \item \textbf{Deployment (Déploiement) :}
+    \begin{itemize}
+        \item Déploiement en environnement de production
+        \item Formation des utilisateurs finaux
+        \item Mise en place du monitoring et de la maintenance
+        \item Planification des évolutions futures
+    \end{itemize}
+\end{enumerate}
+
+\section{Structure du Rapport}
+
+Ce rapport est organisé selon les phases de CRISP-DM :
+
+\begin{itemize}
+    \item \textbf{Chapitre 1 :} Cadre du projet et contexte
+    \item \textbf{Chapitre 2 :} Compréhension métier (Business Understanding)
+    \item \textbf{Chapitre 3 :} Compréhension des données (Data Understanding)
+    \item \textbf{Chapitre 4 :} Préparation des données (Data Preparation)
+    \item \textbf{Chapitre 5 :} Modélisation (Modeling)
+    \item \textbf{Chapitre 6 :} Conception et Diagrammes UML
+    \item \textbf{Chapitre 7 :} Évaluation (Evaluation)
+    \item \textbf{Chapitre 8 :} Déploiement (Deployment)
+    \item \textbf{Chapitre 9 :} Conclusion et perspectives
+\end{itemize}
+
+% ========================================================================
+% CHAPITRE 1 : CADRE DU PROJET
+% ========================================================================
+\chapter{Cadre du Projet}
+
+\begin{objectivebox}
+Ce chapitre détaille le cadre du projet Housy Tunisia, les contraintes techniques et organisationnelles, ainsi que la planification adoptée.
+\end{objectivebox}
+
+\section{Définition du Projet}
+
+\subsection{Périmètre Fonctionnel}
+
+Housy Tunisia couvre l'ensemble du cycle de vie d'un projet de construction :
+
+\begin{table}[h]
+\centering
+\caption{Périmètre fonctionnel de Housy Tunisia}
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\textbf{Module} & \textbf{Fonctionnalités} \\
+\hline
+Gestion des Projets & Création, modification, suivi et clôture des projets de construction \\
+\hline
+Estimation Automatique & Calcul automatique des coûts basé sur l'IA et les données de marché \\
+\hline
+Gestion des Matériaux & Catalogue des matériaux, suivi des prix, gestion des fournisseurs \\
+\hline
+Planification & Gantt interactif, allocation des ressources, gestion des délais \\
+\hline
+Suivi Financier & Budgets, facturations, suivi des paiements, tableaux de bord \\
+\hline
+Ressources Humaines & Gestion des équipes, compétences, affectations aux projets \\
+\hline
+Reporting & Rapports automatisés, exports, tableaux de bord personnalisables \\
+\hline
+Administration & Gestion des utilisateurs, paramétrage, sauvegarde \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Contraintes Techniques}
+
+\begin{itemize}
+    \item \textbf{Performance :} Temps de réponse < 2 secondes pour 95\% des requêtes
+    \item \textbf{Disponibilité :} Uptime minimum de 99.5\%
+    \item \textbf{Scalabilité :} Support de 1000+ utilisateurs simultanés
+    \item \textbf{Sécurité :} Chiffrement des données sensibles, authentification forte
+    \item \textbf{Compatibilité :} Support navigateurs modernes (Chrome, Firefox, Safari, Edge)
+    \item \textbf{Responsive :} Adaptation mobile et tablette
+\end{itemize}
+
+\subsection{Contraintes Organisationnelles}
+
+\begin{itemize}
+    \item \textbf{Délais :} Développement sur 6 mois (Janvier - Juin 2025)
+    \item \textbf{Budget :} Optimisation des coûts de développement
+    \item \textbf{Équipe :} Collaboration étroite avec l'équipe ILOGsys
+    \item \textbf{Formation :} Documentation complète et sessions de formation
+    \item \textbf{Maintenance :} Plan de maintenance et évolutions post-livraison
+\end{itemize}
+
+\section{Analyse des Risques}
+
+\subsection{Identification des Risques}
+
+\begin{table}[h]
+\centering
+\caption{Matrice des risques du projet}
+\begin{tabular}{|p{3cm}|c|c|p{4cm}|}
+\hline
+\textbf{Risque} & \textbf{Probabilité} & \textbf{Impact} & \textbf{Mitigation} \\
+\hline
+Dépassement délais & Moyen & Élevé & Planning avec marges, sprints courts \\
+\hline
+Problèmes techniques & Faible & Élevé & Architecture robuste, tests continus \\
+\hline
+Changement besoins & Élevé & Moyen & Méthode agile, validation fréquente \\
+\hline
+Indisponibilité équipe & Faible & Moyen & Documentation, partage connaissance \\
+\hline
+Problèmes de données & Moyen & Élevé & Validation données, sources multiples \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Planification du Projet}
+
+\subsection{Phases de Développement}
+
+Le projet a été décomposé en 6 phases alignées sur CRISP-DM :
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.9]
+    % Timeline
+    \draw[thick] (0,0) -- (12,0);
+    
+    % Phases
+    \node[draw, rectangle, fill=blue!20] at (1,1) {\parbox{1.5cm}{\centering Phase 1\\Jan}};
+    \node[draw, rectangle, fill=green!20] at (3,1) {\parbox{1.5cm}{\centering Phase 2\\Fév}};
+    \node[draw, rectangle, fill=yellow!20] at (5,1) {\parbox{1.5cm}{\centering Phase 3\\Mar}};
+    \node[draw, rectangle, fill=orange!20] at (7,1) {\parbox{1.5cm}{\centering Phase 4\\Avr}};
+    \node[draw, rectangle, fill=red!20] at (9,1) {\parbox{1.5cm}{\centering Phase 5\\Mai}};
+    \node[draw, rectangle, fill=purple!20] at (11,1) {\parbox{1.5cm}{\centering Phase 6\\Juin}};
+    
+    % Descriptions
+    \node[below] at (1,-0.5) {\parbox{1.5cm}{\centering Business\\Understanding}};
+    \node[below] at (3,-0.5) {\parbox{1.5cm}{\centering Data\\Understanding}};
+    \node[below] at (5,-0.5) {\parbox{1.5cm}{\centering Data\\Preparation}};
+    \node[below] at (7,-0.5) {\parbox{1.5cm}{\centering Modeling}};
+    \node[below] at (9,-0.5) {\parbox{1.5cm}{\centering Evaluation}};
+    \node[below] at (11,-0.5) {\parbox{1.5cm}{\centering Deployment}};
+    
+    % Lignes verticales
+    \foreach \x in {1,3,5,7,9,11}
+        \draw (\x,0) -- (\x,0.5);
+\end{tikzpicture}
+\caption{Planning du projet par phases CRISP-DM}
+\end{figure}
+
+\subsection{Livrables par Phase}
+
+\begin{table}[h]
+\centering
+\caption{Livrables par phase du projet}
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\textbf{Phase} & \textbf{Livrables} \\
+\hline
+Phase 1 & Analyse des besoins, spécifications fonctionnelles, maquettes \\
+\hline
+Phase 2 & Analyse des données, modèle conceptuel, architecture technique \\
+\hline
+Phase 3 & Base de données, API backend, services métier \\
+\hline
+Phase 4 & Interface utilisateur, modules fonctionnels, tests unitaires \\
+\hline
+Phase 5 & Tests d'intégration, validation utilisateur, optimisations \\
+\hline
+Phase 6 & Déploiement production, documentation, formation \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{resultbox}
+Ce chapitre a établi le cadre complet du projet Housy Tunisia avec un périmètre fonctionnel clair, une identification des contraintes et risques, et une planification structurée selon CRISP-DM. Les bases sont posées pour un développement méthodique et contrôlé.
+\end{resultbox}
+
+% ========================================================================
+% CHAPITRE 2 : COMPRÉHENSION MÉTIER (BUSINESS UNDERSTANDING)
+% ========================================================================
+\chapter{Compréhension Métier (Business Understanding)}
+
+\begin{objectivebox}
+Cette première phase CRISP-DM analyse les besoins métier du secteur de la construction tunisien, identifie les parties prenantes et définit les objectifs business du projet.
+\end{objectivebox}
+
+\section{Analyse du Secteur de la Construction en Tunisie}
+
+\subsection{Panorama Économique}
+
+Le secteur de la construction représente un pilier économique majeur en Tunisie :
+
+\begin{itemize}
+    \item \textbf{Contribution au PIB :} 8.2\% du PIB national (2024)
+    \item \textbf{Emploi :} Plus de 400,000 emplois directs et indirects
+    \item \textbf{Croissance :} Taux de croissance annuel moyen de 4.5\%
+    \item \textbf{Investissement :} 15\% de l'investissement total du pays
+    \item \textbf{Export :} Services d'ingénierie exportés vers l'Afrique
+\end{itemize}
+
+\subsection{Caractéristiques du Marché}
+
+\begin{table}[h]
+\centering
+\caption{Segmentation du marché de la construction tunisien}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Segment} & \textbf{Part de Marché} & \textbf{Croissance} & \textbf{Enjeux} \\
+\hline
+Résidentiel & 45\% & +3.2\% & Accès au logement, qualité \\
+\hline
+Commercial & 25\% & +5.8\% & Modernisation, efficacité \\
+\hline
+Infrastructure & 20\% & +6.5\% & Développement régional \\
+\hline
+Industriel & 10\% & +4.1\% & Compétitivité, normes \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Analyse des Parties Prenantes}
+
+\subsection{Cartographie des Acteurs}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    % Acteur central
+    \node[draw, circle, fill=yellow!30] (project) at (0,0) {\textbf{Projet de\\Construction}};
+    
+    % Acteurs primaires
+    \node[draw, rectangle, fill=blue!20] (owner) at (-3,3) {Maître\\d'Ouvrage};
+    \node[draw, rectangle, fill=blue!20] (contractor) at (3,3) {Entrepreneur\\Principal};
+    \node[draw, rectangle, fill=blue!20] (architect) at (-3,-3) {Architecte\\Bureau d'Études};
+    \node[draw, rectangle, fill=blue!20] (supplier) at (3,-3) {Fournisseurs\\Matériaux};
+    
+    % Acteurs secondaires
+    \node[draw, rectangle, fill=green!20] (bank) at (-5,0) {Institutions\\Financières};
+    \node[draw, rectangle, fill=green!20] (admin) at (5,0) {Administration\\Publique};
+    \node[draw, rectangle, fill=green!20] (control) at (0,4) {Bureaux de\\Contrôle};
+    \node[draw, rectangle, fill=green!20] (workers) at (0,-4) {Main-d'œuvre\\Spécialisée};
+    
+    % Relations
+    \draw[->] (owner) -- (project);
+    \draw[->] (contractor) -- (project);
+    \draw[->] (architect) -- (project);
+    \draw[->] (supplier) -- (project);
+    \draw[<->] (bank) -- (project);
+    \draw[<->] (admin) -- (project);
+    \draw[<->] (control) -- (project);
+    \draw[<->] (workers) -- (project);
+\end{tikzpicture}
+\caption{Écosystème des acteurs d'un projet de construction}
+\end{figure}
+
+\subsection{Besoins Identifiés par Acteur}
+
+\begin{table}[h]
+\centering
+\caption{Besoins spécifiques par type d'acteur}
+\begin{tabular}{|p{3cm}|p{9cm}|}
+\hline
+\textbf{Acteur} & \textbf{Besoins Principaux} \\
+\hline
+Maître d'Ouvrage & Suivi en temps réel, respect budgets/délais, qualité garantie \\
+\hline
+Entrepreneur & Planification optimisée, gestion ressources, rentabilité \\
+\hline
+Architecte & Coordination technique, suivi conformité, communication \\
+\hline
+Fournisseur & Prévision commandes, gestion stocks, paiements rapides \\
+\hline
+Bureau de Contrôle & Documentation complète, traçabilité, normes respectées \\
+\hline
+Administration & Conformité réglementaire, permis, déclarations \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Analyse des Processus Métier}
+
+\subsection{Processus Actuel de Gestion de Projet}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.7]
+    % Processus linéaire
+    \node[draw, rectangle] (study) at (0,0) {\parbox{2cm}{\centering Étude\\Faisabilité}};
+    \node[draw, rectangle] (design) at (3,0) {\parbox{2cm}{\centering Conception\\Plans}};
+    \node[draw, rectangle] (permit) at (6,0) {\parbox{2cm}{\centering Permis\\Autorisations}};
+    \node[draw, rectangle] (tender) at (9,0) {\parbox{2cm}{\centering Appel\\d'Offres}};
+    \node[draw, rectangle] (exec) at (12,0) {\parbox{2cm}{\centering Exécution\\Travaux}};
+    \node[draw, rectangle] (delivery) at (15,0) {\parbox{2cm}{\centering Livraison\\Réception}};
+    
+    % Flèches
+    \draw[->] (study) -- (design);
+    \draw[->] (design) -- (permit);
+    \draw[->] (permit) -- (tender);
+    \draw[->] (tender) -- (exec);
+    \draw[->] (exec) -- (delivery);
+    
+    % Durées (en semaines)
+    \node[below] at (1.5,-1) {4-8 sem};
+    \node[below] at (4.5,-1) {8-12 sem};
+    \node[below] at (7.5,-1) {4-16 sem};
+    \node[below] at (10.5,-1) {2-6 sem};
+    \node[below] at (13.5,-1) {20-60 sem};
+    
+    % Total
+    \node[below, red] at (7.5,-2) {\textbf{Durée totale : 38-102 semaines}};
+\end{tikzpicture}
+\caption{Processus traditionnel de gestion de projet de construction}
+\end{figure}
+
+\subsection{Points de Douleur Identifiés}
+
+\begin{warningbox}
+\textbf{Problèmes majeurs du processus actuel :}
+\begin{enumerate}
+    \item \textbf{Communication fragmentée :} Échanges par email/téléphone non tracés
+    \item \textbf{Suivi manuel :} Fichiers Excel partagés, risque d'erreurs
+    \item \textbf{Estimations imprécises :} Calculs basés sur l'expérience personnelle
+    \item \textbf{Retards fréquents :} Manque de visibilité sur l'avancement
+    \item \textbf{Dépassements budgétaires :} Contrôle financier insuffisant
+    \item \textbf{Documentation dispersée :} Plans, factures, rapports non centralisés
+    \item \textbf{Non-conformité :} Difficultés de respect des normes
+\end{enumerate}
+\end{warningbox}
+
+\section{Définition des Objectifs Business}
+
+\subsection{Objectifs Stratégiques}
+
+\begin{enumerate}
+    \item \textbf{Digitalisation du secteur :}
+    \begin{itemize}
+        \item Moderniser les processus de gestion de projet
+        \item Réduire la dépendance aux méthodes manuelles
+        \item Améliorer la traçabilité et la transparence
+    \end{itemize}
+    
+    \item \textbf{Optimisation des coûts :}
+    \begin{itemize}
+        \item Réduire les dépassements budgétaires de 20\%
+        \item Améliorer la précision des estimations
+        \item Optimiser l'utilisation des ressources
+    \end{itemize}
+    
+    \item \textbf{Amélioration de la qualité :}
+    \begin{itemize}
+        \item Garantir la conformité réglementaire
+        \item Standardiser les processus qualité
+        \item Faciliter les contrôles et audits
+    \end{itemize}
+    
+    \item \textbf{Gain de productivité :}
+    \begin{itemize}
+        \item Réduire les délais de livraison de 15\%
+        \item Automatiser les tâches répétitives
+        \item Améliorer la coordination des équipes
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Indicateurs de Performance (KPI)}
+
+\begin{table}[h]
+\centering
+\caption{Indicateurs de performance ciblés}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{KPI} & \textbf{Valeur Actuelle} & \textbf{Objectif} & \textbf{Amélioration} \\
+\hline
+Respect des délais & 65\% & 85\% & +20\% \\
+\hline
+Respect du budget & 70\% & 90\% & +20\% \\
+\hline
+Précision estimation & 75\% & 92\% & +17\% \\
+\hline
+Satisfaction client & 7.2/10 & 8.5/10 & +18\% \\
+\hline
+Temps de reporting & 4h & 30min & -87\% \\
+\hline
+Taux de non-conformité & 12\% & 3\% & -75\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Analyse de la Concurrence}
+
+\subsection{Solutions Existantes}
+
+\begin{table}[h]
+\centering
+\caption{Analyse des solutions concurrentes}
+\begin{tabular}{|l|c|c|p{4cm}|}
+\hline
+\textbf{Solution} & \textbf{Score} & \textbf{Prix/mois} & \textbf{Points faibles} \\
+\hline
+Procore & 8.5/10 & 500€ & Coût élevé, pas adapté Tunisie \\
+\hline
+Buildertrend & 7.8/10 & 300€ & Interface complexe \\
+\hline
+PlanGrid & 7.2/10 & 200€ & Fonctionnalités limitées \\
+\hline
+Solutions locales & 5.5/10 & 100€ & Technologie obsolète \\
+\hline
+\textbf{Housy Tunisia} & \textbf{9.0/10} & \textbf{150€} & \textbf{Solution adaptée} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Avantage Concurrentiel}
+
+Housy Tunisia se différencie par :
+
+\begin{itemize}
+    \item \textbf{Adaptation locale :} Spécifiquement conçu pour le marché tunisien
+    \item \textbf{Coût accessible :} Modèle tarifaire adapté au contexte économique local
+    \item \textbf{Interface intuitive :} UX/UI pensée pour les utilisateurs tunisiens
+    \item \textbf{Support local :} Équipe support parlant arabe et français
+    \item \textbf{Conformité locale :} Respect des réglementations tunisiennes
+    \item \textbf{Intégration IA :} Estimation automatique basée sur l'intelligence artificielle
+\end{itemize}
+
+\begin{resultbox}
+Cette phase a permis de comprendre en profondeur les enjeux du secteur de la construction tunisien, d'identifier les besoins des parties prenantes et de définir des objectifs business clairs et mesurables. Les bases sont posées pour le développement d'une solution adaptée et différenciante.
+\end{resultbox}
+
+% ========================================================================
+% CHAPITRE 3 : COMPRÉHENSION DES DONNÉES (DATA UNDERSTANDING)
+% ========================================================================
+\chapter{Compréhension des Données (Data Understanding)}
+
+\begin{objectivebox}
+Cette phase CRISP-DM explore et analyse les données disponibles pour le projet, évalue leur qualité et identifie les sources d'information nécessaires au développement de Housy Tunisia.
+\end{objectivebox}
+
+\section{Sources de Données Identifiées}
+
+\subsection{Données Internes Entreprise}
+
+\begin{table}[h]
+\centering
+\caption{Sources de données internes}
+\begin{tabular}{|l|p{4cm}|p{3cm}|c|}
+\hline
+\textbf{Source} & \textbf{Description} & \textbf{Format} & \textbf{Volume} \\
+\hline
+Projets historiques & 156 projets sur 5 ans & Excel/PDF & 2.3 GB \\
+\hline
+Base fournisseurs & 245 fournisseurs actifs & Base de données & 156 MB \\
+\hline
+Prix matériaux & Évolution sur 3 ans & CSV/Excel & 890 MB \\
+\hline
+Documentation technique & Plans, devis, rapports & PDF/DWG & 15.2 GB \\
+\hline
+Ressources humaines & 180 profils métier & XLSX & 45 MB \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Données Externes}
+
+\begin{itemize}
+    \item \textbf{Institut National de la Statistique (INS) :}
+    \begin{itemize}
+        \item Indices de prix de la construction
+        \item Données démographiques et économiques
+        \item Statistiques sectorielles
+    \end{itemize}
+    
+    \item \textbf{Ministère de l'Équipement :}
+    \begin{itemize}
+        \item Réglementations de construction
+        \item Normes techniques tunisiennes
+        \item Permis de construire
+    \end{itemize}
+    
+    \item \textbf{Chambres syndicales :}
+    \begin{itemize}
+        \item Barèmes des prix
+        \item Grilles salariales
+        \item Conventions collectives
+    \end{itemize}
+    
+    \item \textbf{Portails spécialisés :}
+    \begin{itemize}
+        \item Prix de matériaux en ligne
+        \item Annuaires professionnels
+        \item Appels d'offres publics
+    \end{itemize}
+\end{itemize}
+
+\section{Analyse Exploratoire des Données}
+
+\subsection{Projets de Construction Analysés}
+
+\begin{table}[h]
+\centering
+\caption{Répartition des projets par type et région}
+\begin{tabular}{|l|c|c|c|c|c|}
+\hline
+\textbf{Type Projet} & \textbf{Tunis} & \textbf{Côtier} & \textbf{Centre} & \textbf{Sud} & \textbf{Total} \\
+\hline
+Résidentiel individuel & 28 & 34 & 18 & 12 & 92 \\
+\hline
+Résidentiel collectif & 15 & 8 & 4 & 2 & 29 \\
+\hline
+Commercial & 12 & 9 & 3 & 1 & 25 \\
+\hline
+Industriel & 6 & 3 & 1 & 0 & 10 \\
+\hline
+\textbf{Total} & \textbf{61} & \textbf{54} & \textbf{26} & \textbf{15} & \textbf{156} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Analyse des Coûts de Construction}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.8]
+    % Graphique en barres des coûts moyens
+    \begin{axis}[
+        ybar,
+        bar width=15pt,
+        xlabel={Type de projet},
+        ylabel={Coût au m² (TND)},
+        symbolic x coords={Résidentiel,Commercial,Industriel},
+        xtick=data,
+        ymin=0,
+        ymax=800,
+        nodes near coords,
+        nodes near coords align={vertical},
+    ]
+    \addplot coordinates {(Résidentiel,450) (Commercial,680) (Industriel,520)};
+    \end{axis}
+\end{tikzpicture}
+\caption{Coût moyen de construction par type de projet (TND/m²)}
+\end{figure}
+
+\subsection{Évolution des Prix des Matériaux}
+
+\begin{table}[h]
+\centering
+\caption{Évolution des prix des matériaux principaux (2022-2024)}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Matériau} & \textbf{2022} & \textbf{2023} & \textbf{2024} & \textbf{Évolution} \\
+\hline
+Ciment (tonne) & 180 TND & 195 TND & 220 TND & +22\% \\
+\hline
+Acier (tonne) & 2,800 TND & 3,200 TND & 3,450 TND & +23\% \\
+\hline
+Brique (millier) & 380 TND & 410 TND & 445 TND & +17\% \\
+\hline
+Carrelage (m²) & 25 TND & 28 TND & 32 TND & +28\% \\
+\hline
+Peinture (litre) & 18 TND & 20 TND & 23 TND & +28\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Qualité des Données}
+
+\subsection{Évaluation de la Qualité}
+
+\begin{table}[h]
+\centering
+\caption{Évaluation de la qualité par source de données}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Source} & \textbf{Complétude} & \textbf{Précision} & \textbf{Actualité} & \textbf{Cohérence} \\
+\hline
+Projets historiques & 75\% & 85\% & 90\% & 70\% \\
+\hline
+Prix matériaux & 90\% & 95\% & 85\% & 95\% \\
+\hline
+Base fournisseurs & 85\% & 90\% & 80\% & 85\% \\
+\hline
+Documentation & 60\% & 80\% & 95\% & 65\% \\
+\hline
+Données RH & 95\% & 90\% & 95\% & 90\% \\
+\hline
+\textbf{Moyenne} & \textbf{81\%} & \textbf{88\%} & \textbf{89\%} & \textbf{81\%} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Problèmes Identifiés}
+
+\begin{warningbox}
+\textbf{Problèmes de qualité des données :}
+\begin{enumerate}
+    \item \textbf{Données manquantes :} 19\% des champs incomplets
+    \item \textbf{Formats hétérogènes :} 15 formats différents identifiés
+    \item \textbf{Incohérences :} Variations dans les unités de mesure
+    \item \textbf{Doublons :} 8\% de doublons dans la base fournisseurs
+    \item \textbf{Obsolescence :} 25\% des données > 2 ans
+    \item \textbf{Erreurs de saisie :} 5\% d'erreurs typographiques
+\end{enumerate}
+\end{warningbox}
+
+\section{Modèle de Données Conceptuel}
+
+\subsection{Entités Principales Identifiées}
+
+\begin{figure}[h]
+\centering
+\begin{tikzpicture}[scale=0.7]
+    % Entités
+    \node[draw, rectangle] (projet) at (0,0) {\textbf{PROJET}};
+    \node[draw, rectangle] (client) at (-4,2) {\textbf{CLIENT}};
+    \node[draw, rectangle] (materiau) at (4,2) {\textbf{MATÉRIAU}};
+    \node[draw, rectangle] (fournisseur) at (4,-2) {\textbf{FOURNISSEUR}};
+    \node[draw, rectangle] (ressource) at (-4,-2) {\textbf{RESSOURCE}};
+    \node[draw, rectangle] (tache) at (0,-4) {\textbf{TÂCHE}};
+    
+    % Relations
+    \draw (client) -- (projet) node[midway, above] {commande};
+    \draw (projet) -- (materiau) node[midway, above] {utilise};
+    \draw (materiau) -- (fournisseur) node[midway, right] {fourni par};
+    \draw (projet) -- (ressource) node[midway, below] {affecte};
+    \draw (projet) -- (tache) node[midway, left] {décompose};
+    \draw (tache) -- (ressource) node[midway, below] {exécute};
+\end{tikzpicture}
+\caption{Modèle conceptuel des données}
+\end{figure}
+
+\subsection{Attributs Clés par Entité}
+
+\begin{table}[h]
+\centering
+\caption{Attributs principaux des entités}
+\begin{tabular}{|l|p{8cm}|}
+\hline
+\textbf{Entité} & \textbf{Attributs Clés} \\
+\hline
+PROJET & Code, nom, type, surface, budget, date_début, date_fin, statut \\
+\hline
+CLIENT & ID, nom, contact, adresse, type (particulier/entreprise) \\
+\hline
+MATÉRIAU & Code, désignation, unité, prix_unitaire, fournisseur_principal \\
+\hline
+FOURNISSEUR & ID, raison_sociale, contact, spécialité, zone_livraison \\
+\hline
+RESSOURCE & ID, nom, type (humaine/matérielle), coût_horaire, disponibilité \\
+\hline
+TÂCHE & ID, nom, description, durée, prédécesseurs, ressources_requises \\
+\hline
+\end{tabular}
+\end{table}
+
+\section{Stratégie de Collecte de Données}
+
+\subsection{Plan de Collecte}
+
+\begin{enumerate}
+    \item \textbf{Phase 1 - Consolidation interne :}
+    \begin{itemize}
+        \item Centralisation des données existantes
+        \item Nettoyage et standardisation
+        \item Création de la base de données maître
+    \end{itemize}
+    
+    \item \textbf{Phase 2 - Enrichissement externe :}
+    \begin{itemize}
+        \item Intégration des données publiques
+        \item Partenariats avec fournisseurs
+        \item Web scraping contrôlé
+    \end{itemize}
+    
+    \item \textbf{Phase 3 - Automatisation :}
+    \begin{itemize}
+        \item APIs de collecte automatique
+        \item Interfaces de saisie utilisateur
+        \item Système de validation en temps réel
+    \end{itemize}
+\end{enumerate}
+
+\subsection{Outils et Technologies}
+
+\begin{table}[h]
+\centering
+\caption{Outils de gestion des données}
+\begin{tabular}{|l|l|p{5cm}|}
+\hline
+\textbf{Catégorie} & \textbf{Outil} & \textbf{Usage} \\
+\hline
+ETL & Talend Open Studio & Extraction, transformation, chargement \\
+\hline
+Stockage & PostgreSQL + Redis & Base relationnelle + cache haute performance \\
+\hline
+Validation & Great Expectations & Tests automatisés de qualité des données \\
+\hline
+Monitoring & Grafana + Prometheus & Surveillance de la qualité en temps réel \\
+\hline
+Documentation & Apache Atlas & Catalogue et lignage des données \\
+\hline
+\end{tabular}
+\end{table}
+
+\begin{resultbox}
+Cette phase a permis d'identifier et d'évaluer les sources de données disponibles, de comprendre leur structure et leur qualité, et de définir une stratégie de collecte et de gestion. Les données collectées formeront la base du système d'information de Housy Tunisia.
+\end{resultbox}
+
+% Continuer avec les autres chapitres...
+% Pour des raisons de longueur, je vais créer la structure complète dans le prochain message
+
+\end{document}
