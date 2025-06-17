@@ -7,6 +7,7 @@
 import { aiService } from './ai-service';
 import IntelligentEstimationService from './intelligent-estimation-service';
 import DataAnalysisService from './data-analysis-service';
+import { UnifiedModelService } from './unified-model-service';
 
 export interface EstimationRequest {
   projectType: string;
@@ -29,10 +30,12 @@ export interface EstimationAIRequest {
 export class EstimationAIService {
   private intelligentEstimationService: IntelligentEstimationService;
   private dataAnalysisService: DataAnalysisService;
+  private unifiedModelService: UnifiedModelService;
 
   constructor() {
     this.intelligentEstimationService = new IntelligentEstimationService();
     this.dataAnalysisService = new DataAnalysisService();
+    this.unifiedModelService = new UnifiedModelService();
   }
   
   /**
@@ -66,26 +69,143 @@ export class EstimationAIService {
     return preferredModel || 'openai';
   }
   /**
+   * NOUVEAU: Sélection étendue incluant Perplexity et OpenAI
+   */
+  private async determineOptimalModelForEstimation(
+    userRole?: string, 
+    preferredModel?: string
+  ): Promise<{
+    modelName: string;
+    modelType: 'ollama' | 'openai' | 'perplexity' | 'claude';
+    reason: string;
+  }> {
+    
+    // Si modèle spécifiquement demandé
+    if (preferredModel) {
+      // Vérifier les permissions pour modèles restreints
+      if (preferredModel.includes('ollama') || preferredModel.includes('llama3.1')) {
+        if (this.canUseOllamaForEstimation(userRole)) {
+          return {
+            modelName: preferredModel,
+            modelType: 'ollama',
+            reason: 'Modèle demandé explicitement par admin'
+          };
+        } else {
+          // Fallback vers un modèle autorisé
+          return {
+            modelName: 'qwen2.5-coder:latest',
+            modelType: 'ollama',
+            reason: 'Fallback - modèle restreint non autorisé'
+          };
+        }
+      }
+      
+      // Modèles externes
+      if (preferredModel.includes('gpt') || preferredModel.includes('openai')) {
+        return {
+          modelName: 'gpt-4-turbo',
+          modelType: 'openai',
+          reason: 'OpenAI demandé par utilisateur'
+        };
+      }
+      
+      if (preferredModel.includes('perplexity')) {
+        return {
+          modelName: 'perplexity-online',
+          modelType: 'perplexity',
+          reason: 'Perplexity demandé par utilisateur'
+        };
+      }
+    }
+    
+    // Sélection automatique optimale basée sur les tests
+    const availableModels = await this.unifiedModelService.getAllAvailableModels();
+    
+    // Pour les administrateurs - priorité aux modèles locaux performants
+    if (this.canUseOllamaForEstimation(userRole)) {
+      // Ordre de préférence basé sur les tests de performance
+      const preferredLocalModels = ['qwen2.5-coder:latest', 'llama3.1:latest', 'phi:latest'];
+      
+      for (const model of preferredLocalModels) {
+        const isAvailable = availableModels.some(m => m.name.includes(model.split(':')[0]));
+        if (isAvailable) {
+          return {
+            modelName: model,
+            modelType: 'ollama',
+            reason: `Modèle local optimal pour admin (score élevé: ${model.includes('qwen') ? '270' : model.includes('llama') ? '186' : '132'})`
+          };
+        }
+      }
+    }
+    
+    // Pour les utilisateurs normaux - modèles externes + bons modèles locaux
+    const hasOpenAI = process.env.OPENAI_API_KEY && process.env.OPENAI_API_KEY !== 'sk-test-key';
+    const hasPerplexity = process.env.PPLX_API_KEY && process.env.PPLX_API_KEY !== 'pplx-test-key';
+    
+    // Si clés API disponibles, prioriser modèles externes pour rapidité
+    if (hasOpenAI) {
+      return {
+        modelName: 'gpt-4-turbo',
+        modelType: 'openai',
+        reason: 'OpenAI disponible - rapide et fiable'
+      };
+    }
+    
+    if (hasPerplexity) {
+      return {
+        modelName: 'perplexity-online',
+        modelType: 'perplexity',
+        reason: 'Perplexity disponible - recherche en temps réel'
+      };
+    }
+    
+    // Fallback vers meilleur modèle local disponible
+    const qwenAvailable = availableModels.some(m => m.name.includes('qwen'));
+    if (qwenAvailable) {
+      return {
+        modelName: 'qwen2.5-coder:latest',
+        modelType: 'ollama',
+        reason: 'Meilleur modèle local disponible (score: 270)'
+      };
+    }
+    
+    // Fallback ultime
+    return {
+      modelName: 'phi:latest',
+      modelType: 'ollama',
+      reason: 'Modèle de fallback rapide'
+    };
+  }
+
+  /**
    * Génère une estimation de matériaux avec IA selon les permissions utilisateur
    * ENRICHIE avec les données JSON certifiées
    */
-  async generateMaterialEstimationWithAI(request: EstimationAIRequest): Promise<string> {
+  async generateMaterialEstimationWithAI(request: EstimationAIRequest): Promise<{
+    response: string;
+    metadata: {
+      modelUsed: string;
+      modelType: string;
+      selectionReason: string;
+      executionTime: number;
+      dataEnrichment: boolean;
+    };
+  }> {
     const { prompt, context, userId, userRole, preferredModel } = request;
+    const startTime = Date.now();
     
-    // Déterminer le modèle approprié
-    const selectedModel = this.determineModelForEstimation(userRole, preferredModel);
-    
-    // Log de sécurité pour l'utilisation d'Ollama
-    if (selectedModel === 'ollama') {
-      console.log(`🔒 OLLAMA ACCESS GRANTED - Admin estimation request from user ${userId} (role: ${userRole})`);
-    }
-
     try {
-      // 🚀 NOUVEAU: Générer une estimation intelligente avec données réelles
+      // Déterminer le modèle optimal
+      const modelSelection = await this.determineOptimalModelForEstimation(userRole, preferredModel);
+      
+      console.log(`🤖 Modèle sélectionné: ${modelSelection.modelName} (${modelSelection.modelType})`);
+      console.log(`💡 Raison: ${modelSelection.reason}`);
+      
+      // Enrichissement avec données JSON réelles
       const projectDetails = {
         projectType: context.projectType,
         surface: context.area,
-        region: 'Tunis', // Par défaut, peut être étendu
+        region: 'Tunis',
         qualityLevel: context.qualityLevel
       };
 
@@ -94,52 +214,55 @@ export class EstimationAIService {
         projectDetails
       );
 
-      // Utiliser le prompt enrichi avec les données certifiées
-      const enrichedPrompt = intelligentAnalysis.prompt_enrichi;      // Utiliser le service IA avec le modèle autorisé
-      const sessionId = `estimation_${userId}_${Date.now()}`;
-      
-      const aiResponse = await aiService.processChatMessage(sessionId, userId || null, enrichedPrompt, selectedModel);
-
-      // Enrichir la réponse avec les analyses de données
-      const enhancedResponse = this.enhanceAIResponse(aiResponse, intelligentAnalysis);
-
-      return enhancedResponse;
-
-    } catch (error) {
-      console.error('Erreur estimation intelligente:', error);
-      
-      // Fallback vers l'ancien système en cas d'erreur
-      const estimationPrompt = this.buildEstimationPrompt(prompt, context, userRole);
-      const sessionId = `estimation_fallback_${userId}_${Date.now()}`;
-    
-    try {
-      const response = await aiService.processChatMessage(
-        sessionId,
-        userId || null,
-        estimationPrompt,
-        selectedModel
+      // Utiliser le service unifié pour la génération
+      const response = await this.unifiedModelService.generateWithModel(
+        modelSelection.modelName,
+        intelligentAnalysis.prompt_enrichi,
+        {
+          temperature: 0.3, // Conservateur pour estimations
+          maxTokens: 1500,
+          systemMessage: "Tu es un expert en estimation de coûts de construction en Tunisie. Réponds en français avec des prix en TND."
+        }
       );
 
-      // Log du résultat pour audit
-      console.log(`📊 Estimation IA generated using ${selectedModel} for user ${userId} (${userRole})`);
+      const executionTime = Date.now() - startTime;
       
-      return response;
+      return {
+        response,
+        metadata: {
+          modelUsed: modelSelection.modelName,
+          modelType: modelSelection.modelType,
+          selectionReason: modelSelection.reason,
+          executionTime,
+          dataEnrichment: true
+        }
+      };
+      
     } catch (error) {
-      console.error(`❌ Error generating estimation with ${selectedModel}:`, error);
+      console.error('Erreur génération estimation:', error);
       
-      // Si Ollama échoue pour un admin, essayer avec un modèle cloud
-      if (selectedModel === 'ollama' && this.canUseOllamaForEstimation(userRole)) {
-        console.log(`🔄 Ollama failed for admin, falling back to OpenAI...`);
-        return await aiService.processChatMessage(
-          sessionId,
-          userId || null,
-          estimationPrompt,
-          'openai'
+      // Fallback vers modèle simple
+      try {
+        const fallbackResponse = await this.unifiedModelService.generateWithModel(
+          'phi:latest',
+          prompt,
+          { temperature: 0.5, maxTokens: 800 }
         );
+        
+        return {
+          response: fallbackResponse,
+          metadata: {
+            modelUsed: 'phi:latest',
+            modelType: 'ollama',
+            selectionReason: 'Fallback après erreur',
+            executionTime: Date.now() - startTime,
+            dataEnrichment: false
+          }
+        };
+      } catch (fallbackError) {
+        const errorMessage = error instanceof Error ? error.message : 'Erreur inconnue';
+        throw new Error(`Estimation impossible: ${errorMessage}`);
       }
-      
-      throw error;
-    }
     }
   }
 

@@ -1,7 +1,7 @@
 import OpenAI from "openai";
 import Anthropic from '@anthropic-ai/sdk';
-import { storage } from "../storage";
-import { InsertChatMessage, InsertAiAnalysis } from "../../shared/schema.js";
+import { storage, db } from "../storage";
+import { InsertChatMessage, InsertAiAnalysis, aiModelTracking } from "../../shared/schema.js";
 import { dataService } from "./data-service";
 
 // Initialize AI providers
@@ -19,7 +19,31 @@ const deepseek = new OpenAI({
   baseURL: "https://api.deepseek.com/v1"
 });
 
-type OllamaModel = "llama2" | "mistral" | "gemma" | "phi" | "falcon" | "orca-mini" | "neural-chat" | "stablelm";
+// Extended type with new models: DeepSeek, Qwen, and specialized variants
+type OllamaModel = 
+  | "llama2" | "mistral" | "gemma" | "phi" | "falcon" | "orca-mini" | "neural-chat" | "stablelm"
+  | "deepseek-coder" | "qwen2.5-coder" | "qwen" | "deepseek" 
+  | "qwen-perplexity" | "perplexity" | "llama3.1";
+
+// Model capabilities definition for tracking responsibilities
+interface ModelCapabilities {
+  estimation: boolean;
+  generation: boolean;
+  specialization?: string;
+}
+
+const MODEL_CAPABILITIES: Record<string, ModelCapabilities> = {
+  "llama3.1": { estimation: true, generation: true, specialization: "general" },
+  "deepseek-coder": { estimation: true, generation: true, specialization: "coding" },
+  "qwen2.5-coder": { estimation: true, generation: true, specialization: "coding" },
+  "qwen": { estimation: true, generation: true, specialization: "general" },
+  "deepseek": { estimation: true, generation: true, specialization: "reasoning" },
+  "qwen-perplexity": { estimation: true, generation: true, specialization: "search" },
+  "perplexity": { estimation: false, generation: true, specialization: "search" },
+  "llama2": { estimation: true, generation: true, specialization: "general" },
+  "mistral": { estimation: true, generation: true, specialization: "general" },
+  "phi": { estimation: true, generation: true, specialization: "fast" }
+};
 
 // Helper function to call Ollama API locally
 async function callOllamaApi(
@@ -92,6 +116,71 @@ async function callOllamaApi(
 }
 
 class AiService {
+  
+  // Système de tracking pour développement (INVISIBLE à l'utilisateur)
+  private async trackModelUsage(params: {
+    taskType: 'estimation' | 'generation' | 'chat';
+    modelUsed: string;
+    responsibleEstimation?: string;
+    responsibleGeneration?: string;
+    userId?: string;
+    sessionId: string;
+    inputData?: any;
+    outputData?: any;
+    executionTimeMs?: number;
+  }) {
+    try {
+      // Ne tracker QUE pour le développement - invisible à l'utilisateur final
+      if (process.env.NODE_ENV === 'development' || process.env.AI_TRACKING_ENABLED === 'true') {
+        const trackingData = {
+          responsibleEstimation: params.responsibleEstimation,
+          responsibleGeneration: params.responsibleGeneration,
+          modelUsed: params.modelUsed,
+          userId: params.userId,
+          sessionId: params.sessionId,
+          taskType: params.taskType,
+          inputData: params.inputData,
+          outputData: params.outputData,
+          executionTimeMs: params.executionTimeMs,
+          modelCapabilities: MODEL_CAPABILITIES[params.modelUsed],
+          performanceMetrics: {
+            timestamp: new Date().toISOString(),
+            environment: process.env.NODE_ENV,
+            user_agent: 'Housy-AI-Service'
+          }
+        };        // Insert into tracking table (development only)
+        await db.insert(aiModelTracking).values(trackingData);
+        
+        console.log(`[DEV] Model tracking logged: ${params.taskType} with ${params.modelUsed}`);
+      }
+    } catch (error) {
+      // Silently fail - tracking ne doit jamais affecter l'expérience utilisateur
+      console.warn('[DEV] Model tracking failed:', error);
+    }
+  }
+
+  // Sélecteur intelligent de modèle selon la tâche
+  private selectOptimalModel(taskType: 'estimation' | 'generation' | 'chat', userRole?: string): {
+    estimationModel: string;
+    generationModel: string;
+    primaryModel: string;
+  } {
+    const isAdmin = userRole === 'admin' || userRole === 'super_admin';
+    
+    // Modèles optimaux par tâche
+    const optimalModels = {
+      estimation: isAdmin ? 'deepseek-coder' : 'qwen2.5-coder', // DeepSeek meilleur pour calculs
+      generation: isAdmin ? 'llama3.1' : 'qwen', // Llama3.1 meilleur pour génération
+      chat: isAdmin ? 'llama3.1' : 'qwen' // Conversation générale
+    };
+
+    const estimationModel = optimalModels.estimation;
+    const generationModel = optimalModels.generation;
+    const primaryModel = optimalModels[taskType];
+
+    return { estimationModel, generationModel, primaryModel };
+  }
+
   // Method to enrich context with real data
   private async enrichContextWithRealData(userMessage: string): Promise<string> {
     try {
@@ -873,6 +962,168 @@ Instructions supplémentaires IMPÉRATIVES pour ce modèle (Ollama):
     
     return segments;
   }
+
+  // Nouvelle méthode principale avec intégration des modèles étendus
+  async processChatMessageEnhanced(
+    sessionId: string, 
+    userId: number | null, 
+    content: string, 
+    preferredModel?: string,
+    userRole?: string
+  ): Promise<string> {
+    const startTime = Date.now();
+    
+    try {
+      // Enrichissement automatique avec données réelles
+      const enrichedContext = await this.enrichContextWithRealData(content);
+      
+      // Détection automatique du type de tâche
+      const taskType = this.detectTaskType(content);
+      
+      // Sélection intelligente des modèles optimaux
+      const { estimationModel, generationModel, primaryModel } = this.selectOptimalModel(taskType, userRole);
+      
+      // Sélection du modèle final selon préférence utilisateur
+      let finalModel = primaryModel;
+      if (preferredModel && MODEL_CAPABILITIES[preferredModel]) {
+        // Vérifier les permissions pour modèles restreints
+        if (preferredModel.includes('ollama') || preferredModel.includes('deepseek-coder')) {
+          if (userRole === 'admin' || userRole === 'super_admin') {
+            finalModel = preferredModel;
+          } else {
+            console.warn(`User ${userRole} attempted restricted model access: ${preferredModel}`);
+            finalModel = primaryModel; // Fallback au modèle autorisé
+          }
+        } else {
+          finalModel = preferredModel;
+        }
+      }
+      
+      console.log(`[ENHANCED] Processing with model: ${finalModel} (task: ${taskType})`);
+      
+      // Traitement selon le modèle sélectionné
+      let response: string;
+      
+      switch (finalModel) {
+        case 'deepseek-coder':
+        case 'deepseek':
+          response = await this.processChatWithDeepSeek([{role: 'user', content: enrichedContext}]);
+          break;
+          
+        case 'qwen2.5-coder':
+        case 'qwen':
+          response = await this.processChatWithQwen([{role: 'user', content: enrichedContext}]);
+          break;
+          
+        case 'llama3.1':
+        case 'mistral':
+        case 'phi':
+          response = await this.processChatWithOllama([{role: 'user', content: enrichedContext}], enrichedContext);
+          break;
+          
+        default:
+          // Fallback vers les modèles cloud classiques
+          if (finalModel.includes('claude')) {
+            response = await this.processChatWithClaude([{role: 'user', content: enrichedContext}]);
+          } else {
+            response = await this.processChatWithOpenAI([{role: 'user', content: enrichedContext}]);
+          }
+      }
+      
+      const executionTime = Date.now() - startTime;
+      
+      // Tracking pour développement (INVISIBLE à l'utilisateur)
+      await this.trackModelUsage({
+        taskType,
+        modelUsed: finalModel,
+        responsibleEstimation: taskType === 'estimation' ? estimationModel : undefined,
+        responsibleGeneration: taskType === 'generation' ? generationModel : undefined,
+        userId: userId?.toString(),
+        sessionId,
+        inputData: { content, enrichedContext: !!enrichedContext },
+        outputData: { responseLength: response.length },
+        executionTimeMs: executionTime
+      });
+      
+      return response;
+      
+    } catch (error) {
+      console.error('Enhanced chat processing failed:', error);
+      
+      // Fallback automatique vers modèle de base
+      try {
+        return await this.processChatMessage(sessionId, userId, content);
+      } catch (fallbackError) {
+        console.error('Fallback also failed:', fallbackError);
+        throw new Error("Impossible de traiter votre demande actuellement.");
+      }
+    }
+  }
+  
+  // Détection automatique du type de tâche
+  private detectTaskType(content: string): 'estimation' | 'generation' | 'chat' {
+    const estimationKeywords = ['coût', 'cout', 'prix', 'tarif', 'estimation', 'budget', 'devis', 'm²', 'm2'];
+    const generationKeywords = ['génère', 'crée', 'écris', 'rédige', 'produis', 'développe'];
+    
+    const contentLower = content.toLowerCase();
+    
+    if (estimationKeywords.some(keyword => contentLower.includes(keyword))) {
+      return 'estimation';
+    }
+    
+    if (generationKeywords.some(keyword => contentLower.includes(keyword))) {
+      return 'generation';
+    }
+    
+    return 'chat';
+  }
+  
+  // Nouvelle méthode pour Qwen
+  private async processChatWithQwen(chatHistory: any[], systemMessage?: string): Promise<string> {
+    try {
+      console.log("Using Qwen via Ollama...");
+      
+      // Qwen est maintenant disponible via Ollama
+      const qwenModels = ['qwen2.5-coder', 'qwen'];
+      let selectedModel = 'qwen2.5-coder'; // Par défaut
+      
+      // Vérifier quel modèle Qwen est disponible
+      try {
+        const baseUrl = process.env.OLLAMA_API_URL || "http://localhost:11434";
+        const modelResponse = await fetch(`${baseUrl}/api/tags`);
+        
+        if (modelResponse.ok) {
+          const modelData = await modelResponse.json();
+          const availableModels = modelData.models?.map((m: any) => m.name) || [];
+          
+          // Sélectionner le premier modèle Qwen disponible
+          for (const model of qwenModels) {
+            if (availableModels.includes(model)) {
+              selectedModel = model;
+              break;
+            }
+          }
+        }
+      } catch (error) {
+        console.warn("Could not check available Qwen models:", error);
+      }
+      
+      const prompt = chatHistory.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
+      
+      const response = await callOllamaApi(prompt, selectedModel as OllamaModel, {
+        system: systemMessage || "Tu es un assistant IA spécialisé dans l'immobilier tunisien.",
+        temperature: 0.7
+      });
+      
+      return response || "Je suis désolé, je n'ai pas pu générer une réponse avec Qwen.";
+      
+    } catch (error) {
+      console.error("Error with Qwen:", error);
+      throw error;
+    }
+  }
+
+  // ...existing code...
 }
 
 export const aiService = new AiService();

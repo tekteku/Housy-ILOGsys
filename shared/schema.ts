@@ -615,7 +615,7 @@ export const clientRequests = pgTable("client_requests", {
   reviewDate: timestamp("review_date"),
   reviewNotes: text("review_notes"),
   estimatedCost: decimal("estimated_cost", { precision: 12, scale: 2 }),
-  estimatedDuration: integer("estimated_duration"), // in days
+  estimatedDuration: integer("estimated_duration").default(0), // in days
   followUpDate: timestamp("follow_up_date"),
   expiryDate: timestamp("expiry_date"),
   conversionRate: doublePrecision("conversion_rate").default(0),
@@ -964,6 +964,24 @@ export const systemSettings = pgTable("system_settings", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Enhanced AI analysis with detailed model tracking (DEVELOPMENT ONLY)
+export const aiModelTracking = pgTable("ai_model_tracking", {
+  id: serial("id").primaryKey(),
+  responsibleEstimation: text("responsible_estimation"), // Nom du modèle responsable estimation  
+  responsibleGeneration: text("responsible_generation"), // Nom du modèle responsable génération
+  modelUsed: text("model_used").notNull(), // Modèle actif
+  timestamp: timestamp("timestamp").defaultNow().notNull(), // Horodatage
+  userId: text("user_id"), // ID utilisateur
+  sessionId: text("session_id").notNull(), // ID session
+  taskType: text("task_type").notNull(), // 'estimation' | 'generation' | 'chat'
+  inputData: jsonb("input_data"), // Données d'entrée pour debug
+  outputData: jsonb("output_data"), // Données de sortie pour debug
+  executionTimeMs: integer("execution_time_ms"), // Temps d'exécution en ms
+  modelCapabilities: jsonb("model_capabilities"), // Capacités du modèle utilisé
+  performanceMetrics: jsonb("performance_metrics"), // Métriques de performance
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Define insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({ id: true, createdAt: true });
 export const insertProjectSchema = createInsertSchema(projects).omit({ id: true, createdAt: true, updatedAt: true });
@@ -1103,3 +1121,7 @@ export type EnhancedProjectDocument = typeof enhancedProjectDocuments.$inferSele
 export type AdminStatistic = typeof adminStatistics.$inferSelect;
 export type EnhancedNotification = typeof enhancedNotifications.$inferSelect;
 export type SystemSetting = typeof systemSettings.$inferSelect;
+
+// AI Model Tracking Types (Development Only)
+export type AiModelTracking = typeof aiModelTracking.$inferSelect;
+export type InsertAiModelTracking = typeof aiModelTracking.$inferInsert;
