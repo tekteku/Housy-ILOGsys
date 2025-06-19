@@ -1,0 +1,1465 @@
+% ========================================================================
+% SPÉCIFICATION DES BESOINS DE L'APPLICATION HOUSY
+% ========================================================================
+
+\chapter{Spécification des Besoins de l'Application Housy}
+
+\begin{objectivebox}
+Ce chapitre présente l'analyse complète des besoins de l'application Housy Tunisia, incluant les besoins fonctionnels et non fonctionnels, les acteurs du système, et les diagrammes de cas d'utilisation détaillés pour chaque type d'utilisateur.
+\end{objectivebox}
+
+% ========================================================================
+% INTRODUCTION
+% ========================================================================
+
+\section{Introduction}
+
+\subsection{Contexte de l'Analyse des Besoins}
+
+L'analyse des besoins constitue une étape cruciale dans le développement de l'application Housy Tunisia. Cette phase permet de définir précisément les fonctionnalités attendues par les différents utilisateurs du système et d'établir les spécifications techniques nécessaires à la réalisation d'une solution adaptée aux spécificités du secteur de la construction tunisien.
+
+\subsection{Méthodologie d'Analyse}
+
+L'identification des besoins s'appuie sur une approche méthodique comprenant :
+
+\begin{itemize}
+    \item \textbf{Entretiens avec les parties prenantes :} Rencontres avec des professionnels du secteur
+    \item \textbf{Observation des processus existants :} Analyse des pratiques actuelles
+    \item \textbf{Étude comparative :} Analyse des solutions concurrentes
+    \item \textbf{Ateliers de travail :} Sessions collaboratives de définition des besoins
+    \item \textbf{Validation itérative :} Confirmationi progressive des spécifications
+\end{itemize}
+
+\subsection{Objectifs de la Spécification}
+
+Cette spécification vise à :
+
+\begin{enumerate}
+    \item Définir clairement les fonctionnalités attendues du système
+    \item Identifier les différents acteurs et leurs rôles respectifs
+    \item Établir les contraintes techniques et de performance
+    \item Fournir une base solide pour la conception et le développement
+    \item Faciliter la validation et les tests de la solution
+\end{enumerate}
+
+\textbf{[CAPTURE À AJOUTER : Processus d'analyse des besoins - méthodologie]}
+
+% ========================================================================
+% SPÉCIFICATION DES BESOINS FONCTIONNELS
+% ========================================================================
+
+\section{Spécification des Besoins Fonctionnels}
+
+\subsection{Gestion des Projets de Construction}
+
+\subsubsection{RF-001 : Création et Gestion de Projets}
+
+\textbf{Description :} L'application doit permettre la création, modification et suppression de projets de construction avec toutes leurs caractéristiques.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Création de projet avec informations de base (nom, type, localisation, surface)
+    \item Association de plans et documents techniques
+    \item Définition des phases de construction
+    \item Gestion du planning prévisionnel
+    \item Attribution des responsables par phase
+    \item Suivi de l'état d'avancement global
+\end{itemize}
+
+\textbf{Priorité :} HAUTE
+
+\subsubsection{RF-002 : Planification et Scheduling}
+
+\textbf{Description :} Le système doit offrir des outils de planification avancés pour organiser les phases de construction.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Création de diagrammes de Gantt interactifs
+    \item Gestion des dépendances entre tâches
+    \item Allocation des ressources humaines et matérielles
+    \item Calcul automatique des chemins critiques
+    \item Alertes en cas de retard potentiel
+    \item Export des plannings vers formats standards
+\end{itemize}
+
+\textbf{Priorité :} HAUTE
+
+\subsection{Estimation et Devis}
+
+\subsubsection{RF-003 : Moteur d'Estimation Intelligente}
+
+\textbf{Description :} L'application doit intégrer un système d'estimation automatisée basé sur l'intelligence artificielle et les données de marché tunisiennes.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Estimation automatique basée sur surface et type de construction
+    \item Utilisation de 11 modèles d'IA (Ollama, OpenAI, Perplexity)
+    \item Enrichissement avec données JSON des matériaux tunisiens
+    \item Calculs détaillés par poste de travail
+    \item Prise en compte des spécificités régionales
+    \item Génération de justifications détaillées
+\end{itemize}
+
+\textbf{Priorité :} TRÈS HAUTE
+
+\subsubsection{RF-004 : Génération de Devis}
+
+\textbf{Description :} Le système doit permettre la création automatique de devis professionnels basés sur les estimations.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Génération automatique de devis formatés
+    \item Personnalisation des modèles de devis
+    \item Calcul automatique des marges et taxes
+    \item Gestion des variantes et options
+    \item Export PDF professionnel
+    \item Historique et versioning des devis
+\end{itemize}
+
+\textbf{Priorité :} HAUTE
+
+\subsection{Gestion des Matériaux et Fournisseurs}
+
+\subsubsection{RF-005 : Catalogue Matériaux Tunisiens}
+
+\textbf{Description :} L'application doit maintenir un catalogue complet des matériaux de construction disponibles en Tunisie.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Base de données complète des matériaux locaux
+    \item Prix actualisés en dinars tunisiens (TND)
+    \item Fiches techniques détaillées par matériau
+    \item Gestion des fournisseurs et leurs spécialités
+    \item Comparaison de prix entre fournisseurs
+    \item Alertes sur variations de prix importantes
+\end{itemize}
+
+\textbf{Priorité :} HAUTE
+
+\subsubsection{RF-006 : Gestion des Commandes}
+
+\textbf{Description :} Le système doit faciliter la gestion des commandes de matériaux et le suivi des livraisons.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Création de bons de commande automatisés
+    \item Suivi en temps réel des commandes
+    \item Gestion des réceptions et contrôles qualité
+    \item Alertes sur retards de livraison
+    \item Optimisation des stocks chantier
+    \item Intégration avec systèmes fournisseurs
+\end{itemize}
+
+\textbf{Priorité :} MOYENNE
+
+\subsection{Gestion Commerciale et Clients}
+
+\subsubsection{RF-007 : CRM Intégré}
+
+\textbf{Description :} L'application doit inclure un système de gestion de la relation client adapté au secteur de la construction.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Gestion complète des fiches clients
+    \item Suivi des prospects et opportunités
+    \item Historique des interactions commerciales
+    \item Gestion du pipeline de ventes
+    \item Relances automatiques
+    \item Reporting commercial détaillé
+\end{itemize}
+
+\textbf{Priorité :} MOYENNE
+
+\subsubsection{RF-008 : Facturation et Paiements}
+
+\textbf{Description :} Le système doit gérer l'ensemble du processus de facturation et de suivi des paiements.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Génération automatique de factures
+    \item Gestion des échéanciers de paiement
+    \item Suivi des encaissements
+    \item Relances automatiques impayés
+    \item Conformité réglementaire tunisienne
+    \item Export comptable
+\end{itemize}
+
+\textbf{Priorité :} HAUTE
+
+\subsection{Analytics et Reporting}
+
+\subsubsection{RF-009 : Tableaux de Bord Analytiques}
+
+\textbf{Description :} L'application doit fournir des outils d'analyse et de reporting complets pour le pilotage de l'activité.
+
+\textbf{Critères d'acceptation :}
+\begin{itemize}
+    \item Tableaux de bord temps réel configurables
+    \item KPI sectoriels prédéfinis
+    \item Analyses de rentabilité par projet
+    \item Prévisions basées sur l'historique
+    \item Rapports d'activité automatisés
+    \item Export vers outils BI externes
+\end{itemize}
+
+\textbf{Priorité :} MOYENNE
+
+\textbf{[CAPTURE À AJOUTER : Synthèse des besoins fonctionnels par priorité]}
+
+% ========================================================================
+% PRÉSENTATION DES ACTEURS
+% ========================================================================
+
+\section{Présentation des Acteurs}
+
+\subsection{Classification des Acteurs}
+
+Le système Housy Tunisia interagit avec différents types d'acteurs, chacun ayant des besoins spécifiques et des niveaux d'accès différenciés.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteurs principaux (niveau 1)
+\node[draw, rectangle, fill=blue!20] (admin) at (0,8) {\parbox{2.5cm}{\centering\textbf{Gérant}\\(Administrateur)}};
+\node[draw, rectangle, fill=green!20] (chef) at (4,8) {\parbox{2.5cm}{\centering\textbf{Chef de Projet}}};
+\node[draw, rectangle, fill=orange!20] (dev) at (8,8) {\parbox{2.5cm}{\centering\textbf{Développeur}}};
+
+% Acteurs commerciaux (niveau 2)
+\node[draw, rectangle, fill=purple!20] (promoteur) at (0,5) {\parbox{2.5cm}{\centering\textbf{Promoteur}\\Immobilier}};
+\node[draw, rectangle, fill=yellow!20] (client_normal) at (4,5) {\parbox{2.5cm}{\centering\textbf{Client Normal}\\(Particulier)}};
+\node[draw, rectangle, fill=cyan!20] (client_entreprise) at (8,5) {\parbox{2.5cm}{\centering\textbf{Client}\\Entreprise}};
+
+% Acteurs supports (niveau 3)
+\node[draw, rectangle, fill=pink!20] (fourn) at (0,2) {\parbox{2.5cm}{\centering\textbf{Fournisseur}}};
+\node[draw, rectangle, fill=gray!20] (comptable) at (4,2) {\parbox{2.5cm}{\centering\textbf{Comptable}}};
+\node[draw, rectangle, fill=lime!20] (architecte) at (8,2) {\parbox{2.5cm}{\centering\textbf{Architecte}\\Bureau d'Études}};
+
+% Système central
+\node[draw, ellipse, fill=red!10] (system) at (4,-1) {\parbox{3.5cm}{\centering\textbf{Système Housy\\Tunisia}}};
+
+% Connexions principales (acteurs primaires)
+\draw[<->, very thick, blue] (admin) -- (system);
+\draw[<->, very thick, green] (chef) -- (system);
+\draw[<->, very thick, orange] (dev) -- (system);
+
+% Connexions commerciales (acteurs clients)
+\draw[<->, thick, purple] (promoteur) -- (system);
+\draw[<->, thick, yellow] (client_normal) -- (system);
+\draw[<->, thick, cyan] (client_entreprise) -- (system);
+
+% Connexions supports
+\draw[<->, pink] (fourn) -- (system);
+\draw[<->, gray] (comptable) -- (system);
+\draw[<->, lime] (architecte) -- (system);
+
+% Hiérarchie organisationnelle
+\draw[thick, blue, dashed] (admin) -- node[left] {\tiny Supervise} (chef);
+\draw[thick, blue, dashed] (admin) -- node[above] {\tiny Manage} (dev);
+
+% Relations commerciales
+\draw[thick, purple, dotted] (promoteur) -- node[left] {\tiny Collaboration} (architecte);
+\draw[thick, yellow, dotted] (client_normal) -- node[above] {\tiny Via} (promoteur);
+
+% Légende
+\node[draw, rectangle, fill=white] at (12,6) {\parbox{3cm}{\tiny\textbf{Légende:}\\
+\textcolor{blue}{━━} Acteurs Principaux\\
+\textcolor{purple}{━━} Acteurs Commerciaux\\
+\textcolor{pink}{━━} Acteurs Supports\\
+\textcolor{blue}{┅┅} Hiérarchie\\
+\textcolor{purple}{⋯⋯} Collaboration}};
+
+\end{tikzpicture}
+\caption{Diagramme étendu des acteurs du système Housy Tunisia}
+\label{fig:acteurs_systeme_etendu}
+\end{figure}
+
+\subsection{Acteurs Principaux}
+
+\subsubsection{Gérant (Administrateur)}
+
+\textbf{Rôle :} Responsable général de l'entreprise et administrateur système principal.
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item Gestion globale de l'entreprise et des projets
+    \item Configuration et administration du système
+    \item Accès complet à tous les modules et données
+    \item Gestion des utilisateurs et des permissions
+    \item Validation des devis et contrats importants
+    \item Supervision des performances et de la rentabilité
+\end{itemize}
+
+\textbf{Compétences requises :}
+\begin{itemize}
+    \item Expertise métier construction
+    \item Compétences managériales
+    \item Connaissance des aspects financiers et commerciaux
+    \item Maîtrise des outils informatiques de gestion
+\end{itemize}
+
+\subsubsection{Chef de Projet}
+
+\textbf{Rôle :} Responsable opérationnel de la gestion des projets de construction.
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item Création et suivi des projets de construction
+    \item Planification des phases et allocation des ressources
+    \item Coordination des équipes et des intervenants
+    \item Contrôle qualité et respect des délais
+    \item Communication avec les clients
+    \item Gestion des approvisionnements
+\end{itemize}
+
+\textbf{Compétences requises :}
+\begin{itemize}
+    \item Formation technique en construction
+    \item Expérience en gestion de projet
+    \item Compétences en communication
+    \item Maîtrise de la planification et du scheduling
+\end{itemize}
+
+\subsubsection{Développeur}
+
+\textbf{Rôle :} Professionnel technique responsable du développement et de la maintenance du système.
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item Développement de nouvelles fonctionnalités
+    \item Maintenance corrective et évolutive
+    \item Tests et validation des développements
+    \item Optimisation des performances
+    \item Documentation technique
+    \item Support technique aux utilisateurs
+\end{itemize}
+
+\textbf{Compétences requises :}
+\begin{itemize}
+    \item Maîtrise des technologies web modernes
+    \item Connaissance des bases de données
+    \item Compétences en intelligence artificielle
+    \item Méthodologies de développement agile
+\end{itemize}
+
+\subsection{Acteurs Secondaires}
+
+\subsubsection{Promoteur Immobilier}
+
+\textbf{Rôle :} Professionnel de l'immobilier gérant des projets de promotion et développement immobilier.
+
+\textbf{Responsabilités :}
+\begin{itemize}
+    \item Développement de projets immobiliers (résidences, complexes)
+    \item Étude de faisabilité technique et financière
+    \item Recherche et sécurisation du financement
+    \item Commercialisation et vente des biens immobiliers
+    \item Coordination avec architectes, bureaux d'études et entreprises
+    \item Suivi réglementaire et obtention des autorisations
+    \item Gestion des relations avec les futurs acquéreurs
+\end{itemize}
+
+\textbf{Besoins spécifiques dans Housy :}
+\begin{itemize}
+    \item Estimations rapides pour études de faisabilité
+    \item Analyse de rentabilité par projet et variantes
+    \item Suivi commercial des prospects et réservations
+    \item Tableaux de bord financiers et prévisionnels
+    \item Gestion des autorisations administratives
+    \item Module de commercialisation intégré
+    \item Interfaces avec les banques et organismes de financement
+\end{itemize}
+
+\textbf{Interactions avec le système :}
+\begin{itemize}
+    \item Création de projets de promotion immobilière
+    \item Génération d'estimations pour différents scénarios
+    \item Suivi des ventes et réservations
+    \item Édition de documents commerciaux
+    \item Consultation des analyses de rentabilité
+    \item Gestion du planning de commercialisation
+\end{itemize}
+
+\textbf{Compétences requises :}
+\begin{itemize}
+    \item Formation en commerce, immobilier ou BTP
+    \item Connaissance approfondie du marché immobilier tunisien
+    \item Capacités financières et commerciales
+    \item Maîtrise des aspects réglementaires immobiliers
+\end{itemize}
+
+\subsubsection{Client Normal (Particulier)}
+
+\textbf{Rôle :} Particulier ou famille souhaitant construire, rénover ou acquérir un bien immobilier.
+
+\textbf{Profil type :}
+\begin{itemize}
+    \item Propriétaire foncier souhaitant construire
+    \item Acquéreur de bien immobilier en VEFA
+    \item Propriétaire d'un bien existant à rénover
+    \item Investisseur particulier en immobilier
+\end{itemize}
+
+\textbf{Besoins spécifiques dans Housy :}
+\begin{itemize}
+    \item Interface simple et intuitive (non-expert)
+    \item Estimations transparentes et facilement compréhensibles
+    \item Suivi temps réel de l'avancement de son projet
+    \item Communication facilitée avec les équipes techniques
+    \item Accès mobile pour consultation à distance
+    \item Historique complet et archivage de son dossier
+    \item Notifications automatiques des étapes importantes
+    \item Validation électronique des documents
+\end{itemize}
+
+\textbf{Interactions avec le système :}
+\begin{itemize}
+    \item Consultation du statut de son projet
+    \item Validation des devis et avenants
+    \item Communication avec l'équipe projet via messagerie
+    \item Téléchargement des documents (plans, factures, certificats)
+    \item Suivi des paiements et échéanciers
+    \item Signalement de demandes ou réclamations
+    \item Accès aux galeries photos de l'avancement
+\end{itemize}
+
+\textbf{Contraintes d'usage :}
+\begin{itemize}
+    \item Connaissances limitées du vocabulaire technique BTP
+    \item Besoin d'accompagnement et d'explications détaillées
+    \item Utilisation principalement mobile et occasionnelle
+    \item Attentes élevées en termes de transparence et communication
+\end{itemize}
+
+\subsubsection{Client Entreprise}
+
+\textbf{Rôle :} Entreprise ou institution souhaitant réaliser des travaux de construction (bureaux, usines, locaux commerciaux).
+
+\textbf{Interactions avec le système :}
+\begin{itemize}
+    \item Consultation de l'avancement de projets d'entreprise
+    \item Validation des devis importants avec plusieurs niveaux
+    \item Communication avec l'équipe projet via interface professionnelle
+    \item Accès aux documents techniques et réglementaires
+    \item Suivi budgétaire détaillé avec reporting comptable
+    \item Gestion des autorisations et conformités professionnelles
+\end{itemize}
+
+\subsubsection{Fournisseur}
+
+\textbf{Rôle :} Bénéficiaire final des services de construction.
+
+\textbf{Interactions avec le système :}
+\begin{itemize}
+    \item Consultation de l'avancement de ses projets
+    \item Validation des devis et modifications
+    \item Communication avec l'équipe projet
+    \item Accès aux documents et plans
+\end{itemize}
+
+\subsubsection{Fournisseur}
+
+\textbf{Rôle :} Partenaire commercial fournissant matériaux et services.
+
+\textbf{Interactions avec le système :}
+\begin{itemize}
+    \item Mise à jour des catalogues et prix
+    \item Gestion des commandes et livraisons
+    \item Suivi des paiements
+    \item Communication sur la disponibilité
+\end{itemize}
+
+\subsubsection{Comptable}
+
+\textbf{Rôle :} Responsable de la gestion financière et comptable.
+
+\textbf{Interactions avec le système :}
+\begin{itemize}
+    \item Export des données comptables
+    \item Validation des écritures financières
+    \item Contrôle des facturations
+    \item Reporting financier
+\end{itemize}
+
+% ========================================================================
+% IDENTIFICATION DE FONCTIONNALITÉS PAR ACTEUR
+% ========================================================================
+
+\section{Identification de Fonctionnalités par Acteur}
+
+\subsection{Matrice Fonctionnalités-Acteurs}
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{|l|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{Fonctionnalité} & \textbf{Gérant} & \textbf{Chef Projet} & \textbf{Développeur} & \textbf{Promoteur} & \textbf{Client Normal} & \textbf{Client Entreprise} & \textbf{Fournisseur} & \textbf{Comptable} \\
+\hline
+Gestion projets & ●●● & ●●● & ○ & ●●○ & ○ & ●○○ & ○ & ○ \\
+\hline
+Estimation IA & ●●● & ●●● & ●●○ & ●●● & ●○○ & ●●○ & ○ & ○ \\
+\hline
+Génération devis & ●●● & ●●● & ○ & ●●● & ●○○ & ●●○ & ○ & ○ \\
+\hline
+Planning & ●●● & ●●● & ○ & ●●○ & ●○○ & ●●○ & ○ & ○ \\
+\hline
+Gestion clients & ●●● & ●●○ & ○ & ●●● & ○ & ○ & ○ & ○ \\
+\hline
+Catalogue matériaux & ●●○ & ●●● & ●○○ & ●○○ & ●○○ & ●○○ & ●●○ & ○ \\
+\hline
+Commandes & ●●○ & ●●● & ○ & ●○○ & ○ & ●○○ & ●●● & ○ \\
+\hline
+Facturation & ●●● & ●○○ & ○ & ●●○ & ●○○ & ●●○ & ○ & ●●● \\
+\hline
+Analytics & ●●● & ●●○ & ●○○ & ●●● & ○ & ●○○ & ○ & ●○○ \\
+\hline
+Commercialisation & ●●○ & ○ & ○ & ●●● & ○ & ○ & ○ & ○ \\
+\hline
+Suivi client & ●●○ & ●●○ & ○ & ●●○ & ●●● & ●●● & ○ & ○ \\
+\hline
+Administration & ●●● & ○ & ●●○ & ○ & ○ & ○ & ○ & ○ \\
+\hline
+Support technique & ○ & ○ & ●●● & ○ & ○ & ○ & ○ & ○ \\
+\hline
+\end{tabular}
+\caption{Matrice étendue d'accès aux fonctionnalités par acteur}
+\label{tab:matrice_fonctionnalites_etendue}
+\end{table}
+
+\textbf{Légende :}
+\begin{itemize}
+    \item ●●● : Accès complet (lecture, écriture, suppression)
+    \item ●●○ : Accès avancé (lecture, écriture limitée)
+    \item ●○○ : Accès basique (lecture principalement)
+    \item ○ : Pas d'accès direct
+\end{itemize}
+
+\subsection{Fonctionnalités Spécifiques par Acteur}
+
+\subsubsection{Fonctionnalités Gérant}
+
+\begin{itemize}
+    \item \textbf{Dashboard dirigeant :} Vue consolidée de l'activité
+    \item \textbf{Gestion utilisateurs :} Création, modification, suppression des comptes
+    \item \textbf{Configuration système :} Paramétrage global de l'application
+    \item \textbf{Validation financière :} Approbation des devis importants
+    \item \textbf{Reporting exécutif :} Analyses de performance et rentabilité
+    \item \textbf{Gestion des permissions :} Attribution des droits d'accès
+\end{itemize}
+
+\subsubsection{Fonctionnalités Chef de Projet}
+
+\begin{itemize}
+    \item \textbf{Création de projets :} Initiation et paramétrage des nouveaux projets
+    \item \textbf{Planification avancée :} Outils de scheduling et allocation ressources
+    \item \textbf{Suivi d'avancement :} Monitoring temps réel des phases
+    \item \textbf{Gestion équipes :} Attribution des tâches et suivi des équipes
+    \item \textbf{Communication client :} Interface dédiée aux échanges clients
+    \item \textbf{Contrôle qualité :} Outils de validation et contrôle des livrables
+\end{itemize}
+
+\subsubsection{Fonctionnalités Développeur}
+
+\begin{itemize}
+    \item \textbf{Interface d'administration technique :} Gestion des paramètres système
+    \item \textbf{Logs et monitoring :} Surveillance des performances et erreurs
+    \item \textbf{Gestion modèles IA :} Configuration et optimisation des modèles
+    \item \textbf{Base de données :} Outils d'administration et maintenance
+    \item \textbf{API management :} Gestion des intégrations et APIs
+    \item \textbf{Tests et debugging :} Outils de développement et débogage
+\end{itemize}
+
+\subsubsection{Fonctionnalités Promoteur Immobilier}
+
+\begin{itemize}
+    \item \textbf{Portfolio de projets :} Gestion de multiples projets immobiliers simultanés
+    \item \textbf{Commercialisation avancée :} Outils marketing et stratégies de vente
+    \item \textbf{Gestion prospects :} CRM spécialisé pour lead generation immobilier
+    \item \textbf{Calculs de rentabilité :} Analyses ROI et simulations financières
+    \item \textbf{Planification promotion :} Calendriers de commercialisation par phases
+    \item \textbf{Banque de données clients :} Segmentation et ciblage des prospects
+    \item \textbf{Génération brochures :} Création automatisée de supports marketing
+    \item \textbf{Suivi réservations :} Gestion des réservations et contrats de vente
+    \item \textbf{Reporting commercial :} Tableaux de bord ventes et performance
+    \item \textbf{Intégration partners :} Connexion avec banques et notaires
+\end{itemize}
+
+\subsubsection{Fonctionnalités Client Normal}
+
+\begin{itemize}
+    \item \textbf{Interface simplifiée :} Dashboard utilisateur adapté aux non-professionnels
+    \item \textbf{Estimation personnelle :} Outil d'estimation pour projet personnel
+    \item \textbf{Suivi projet personnel :} Monitoring de l'avancement de son projet
+    \item \textbf{Validation électronique :} Signature numérique des documents
+    \item \textbf{Messagerie intégrée :} Communication directe avec l'équipe projet
+    \item \textbf{Galerie photos :} Suivi visuel de l'avancement des travaux
+    \item \textbf{Planning client :} Calendrier des étapes et rendez-vous
+    \item \textbf{Espace documents :} Accès centralisé à tous les documents du projet
+    \item \textbf{Notifications push :} Alertes automatiques sur mobile
+    \item \textbf{Support client :} Canal d'assistance et FAQ personnalisée
+\end{itemize}
+
+\subsubsection{Fonctionnalités Client Entreprise}
+
+\begin{itemize}
+    \item \textbf{Gestion multi-sites :} Suivi de projets sur plusieurs localisations
+    \item \textbf{Validation hiérarchique :} Workflows d'approbation entreprise
+    \item \textbf{Reporting corporate :} Rapports adaptés aux besoins entreprise
+    \item \textbf{Interface comptabilité :} Intégration avec systèmes ERP
+    \item \textbf{Conformité professionnelle :} Respect des normes et certifications
+    \item \textbf{Gestion des autorisations :} Suivi des permis et conformités
+\end{itemize}
+
+% ========================================================================
+% DIAGRAMME DES CAS D'UTILISATION GLOBAL
+% ========================================================================
+
+\section{Diagramme des Cas d'Utilisation (Global)}
+
+\subsection{Vue d'Ensemble du Système}
+
+Le diagramme global présente l'ensemble des cas d'utilisation du système Housy Tunisia et leurs relations avec les différents acteurs.
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.6, transform shape]
+
+% Système
+\draw[thick] (-2,-8) rectangle (12,8);
+\node[font=\bfseries] at (5,7.5) {Système Housy Tunisia};
+
+% Acteurs Principaux
+\node[draw, ellipse, fill=blue!20] (admin) at (-7,5) {\parbox{1.5cm}{\centering Gérant\\Admin}};
+\node[draw, ellipse, fill=green!20] (chef) at (-7,2) {\parbox{1.5cm}{\centering Chef de\\Projet}};
+\node[draw, ellipse, fill=orange!20] (dev) at (-7,-1) {\parbox{1.5cm}{\centering Développeur}};
+
+% Acteurs Clients
+\node[draw, ellipse, fill=purple!20] (promoteur) at (14,5) {\parbox{1.5cm}{\centering Promoteur\\Immobilier}};
+\node[draw, ellipse, fill=yellow!20] (client_normal) at (14,2) {\parbox{1.5cm}{\centering Client\\Normal}};
+\node[draw, ellipse, fill=cyan!20] (client_ent) at (14,-1) {\parbox{1.5cm}{\centering Client\\Entreprise}};
+
+% Acteurs Support
+\node[draw, ellipse, fill=pink!20] (fourn) at (-7,-4) {\parbox{1.5cm}{\centering Fournisseur}};
+\node[draw, ellipse, fill=gray!20] (comptable) at (14,-4) {\parbox{1.5cm}{\centering Comptable}};
+
+% Cas d'utilisation principaux
+\node[draw, ellipse] (gestion_proj) at (2,6) {\parbox{2cm}{\centering Gérer\\Projets}};
+\node[draw, ellipse] (estimation) at (5,5) {\parbox{2cm}{\centering Estimation\\IA}};
+\node[draw, ellipse] (devis) at (8,4) {\parbox{2cm}{\centering Générer\\Devis}};
+\node[draw, ellipse] (planning) at (2,3) {\parbox{2cm}{\centering Planifier\\Travaux}};
+\node[draw, ellipse] (materiaux) at (5,2) {\parbox{2cm}{\centering Gérer\\Matériaux}};
+\node[draw, ellipse] (commandes) at (8,1) {\parbox{2cm}{\centering Gérer\\Commandes}};
+\node[draw, ellipse] (crm) at (2,0) {\parbox{2cm}{\centering Gestion\\CRM}};
+\node[draw, ellipse] (facturation) at (5,-1) {\parbox{2cm}{\centering Facturation}};
+\node[draw, ellipse] (analytics) at (8,-2) {\parbox{2cm}{\centering Analytics}};
+\node[draw, ellipse] (admin_sys) at (2,-3) {\parbox{2cm}{\centering Administration\\Système}};
+\node[draw, ellipse] (support) at (5,-4) {\parbox{2cm}{\centering Support\\Technique}};
+\node[draw, ellipse] (consultation) at (8,-5) {\parbox{2cm}{\centering Consulter\\Projets}};
+\node[draw, ellipse] (consultation) at (8,-5) {\parbox{2cm}{\centering Consulter\\Projets}};
+
+% Relations Gérant
+\draw[->] (admin) -- (gestion_proj);
+\draw[->] (admin) -- (estimation);
+\draw[->] (admin) -- (devis);
+\draw[->] (admin) -- (crm);
+\draw[->] (admin) -- (analytics);
+\draw[->] (admin) -- (admin_sys);
+
+% Relations Chef de Projet
+\draw[->] (chef) -- (gestion_proj);
+\draw[->] (chef) -- (estimation);
+\draw[->] (chef) -- (planning);
+\draw[->] (chef) -- (materiaux);
+\draw[->] (chef) -- (commandes);
+
+% Relations Développeur
+\draw[->] (dev) -- (admin_sys);
+\draw[->] (dev) -- (support);
+\draw[->] (dev) -- (estimation);
+
+% Relations Promoteur Immobilier
+\draw[->] (promoteur) -- (gestion_proj);
+\draw[->] (promoteur) -- (estimation);
+\draw[->] (promoteur) -- (devis);
+\draw[->] (promoteur) -- (analytics);
+\draw[->] (promoteur) -- (crm);
+
+% Relations Client Normal
+\draw[->] (client_normal) -- (consultation);
+\draw[->] (client_normal) -- (estimation);
+
+% Relations Client Entreprise
+\draw[->] (client_ent) -- (consultation);
+\draw[->] (client_ent) -- (analytics);
+
+% Relations Fournisseur
+\draw[->] (fourn) -- (materiaux);
+\draw[->] (fourn) -- (commandes);
+
+% Relations Comptable
+\draw[->] (comptable) -- (facturation);
+\draw[->] (comptable) -- (analytics);
+
+% Relations entre cas d'utilisation
+\draw[dashed, ->] (estimation) -- node[above] {\tiny include} (materiaux);
+\draw[dashed, ->] (devis) -- node[above] {\tiny include} (estimation);
+\draw[dashed, ->] (planning) -- node[left] {\tiny include} (gestion_proj);
+\draw[dashed, ->] (facturation) -- node[below] {\tiny include} (devis);
+
+\end{tikzpicture}
+\caption{Diagramme global des cas d'utilisation}
+\label{fig:cas_utilisation_global}
+\end{figure}
+
+\subsection{Description des Cas d'Utilisation Principaux}
+
+\subsubsection{CU-001 : Gérer Projets}
+\textbf{Acteurs :} Gérant, Chef de Projet \\
+\textbf{Description :} Création, modification et suivi des projets de construction \\
+\textbf{Prérequis :} Utilisateur authentifié avec droits appropriés
+
+\subsubsection{CU-002 : Estimation IA}
+\textbf{Acteurs :} Gérant, Chef de Projet, Développeur \\
+\textbf{Description :} Génération d'estimations automatisées avec intelligence artificielle \\
+\textbf{Prérequis :} Projet créé, données de base saisies
+
+\subsubsection{CU-003 : Générer Devis}
+\textbf{Acteurs :} Gérant, Chef de Projet \\
+\textbf{Description :} Création automatique de devis professionnels \\
+\textbf{Prérequis :} Estimation réalisée et validée
+
+% ========================================================================
+% CAS D'UTILISATION DÉVELOPPEUR
+% ========================================================================
+
+\subsection{Diagramme de Cas d'Utilisation Relatif à un Développeur}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteur Développeur
+\node[draw, ellipse, fill=orange!20] (dev) at (-4,0) {\parbox{1.5cm}{\centering Développeur}};
+
+% Système
+\draw[thick] (0,-6) rectangle (10,6);
+\node[font=\bfseries] at (5,5.5) {Module Développement - Housy};
+
+% Cas d'utilisation développeur
+\node[draw, ellipse] (config_ia) at (2,4) {\parbox{2cm}{\centering Configurer\\Modèles IA}};
+\node[draw, ellipse] (admin_bd) at (5,3) {\parbox{2cm}{\centering Administrer\\Base Données}};
+\node[draw, ellipse] (monitoring) at (8,2) {\parbox{2cm}{\centering Monitoring\\Performance}};
+\node[draw, ellipse] (debug) at (2,1) {\parbox{2cm}{\centering Debug\\Application}};
+\node[draw, ellipse] (tests) at (5,0) {\parbox{2cm}{\centering Exécuter\\Tests}};
+\node[draw, ellipse] (deploy) at (8,-1) {\parbox{2cm}{\centering Déployer\\Version}};
+\node[draw, ellipse] (api_manage) at (2,-2) {\parbox{2cm}{\centering Gérer\\APIs}};
+\node[draw, ellipse] (logs) at (5,-3) {\parbox{2cm}{\centering Analyser\\Logs}};
+\node[draw, ellipse] (backup) at (8,-4) {\parbox{2cm}{\centering Sauvegarder\\Données}};
+
+% Relations
+\draw[->] (dev) -- (config_ia);
+\draw[->] (dev) -- (admin_bd);
+\draw[->] (dev) -- (monitoring);
+\draw[->] (dev) -- (debug);
+\draw[->] (dev) -- (tests);
+\draw[->] (dev) -- (deploy);
+\draw[->] (dev) -- (api_manage);
+\draw[->] (dev) -- (logs);
+\draw[->] (dev) -- (backup);
+
+% Relations include/extend
+\draw[dashed, ->] (debug) -- node[above] {\tiny include} (logs);
+\draw[dashed, ->] (deploy) -- node[above] {\tiny include} (tests);
+\draw[dashed, ->] (monitoring) -- node[below] {\tiny extend} (logs);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation - Développeur}
+\label{fig:cas_utilisation_dev}
+\end{figure}
+
+\subsubsection{Spécifications Développeur}
+
+\textbf{CU-DEV-001 : Configurer Modèles IA}
+\begin{itemize}
+    \item \textbf{Description :} Configuration et optimisation des 11 modèles d'IA intégrés
+    \item \textbf{Préconditions :} Accès administrateur technique
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès à l'interface d'administration IA
+        \item Sélection du modèle à configurer (Ollama, OpenAI, Perplexity)
+        \item Modification des paramètres (température, tokens, etc.)
+        \item Test de validation du modèle
+        \item Sauvegarde de la configuration
+    \end{enumerate}
+    \item \textbf{Postconditions :} Modèle configuré et opérationnel
+\end{itemize}
+
+\textbf{CU-DEV-002 : Monitoring Performance}
+\begin{itemize}
+    \item \textbf{Description :} Surveillance en temps réel des performances système
+    \item \textbf{Préconditions :} Système en fonctionnement
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès au dashboard de monitoring
+        \item Consultation des métriques en temps réel
+        \item Analyse des performances par composant
+        \item Identification des goulots d'étranglement
+        \item Configuration d'alertes automatiques
+    \end{enumerate}
+    \item \textbf{Postconditions :} Monitoring actif et alertes configurées
+\end{itemize}
+
+% ========================================================================
+% CAS D'UTILISATION CHEF DE PROJET
+% ========================================================================
+
+\subsection{Diagramme de Cas d'Utilisation Relatif au Chef de Projet}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteur Chef de Projet
+\node[draw, ellipse, fill=green!20] (chef) at (-4,0) {\parbox{1.5cm}{\centering Chef de\\Projet}};
+
+% Système
+\draw[thick] (0,-6) rectangle (10,6);
+\node[font=\bfseries] at (5,5.5) {Module Gestion Projets - Housy};
+
+% Cas d'utilisation chef de projet
+\node[draw, ellipse] (creer_projet) at (2,4) {\parbox{2cm}{\centering Créer\\Projet}};
+\node[draw, ellipse] (planifier) at (5,3.5) {\parbox{2cm}{\centering Planifier\\Phases}};
+\node[draw, ellipse] (estimer) at (8,3) {\parbox{2cm}{\centering Estimer\\Coûts}};
+\node[draw, ellipse] (allouer) at (2,2) {\parbox{2cm}{\centering Allouer\\Ressources}};
+\node[draw, ellipse] (suivre) at (5,1.5) {\parbox{2cm}{\centering Suivre\\Avancement}};
+\node[draw, ellipse] (communiquer) at (8,1) {\parbox{2cm}{\centering Communiquer\\Client}};
+\node[draw, ellipse] (gerer_equipe) at (2,0) {\parbox{2cm}{\centering Gérer\\Équipes}};
+\node[draw, ellipse] (commander) at (5,-0.5) {\parbox{2cm}{\centering Commander\\Matériaux}};
+\node[draw, ellipse] (controler) at (8,-1) {\parbox{2cm}{\centering Contrôler\\Qualité}};
+\node[draw, ellipse] (reporter) at (2,-2) {\parbox{2cm}{\centering Générer\\Rapports}};
+\node[draw, ellipse] (valider) at (5,-3) {\parbox{2cm}{\centering Valider\\Livrables}};
+\node[draw, ellipse] (facturer) at (8,-4) {\parbox{2cm}{\centering Préparer\\Facturation}};
+
+% Relations
+\draw[->] (chef) -- (creer_projet);
+\draw[->] (chef) -- (planifier);
+\draw[->] (chef) -- (estimer);
+\draw[->] (chef) -- (allouer);
+\draw[->] (chef) -- (suivre);
+\draw[->] (chef) -- (communiquer);
+\draw[->] (chef) -- (gerer_equipe);
+\draw[->] (chef) -- (commander);
+\draw[->] (chef) -- (controler);
+\draw[->] (chef) -- (reporter);
+\draw[->] (chef) -- (valider);
+\draw[->] (chef) -- (facturer);
+
+% Relations include/extend
+\draw[dashed, ->] (planifier) -- node[above] {\tiny include} (estimer);
+\draw[dashed, ->] (suivre) -- node[above] {\tiny include} (reporter);
+\draw[dashed, ->] (valider) -- node[above] {\tiny extend} (facturer);
+\draw[dashed, ->] (allouer) -- node[left] {\tiny include} (gerer_equipe);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation - Chef de Projet}
+\label{fig:cas_utilisation_chef}
+\end{figure}
+
+\subsubsection{Spécifications Chef de Projet}
+
+\textbf{CU-CHEF-001 : Créer Projet}
+\begin{itemize}
+    \item \textbf{Description :} Initialisation d'un nouveau projet de construction
+    \item \textbf{Préconditions :} Authentification et droits de création
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Saisie des informations projet (nom, type, localisation)
+        \item Définition des caractéristiques techniques (surface, étages)
+        \item Association des documents et plans
+        \item Configuration des paramètres de base
+        \item Validation et création du projet
+    \end{enumerate}
+    \item \textbf{Postconditions :} Projet créé et accessible pour planification
+\end{itemize}
+
+\textbf{CU-CHEF-002 : Estimer Coûts}
+\begin{itemize}
+    \item \textbf{Description :} Génération d'estimation automatisée avec IA
+    \item \textbf{Préconditions :} Projet créé avec données de base
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Sélection du modèle d'IA optimal
+        \item Saisie des paramètres spécifiques
+        \item Lancement de l'estimation automatique
+        \item Consultation des résultats détaillés
+        \item Validation et ajustements si nécessaire
+    \end{enumerate}
+    \item \textbf{Postconditions :} Estimation validée et disponible pour devis
+\end{itemize}
+
+% ========================================================================
+% CAS D'UTILISATION GÉRANT
+% ========================================================================
+
+\subsection{Diagramme de Cas d'Utilisation Relatif au Gérant (Administrateur)}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteur Gérant
+\node[draw, ellipse, fill=blue!20] (admin) at (-4,0) {\parbox{1.5cm}{\centering Gérant\\Admin}};
+
+% Système
+\draw[thick] (0,-6) rectangle (10,6);
+\node[font=\bfseries] at (5,5.5) {Module Administration - Housy};
+
+% Cas d'utilisation gérant
+\node[draw, ellipse] (gerer_users) at (2,4) {\parbox{2cm}{\centering Gérer\\Utilisateurs}};
+\node[draw, ellipse] (config_sys) at (5,3.5) {\parbox{2cm}{\centering Configurer\\Système}};
+\node[draw, ellipse] (valider_devis) at (8,3) {\parbox{2cm}{\centering Valider\\Devis}};
+\node[draw, ellipse] (dashboard) at (2,2) {\parbox{2cm}{\centering Dashboard\\Exécutif}};
+\node[draw, ellipse] (analyser) at (5,1.5) {\parbox{2cm}{\centering Analyser\\Performance}};
+\node[draw, ellipse] (gerer_clients) at (8,1) {\parbox{2cm}{\centering Gérer\\Clients}};
+\node[draw, ellipse] (superviser) at (2,0) {\parbox{2cm}{\centering Superviser\\Projets}};
+\node[draw, ellipse] (finances) at (5,-0.5) {\parbox{2cm}{\centering Gestion\\Financière}};
+\node[draw, ellipse] (strategies) at (8,-1) {\parbox{2cm}{\centering Définir\\Stratégies}};
+\node[draw, ellipse] (rapports) at (2,-2) {\parbox{2cm}{\centering Rapports\\Direction}};
+\node[draw, ellipse] (audit) at (5,-3) {\parbox{2cm}{\centering Audit\\Activité}};
+\node[draw, ellipse] (backup_sys) at (8,-4) {\parbox{2cm}{\centering Sauvegardes\\Système}};
+
+% Relations
+\draw[->] (admin) -- (gerer_users);
+\draw[->] (admin) -- (config_sys);
+\draw[->] (admin) -- (valider_devis);
+\draw[->] (admin) -- (dashboard);
+\draw[->] (admin) -- (analyser);
+\draw[->] (admin) -- (gerer_clients);
+\draw[->] (admin) -- (superviser);
+\draw[->] (admin) -- (finances);
+\draw[->] (admin) -- (strategies);
+\draw[->] (admin) -- (rapports);
+\draw[->] (admin) -- (audit);
+\draw[->] (admin) -- (backup_sys);
+
+% Relations include/extend
+\draw[dashed, ->] (dashboard) -- node[above] {\tiny include} (analyser);
+\draw[dashed, ->] (strategies) -- node[above] {\tiny include} (analyser);
+\draw[dashed, ->] (rapports) -- node[left] {\tiny include} (audit);
+\draw[dashed, ->] (superviser) -- node[below] {\tiny extend} (valider_devis);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation - Gérant (Administrateur)}
+\label{fig:cas_utilisation_admin}
+\end{figure}
+
+\subsubsection{Spécifications Gérant}
+
+\textbf{CU-ADMIN-001 : Gérer Utilisateurs}
+\begin{itemize}
+    \item \textbf{Description :} Administration complète des comptes utilisateurs
+    \item \textbf{Préconditions :} Droits d'administration système
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès au module d'administration
+        \item Création/modification/suppression des comptes
+        \item Attribution des rôles et permissions
+        \item Configuration des accès par module
+        \item Validation et activation des comptes
+    \end{enumerate}
+    \item \textbf{Postconditions :} Utilisateurs configurés avec droits appropriés
+\end{itemize}
+
+\textbf{CU-ADMIN-002 : Dashboard Exécutif}
+\begin{itemize}
+    \item \textbf{Description :} Vue consolidée des KPI et métriques business
+    \item \textbf{Préconditions :} Données disponibles dans le système
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès au dashboard exécutif
+        \item Consultation des indicateurs temps réel
+        \item Analyse des tendances et évolutions
+        \item Configuration des alertes métier
+        \item Export des données pour reporting
+    \end{enumerate}
+    \item \textbf{Postconditions :} Vue complète de l'activité et performance
+\end{itemize}
+
+% ========================================================================
+% BESOINS NON FONCTIONNELS
+% ========================================================================
+
+\section{Spécification des Besoins Non Fonctionnels}
+
+\subsection{Performance}
+
+\subsubsection{RNF-001 : Temps de Réponse}
+\begin{itemize}
+    \item \textbf{Exigence :} Temps de réponse < 2 secondes pour 95\% des requêtes
+    \item \textbf{Justification :} Expérience utilisateur fluide
+    \item \textbf{Mesure :} Monitoring automatique des temps de réponse
+    \item \textbf{Priorité :} HAUTE
+\end{itemize}
+
+\subsubsection{RNF-002 : Charge Concurrent}
+\begin{itemize}
+    \item \textbf{Exigence :} Support de 50 utilisateurs simultanés minimum
+    \item \textbf{Justification :} Montée en charge progressive de l'entreprise
+    \item \textbf{Mesure :} Tests de charge réguliers
+    \item \textbf{Priorité :} MOYENNE
+\end{itemize}
+
+\subsubsection{RNF-003 : Performance IA}
+\begin{itemize}
+    \item \textbf{Exigence :} Estimation IA en moins de 30 secondes
+    \item \textbf{Justification :} Acceptable pour calculs complexes
+    \item \textbf{Mesure :} Monitoring spécifique des modèles IA
+    \item \textbf{Priorité :} HAUTE
+\end{itemize}
+
+\subsection{Sécurité}
+
+\subsubsection{RNF-004 : Authentification}
+\begin{itemize}
+    \item \textbf{Exigence :} Authentification forte avec JWT
+    \item \textbf{Justification :} Protection des données sensibles
+    \item \textbf{Mesure :} Audit des connexions
+    \item \textbf{Priorité :} TRÈS HAUTE
+\end{itemize}
+
+\subsubsection{RNF-005 : Chiffrement}
+\begin{itemize}
+    \item \textbf{Exigence :} Chiffrement HTTPS/TLS pour toutes les communications
+    \item \textbf{Justification :} Confidentialité des échanges
+    \item \textbf{Mesure :} Certificats SSL valides
+    \item \textbf{Priorité :} TRÈS HAUTE
+\end{itemize}
+
+\subsubsection{RNF-006 : Gestion des Permissions}
+\begin{itemize}
+    \item \textbf{Exigence :} Contrôle d'accès granulaire par rôle
+    \item \textbf{Justification :} Séparation des responsabilités
+    \item \textbf{Mesure :} Tests de sécurité d'accès
+    \item \textbf{Priorité :} HAUTE
+\end{itemize}
+
+\subsection{Disponibilité}
+
+\subsubsection{RNF-007 : Uptime}
+\begin{itemize}
+    \item \textbf{Exigence :} Disponibilité 99.5\% minimum (8h/24h, 5j/7j)
+    \item \textbf{Justification :} Continuité de service pendant heures ouvrables
+    \item \textbf{Mesure :} Monitoring continu avec alertes
+    \item \textbf{Priorité :} HAUTE
+\end{itemize}
+
+\subsubsection{RNF-008 : Récupération}
+\begin{itemize}
+    \item \textbf{Exigence :} Temps de récupération < 4 heures en cas de panne
+    \item \textbf{Justification :} Minimisation de l'impact métier
+    \item \textbf{Mesure :} Procédures de disaster recovery testées
+    \item \textbf{Priorité :} MOYENNE
+\end{itemize}
+
+\subsection{Utilisabilité}
+
+\subsubsection{RNF-009 : Interface Utilisateur}
+\begin{itemize}
+    \item \textbf{Exigence :} Interface responsive compatible mobile/desktop
+    \item \textbf{Justification :} Flexibilité d'utilisation terrain/bureau
+    \item \textbf{Mesure :} Tests sur différents dispositifs
+    \item \textbf{Priorité :} HAUTE
+\end{itemize}
+
+\subsubsection{RNF-010 : Apprentissage}
+\begin{itemize}
+    \item \textbf{Exigence :} Formation utilisateur < 4 heures pour maîtrise de base
+    \item \textbf{Justification :} Adoption rapide par les équipes
+    \item \textbf{Mesure :} Tests utilisateur et feedback
+    \item \textbf{Priorité :} MOYENNE
+\end{itemize}
+
+\subsection{Compatibilité}
+
+\subsubsection{RNF-011 : Navigateurs}
+\begin{itemize}
+    \item \textbf{Exigence :} Support Chrome, Firefox, Safari, Edge (versions récentes)
+    \item \textbf{Justification :} Couverture maximale utilisateurs
+    \item \textbf{Mesure :} Tests cross-browser automatisés
+    \item \textbf{Priorité :} HAUTE
+\end{itemize}
+
+\subsubsection{RNF-012 : Intégration}
+\begin{itemize}
+    \item \textbf{Exigence :} APIs RESTful pour intégrations tierces
+    \item \textbf{Justification :} Évolutivité et interopérabilité
+    \item \textbf{Mesure :} Documentation API complète
+    \item \textbf{Priorité :} MOYENNE
+\end{itemize}
+
+\subsection{Conformité}
+
+\subsubsection{RNF-013 : Réglementation Tunisienne}
+\begin{itemize}
+    \item \textbf{Exigence :} Conformité aux normes comptables et fiscales tunisiennes
+    \item \textbf{Justification :} Obligation légale
+    \item \textbf{Mesure :} Validation par expert comptable
+    \item \textbf{Priorité :} TRÈS HAUTE
+\end{itemize}
+
+\subsubsection{RNF-014 : Protection Données}
+\begin{itemize}
+    \item \textbf{Exigence :} Respect de la réglementation sur la protection des données
+    \item \textbf{Justification :} Conformité légale et confiance client
+    \item \textbf{Mesure :} Audit de conformité
+    \item \textbf{Priorité :} TRÈS HAUTE
+\end{itemize}
+
+\textbf{[CAPTURE À AJOUTER : Synthèse des exigences non fonctionnelles par catégorie]}
+
+% ========================================================================
+% CONCLUSION
+% ========================================================================
+
+\section{Conclusion}
+
+\subsection{Synthèse des Spécifications}
+
+Ce chapitre a présenté une analyse exhaustive des besoins de l'application Housy Tunisia, couvrant :
+
+\begin{enumerate}
+    \item \textbf{Besoins fonctionnels :} 9 domaines principaux avec 30+ fonctionnalités détaillées
+    \item \textbf{Acteurs du système :} 6 types d'utilisateurs avec rôles spécifiques
+    \item \textbf{Cas d'utilisation :} Diagrammes détaillés pour chaque acteur principal
+    \item \textbf{Exigences non fonctionnelles :} 14 critères de qualité et performance
+\end{enumerate}
+
+\subsection{Priorisation des Développements}
+
+La matrice de priorisation établie permet de planifier le développement par ordre d'importance :
+
+\begin{itemize}
+    \item \textbf{Priorité TRÈS HAUTE :} Estimation IA, Authentification, Conformité
+    \item \textbf{Priorité HAUTE :} Gestion projets, Génération devis, Performance
+    \item \textbf{Priorité MOYENNE :} CRM, Analytics, Intégrations
+\end{itemize}
+
+\subsection{Transition vers la Conception}
+
+Ces spécifications constituent la base pour :
+\begin{itemize}
+    \item La conception détaillée de l'architecture technique
+    \item Le développement des modules fonctionnels
+    \item La définition des tests d'acceptation
+    \item La planification du déploiement
+\end{itemize}
+
+\begin{resultbox}
+Les spécifications des besoins de Housy Tunisia fournissent un cadre complet et détaillé pour le développement d'une solution parfaitement adaptée aux exigences du secteur de la construction tunisien, avec une approche centrée sur l'intelligence artificielle et l'expérience utilisateur.
+\end{resultbox}
+
+\textbf{[CAPTURE À AJOUTER : Roadmap de développement basée sur les priorités]}
+
+% ========================================================================
+% CAS D'UTILISATION PROMOTEUR IMMOBILIER
+% ========================================================================
+
+\subsection{Diagramme de Cas d'Utilisation Relatif au Promoteur Immobilier}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteur Promoteur Immobilier
+\node[draw, ellipse, fill=purple!20] (promoteur) at (-4,0) {\parbox{1.5cm}{\centering Promoteur\\Immobilier}};
+
+% Système
+\draw[thick] (0,-6) rectangle (12,6);
+\node at (6,5.5) {\textbf{Système Housy - Module Promotion}};
+
+% Cas d'utilisation Promoteur
+\node[draw, ellipse] (portfolio) at (2,4) {\parbox{2cm}{\centering Gérer\\Portfolio}};
+\node[draw, ellipse] (commercialiser) at (5,4) {\parbox{2cm}{\centering Commercialiser\\Projets}};
+\node[draw, ellipse] (prospects) at (8,4) {\parbox{2cm}{\centering Gérer\\Prospects}};
+\node[draw, ellipse] (calculer_roi) at (10,3) {\parbox{2cm}{\centering Calculer\\ROI}};
+\node[draw, ellipse] (planifier_phases) at (2,2) {\parbox{2cm}{\centering Planifier\\Phases}};
+\node[draw, ellipse] (marketing) at (5,2) {\parbox{2cm}{\centering Créer\\Marketing}};
+\node[draw, ellipse] (reservations) at (8,2) {\parbox{2cm}{\centering Gérer\\Réservations}};
+\node[draw, ellipse] (reporting_comm) at (10,1) {\parbox{2cm}{\centering Reporting\\Commercial}};
+\node[draw, ellipse] (partenaires) at (2,0) {\parbox{2cm}{\centering Gérer\\Partenaires}};
+\node[draw, ellipse] (prix_marche) at (5,0) {\parbox{2cm}{\centering Analyser\\Prix Marché}};
+\node[draw, ellipse] (simulation_fin) at (8,0) {\parbox{2cm}{\centering Simulation\\Financière}};
+\node[draw, ellipse] (suivi_ventes) at (10,-1) {\parbox{2cm}{\centering Suivre\\Ventes}};
+
+% Relations principales
+\draw[->] (promoteur) -- (portfolio);
+\draw[->] (promoteur) -- (commercialiser);
+\draw[->] (promoteur) -- (prospects);
+\draw[->] (promoteur) -- (calculer_roi);
+\draw[->] (promoteur) -- (planifier_phases);
+\draw[->] (promoteur) -- (marketing);
+\draw[->] (promoteur) -- (reservations);
+\draw[->] (promoteur) -- (reporting_comm);
+\draw[->] (promoteur) -- (partenaires);
+\draw[->] (promoteur) -- (prix_marche);
+\draw[->] (promoteur) -- (simulation_fin);
+\draw[->] (promoteur) -- (suivi_ventes);
+
+% Relations include/extend
+\draw[dashed, ->] (commercialiser) -- node[above] {\tiny include} (marketing);
+\draw[dashed, ->] (prospects) -- node[above] {\tiny include} (reservations);
+\draw[dashed, ->] (calculer_roi) -- node[right] {\tiny include} (simulation_fin);
+\draw[dashed, ->] (reporting_comm) -- node[right] {\tiny include} (suivi_ventes);
+\draw[dashed, ->] (portfolio) -- node[left] {\tiny extend} (planifier_phases);
+\draw[dashed, ->] (prix_marche) -- node[below] {\tiny extend} (calculer_roi);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation - Promoteur Immobilier}
+\label{fig:cas_utilisation_promoteur}
+\end{figure}
+
+\subsubsection{Spécifications Promoteur Immobilier}
+
+\textbf{CU-PROM-001 : Gérer Portfolio de Projets}
+\begin{itemize}
+    \item \textbf{Description :} Gestion centralisée de tous les projets immobiliers en cours et futurs
+    \item \textbf{Préconditions :} Compte promoteur activé avec droits appropriés
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès au module portfolio
+        \item Visualisation des projets par statut (étude, construction, commercialisation)
+        \item Création de nouveaux projets avec paramètres de base
+        \item Association des équipes et ressources par projet
+        \item Suivi des jalons et échéanciers globaux
+        \item Génération de rapports consolidés
+    \end{enumerate}
+    \item \textbf{Postconditions :} Portfolio mis à jour avec nouvelle structure projet
+\end{itemize}
+
+\textbf{CU-PROM-002 : Commercialiser Projets}
+\begin{itemize}
+    \item \textbf{Description :} Outils de commercialisation et marketing des projets immobiliers
+    \item \textbf{Préconditions :} Projet en phase commercialisable
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Définition de la stratégie commerciale
+        \item Création des supports marketing automatisés
+        \item Configuration des prix et options de financement
+        \item Lancement des campagnes de communication
+        \item Suivi des visites et des prospects intéressés
+        \item Génération des contrats de réservation
+    \end{enumerate}
+    \item \textbf{Postconditions :} Campagne commerciale active avec tracking des résultats
+\end{itemize}
+
+\textbf{CU-PROM-003 : Calculer ROI et Rentabilité}
+\begin{itemize}
+    \item \textbf{Description :} Analyse financière et calculs de rentabilité des projets
+    \item \textbf{Préconditions :} Données financières et techniques disponibles
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Saisie des paramètres financiers du projet
+        \item Calcul automatique des coûts de construction
+        \item Estimation des prix de vente par typologie
+        \item Simulation de différents scénarios de financement
+        \item Génération des indicateurs ROI, TRI, VAN
+        \item Analyse de sensibilité et risques
+    \end{enumerate}
+    \item \textbf{Postconditions :} Dossier financier complet avec recommandations
+\end{itemize}
+
+% ========================================================================
+% CAS D'UTILISATION CLIENT NORMAL
+% ========================================================================
+
+\subsection{Diagramme de Cas d'Utilisation Relatif au Client Normal}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteur Client Normal
+\node[draw, ellipse, fill=yellow!20] (client) at (-4,0) {\parbox{1.5cm}{\centering Client\\Normal}};
+
+% Système
+\draw[thick] (0,-5) rectangle (12,5);
+\node at (6,4.5) {\textbf{Système Housy - Interface Client}};
+
+% Cas d'utilisation Client
+\node[draw, ellipse] (consulter_projet) at (2,3) {\parbox{2cm}{\centering Consulter\\Mon Projet}};
+\node[draw, ellipse] (estimation_perso) at (5,3) {\parbox{2cm}{\centering Demander\\Estimation}};
+\node[draw, ellipse] (valider_docs) at (8,3) {\parbox{2cm}{\centering Valider\\Documents}};
+\node[draw, ellipse] (messagerie) at (10,2) {\parbox{2cm}{\centering Communiquer\\Équipe}};
+\node[draw, ellipse] (galerie_photos) at (2,1) {\parbox{2cm}{\centering Voir\\Avancement}};
+\node[draw, ellipse] (planning_rdv) at (5,1) {\parbox{2cm}{\centering Gérer\\Rendez-vous}};
+\node[draw, ellipse] (documents) at (8,1) {\parbox{2cm}{\centering Accéder\\Documents}};
+\node[draw, ellipse] (notifications) at (10,0) {\parbox{2cm}{\centering Recevoir\\Notifications}};
+\node[draw, ellipse] (paiements) at (2,-1) {\parbox{2cm}{\centering Suivre\\Paiements}};
+\node[draw, ellipse] (support) at (5,-1) {\parbox{2cm}{\centering Contacter\\Support}};
+\node[draw, ellipse] (satisfaction) at (8,-1) {\parbox{2cm}{\centering Évaluer\\Service}};
+\node[draw, ellipse] (mobile_app) at (10,-2) {\parbox{2cm}{\centering Application\\Mobile}};
+
+% Relations principales
+\draw[->] (client) -- (consulter_projet);
+\draw[->] (client) -- (estimation_perso);
+\draw[->] (client) -- (valider_docs);
+\draw[->] (client) -- (messagerie);
+\draw[->] (client) -- (galerie_photos);
+\draw[->] (client) -- (planning_rdv);
+\draw[->] (client) -- (documents);
+\draw[->] (client) -- (notifications);
+\draw[->] (client) -- (paiements);
+\draw[->] (client) -- (support);
+\draw[->] (client) -- (satisfaction);
+\draw[->] (client) -- (mobile_app);
+
+% Relations include/extend
+\draw[dashed, ->] (consulter_projet) -- node[above] {\tiny include} (galerie_photos);
+\draw[dashed, ->] (consulter_projet) -- node[above] {\tiny include} (documents);
+\draw[dashed, ->] (estimation_perso) -- node[right] {\tiny extend} (valider_docs);
+\draw[dashed, ->] (messagerie) -- node[right] {\tiny include} (notifications);
+\draw[dashed, ->] (mobile_app) -- node[below] {\tiny include} (notifications);
+\draw[dashed, ->] (support) -- node[below] {\tiny extend} (satisfaction);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation - Client Normal}
+\label{fig:cas_utilisation_client}
+\end{figure}
+
+\subsubsection{Spécifications Client Normal}
+
+\textbf{CU-CLIENT-001 : Consulter Mon Projet}
+\begin{itemize}
+    \item \textbf{Description :} Suivi en temps réel de l'avancement du projet personnel
+    \item \textbf{Préconditions :} Projet assigné au client avec accès configuré
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Connexion à l'espace client personnalisé
+        \item Visualisation du dashboard projet avec statut actuel
+        \item Consultation du planning et des prochaines étapes
+        \item Accès aux photos et rapports d'avancement
+        \item Vérification des jalons atteints et à venir
+        \item Téléchargement des documents mis à jour
+    \end{enumerate}
+    \item \textbf{Postconditions :} Client informé de l'état actuel de son projet
+\end{itemize}
+
+\textbf{CU-CLIENT-002 : Demander Estimation Personnelle}
+\begin{itemize}
+    \item \textbf{Description :} Obtention d'une estimation pour un projet personnel
+    \item \textbf{Préconditions :} Accès client activé
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès au module d'estimation client
+        \item Saisie des paramètres du projet (surface, type, localisation)
+        \item Sélection des options et niveau de finition souhaités
+        \item Lancement du calcul d'estimation avec IA
+        \item Réception de l'estimation détaillée en langage simple
+        \item Demande de rendez-vous pour affiner le projet
+    \end{enumerate}
+    \item \textbf{Postconditions :} Estimation reçue avec possibilité de suite commerciale
+\end{itemize}
+
+\textbf{CU-CLIENT-003 : Valider Documents Électroniquement}
+\begin{itemize}
+    \item \textbf{Description :} Signature numérique et validation des documents projet
+    \item \textbf{Préconditions :} Documents préparés par l'équipe projet
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Réception de notification de document à valider
+        \item Accès au document via l'interface sécurisée
+        \item Lecture et compréhension avec aide contextuelle
+        \item Demande de clarifications si nécessaire via messagerie
+        \item Validation électronique avec signature numérique
+        \item Confirmation de réception par l'équipe projet
+    \end{enumerate}
+    \item \textbf{Postconditions :} Document validé et workflow projet poursuivi
+\end{itemize}
+
+% ========================================================================
+% CAS D'UTILISATION CLIENT ENTREPRISE
+% ========================================================================
+
+\subsection{Diagramme de Cas d'Utilisation Relatif au Client Entreprise}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}[scale=0.7]
+
+% Acteur Client Entreprise
+\node[draw, ellipse, fill=cyan!20] (client_ent) at (-4,0) {\parbox{1.5cm}{\centering Client\\Entreprise}};
+
+% Système
+\draw[thick] (0,-4) rectangle (12,4);
+\node at (6,3.5) {\textbf{Système Housy - Interface Entreprise}};
+
+% Cas d'utilisation Client Entreprise
+\node[draw, ellipse] (multi_sites) at (2,2) {\parbox{2cm}{\centering Gérer\\Multi-sites}};
+\node[draw, ellipse] (validation_hier) at (5,2) {\parbox{2cm}{\centering Validation\\Hiérarchique}};
+\node[draw, ellipse] (reporting_corp) at (8,2) {\parbox{2cm}{\centering Reporting\\Corporate}};
+\node[draw, ellipse] (interface_erp) at (10,1) {\parbox{2cm}{\centering Interface\\ERP}};
+\node[draw, ellipse] (conformite) at (2,0) {\parbox{2cm}{\centering Conformité\\Pro}};
+\node[draw, ellipse] (autorisations) at (5,0) {\parbox{2cm}{\centering Gérer\\Autorisations}};
+\node[draw, ellipse] (budget_corp) at (8,0) {\parbox{2cm}{\centering Budget\\Corporate}};
+\node[draw, ellipse] (audit_corp) at (10,-1) {\parbox{2cm}{\centering Audit\\Corporate}};
+\node[draw, ellipse] (workflow_ent) at (2,-2) {\parbox{2cm}{\centering Workflow\\Entreprise}};
+\node[draw, ellipse] (kpi_corp) at (5,-2) {\parbox{2cm}{\centering KPI\\Corporate}};
+
+% Relations principales
+\draw[->] (client_ent) -- (multi_sites);
+\draw[->] (client_ent) -- (validation_hier);
+\draw[->] (client_ent) -- (reporting_corp);
+\draw[->] (client_ent) -- (interface_erp);
+\draw[->] (client_ent) -- (conformite);
+\draw[->] (client_ent) -- (autorisations);
+\draw[->] (client_ent) -- (budget_corp);
+\draw[->] (client_ent) -- (audit_corp);
+\draw[->] (client_ent) -- (workflow_ent);
+\draw[->] (client_ent) -- (kpi_corp);
+
+% Relations include/extend
+\draw[dashed, ->] (multi_sites) -- node[above] {\tiny include} (workflow_ent);
+\draw[dashed, ->] (reporting_corp) -- node[above] {\tiny include} (kpi_corp);
+\draw[dashed, ->] (validation_hier) -- node[right] {\tiny include} (workflow_ent);
+\draw[dashed, ->] (conformite) -- node[below] {\tiny include} (autorisations);
+\draw[dashed, ->] (interface_erp) -- node[right] {\tiny extend} (budget_corp);
+
+\end{tikzpicture}
+\caption{Diagramme de cas d'utilisation - Client Entreprise}
+\label{fig:cas_utilisation_client_entreprise}
+\end{figure}
+
+\subsubsection{Spécifications Client Entreprise}
+
+\textbf{CU-CENT-001 : Gestion Multi-sites}
+\begin{itemize}
+    \item \textbf{Description :} Coordination de projets sur plusieurs sites géographiques
+    \item \textbf{Préconditions :} Compte entreprise avec projets multi-localisations
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Accès au dashboard multi-sites
+        \item Vue consolidée de tous les sites en cours
+        \item Comparaison des avancements par localisation
+        \item Coordination des ressources entre sites
+        \item Reporting consolidé pour la direction
+        \item Optimisation des synergies inter-sites
+    \end{enumerate}
+    \item \textbf{Postconditions :} Vision globale et coordination optimisée des sites
+\end{itemize}
+
+\textbf{CU-CENT-002 : Validation Hiérarchique}
+\begin{itemize}
+    \item \textbf{Description :} Workflows d'approbation selon la hiérarchie entreprise
+    \item \textbf{Préconditions :} Structure hiérarchique configurée dans le système
+    \item \textbf{Scénario principal :}
+    \begin{enumerate}
+        \item Soumission de demande nécessitant validation
+        \item Routage automatique selon montant et type
+        \item Notification des valideurs concernés
+        \item Processus de validation par niveaux successifs
+        \item Traçabilité complète des décisions
+        \item Notification de validation finale ou rejet
+    \end{enumerate}
+    \item \textbf{Postconditions :} Décision prise avec traçabilité complète
+\end{itemize}
