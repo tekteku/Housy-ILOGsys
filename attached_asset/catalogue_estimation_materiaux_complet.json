@@ -1,0 +1,259 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Estimation matériaux construction",
+    "source_principale": "brico-direct.tn",
+    "nombre_materiaux": 10,
+    "economies_moyennes": "19.9%"
+  },
+  "categories_disponibles": [
+    "gros_oeuvre",
+    "revêtement",
+    "granulats",
+    "isolation"
+  ],
+  "statistiques_prix": {
+    "prix_minimum_tnd": 0.81,
+    "prix_maximum_tnd": 44.41,
+    "prix_moyen_tnd": 16.945
+  },
+  "materiaux": [
+    {
+      "id": 1,
+      "nom": "Brique",
+      "type_detaille": "Brique - Brique rouge 6 trous",
+      "prix": {
+        "unitaire_tnd": 0.81,
+        "moyen_tnd": 0.98,
+        "maximum_tnd": 1.15
+      },
+      "unite": "pièce",
+      "fournisseur": {
+        "meilleur": "Fournisseur A",
+        "nombre_total": 4
+      },
+      "disponibilite": "Sur commande",
+      "economie": {
+        "montant_tnd": 0.34,
+        "pourcentage": 29.6
+      },
+      "usage": "Maçonnerie, cloisons",
+      "categorie": "gros_oeuvre"
+    },
+    {
+      "id": 2,
+      "nom": "Carrelage",
+      "type_detaille": "Carrelage - Carrelage céramique 30x30",
+      "prix": {
+        "unitaire_tnd": 22.32,
+        "moyen_tnd": 29.18,
+        "maximum_tnd": 33.25
+      },
+      "unite": "m²",
+      "fournisseur": {
+        "meilleur": "Fournisseur A",
+        "nombre_total": 3
+      },
+      "disponibilite": "Stock limité",
+      "economie": {
+        "montant_tnd": 10.93,
+        "pourcentage": 32.9
+      },
+      "usage": "Revêtement sol/mur",
+      "categorie": "revêtement"
+    },
+    {
+      "id": 3,
+      "nom": "Ciment",
+      "type_detaille": "Ciment - Ciment Portland CEM II 42.5",
+      "prix": {
+        "unitaire_tnd": 16.75,
+        "moyen_tnd": 18.39,
+        "maximum_tnd": 20.67
+      },
+      "unite": "sac 50kg",
+      "fournisseur": {
+        "meilleur": "Fournisseur A",
+        "nombre_total": 3
+      },
+      "disponibilite": "En stock",
+      "economie": {
+        "montant_tnd": 3.92,
+        "pourcentage": 19.0
+      },
+      "usage": "Construction générale, béton",
+      "categorie": "gros_oeuvre"
+    },
+    {
+      "id": 4,
+      "nom": "Fer à béton",
+      "type_detaille": "Fer à béton - Fer rond lisse/nervuré",
+      "prix": {
+        "unitaire_tnd": 2.95,
+        "moyen_tnd": 3.08,
+        "maximum_tnd": 3.21
+      },
+      "unite": "kg",
+      "fournisseur": {
+        "meilleur": "Marché Local",
+        "nombre_total": 4
+      },
+      "disponibilite": "Stock limité",
+      "economie": {
+        "montant_tnd": 0.26,
+        "pourcentage": 8.1
+      },
+      "usage": "Armature béton armé",
+      "categorie": "gros_oeuvre"
+    },
+    {
+      "id": 5,
+      "nom": "Gravier",
+      "type_detaille": "Gravier - Gravier 8/16",
+      "prix": {
+        "unitaire_tnd": 27.68,
+        "moyen_tnd": 29.36,
+        "maximum_tnd": 30.44
+      },
+      "unite": "m³",
+      "fournisseur": {
+        "meilleur": "Fournisseur A",
+        "nombre_total": 3
+      },
+      "disponibilite": "Sur commande",
+      "economie": {
+        "montant_tnd": 2.76,
+        "pourcentage": 9.1
+      },
+      "usage": "Béton, drainage",
+      "categorie": "granulats"
+    },
+    {
+      "id": 6,
+      "nom": "Isolant",
+      "type_detaille": "Isolant - Laine de verre 100mm",
+      "prix": {
+        "unitaire_tnd": 19.38,
+        "moyen_tnd": 21.86,
+        "maximum_tnd": 23.93
+      },
+      "unite": "m²",
+      "fournisseur": {
+        "meilleur": "Fournisseur C",
+        "nombre_total": 4
+      },
+      "disponibilite": "En stock",
+      "economie": {
+        "montant_tnd": 4.55,
+        "pourcentage": 19.0
+      },
+      "usage": "Isolation thermique",
+      "categorie": "isolation"
+    },
+    {
+      "id": 7,
+      "nom": "Parpaing",
+      "type_detaille": "Parpaing - Parpaing 20x20x40",
+      "prix": {
+        "unitaire_tnd": 1.39,
+        "moyen_tnd": 1.48,
+        "maximum_tnd": 1.74
+      },
+      "unite": "pièce",
+      "fournisseur": {
+        "meilleur": "Fournisseur B",
+        "nombre_total": 4
+      },
+      "disponibilite": "Stock limité",
+      "economie": {
+        "montant_tnd": 0.35,
+        "pourcentage": 20.1
+      },
+      "usage": "Maçonnerie, murs",
+      "categorie": "gros_oeuvre"
+    },
+    {
+      "id": 8,
+      "nom": "Peinture",
+      "type_detaille": "Peinture - Peinture acrylique intérieur",
+      "prix": {
+        "unitaire_tnd": 44.41,
+        "moyen_tnd": 51.92,
+        "maximum_tnd": 56.31
+      },
+      "unite": "bidon 25L",
+      "fournisseur": {
+        "meilleur": "Fournisseur B",
+        "nombre_total": 3
+      },
+      "disponibilite": "Sur commande",
+      "economie": {
+        "montant_tnd": 11.9,
+        "pourcentage": 21.1
+      },
+      "usage": "Peinture intérieure",
+      "categorie": "revêtement"
+    },
+    {
+      "id": 9,
+      "nom": "Placo",
+      "type_detaille": "Placo - Plaque de plâtre BA13",
+      "prix": {
+        "unitaire_tnd": 9.11,
+        "moyen_tnd": 10.09,
+        "maximum_tnd": 11.63
+      },
+      "unite": "m²",
+      "fournisseur": {
+        "meilleur": "Fournisseur C",
+        "nombre_total": 4
+      },
+      "disponibilite": "Stock limité",
+      "economie": {
+        "montant_tnd": 2.52,
+        "pourcentage": 21.7
+      },
+      "usage": "Cloisons, doublage",
+      "categorie": "isolation"
+    },
+    {
+      "id": 10,
+      "nom": "Sable",
+      "type_detaille": "Sable - Sable de rivière",
+      "prix": {
+        "unitaire_tnd": 24.65,
+        "moyen_tnd": 26.23,
+        "maximum_tnd": 30.22
+      },
+      "unite": "m³",
+      "fournisseur": {
+        "meilleur": "Fournisseur B",
+        "nombre_total": 4
+      },
+      "disponibilite": "En stock",
+      "economie": {
+        "montant_tnd": 5.57,
+        "pourcentage": 18.4
+      },
+      "usage": "Mortier, béton",
+      "categorie": "granulats"
+    }
+  ]
+}

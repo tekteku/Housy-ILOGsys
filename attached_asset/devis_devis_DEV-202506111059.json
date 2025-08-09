@@ -1,0 +1,80 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Devis généré",
+    "numero_devis": "devis_DEV-202506111059"
+  },
+  "devis": {
+    "numero": "DEV-202506111059",
+    "date": "11/06/2025",
+    "validite": "11/07/2025",
+    "client": {
+      "nom": "Mme Fatma Sassi",
+      "adresse": "Avenue Bourguiba, Sousse 4000",
+      "tel": "+216 73 XXX XXX"
+    },
+    "project": {
+      "nom": "Rénovation Appartement 80m²",
+      "description": "Rénovation complète avec isolation et finitions"
+    },
+    "lines": [
+      {
+        "designation": "Isolant - Laine de verre 100mm",
+        "quantite": 80,
+        "unite": "m²",
+        "prix_unitaire": 19.38,
+        "total_ht": 1550.3999999999999,
+        "fournisseur": "Fournisseur C",
+        "economie_possible": 364.0
+      },
+      {
+        "designation": "Placo - Plaque de plâtre BA13",
+        "quantite": 150,
+        "unite": "m²",
+        "prix_unitaire": 9.11,
+        "total_ht": 1366.5,
+        "fournisseur": "Fournisseur C",
+        "economie_possible": 378.0
+      },
+      {
+        "designation": "Carrelage - Carrelage céramique 30x30",
+        "quantite": 80,
+        "unite": "m²",
+        "prix_unitaire": 22.32,
+        "total_ht": 1785.6,
+        "fournisseur": "Fournisseur A",
+        "economie_possible": 874.4
+      },
+      {
+        "designation": "Peinture - Peinture acrylique intérieur",
+        "quantite": 6,
+        "unite": "bidon 25L",
+        "prix_unitaire": 44.41,
+        "total_ht": 266.46,
+        "fournisseur": "Fournisseur B",
+        "economie_possible": 71.4
+      }
+    ],
+    "sous_total": 4968.96,
+    "tva_montant": 944.1024,
+    "total_ttc": 5913.0624,
+    "total_economies": 1687.8000000000002
+  }
+}

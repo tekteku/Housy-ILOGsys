@@ -1,0 +1,100 @@
+# Fichier .dockerignore pour optimiser la construction des images Docker
+
+# Fichiers et dossiers à exclure de l'image Docker
+
+# Dépendances Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Fichiers de build et dist
+dist/
+build/
+.next/
+.nuxt/
+
+# Fichiers de cache
+.npm
+.yarn-integrity
+.pnpm-debug.log*
+.cache/
+
+# Fichiers de configuration locale
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE et éditeurs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Système d'exploitation
+.DS_Store
+Thumbs.db
+*.log
+
+# Git
+.git/
+.gitignore
+README.md
+CHANGELOG.md
+*.md
+
+# Tests
+coverage/
+.nyc_output
+test-results/
+test-report.json
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Fichiers temporaires
+*.tmp
+*.temp
+.temp/
+tmp/
+
+# Logs
+logs/
+*.log
+
+# Base de données locale
+*.sqlite
+*.db
+
+# Sauvegarde et fichiers temporaires d'éditeur
+*~
+*.bak
+*.swp
+*.tmp
+
+# Fichiers système Windows
+*.ini
+desktop.ini
+
+# Fichiers de déploiement
+deploy/
+deployment/
+k8s/
+kubernetes/
+
+# Fichiers de scripts PowerShell spécifiques au développement
+*.ps1
+*.bat
+
+# Monitoring
+prometheus/
+grafana/
+
+# Documentation
+docs/
+documentation/

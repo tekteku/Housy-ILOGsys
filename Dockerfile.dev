@@ -1,0 +1,39 @@
+# Dockerfile pour l'environnement de développement
+FROM node:18-alpine AS development
+
+LABEL maintainer="Housy Development Team <dev@housy.tn>"
+LABEL description="Housy Development Environment"
+
+# Installer les outils de développement
+RUN apk add --no-cache \
+    git \
+    curl \
+    bash \
+    vim \
+    && rm -rf /var/cache/apk/*
+
+WORKDIR /app
+
+# Copier les fichiers de dépendances
+COPY package*.json ./
+
+# Installer toutes les dépendances (dev incluses)
+RUN npm install
+
+# Copier le code source
+COPY . .
+
+# Exposer les ports pour le développement
+EXPOSE 3000 5173
+
+# Variables d'environnement pour le développement
+ENV NODE_ENV=development
+ENV PORT=3000
+ENV HOST=0.0.0.0
+
+# Health check pour le développement
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:3000 || exit 1
+
+# Commande par défaut pour le développement
+CMD ["npm", "run", "dev"]

@@ -1,0 +1,347 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Matériaux bruts",
+    "fichier_source": "materials_raw_20250611_093824",
+    "nombre_produits": 31
+  },
+  "colonnes_disponibles": [
+    "nom",
+    "prix",
+    "devise",
+    "unite",
+    "categorie",
+    "site",
+    "url",
+    "timestamp"
+  ],
+  "donnees": [
+    {
+      "nom": "DEVIDOIR GM DELI / NOIR / BLEU",
+      "prix": 21.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=ciment",
+      "timestamp": "2025-06-11T09:38:44.976905"
+    },
+    {
+      "nom": "DEVIDOIR PM DELI / NOIR / BLEU",
+      "prix": 6.9,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=ciment",
+      "timestamp": "2025-06-11T09:38:44.979308"
+    },
+    {
+      "nom": "DEVIDOIR MM DELI / NOIR / BLEU",
+      "prix": 9.9,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=ciment",
+      "timestamp": "2025-06-11T09:38:44.980298"
+    },
+    {
+      "nom": "Aspirateur ZEEGMA Zonder Pro Compact / 1000W /  Noir & Gris",
+      "prix": 249.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=ciment",
+      "timestamp": "2025-06-11T09:38:44.981515"
+    },
+    {
+      "nom": "Fer À frise 19 MM MOSER / NOIR",
+      "prix": 89.0,
+      "devise": "dt",
+      "unite": "pièce",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.401847"
+    },
+    {
+      "nom": "Fer à boucler LIVOO DOS193",
+      "prix": 259.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.402846"
+    },
+    {
+      "nom": "Fer à repasser Copper Express RUSSELL HOBBS 23975-56 / 2600W",
+      "prix": 209.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.403847"
+    },
+    {
+      "nom": "Fer à repasser TOUCH / 2600 W / Mauve",
+      "prix": 99.0,
+      "devise": "dt",
+      "unite": "pièce",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.404850"
+    },
+    {
+      "nom": "Fer à Repasser Russell Hobbs Light & Easy Brights Saphir / 2400W",
+      "prix": 135.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.406848"
+    },
+    {
+      "nom": "Fer à repasser Ufesa activa PV1500C / 2200W",
+      "prix": 109.0,
+      "devise": "dt",
+      "unite": "pièce",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.407846"
+    },
+    {
+      "nom": "Fer à repasser ROSBERG 160ML / 2200W / Noir et Rouge / 55R51050GR",
+      "prix": 59.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.408845"
+    },
+    {
+      "nom": "Fer à vapeur Céramique KIWI KSI 6319C",
+      "prix": 89.0,
+      "devise": "dt",
+      "unite": "pièce",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.409846"
+    },
+    {
+      "nom": "Fer à repasser Ufesa Selecta PV3280 / 2800W / Bleu",
+      "prix": 155.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.410847"
+    },
+    {
+      "nom": "Fer A Repasser Sans Fil ZEEGMA Ironee 2600W - Noir&Gold",
+      "prix": 189.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.412850"
+    },
+    {
+      "nom": "Fer À Repasser LEXICAL 2200W / Beige / LSI1008",
+      "prix": 75.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.414847"
+    },
+    {
+      "nom": "Fer à Repasser LEXICAL 2200W NOIR / LSI-1015N",
+      "prix": 79.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.415845"
+    },
+    {
+      "nom": "FER A VAPEUR TEFAL SANS FIL 2400W / Bleu et Blanc / FV6520E0",
+      "prix": 299.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.416846"
+    },
+    {
+      "nom": "Fer À Boucler Remington / Rose / CI5901",
+      "prix": 179.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.417846"
+    },
+    {
+      "nom": "FER A GENERATEUR EXPRESS TEFAL 2200W Bleu - SV4110",
+      "prix": 299.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.418847"
+    },
+    {
+      "nom": "Fer À Vapeur Tefal 2800W Vert  - FV5781E1",
+      "prix": 175.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.419846"
+    },
+    {
+      "nom": "Fer à boucler Babyliss 25mm",
+      "prix": 149.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.421263"
+    },
+    {
+      "nom": "Fer à boucler Babyliss 32 mm",
+      "prix": 149.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.423301"
+    },
+    {
+      "nom": "Fer À Vapeur Tefal Easy Gliss 2400W Noir - FV5718EO",
+      "prix": 315.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.424301"
+    },
+    {
+      "nom": "Fer à Boucler Pro BABYLISS Sublim'touch C338E 38mm",
+      "prix": 159.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.425300"
+    },
+    {
+      "nom": "Fer À Boucler ROWENTA KARL LAGERFELD / Noir / CF321L",
+      "prix": 99.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.426301"
+    },
+    {
+      "nom": "Fer à Boucler Remington CI6X10",
+      "prix": 289.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.427299"
+    },
+    {
+      "nom": "Fer à repasser RUSSELL HOBBS LIGHT & EASY Pro 26461-56 / 2600W",
+      "prix": 169.0,
+      "devise": "dt",
+      "unite": "g",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.428292"
+    },
+    {
+      "nom": "Fer à repasser RUSSELL HOBBS Diamond Elite 27000-56 / 3100W",
+      "prix": 399.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "fer",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=fer",
+      "timestamp": "2025-06-11T09:38:50.429305"
+    },
+    {
+      "nom": "NETTOYEUR VAPEUR KARCHER SC 4 EasyFix 2000 W",
+      "prix": 19.0,
+      "devise": "dt",
+      "unite": "pièce",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=carrelage",
+      "timestamp": "2025-06-11T09:38:55.900147"
+    },
+    {
+      "nom": "Aspirateur nettoyeur de sol 2en1 KARCHER FC 5",
+      "prix": 224.0,
+      "devise": "dt",
+      "unite": "l",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=carrelage",
+      "timestamp": "2025-06-11T09:38:55.901153"
+    },
+    {
+      "nom": "Nettoyeur vapeur KARCHER SC 5 EasyFix IRON",
+      "prix": 799.0,
+      "devise": "dt",
+      "unite": "pièce",
+      "categorie": "autres",
+      "site": "TunisiaNet",
+      "url": "https://www.tunisianet.com.tn/recherche?controller=search&s=carrelage",
+      "timestamp": "2025-06-11T09:38:55.902219"
+    }
+  ]
+}

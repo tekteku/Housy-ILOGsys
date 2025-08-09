@@ -1,0 +1,49 @@
+{
+  "metadata": {
+    "date_creation": "2025-06-12T15:40:37.894677",
+    "description": "Résumé optimisé des propriétés immobilières tunisiennes",
+    "total_proprietes": 5458,
+    "sources": []
+  },
+  "statistiques_generales": {},
+  "echantillons": [
+    {
+      "titre": "Villa s+3 à vendre",
+      "prix": {
+        "montant_brut": "4 pièces Prix sur demande",
+        "montant_nettoye": "4 pièces Prix sur demande",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Hammemet centre, Nabeul",
+        "region": NaN,
+        "pays": "Tunisie"
+      },
+      "type": "",
+      "source": {
+        "site": "fi-dari.tn",
+        "id_propriete": NaN,
+        "numero_page": 1
+      }
+    },
+    {
+      "titre": "Maison de haut standing à vendre à Cité Ettaoufik",
+      "prix": {
+        "montant_brut": "Prix à consulter",
+        "montant_nettoye": "Prix à consulter",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Saadoun,\n\t\t\t\t\t\t\t\tTunis",
+        "region": NaN,
+        "pays": "Tunisie"
+      },
+      "type": "",
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": NaN,
+        "numero_page": 1
+      }
+    }
+  ]
+}

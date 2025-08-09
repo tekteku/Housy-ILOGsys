@@ -1,0 +1,75 @@
+# Configuration Docker pour l'environnement de développement
+
+services:
+  # Base de données PostgreSQL pour développement
+  postgres-dev:
+    image: postgres:15-alpine
+    container_name: housy-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: housy_tunisia
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "0000"
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    networks:
+      - housy-dev-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d housy_tunisia"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis pour développement
+  redis-dev:
+    image: redis:7-alpine
+    container_name: housy-redis-dev
+    restart: unless-stopped
+    ports:
+      - "6380:6379"
+    networks:
+      - housy-dev-network
+
+  # Application en mode développement avec hot-reload
+  housy-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: housy-app-dev
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+      - "5173:5173"  # Vite dev server
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:0000@postgres-dev:5432/housy_tunisia
+      REDIS_URL: redis://redis-dev:6379
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/client/node_modules
+    networks:
+      - housy-dev-network
+    depends_on:
+      postgres-dev:
+        condition: service_healthy
+      redis-dev:
+        condition: service_started
+    command: npm run dev
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      interval: 30s
+      timeout: 3s
+      start_period: 60s
+      retries: 3
+
+volumes:
+  postgres_dev_data:
+    driver: local
+
+networks:
+  housy-dev-network:
+    driver: bridge
