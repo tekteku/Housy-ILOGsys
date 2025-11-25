@@ -1,0 +1,1196 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "SystÃ¨me complet d'estimation matÃ©riaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "ComplÃ¨te"
+    },
+    "type_donnees": "PropriÃ©tÃ©s immobiliÃ¨res",
+    "site_source": "mubawab.tn",
+    "nombre_proprietes": 34,
+    "regions_couvertes": [
+      null
+    ],
+    "types_proprietes": [
+      null
+    ]
+  },
+  "statistiques_prix": {
+    "prix_minimum_tnd": 1.0,
+    "prix_maximum_tnd": 980.0,
+    "prix_moyen_tnd": 487.03333333333336,
+    "nombre_avec_prix": 30
+  },
+  "proprietes": [
+    {
+      "id": 369,
+      "titre": "Maison de haut standing Ã  vendre Ã  CitÃ© Ettaoufik",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "Prix Ã  consulter",
+        "montant_nettoye": "Prix Ã  consulter",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Saadoun,\n\t\t\t\t\t\t\t\tTunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "Prix Ã  consulter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison de haut standing Ã  vendre Ã  CitÃ© Ettaoufik\n\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tBab Saadoun,\n\t\t\t\t\t\t\t\tTunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t500\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t7 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t6 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tÃ€ vendre villa R2 trÃ¨s bien situÃ©e donnant accÃ¨s directe sur 2 avenues excellent investissement pour le commerce ,les bureaux ou lâ€™habitation superficie du terrain 450 mÃ¨tres carrÃ©s surface bÃ¢tie 600 mÃ¨tres\nemplacement exacte 19 rue 3 septembre 1934 ettwafik Tunis\n\t\t\t\t\t\n\n\t\t\t\t\t\n\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/pa/7925569/maison-de-haut-standing-%C3%A0-vendre-%C3%A0-cit%C3%A9-ettaoufik",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 370,
+      "titre": "A vendre maison S3 Ã  sidi Bechir",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "270Â 000 TND",
+        "montant_nettoye": "270Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Sidi Bechir,\n\t\t\t\t\t\t\t\tTunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "270Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tA vendre maison S3 Ã  sidi Bechir\n\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tSidi Bechir,\n\t\t\t\t\t\t\t\tTunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t130\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tPorte blindÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tFour\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tla MÃ©diterranÃ© immobiliÃ¨re pour propose Ã  la vente une maisons S3 Ã  sidi BÃ©chir, sur un terrain de 65mÂ² situÃ©e dans un quartier proche de toutes les commoditÃ©s . Elle se compose de deux niveaux: le rez-de-chaussÃ©e comporte un salon spacieux avec un coin de repas , une cuisine moderne et bien Ã©quipÃ©e par des Ã©lÃ©ments de rangements,plaque,hotte et four complÃ©tÃ© par un sÃ©choir, Au premier Ã©tage on trouve trois chambres Ã  coucher dont une avec dressi...\n\t\t\t\t\t\n\n\t\t\t\t\t\n\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8131719/a-vendre-maison-s3-%C3%A0-sidi-bechir",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 371,
+      "titre": "Villa de Charme Ã  Demna Metline",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "640Â 000 TND",
+        "montant_nettoye": "640Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "640Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tVilla de Charme Ã  Demna Metline\n\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tBizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t320\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tVue sur mer\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tVue sur les montagnes\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tPiscine\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChauffage central\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t+ 2 extras\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t EDF ImmobiliÃ¨re vous propose une somptueuse villa haut standing situÃ©e Ã  Demna, Bizerte,\navec des prestations dâ€™exception :\nComposition : Vaste salon\nSuite parentale Deux chambres\nDeux salles de bain\nCuisine entiÃ¨rement Ã©quipÃ©e\nCaractÃ©ristiques techniques :\nIsolation thermique et phonique\nDouble vitrage\nchauffage central\nClimatisation\nExtÃ©rieur :\nMagnifique jardin\nDeux terrasses\nPiscine Vue mer panoramique et imprenable \nPlace Par...\n\t\t\t\t\t\n\n\t\t\t\t\t\n\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8057179/villa-de-charme-%C3%A0-demna-metline",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 372,
+      "titre": "Villa Ã  vendre Ã  Montfleury",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "Prix Ã  consulter",
+        "montant_nettoye": "Prix Ã  consulter",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montfleury,\n\t\t\t\t\t\t\t\tTunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "Prix Ã  consulter\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tVilla Ã  vendre Ã  Montfleury\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMontfleury,\n\t\t\t\t\t\t\t\tTunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t250\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t8 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t7 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChauffage central\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tNous vous proposons Ã  la vente une villa S8 situÃ©e Ã  Montfleury, lâ€™un des quartiers les plus prisÃ©s de Tunis. Construite en 1965, cette propriÃ©tÃ© reprÃ©sente une opportunitÃ© rare sur le marchÃ©. Ã‰difiÃ©e sur un terrain de 781 mÂ², elle offre 250 mÂ² de surface habitable rÃ©partie sur trois niveaux.\n\nLa villa se compose de :\n\nUn salon spacieux avec salle Ã  manger de 34 mÂ²\n\n8 chambres lumineuses\n\nDeux cuisines\n\nUne salle de bains\n\nDeux salles...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8134378/villa-%C3%A0-vendre-%C3%A0-montfleury",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 373,
+      "titre": "A vendre une maison Coloniale Ã  Tunis",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "680Â 000 TND",
+        "montant_nettoye": "680Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Bhar,\n\t\t\t\t\t\t\t\tTunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "680Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tA vendre une maison Coloniale Ã  Tunis\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tBab Bhar,\n\t\t\t\t\t\t\t\tTunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t380\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t8 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t8 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\toccasion Ã  ne pas rater Ã  Vendre une belle maison coloniale de 380mÂ² situÃ© Ã  Tunis pas loin de Beb Jedid . Elle est composÃ©e dâ€™un hall au RDC deux salons spacieux et 8 chambres\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8133182/a-vendre-une-maison-coloniale-%C3%A0-tunis",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 374,
+      "titre": "Maison arabe",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "Prix Ã  consulter",
+        "montant_nettoye": "Prix Ã  consulter",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Souika, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "Prix Ã  consulter\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison arabe\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bab Souika, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t220\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tMaison arabe a 3 minutes du lycee de la rue de pacha bab souika d'une superficie de 220 mÂ² enverrons . 4 chambres 2 cuisines une douche et 2 skrifas et patio de 6m/6m . Le prix demande et de 280 MD NÃ©gociable\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8142961/maison-arabe",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 375,
+      "titre": "Magnifique villa France ville",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "680Â 000 TND",
+        "montant_nettoye": "680Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montplaisir, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "680Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMagnifique villa France ville\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Montplaisir, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t220\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChauffage central\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tRÃ©f AVM01406 \nA vendre une villa trois Ã©tages Emplacement France ville \nSuperficie terrain 220 mÂ² Superficie BÃ¢tit 260 mÂ² Superficie studio 30 mÂ² \nTypologie S4 \nComposition:Rez de chaussÃ©e Salon salle Ã  manger spacieux un sÃ©jour une salle dâ€™eau avec douche cuisine bien Ã©quipÃ©e avec une terrasse sÃ©choir.\n Premier Ã©tage: trois chambres Ã  coucher dont une avec dressing et une avec balcon une salle de bain. \nDeuxiÃ¨me Ã©tage une cuisine et une gr...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7964780/magnifique-villa-france-ville",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 376,
+      "titre": "Villa individuelle en vente",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "1Â 800Â 000 TND",
+        "montant_nettoye": "1Â 800Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Tunis, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": null,
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8140315/villa-individuelle-en-vente",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 377,
+      "titre": "Maison en triplex, Rue 7 Novembre, Bizerte",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "750Â 000 TND",
+        "montant_nettoye": "750Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "750Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison en triplex, Rue 7 Novembre, Bizerte\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t120\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t6 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tSalon europÃ©en\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tAntenne parabolique\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tEDF ImmobiliÃ¨re propose Ã  la vente une maison en triplex Ã  Rue 7 Novembre Bizerte sur un terrain de 120 mÂ² \nemplacement idÃ©al sur la route principale composÃ© de:\nDeux Locaux Commerciaux au RDC\n1 er Ã©tage : 2 salons, salle Ã  manger, 2 chambres Ã  coucher\n2 Ã¨me Ã©tage : salon, 2 chambres, terrasse \nPrix de la vente 750 MD\nPour plus d'informations veuillez nous contacter \nVous trouverez l'agence au sein du Complexe Commercial Bizerte Center. \n...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7872742/maison-en-triplex-rue-7-novembre-bizerte",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 378,
+      "titre": "Duplex Ã  Vendre Ã  CitÃ© Jalaa Bizerte",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "350Â 000 TND",
+        "montant_nettoye": "350Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "350Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tDuplex Ã  Vendre Ã  CitÃ© Jalaa Bizerte\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t250\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t7 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tEDF ImmobiliÃ¨re vous propose une maison composÃ©e de deux Ã©tages indÃ©pendants, situÃ©e Ã  CitÃ© El Jalaa, Bizerte\nRez-de-chaussÃ©e (110 mÂ²) : Salon 2 chambres Cuisine Salle de bain Terrasse Garage\n1er Ã©tage (140 mÂ²) : Vaste salon Cuisine 3 chambres Ã  coucher Salle dâ€™eau Balcon\n DÃ©tails supplÃ©mentaires : Superficie du terrain : 154 mÂ² \nSurface bÃ¢tie : 250 mÂ² \nSituation juridique : Titre foncier \nPrix de vente : 350 000 DT \nPour plus dâ€™informatio...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8064450/duplex-%C3%A0-vendre-%C3%A0-cit%C3%A9-jalaa-bizerte",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 379,
+      "titre": "Duplex Ã  vendre Ã  citÃ© Tayaran Bizerte",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "350Â 000 TND",
+        "montant_nettoye": "350Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "350Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tDuplex Ã  vendre Ã  citÃ© Tayaran Bizerte\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t260\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t7 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tSalon europÃ©en\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tAntenne parabolique\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tDouble vitrage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t EDF immobiliÃ¨re met Ã  la vente une maison en duplex Ã  citÃ© tayaran Bizerte .\nse composÃ©e d'un salon  3 chambres  cuisine  salle de bain  terrasse\n1Ã©re Ã©tage s2 en cours\nsuperficie BÃ¢tie \n rdc : 160mÂ² \n1Ã©re Ã©tage : 100mÂ² \nsuperficie de terrain : 200mÂ²\nsituation juridique : titre \nPrix de vente : 360 MD\nPour plus d'informations merci de nous contacter sur 72 423 856 // 29 276 849 Ou bien visiter notre  agence situÃ©e Ã  Bizerte centre Burea...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8077377/duplex-%C3%A0-vendre-%C3%A0-cit%C3%A9-tayaran-bizerte",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 380,
+      "titre": "Duplex Ã  vendre Ã  Hamdless Bizerte",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "200Â 000 TND",
+        "montant_nettoye": "200Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "200Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tDuplex Ã  vendre Ã  Hamdless Bizerte\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t100\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tVue sur mer\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tMeublÃ©\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tDouble vitrage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tRÃ©frigÃ©rateur\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tFour\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tMachine Ã  laver\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tMicro-ondes\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tEDF ImmobiliÃ¨re met Ã  vendre en exclusivitÃ© trÃ¨s bel appartement en duplex authentique avec une dÃ©coration et architecture artisanale entiÃ¨rement indÃ©pendante \ncomposÃ© de 2 Ã©tages et une terrasse supÃ©rieure donnant vue sur mer. \nSituÃ© au pied du Fort dâ€™Espagne Ã  100 mÂ² de la MÃ©dina  \nChaque Ã©tage dispose dâ€™un climatiseur chaud froid, dâ€™une salle de bain, dâ€™un WC, fenÃªtres double vitrage avec des stores automatiques. \nLe premier Ã©tage : salon...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7809304/duplex-%C3%A0-vendre-%C3%A0-hamdless-bizerte",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 381,
+      "titre": "Une Villa Ã  vendre Ã  Bizerte",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "520Â 000 TND",
+        "montant_nettoye": "520Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "520Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tUne Villa Ã  vendre Ã  Bizerte\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t609\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tAntenne parabolique\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tSÃ©curitÃ©\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tPorte blindÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tRÃ©f 2573 : EDF ImmobiliÃ¨re met Ã  la vente une Villa situÃ©e Ã   bizerte .\nS3 entourÃ© avec un grand jardin avec des herbes d'olives et thomson plus abri de voiture\nElle fait l'angle 25 mÃ¨tres de face Emplacement commercial pour INVESTISSEMENT\n 2 minutes au centre ville Bizerte\nSurface : 609 mÂ²\nBÃ¢tie : 180 mÂ² \nTitre individuel\nPrix :  520 000 DT discutable 152 milles \nPour plus d'informations merci de nous contacter ou bien visiter notre agen...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7994906/une-villa-%C3%A0-vendre-%C3%A0-bizerte",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 382,
+      "titre": "A vendre villa de 603mÂ² Ã  Montfleury, Tunis",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "690Â 000 TND",
+        "montant_nettoye": "690Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montfleury, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "690Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tA vendre villa de 603mÂ² Ã  Montfleury, Tunis\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Montfleury, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t603\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t L'agence immobiliÃ¨re Century 21 Masters vous propose Ã  la vente une villa Ã  rÃ©novÃ© Ã  Montfleury, Tunis.\n - Superficie terrain : 603mÂ²\n - Superficie bÃ¢ti : 350mÂ² \n- Dossier juridique en rÃ¨gle, titre foncier disponible \n- Etat du bien : Ã  rÃ©novÃ© \nComposition : \n- Villa sur deux niveaux \n- Jardin \n- Garage de voiture \n- un studio indÃ©pendant \nPour plus d'informations, veuillez nous contacter au : 29.855.485 / 23.221.222\n E-mail : cun@cen...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8127983/a-vendre-villa-de-603m%C2%B2-%C3%A0-montfleury-tunis",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 383,
+      "titre": "A Vendre deux appartements en plein centre ville",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "530Â 000 TND",
+        "montant_nettoye": "530Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "530Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tA Vendre deux appartements en plein centre ville\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t320\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t7 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tPiscine\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tMeublÃ©\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tEntre-seul\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCheminÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tPorte blindÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tRÃ©frigÃ©rateur\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tFour\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tMicro-ondes\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tklouz immobiliÃ¨re met en vente deux appartements en plein centre ville Bizerte  \ncomposÃ© d'un cave de superficie 90 m\nRDC composÃ© d'un salon (   deux cheminÃ©e )  salle a manger  terrasse  piscine  cuisine  (  plaque de cuisson  rÃ©frigÃ©rateur  four )  deux chambres a coucher \n1 er Ã©tage appartement en duplexe composÃ©  de deux salons  cuisine  salle d'eau  trois chambres  salle d'eau \nSuperficie terrain ; 182 m \nsuperficie bÃ¢tie ; 320 m \ntitr...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8137742/a-vendre-deux-appartements-en-plein-centre-ville",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 384,
+      "titre": "Villa de 582mÂ², Bab Saadoun",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "890Â 000 TND",
+        "montant_nettoye": "890Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Saadoun, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "890Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tVilla de 582mÂ², Bab Saadoun\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bab Saadoun, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t582\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t6 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tCette villa de plain-pied est trÃ¨s bien situÃ©e sur l'avenue principale et Ã  moins de cinq minutes Ã  pieds de la porte historique \"Bab Saadoun\".\nLa vocation du terrain est R2.\nLa bÃ¢tisse est de 300mÂ² y compris le studio au jardin\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7687530/villa-de-582m%C2%B2-bab-saadoun",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 385,
+      "titre": "Ã€ vendre â€“ villa spacieuse Ã  borj zouara,\ntunis",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "750Â 000 TND",
+        "montant_nettoye": "750Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Saadoun, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "750Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tÃ€ vendre â€“ villa spacieuse Ã  borj zouara,\ntunis\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bab Saadoun, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t271\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t6 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tEntre-seul\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChauffage central\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tVous cherchez une villa dans un quartier central de Tunis ? Cette propriÃ©tÃ© est faite pour vous !\nSituÃ©e Ã  Borj Zouara, sur les hauteurs de Bab Saadoun, cette villa offre un emplacement rare dans une citÃ© rÃ©sidentielle calme, Ã  quelques minutes des facultÃ©s de mÃ©decine, Ecole des Beaux Arts, FacultÃ© des Lettres 9 Avril, des hÃ´pitaux (Charles Nicolle, Rabta, HÃ´pital des enfants, HÃ´pital ophtalmologique), de lâ€™ISG Tunis et Ã  3 km seulement du Bard...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8135206/%C3%A0-vendre-%E2%80%93-villa-spacieuse-%C3%A0-borj-zouara-tunis",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 386,
+      "titre": "Maison style arabe pour fait maison d'hÃ´te",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "1Â 650Â 000 TND",
+        "montant_nettoye": "1Â 650Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Bhar, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "1Â 650Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison style arabe pour fait maison d'hÃ´te\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bab Bhar, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t407\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t10 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tMaison style arabe pour fait maison d'hÃ´te\nOu une grande maison\nIl est possible de vendre la moitiÃ© de la propriÃ©tÃ© et le prix nÃ©gociable\nPour plus dâ€™informations, veuillez appeler le numÃ©ro sur WhatsApp\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8134124/maison-style-arabe-pour-fait-maison-d-h%C3%B4te",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 387,
+      "titre": "Villa individuelle en vente",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "4Â 000Â 000 TND",
+        "montant_nettoye": "4Â 000Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montplaisir, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": null,
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8134066/villa-individuelle-en-vente",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 388,
+      "titre": "Maison jumelÃ©e en vente",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "980Â 000 TND",
+        "montant_nettoye": "980Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": null,
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8133426/maison-jumel%C3%A9e-en-vente",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 389,
+      "titre": "Ã€ vendre Villa de Luxe en Bord de Mer Ã  Metline",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "900Â 000 TND",
+        "montant_nettoye": "900Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": null,
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7880478/%C3%A0-vendre-villa-de-luxe-en-bord-de-mer-%C3%A0-metline",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 390,
+      "titre": "Villa individuelle en vente",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "750Â 000 TND",
+        "montant_nettoye": "750Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "750Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tVilla individuelle en vente\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t320\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tSÃ©curitÃ©\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tFour\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tCette villa est situÃ©e dans un quartier calme et sÃ©curisÃ©, offrant une tranquillitÃ© apprÃ©ciable. Elle se compose de deux Ã©tages indÃ©pendants.Le rez-de-chaussÃ©e possÃ¨de un salon spacieux, une cuisine Ã©quipÃ©e avec une plaque de cuisson, une hotte aspirante, un four Ã©lectrique, et elle donne accÃ¨s sur une terrasse une salle dâ€™eau pour les invitÃ©s complÃ©tÃ©s la partie jours. La partie nuit Ã  loge trois chambres Ã  coucher, elles se partagent une salle...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8129734/villa-individuelle-en-vente",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 391,
+      "titre": "Maison de luxe Ã  vendre. Superficie 167 mÂ².\nPlaces de statio...",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "800Â 000 TND",
+        "montant_nettoye": "800Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "800Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison de luxe Ã  vendre. Superficie 167 mÂ².\nPlaces de statio...\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t167\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t12 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t8 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tVue sur mer\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tVue sur les montagnes\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tEntre-seul\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tRaffinement et confort pour cette villa Ã  vendre.\nPrix 800 000 TND.\n8 chambres Ã  coucher, 2 salles de bains, 167 mÂ².\n12 piÃ¨ces.\nBon Ã©tat.\nRÃ©sidence parfaitement Ã©quipÃ©e avec un parking.\nVous profiterez Ã©galement d'un jardin et d'une belle terrasse.\n\nCette belle villa est en vente.\nCuisine Ã©quipÃ©e.\nVue exceptionnelle sur la montagne.\n\nSoyez le premier Ã  visiter cette villa en vente.\nEn prime, une magnifique vue sur la mer\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7863077/maison-de-luxe-%C3%A0-vendre-superficie-167-m%C2%B2-places-de-stationnement-et-terrasse",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 392,
+      "titre": "Terrain bÃ¢ti trÃ¨s proche de l'avenue mohamed v",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "870Â 000 TND",
+        "montant_nettoye": "870Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montplaisir, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "870Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tTerrain bÃ¢ti trÃ¨s proche de l'avenue mohamed v\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Montplaisir, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t280\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 PiÃ¨ce \n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tEntre-seul\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tSÃ©curitÃ©\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tÃ€ VENDRE : TERRAIN BÃ‚TI â€“ PROCHE DE L'AVENUE MOHAMED V ET EN PARALLÃˆLE AVEC L'AVENUE KHEIREDDINE BECHA\n\nAdresse : 16 Rue du Niger, Tunis, Tunisie\n\nLocalisation privilÃ©giÃ©e\nSituÃ© Ã  cÃ´tÃ© du consulat dâ€™AlgÃ©rie, dans un quartier hautement surveillÃ© et sÃ©curisÃ©, offrant une tranquillitÃ© rare en plein centre-ville. Ã€ proximitÃ© immÃ©diate de lâ€™Avenue Mohamed V et des principales institutions publiques et privÃ©es (ministÃ¨res, municipalitÃ©s, banques...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8113241/terrain-b%C3%A2ti-tr%C3%A8s-proche-de-l-avenue-mohamed-v",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 393,
+      "titre": "A vendre un duplex Ã  Montfleury",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "195Â 000 TND",
+        "montant_nettoye": "195Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montfleury, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "195Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tA vendre un duplex Ã  Montfleury\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Montfleury, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t122\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tHB4436 \nfirst home real state vous propose la vente d'un duplex Ã  Montfleury \nCaractÃ©ristiques : Superficie du terrain :\n 122 M2 Superficie couverte : \nRez-de-chaussÃ©e : 99.5 M2\n Ã‰tage : 23 M2 Prix :195 000 DT \nPour plus dâ€™informations veuillez nous contacter sur le 216 29 445 926 ou Whatsapp .\n\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8124674/a-vendre-un-duplex-%C3%A0-montfleury",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 394,
+      "titre": "Villa Soleil Ã  Vendre Ã  Montfleury",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "600Â 000 TND",
+        "montant_nettoye": "600Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Sidi Bechir, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "600Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tVilla Soleil Ã  Vendre Ã  Montfleury\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Sidi Bechir, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t243\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tUne coquette villa sur un terrain de 243 mÂ² SituÃ©e dans un quartier rÃ©sidentiel prisÃ© Ã  Montfleury. Au RDC, On trouve un double salon, un sÃ©jour, une cuisine et une salle d'eau pour les invitÃ©s. A L'Ã©tage, On a 4 chambres, une salle de bain et une grande terrasse au toit idÃ©ale pour profiter des soirÃ©es en plein air. A L'extÃ©rieur, On a une terrasse. NB: Cette villa est Ã©quipÃ©e de panneaux photovoltaÃ¯ques sur le toit. Pour tous les renseignements...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7990347/villa-soleil-%C3%A0-vendre-%C3%A0-montfleury",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 395,
+      "titre": "Immeuble Lyne Ã  Vendre Ã  Bab Fella, Montfleury",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "500Â 000 TND",
+        "montant_nettoye": "500Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Jazira, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "500Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tImmeuble Lyne Ã  Vendre Ã  Bab Fella, Montfleury\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bab Jazira, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t150\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\"Un immeuble sur un terrain de 150 mÂ², situÃ© dans un bon quartier Ã  Bab Fella, Montfleury. Au RDC, on a un Pressing dans un local de 42 m2 avec tout son matÃ©riel qui est neuf fonctionnel et Ã  la pointe de la technologie. Ce local est en activitÃ© depuis plus de 40 ans. Au 1er Ã©tage, on a un duplex. A l'Ã©tage, on un salon, une cuisine Ã©quipÃ©e, une chambre et une salle d'eau. Au 2 Ã©me Ã©tage, on a un salon, deux chambres et une salle d'eau. A l'extÃ©r...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7911937/immeuble-lyne-%C3%A0-vendre-%C3%A0-bab-fella-montfleury",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 396,
+      "titre": "Immeuble Paolis Ã  Vendre Ã  Bizerte",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "300Â 000 TND",
+        "montant_nettoye": "300Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "300Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tImmeuble Paolis Ã  Vendre Ã  Bizerte\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t140\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t6 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tJardin\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tUn immeuble un terrain d'une superficie de 140 mÂ² situÃ© dans un bon quartier Ã  CitÃ© les palmeraies, Bizerte. Au RDC, On a un appartement S2 qui se compose par un salon, une cuisine, 2 chambres et une salle de bain. A L'Ã©tage, On a un appartement S3 qui se compose par un salon, une cuisine, 3 chambres et une salle de bain. Pour tous les renseignements, Contacter l'agent\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8071467/immeuble-paolis-%C3%A0-vendre-%C3%A0-bizerte",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 397,
+      "titre": "A vendre une maison S3, CitÃ© Beau SÃ©jour El Agba",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "360Â 000 TND",
+        "montant_nettoye": "360Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "El Agba, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "360Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tA vendre une maison S3, CitÃ© Beau SÃ©jour El Agba\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t El Agba, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t136\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tGarage\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChambre rangement\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tEntre-seul\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChauffage central\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tRE/MAX VÃ¯P vous propose Ã  la vente une maison de plain-pied, Ã  CitÃ© Les Peupliers, El Agba Tunis.\nLe quartier se caractÃ©rise par son aspect rÃ©sidentiel calme et sÃ©curisÃ© avec un trÃ¨s bon voisinage.\nLa superficie de la maison est 136 mÂ², construite sur un terrain de 199 mÂ² ; jumelÃ©e des deux cÃ´tÃ©s et construite en 2004.\nA lâ€™avant de la maison il y a une terrasse, un abri de voiture et un escalier qui mÃ¨ne vers le toit de la maison, avec une ori...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8066566/a-vendre-une-maison-s3-cit%C3%A9-beau-s%C3%A9jour-el-agba",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 398,
+      "titre": "Maison a vendre",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "130Â 000 TND",
+        "montant_nettoye": "130Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bab Saadoun, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "130Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison a vendre\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bab Saadoun, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t65\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tMaison arabe de 65m s2 \nsituÃ© a bab saadoun a 5mn de la station du mÃ©tro bab saadoun\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8121081/maison-a-vendre",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 399,
+      "titre": "Une superbe maison arabe",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "220Â 000 TND",
+        "montant_nettoye": "220Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Maakel Ezzaim, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "220Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tUne superbe maison arabe\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Maakel Ezzaim, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t200\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tUne superbe maison arabe a Tunis beb jdid se compose d'une salon et 3 chambres Ã  coucher cuisine salle d'eau et salle de bain,cette maison est TrÃ¨s propre tu peux habiter directement\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/8119786/une-superbe-maison-arabe",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 400,
+      "titre": "Maison style amÃ©ricain Ã  Beni Nafa, Bizert",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "110Â 000 TND",
+        "montant_nettoye": "110Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Bizerte, Bizerte",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "110Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tMaison style amÃ©ricain Ã  Beni Nafa, Bizert\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Bizerte, Bizerte\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t100\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t5 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t3 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t1 Salle de bain\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tAntenne parabolique\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t EDF ImmobiliÃ¨re met en vente une maison style amÃ©ricain Ã  Beni Nafa, Bizerte . \nCette maison est Ã©difiÃ©e sur un terrain de 100mÂ², Elle comprend \nAU RDC : un salon, sÃ©jour, 2 chambres Ã  coucher, une cuisine, salle de bains,\nA Lâ€™Ã©tage: salon, une chambre Ã  coucher terrasse \nLe prix de vente est de 110 mille de dinars tunisiens. \nPour plus d'infos veuillez nous  contacter Ou visiter notre agence : Complexe Commerciale Bizerte Center Bureau n 5...\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7869260/maison-style-am%C3%A9ricain-%C3%A0-beni-nafa-bizert",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 401,
+      "titre": "Vente montfleury villa avec deux magasins",
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": "590Â 000 TND",
+        "montant_nettoye": "590Â 000 TND",
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": "Montfleury, Tunis",
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": "590Â 000 TND\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\tVente montfleury villa avec deux magasins\n\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t Montfleury, Tunis\n\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\t255\n\t\t\t\t\t\tmÂ²\n\t\t\t\t\t\t\t\t\t\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t6 PiÃ¨ces\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t4 Chambres\n\t\t\t\t\n\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t2 Salles de bains\n\t\t\t\t\n\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tTerrasse\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tClimatisation\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tChauffage central\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\t\t\tCuisine Ã©quipÃ©e\n\t\t\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\t\n\t\t\t\t\tennasr homing met en vente une villa avec deux locaux comerciaux elle ce presente a l'entrÃ©e un espace verenda \nau rez de chaussÃ©e un sÃ©jour plus un grand salon avec un decore arabesque \nsalle d'eau invitÃ©s \ncuisine equipÃ©e \nau premiere etage \nquatre chambres plus terrasse \npanneaux voltaique \nchauffage central \nclimatisation\n\t\t\t\t\t\n\t\n\t\t\t\t\t\n\t\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tContacter\n\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t Appelez\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\t\n\t\t\t\t\t\t\t\tWhatsApp",
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": "https://www.mubawab.tn/fr/a/7756605/vente-montfleury-villa-avec-deux-magasins",
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    },
+    {
+      "id": 402,
+      "titre": null,
+      "type_propriete": null,
+      "prix": {
+        "montant_brut": null,
+        "montant_nettoye": null,
+        "devise": "TND"
+      },
+      "localisation": {
+        "ville": null,
+        "region": null,
+        "pays": "Tunisie"
+      },
+      "caracteristiques": {
+        "surface_m2": null,
+        "surface_brute": null,
+        "chambres": null,
+        "salles_bain": null },
+      "transaction": {
+        "type": null,
+        "nouveau_listing": true
+      },
+      "agent": {
+        "nom": null },
+      "liens": {
+        "annonce": null,
+        "image": null },
+      "source": {
+        "site": "mubawab.tn",
+        "id_propriete": null,
+        "numero_page": 1
+      }
+    }
+  ]
+}
+

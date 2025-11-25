@@ -1,0 +1,76 @@
+﻿Créer un document technique détaillé qui décrit l'architecture complète de l'application Housy, en incluant spécifiquement:
+
+1. INTERACTIONS ENTRE FICHIERS JSON ET MODÈLES LLM:
+   - Décrire le format et la structure des fichiers JSON utilisés pour communiquer avec les modèles LLM
+   - Expliquer le processus de transmission des données entre l'application et les API d'IA
+   - Détailler les mécanismes de traitement des réponses LLM et leur intégration dans l'application
+   - Documenter les schémas de validation JSON pour les entrées/sorties des LLM
+
+2. ARCHITECTURE DE DOCKERISATION:
+   - Présenter la structure complète des conteneurs Docker (frontend, backend, base de données, cache)
+   - Décrire le fichier docker-compose.yml avec configuration des services
+   - Expliquer les Dockerfiles pour chaque composant
+   - Détailler la gestion des variables d'environnement et secrets
+   - Documenter la configuration des volumes persistants
+   - Expliquer la stratégie de mise en réseau entre les conteneurs
+
+3. COMMUNICATIONS ENTRE COMPOSANTS:
+   - Décrire en détail tous les flux de données entre frontend, backend, base de données et LLM
+   - Présenter les formats d'API et les protocoles utilisés (REST, WebSocket, etc.)
+   - Documenter toutes les routes API avec leurs paramètres et réponses
+   - Expliquer la gestion d'état et la synchronisation des données
+   - Détailler les mécanismes de mise en cache avec Redis
+   - Présenter les stratégies de gestion des erreurs et de reprise
+
+Le document doit être structuré avec des sections claires, des diagrammes explicatifs, et des exemples de code pertinents pour illustrer les concepts techniques. Inclure des considérations de performance, sécurité et évolutivité pour chaque aspect de l'architecture.
+
+SPÉCIFICATIONS TECHNIQUES POUR L'IMAGE:
+
+OBJECTIF: Créer une représentation visuelle technique détaillant les flux JSON et les interactions avec les modèles LLM dans l'application Housy.
+
+CTURE À REPRÉSENTER:
+
+1. FLUX JSON ET VALIDATION
+   - Cycle: Client (Frontend)  Validation Zod  Backend  Traitement  Base de données  Cache  Réponse
+   - Schémas de validation Zod avec structure typée
+   - Format standardisé des réponses API JSON
+   - Gestion des erreurs avec codes appropriés
+
+2. INTERACTIONS LLM
+   - Flux: Demande utilisateur  Enrichissement contextuel  Sélection du modèle  Appel API LLM  Traitement de réponse  Présentation
+   - Système multi-modèles (Claude, GPT-4, Ollama)
+   - Structure des prompts enrichis avec contexte réel
+   - Mécanismes de failover et sélection
+
+3. ARCHITECTURE DOCKER
+   - Conteneurs: housy-app (Node.js), postgres (PostgreSQL), redis (Cache)
+   - Réseau Docker isolé housy-network
+   - Volumes persistants pour données
+   - Variables d'environnement et secrets
+   - Configuration de déploiement
+
+4. COMMUNICATIONS INTER-COMPOSANTS
+   - API REST avec routes détaillées
+   - Flux de données bidirectionnels
+   - Cache Redis et invalidation
+   - Gestion d'état et synchronisation
+   - Protocoles de sécurité (JWT, CORS)
+
+STYLE VISUEL:
+- Image technique haute résolution (PNG/SVG)
+- Codes couleur: Vert (données validées), Orange (traitement), Bleu (LLM), Rouge (erreurs)
+- Diagramme de flux avec flèches directionnelles
+- Icônes représentatives pour chaque composant
+- Annotations techniques et exemples JSON
+- Fond blanc/gris clair, typographie claire
+- Orientation paysage, style professionnel
+
+ÉLÉMENTS SPÉCIFIQUES À INCLURE:
+- Schémas des tables principales (Users, Projects, Materials, AI_Interactions)
+- Routes API détaillées (/api/auth/*, /api/projects/*, /api/ai/*, etc.)
+- Flux d'intégration IA complets
+- Points de sécurité et performance
+- Configuration Docker et orchestration
+- Formats JSON d'échange avec exemples concrets
+
+Le diagramme doit être suffisamment détaillé pour servir de référence technique aux développeurs tout en restant lisible et professionnel.

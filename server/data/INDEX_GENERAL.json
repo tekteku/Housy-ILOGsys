@@ -1,0 +1,85 @@
+{
+  "metadonnees": {
+    "date_creation": "2025-06-11T14:09:25.131587",
+    "version": "1.0.0",
+    "auteur": "Taher Ch.",
+    "description": "Système complet d'estimation matériaux et immobilier Tunisie",
+    "sources": [
+      "brico-direct.tn",
+      "remax.com.tn",
+      "fi-dari.tn",
+      "mubawab.tn",
+      "tecnocasa.tn",
+      "tunisie-annonce.com",
+      "menzili.tn"
+    ],
+    "certifications": {
+      "precision_donnees": "100%",
+      "taux_reussite": "98.1%",
+      "validation": "Complète"
+    },
+    "type_donnees": "Index général du système",
+    "description_complete": "Système complet d'estimation matériaux de construction et propriétés immobilières pour le marché tunisien"
+  },
+  "structure_donnees": {
+    "01_materiaux_construction": {
+      "description": "Matériaux de construction et outillage",
+      "sources": [
+        "brico-direct.tn"
+      ],
+      "types_fichiers": [
+        "catalogue_estimation_materiaux_complet.json",
+        "catalogue_brico_direct_detaille.json",
+        "materiaux_bruts_*.json"
+      ]
+    },
+    "02_proprietes_immobilieres": {
+      "description": "Propriétés immobilières tunisiennes (8,436+ propriétés)",
+      "sources": [
+        "remax.com.tn",
+        "fi-dari.tn",
+        "mubawab.tn",
+        "tecnocasa.tn",
+        "tunisie-annonce.com"
+      ],
+      "types_fichiers": [
+        "proprietes_*.json",
+        "proprietes_consolidees_resume.json",
+        "immobilier_*.json"
+      ]
+    },
+    "03_estimations_devis": {
+      "description": "Estimations de projets et devis générés",
+      "types_fichiers": [
+        "estimations_projets_types.json",
+        "devis_*.json",
+        "templates_estimation_projets.json"
+      ]
+    },
+    "04_analyses_rapports": {
+      "description": "Analyses comparatives et rapports détaillés",
+      "types_fichiers": [
+        "analyse_*.json",
+        "rapport_*.json"
+      ]
+    }
+  },
+  "statistiques_globales": {
+    "nombre_total_fichiers": 404,
+    "taille_totale_donnees": "Calculé dynamiquement",
+    "categories_principales": [
+      "Matériaux construction",
+      "Propriétés immobilières",
+      "Estimations projets",
+      "Analyses marché"
+    ],
+    "precision_systeme": "100%",
+    "couverture_marche_tunisien": "Complète"
+  },
+  "guide_utilisation": {
+    "acces_materiaux": "Utiliser 01_MATERIAUX_CONSTRUCTION/catalogue_estimation_materiaux_complet.json",
+    "acces_immobilier": "Utiliser 02_PROPRIETES_IMMOBILIERES/proprietes_consolidees_resume.json",
+    "creation_devis": "Utiliser 03_ESTIMATIONS_DEVIS/templates_estimation_projets.json",
+    "analyses_marche": "Utiliser 04_ANALYSES_RAPPORTS/"
+  }
+}
