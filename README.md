@@ -344,3 +344,10 @@ Pour toute question ou problème :
 <p align="center">
   <sub>Révolutionnons ensemble le secteur de la construction !</sub>
 </p>
+<img width="1354" height="687" alt="Image" src="https://github.com/user-attachments/assets/bc79c50a-1a22-4cf8-a605-b34fc42a1ff0" />
+
+<img width="1332" height="683" alt="Image" src="https://github.com/user-attachments/assets/0c96e220-94be-4a83-9782-a2e9165cb107" />
+
+<img width="1340" height="652" alt="Image" src="https://github.com/user-attachments/assets/7aa5dc2a-70a2-4b68-9d6c-438f9080475d" />
+
+<img width="1360" height="673" alt="Image" src="https://github.com/user-attachments/assets/e1db8775-afdb-4b1b-9a03-7bcc40bfd820" />
